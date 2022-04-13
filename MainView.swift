@@ -8,29 +8,20 @@
 import SwiftUI
 import CoreData
 
-class ViewModel: ObservableObject {
-    var items = [[0, 1], [2, 3], [4, 5]]
-    
-}
 
-
-struct ContentView: View {
+struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
+    
     @State private var showModal = false //상태
     @State private var showDialog = true
     @State private var showingModal = false
-    @State private var show = true
+    @State private var show = false
 
-
-    
-    @ObservedObject var viewModel = ViewModel()
-    @State var selection: Bool? = false
-    @State var itemIndex = 0
     
     var body: some View {
         ZStack{
@@ -52,8 +43,13 @@ struct ContentView: View {
                     //add item
                     show.toggle()
                     }) {
-                        Text("Add Item")
+                        Image(systemName: "plus")
+                            .foregroundColor(Color.black)
+                        
                     }
+                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                    .opacity(show ? 0 : 1)
+
                 Spacer()
 
                 Button(action: {
@@ -64,46 +60,22 @@ struct ContentView: View {
                     Spacer()
                 
             }
+
             
-            // The Custom Popup is on top of the screen
               if $showingModal.wrappedValue {
                   DetailView(showingModal: self.$showingModal)
 
               }
         }
-
-    }
-    
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            show.toggle()
+            print("Show details for user")
+            
         }
+
     }
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
 }
 
 private let itemFormatter: DateFormatter = {
@@ -115,7 +87,7 @@ private let itemFormatter: DateFormatter = {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        MainView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
 
@@ -189,24 +161,4 @@ struct scroll: View{
     
 }
 
-struct AddView: View{
-    @State var name: String = ""
-    @Binding var show: Bool
-
-    var body: some View {
-        
-        if show{
-            ZStack{
-                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                    .fill(Color.yellow)
-                    .frame(width: 200, height: 50)
-                TextField("제목을 입력하세요", text: $name)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.title)
-                    .foregroundColor(Color.black)
-            }
-        }
-
-    }
-}
 
