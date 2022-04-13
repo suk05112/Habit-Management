@@ -40,7 +40,12 @@ struct DetailView: View{
             }
 
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            print("바깥쪽 터치됨")
+            self.showingModal = false
 
+        }
 
     }
         

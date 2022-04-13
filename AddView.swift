@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 struct AddView: View{
-    @State var name: String = ""
+    @Binding var name: String
     @Binding var show: Bool
     @State var iter: Bool = false
 
@@ -23,26 +23,32 @@ struct AddView: View{
                     .shadow(radius: 5)
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                     .frame(width: .none, height: 120)
-                VStack{
+                VStack(alignment: .leading){
                     TextField("제목을 입력하세요", text: $name)
                         .textFieldStyle(.roundedBorder)
                         .font(.system(size: 25))
                         .foregroundColor(Color.black)
                         .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                     HStack{
-                        ForEach(1..<8){_ in
-                            Week()
+                        ForEach(1..<8){
+                            WeekButton(weekOfDay: $0)
                         }
-                    }
-                }.frame(alignment:.leading)
+                    }.padding(.leading, 30)
+                }
 
+            }
+            .onTapGesture {
+                    //nothing to do but It is necessary to prevent mainView's touch event
+                    
             }
         }
 
     }
 }
 
-struct Week: View{
+struct WeekButton: View{
+    @State var weekOfDay: Int = 1
+    
     var body: some View {
         Button(action:{
             
@@ -51,10 +57,14 @@ struct Week: View{
                 Circle()
                     .fill(Color.green)
                     .frame(width: 35, height: 35)
-                Text("월").foregroundColor(Color.black)
+                Text(getWeekOfDay(num:weekOfDay)).foregroundColor(Color.black)
             }
         }
 
+    }
+    
+    func getWeekOfDay(num: Int) -> String{
+        return Week(rawValue: num)!.description
     }
 }
 
