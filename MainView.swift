@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreData
-
+import RealmSwift
 
 struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -17,13 +17,17 @@ struct MainView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     
-    @State private var showModal = false //상태
-    @State private var showDialog = true
-    @State private var showingModal = false
-    @State private var show = false
+    @State private var showingDetail = false
+    @State private var showingAdd = false
+    @State private var name: String = ""
+
+
+    let realm = try! Realm()
+//    let testRealm = Habits(name: "test")
 
     
     var body: some View {
+        
         ZStack{
             VStack{
                 ZStack(alignment: .topLeading){
@@ -38,42 +42,76 @@ struct MainView: View {
                     }
 
                 }
-                AddView(show: $show)
+                
+                ForEach(realm.objects(Habits.self), id:\.self){
+                    item(name:$0.name, showingModal: $showingDetail)
+                }
+
+                AddView(name: $name, show: $showingAdd)
                 Button(action: {
                     //add item
-                    show.toggle()
+                    showingAdd.toggle()
+                    try! realm.write {
+//                        realm.add(testRealm)
+                        let habit = realm.objects(Habits.self)
+                        print(habit)
+                    }
                     }) {
                         Image(systemName: "plus")
                             .foregroundColor(Color.black)
                         
                     }
                     .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-                    .opacity(show ? 0 : 1)
+                    .opacity(showingAdd ? 0 : 1)
 
                 Spacer()
 
-                Button(action: {
-                    self.showingModal = true
-                    }) {
-                        Text("Detail")
-                    }
-                    Spacer()
                 
             }
-
-            
-              if $showingModal.wrappedValue {
-                  DetailView(showingModal: self.$showingModal)
+              if $showingDetail.wrappedValue {
+                  DetailView(showingModal: $showingDetail)
 
               }
         }
+        
         .contentShape(Rectangle())
         .onTapGesture {
-            show.toggle()
+            showingAdd = false
+            try! realm.write {
+                realm.deleteAll()
+            }
+            
+            if !name.isEmpty{
+                try! realm.write {
+                    realm.add(Habits(name: name))
+                    let habit = realm.objects(Habits.self)
+                    print(habit)
+                }
+                name = ""
+            }
+
             print("Show details for user")
             
         }
 
+    }
+    
+    func remove(){
+        let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
+                let realmURLs = [
+                  realmURL,
+                  realmURL.appendingPathExtension("lock"),
+                  realmURL.appendingPathExtension("note"),
+                  realmURL.appendingPathExtension("management")
+                ]
+                
+                for URL in realmURLs {
+                  do {
+                    try FileManager.default.removeItem(at: URL)
+                  } catch {
+                    // handle error
+                  }
+                }
     }
 
 }
@@ -108,6 +146,28 @@ extension Color{
     
 }
 
+struct item: View{
+    
+    @State var name: String = ""
+    @Binding var showingModal: Bool
+    
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white)
+                .shadow(radius: 5)
+                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                .frame(width: .none, height: 70)
+            Text(name)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            print("item touch")
+            showingModal = true
+
+        }
+    }
+}
 
 struct scroll: View{
     var body: some View {
