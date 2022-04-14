@@ -24,7 +24,7 @@ struct AddView: View{
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                     .frame(width: .none, height: 120)
                 VStack(alignment: .leading){
-                    TextField("제목을 입력하세요", text: $name)
+                    TextField("제목을 입력하세요", text: $name, onCommit: {addData()})
                         .textFieldStyle(.roundedBorder)
                         .font(.system(size: 25))
                         .foregroundColor(Color.black)
@@ -43,6 +43,10 @@ struct AddView: View{
             }
         }
 
+    }
+    
+    func addData(){
+        
     }
 }
 

@@ -20,7 +20,14 @@ struct MainView: View {
     @State private var showingDetail = false
     @State private var showingAdd = false
     @State private var name: String = ""
+    
+    var scrollView = scroll()
 
+
+    init(){
+        print("init")
+    
+    }
 
     let realm = try! Realm()
 //    let testRealm = Habits(name: "test")
@@ -39,6 +46,7 @@ struct MainView: View {
                             .bold()
                             .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
                         scroll()
+
                     }
 
                 }
@@ -72,6 +80,7 @@ struct MainView: View {
                   DetailView(showingModal: $showingDetail)
 
               }
+//            remove()
         }
         
         .contentShape(Rectangle())
@@ -170,6 +179,9 @@ struct item: View{
 }
 
 struct scroll: View{
+    var count = 0
+    let items = (1...100)
+
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -194,25 +206,34 @@ struct scroll: View{
                         Text("SAT")
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
-                    ScrollView(.horizontal) {
-                        VStack(alignment: .center, spacing: 3) {
-                                    ForEach(0...6, id: \.self) { row in
-                                        HStack(alignment: .center, spacing: 3) {
-                                            ForEach(0...50, id: \.self) { item in
-                                                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                    .fill(Color(hex: "#EFF0EF"))
-                                                    //.fill(Color(red: 52 / 255, green: 152 / 255, blue: 219 / 255))
-                                                    .frame(width: 29, height: 29)
-                                                    .background(Color.green)
-                                                   
-                                            }
+
+                        ScrollView(.horizontal) {
+                            VStack(alignment: .center, spacing: 3) {
+                                ForEach(0...6, id: \.self) { row in
+                                    HStack(alignment: .center, spacing: 3) {
+//                                        ForEach(0...50, id: \.self) { i in
+//                                            Text("[\(row),\(i)]")
+//                                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                        ForEach(items, id: \.self) {_ in
+
+                                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                .fill(Color(hex: "#EFF0EF"))
+                                            //.fill(Color(red: 52 / 255, green: 152 / 255, blue: 219 / 255))
+                                                .frame(width: 29, height: 29)
+                                                .background(Color.green)
+//                                                .id(i)
+                                                
+                                            
                                         }
                                     }
                                 }
                             }
+                        }
+                        
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
                     
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
-                }
+                    }
             }
 
 
