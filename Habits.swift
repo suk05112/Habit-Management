@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class Habits: Object{
-//    @Persisted(primaryKey: true) var id: String? = "id"
+    @Persisted(primaryKey: true) var id: String? = "id"
     @Persisted var name: String = "dafault name"
 //    @Persisted weekIter:Iter
     @Persisted var continuity: Int = 0

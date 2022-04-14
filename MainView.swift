@@ -22,9 +22,12 @@ struct MainView: View {
     @State private var name: String = ""
 
 
-    let realm = try! Realm()
-//    let testRealm = Habits(name: "test")
+    var manager: RealmManager<Habits>?
 
+
+    init(){
+        manager = RealmManager(configuration: nil, fileUrl: nil)
+    }
     
     var body: some View {
         
@@ -43,19 +46,12 @@ struct MainView: View {
 
                 }
                 
-                ForEach(realm.objects(Habits.self), id:\.self){
-                    item(name:$0.name, showingModal: $showingDetail)
-                }
 
                 AddView(name: $name, show: $showingAdd)
                 Button(action: {
                     //add item
                     showingAdd.toggle()
-                    try! realm.write {
-//                        realm.add(testRealm)
-                        let habit = realm.objects(Habits.self)
-                        print(habit)
-                    }
+
                     }) {
                         Image(systemName: "plus")
                             .foregroundColor(Color.black)
@@ -77,42 +73,11 @@ struct MainView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             showingAdd = false
-            try! realm.write {
-                realm.deleteAll()
-            }
-            
-            if !name.isEmpty{
-                try! realm.write {
-                    realm.add(Habits(name: name))
-                    let habit = realm.objects(Habits.self)
-                    print(habit)
-                }
-                name = ""
-            }
-
             print("Show details for user")
             
         }
-
     }
     
-    func remove(){
-        let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
-                let realmURLs = [
-                  realmURL,
-                  realmURL.appendingPathExtension("lock"),
-                  realmURL.appendingPathExtension("note"),
-                  realmURL.appendingPathExtension("management")
-                ]
-                
-                for URL in realmURLs {
-                  do {
-                    try FileManager.default.removeItem(at: URL)
-                  } catch {
-                    // handle error
-                  }
-                }
-    }
 
 }
 

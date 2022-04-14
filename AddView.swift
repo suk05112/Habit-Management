@@ -48,20 +48,22 @@ struct AddView: View{
 
 struct WeekButton: View{
     @State var weekOfDay: Int = 1
+    @State var OnOff: Bool = false
     
     var body: some View {
         Button(action:{
-            
+            OnOff.toggle()
         }){
             ZStack{
                 Circle()
-                    .fill(Color.green)
+                    .fill(OnOff ? Color.green: Color.yellow)
                     .frame(width: 35, height: 35)
                 Text(getWeekOfDay(num:weekOfDay)).foregroundColor(Color.black)
             }
         }
 
     }
+
     
     func getWeekOfDay(num: Int) -> String{
         return Week(rawValue: num)!.description
