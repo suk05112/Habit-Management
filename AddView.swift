@@ -12,7 +12,7 @@ import UIKit
 struct AddView: View{
     @Binding var name: String
     @Binding var show: Bool
-    @State var iter: Bool = false
+    @Binding var iter: [Int]
 
     var body: some View {
         
@@ -31,7 +31,7 @@ struct AddView: View{
                         .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                     HStack{
                         ForEach(1..<8){
-                            WeekButton(weekOfDay: $0)
+                            WeekButton(weekOfDay: $0, iter: $iter)
                         }
                     }.padding(.leading, 30)
                 }
@@ -49,24 +49,35 @@ struct AddView: View{
 struct WeekButton: View{
     @State var weekOfDay: Int = 1
     @State var OnOff: Bool = false
+    @Binding var iter: [Int]
+
     
     var body: some View {
         Button(action:{
             OnOff.toggle()
+            if iter.contains(getWeekOfDay(num: weekOfDay).rawValue){
+                iter.removeAll(where: {$0 == getWeekOfDay(num: weekOfDay).rawValue})
+            }
+            else{
+                iter.append(Week(rawValue: getWeekOfDay(num: weekOfDay).rawValue)!.rawValue)
+            }
+            
+//            print(iter)
+
         }){
             ZStack{
                 Circle()
                     .fill(OnOff ? Color.green: Color.yellow)
                     .frame(width: 35, height: 35)
-                Text(getWeekOfDay(num:weekOfDay)).foregroundColor(Color.black)
+                Text(getWeekOfDay(num:weekOfDay).description).foregroundColor(Color.black)
             }
         }
 
     }
 
     
-    func getWeekOfDay(num: Int) -> String{
-        return Week(rawValue: num)!.description
+    func getWeekOfDay(num: Int) -> Week{
+        return Week(rawValue: num)!
     }
 }
 

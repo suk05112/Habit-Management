@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 enum Week: Int{
     case sun = 1, mon, tue, wed, thu, fri, sat
@@ -22,4 +23,7 @@ enum Week: Int{
 
       }
     }
+    
+
+
 }
