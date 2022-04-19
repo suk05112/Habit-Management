@@ -9,7 +9,13 @@ import Foundation
 import RealmSwift
 
 class Habits: Object{
-    @Persisted(primaryKey: true) var id: String? = "idㅇ"
+    
+    let dateFormatter = DateFormatter()
+
+    
+//    @Persisted(primaryKey: true) var id: String? = DateFormatter().string(from: Date())
+    @Persisted(primaryKey: true) var id: String?
+
     @Persisted var name: String = "dafault name"
     @Persisted var weekIter: List<Int> = List<Int>()
     var dataArray: [Int] {
@@ -27,5 +33,10 @@ class Habits: Object{
         self.init()
         self.name = name
         self.dataArray = iter
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        print("date = ", dateFormatter.string(from: Date()))
+        self.id = dateFormatter.string(from: Date())
         }
 }

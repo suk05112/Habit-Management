@@ -19,33 +19,17 @@ struct MainView: View {
     
     @State private var showingDetail = false
     @State private var showingAdd = false
+    
     @State private var name: String = ""
     @State var iter: [Int] = []
 
-
-    var manager: RealmManager<Habits>?
-    let realm = try! Realm()
+    
+    @StateObject var ViewModel = viewModel()
     
     init(){
 
-        
-        print(realm.objects(Habits.self))
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-
-//        manager = RealmManager(configuration: nil, fileUrl: nil)
-//        try! manager?.realm?.write {
-//            manager?.realm?.add(Habits(name: "test", iter: [1,2,3]))
-//                }
-//        print(manager?.realm?.objects(Habits.self))
-
-//        manager?.fetchWith(condition: nil,
-//                                   completion: { result in
-//                                    for message in result {
-//                                        self.arrMessage?.append(message)
-//                                    }
-//
-//                                    print(self.arrMessage!)
-//                })
+        
     }
     
     var body: some View {
@@ -65,6 +49,22 @@ struct MainView: View {
 
                 }
                 
+                Spacer()
+                ScrollView(.vertical) {
+                    ForEach((ViewModel.realm?.objects(Habits.self))!, id: \.id){ list in
+                        item(name: list.name, showingModal: $showingDetail)
+                            .swipeActions() {
+                                    Button { 
+                                    } label: {
+                                      Label("Toggle visited", systemImage: "mappin.circle")
+                                    }
+                                    .tint(.purple)
+                                  }
+                        
+                    }
+                }
+
+                Spacer()
 
                 AddView(name: $name, show: $showingAdd, iter: $iter)
                 Button(action: {
@@ -94,17 +94,8 @@ struct MainView: View {
             showingAdd = false
             print("Show details for user")
             print(iter)
-            try! realm.write{
-                realm.add(Habits(name: name, iter: iter))
-            }
-            manager?.addOrUpdate(object: Habits(name: name, iter: iter ),
-                                         completion: { error in
-                                            if let err = error {
-                                                print("Error \(err.localizedDescription)")
-                                            } else {
-//                                                self.fetch()
-                                            }
-                    })
+            ViewModel.addItem(name: name, iter: iter)
+            name = ""
             
         }
     }
@@ -216,5 +207,4 @@ struct scroll: View{
     }
     
 }
-
 

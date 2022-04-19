@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038FB458280D61F600740AA6 /* viewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* viewModel.swift */; };
 		0392B413280695AD006C1E04 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B412280695AD006C1E04 /* DetailView.swift */; };
 		0392B4152806BE5B006C1E04 /* Habits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B4142806BE5B006C1E04 /* Habits.swift */; };
 		0392B4172806C444006C1E04 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B4162806C444006C1E04 /* Week.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		00AABC6128360E166803BD07 /* Pods-Habit Management.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management.release.xcconfig"; path = "Target Support Files/Pods-Habit Management/Pods-Habit Management.release.xcconfig"; sourceTree = "<group>"; };
+		038FB457280D61F600740AA6 /* viewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewModel.swift; sourceTree = "<group>"; };
 		0392B412280695AD006C1E04 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		0392B4142806BE5B006C1E04 /* Habits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habits.swift; sourceTree = "<group>"; };
 		0392B4162806C444006C1E04 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		03CFE0DA27F4949C004C54B6 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				038FB457280D61F600740AA6 /* viewModel.swift */,
 			);
 			name = "View Model";
 			path = ..;
@@ -470,6 +473,7 @@
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				0392B413280695AD006C1E04 /* DetailView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
+				038FB458280D61F600740AA6 /* viewModel.swift in Sources */,
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
