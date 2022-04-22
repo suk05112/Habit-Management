@@ -25,10 +25,11 @@ struct MainView: View {
 
     
     @StateObject var ViewModel = viewModel()
+
     
     init(){
 
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
     }
     
@@ -50,22 +51,19 @@ struct MainView: View {
                 }
                 
                 Spacer()
-                ScrollView(.vertical) {
-                    ForEach((ViewModel.realm?.objects(Habits.self))!, id: \.id){ list in
-                        item(name: list.name, showingModal: $showingDetail)
-                            .swipeActions() {
-                                    Button { 
-                                    } label: {
-                                      Label("Toggle visited", systemImage: "mappin.circle")
-                                    }
-                                    .tint(.purple)
-                                  }
-                        
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    ForEach(ViewModel.habit!) { list in
+                        ItemView(delete: ViewModel.deleteItem(at:), myItem: $ViewModel.result[getItem(habit: list)],
+                             showingModal: $showingDetail,
+                             offset: $ViewModel.result[getItem(habit: list)].offset)
+                       
                     }
                 }
-
+                
                 Spacer()
 
+                
                 AddView(name: $name, show: $showingAdd, iter: $iter)
                 Button(action: {
                     //add item
@@ -74,13 +72,11 @@ struct MainView: View {
                     }) {
                         Image(systemName: "plus")
                             .foregroundColor(Color.black)
-                        
                     }
                     .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
                     .opacity(showingAdd ? 0 : 1)
 
                 Spacer()
-
                 
             }
               if $showingDetail.wrappedValue {
@@ -100,6 +96,15 @@ struct MainView: View {
         }
     }
     
+    func getItem(habit: Habits)->Int{
+
+        if let index = ViewModel.habit!.firstIndex(where: { $0 == habit}){
+            return index
+        }
+
+        return 0
+
+    }
 
 }
 
@@ -133,28 +138,6 @@ extension Color{
     
 }
 
-struct item: View{
-    
-    @State var name: String = ""
-    @Binding var showingModal: Bool
-    
-    var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.white)
-                .shadow(radius: 5)
-                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                .frame(width: .none, height: 70)
-            Text(name)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            print("item touch")
-            showingModal = true
-
-        }
-    }
-}
 
 struct scroll: View{
     var body: some View {

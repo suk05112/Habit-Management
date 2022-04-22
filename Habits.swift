@@ -8,16 +8,18 @@
 import Foundation
 import RealmSwift
 
-class Habits: Object{
+class Habits: Object, Identifiable, ObjectKeyIdentifiable{
     
     let dateFormatter = DateFormatter()
 
-    
-//    @Persisted(primaryKey: true) var id: String? = DateFormatter().string(from: Date())
     @Persisted(primaryKey: true) var id: String?
-
     @Persisted var name: String = "dafault name"
     @Persisted var weekIter: List<Int> = List<Int>()
+    @Persisted var continuity: Int = 0
+
+    var offset:CGFloat = 0.0
+    var isSwipe:Bool = false
+
     var dataArray: [Int] {
             get {
                 return weekIter.map{$0}
@@ -27,7 +29,8 @@ class Habits: Object{
                 weekIter.append(objectsIn: newValue)
             }
         }
-    @Persisted var continuity: Int = 0
+    
+    
     
     convenience init(name: String, iter: [Int]) {
         self.init()
