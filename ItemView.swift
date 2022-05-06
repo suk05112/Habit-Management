@@ -10,8 +10,9 @@ import SwiftUI
 
 struct ItemView: View{
     
-    var delete: (Habits) -> ()
-    @Binding var myItem: Habits
+    var delete: (Habit) -> ()
+    var check: (String) -> ()
+    @Binding var myItem: Habit
     @Binding var showingModal: Bool
     @Binding var offset: CGFloat
     
@@ -32,7 +33,14 @@ struct ItemView: View{
                     Image(systemName: "trash")
                         .font(.title)
                         .foregroundColor(.white)
-                        .frame(width: 90, height: 50)
+                        .frame(width: 70, height: 50)
+                        
+                }
+                Button(action: {self.check(myItem.id!)}){
+                    Image(systemName: "checkmark")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 70, height: 50)
                         
                 }
             }
@@ -44,7 +52,18 @@ struct ItemView: View{
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                     .frame(width: .none, height: 70)
 
-                Text(myItem.name)
+                HStack{
+                    VStack(alignment: .leading){
+                        Text(myItem.name)
+                            .font(.title2)
+                        Text("3일째 실천 중")
+                            .font(.body)
+                    }
+                    Spacer()
+                    HStack{}
+                }
+                .padding(20)
+                
 
             }
             .contentShape(Rectangle())
@@ -62,7 +81,7 @@ struct ItemView: View{
     }
     
     func onChanged(value: DragGesture.Value){
-        print("on changed",offset)
+//        print("on changed",offset)
         
         if value.translation.width < 0 {
             if myItem.isSwipe{

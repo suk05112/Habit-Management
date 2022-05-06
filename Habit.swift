@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class Habits: Object, Identifiable, ObjectKeyIdentifiable{
+class Habit: Object, Identifiable, ObjectKeyIdentifiable{
     
     let dateFormatter = DateFormatter()
 
@@ -29,9 +29,7 @@ class Habits: Object, Identifiable, ObjectKeyIdentifiable{
                 weekIter.append(objectsIn: newValue)
             }
         }
-    
-    
-    
+
     convenience init(name: String, iter: [Int]) {
         self.init()
         self.name = name

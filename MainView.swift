@@ -24,81 +24,104 @@ struct MainView: View {
     @State var iter: [Int] = []
 
     
-    @StateObject var ViewModel = viewModel()
-
-    
+    @StateObject var ViewModel = HabitVM()
+    @StateObject var completedVM = compltedLIstVM.shared
     init(){
-
-//        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//        ScrollData()
+//        ViewModel.getContinuity()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
         
     }
     
     var body: some View {
         
-        ZStack{
-            VStack{
-                ZStack(alignment: .topLeading){
-                    Rectangle()
-                        .fill(Color(hex: "#C7F0C8"))
-                        .frame(height: 242, alignment: .top)
-                    VStack(alignment: .leading){
-                        Text("수진님!\n3일째 물마시기 실천 중!")
-                            .bold()
-                            .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
-                        scroll()
-                    }
+        TabView{
+            ZStack{
+                VStack{
+                    ZStack(alignment: .topLeading){
+                        Rectangle()
+                            .fill(Color(hex: "#C7F0C8"))
+                            .frame(height: 242, alignment: .top)
+                        VStack(alignment: .leading){
+                            Text("수진님!\n3일째 물마시기 실천 중!")
+                                .bold()
+                                .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
+                            scrollView()
+                        }
 
+                    }
+                    
+                    Spacer()
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        ForEach(ViewModel.result) { list in
+                            ItemView(delete: ViewModel.deleteItem(at:), check: completedVM.complete(id:), myItem: $ViewModel.result[getItem(habit: list)],
+                                 showingModal: $showingDetail,
+                                 offset: $ViewModel.result[getItem(habit: list)].offset)
+                        }
+                    }
+                    
+                    Spacer()
+
+                    
+                    AddView(name: $name, show: $showingAdd, iter: $iter)
+                    Button(action: {
+                        //add item
+                        showingAdd.toggle()
+
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundColor(Color.black)
+                        }
+                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                        .opacity(showingAdd ? 0 : 1)
+
+                    Spacer()
+                    
                 }
-                
-                Spacer()
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(ViewModel.habit!) { list in
-                        ItemView(delete: ViewModel.deleteItem(at:), myItem: $ViewModel.result[getItem(habit: list)],
-                             showingModal: $showingDetail,
-                             offset: $ViewModel.result[getItem(habit: list)].offset)
-                       
-                    }
-                }
-                
-                Spacer()
+                  if $showingDetail.wrappedValue {
+                      DetailView(showingModal: $showingDetail)
 
-                
-                AddView(name: $name, show: $showingAdd, iter: $iter)
-                Button(action: {
-                    //add item
-                    showingAdd.toggle()
-
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.black)
-                    }
-                    .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-                    .opacity(showingAdd ? 0 : 1)
-
-                Spacer()
+                  }
+            }
+            
+            .contentShape(Rectangle())
+            .onTapGesture {
+                showingAdd = false
+                print("Show details for user")
+                print(iter)
+                ViewModel.addItem(name: name, iter: iter)
+                name = ""
+                iter = []
                 
             }
-              if $showingDetail.wrappedValue {
-                  DetailView(showingModal: $showingDetail)
+            .tabItem{
+                Image(systemName: "house")
+                Text("홈")
+            }
+            
+            Text("글쓰기")
+                .tabItem{
+                    Image(systemName: "square.and.pencil")
+                    Text("글쓰기")
+                }
+            
+            StaticsView()
+                .tabItem{
+                    Image(systemName: "gear")
+                    Text("통계")
+                }
 
-              }
-        }
-        
-        .contentShape(Rectangle())
-        .onTapGesture {
-            showingAdd = false
-            print("Show details for user")
-            print(iter)
-            ViewModel.addItem(name: name, iter: iter)
-            name = ""
             
         }
+        
+
     }
     
-    func getItem(habit: Habits)->Int{
+    func getItem(habit: Habit)->Int{
 
-        if let index = ViewModel.habit!.firstIndex(where: { $0 == habit}){
+        if let index = ViewModel.result.firstIndex(where: { $0 == habit}){
             return index
         }
 
@@ -114,6 +137,8 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -137,57 +162,3 @@ extension Color{
     }
     
 }
-
-
-struct scroll: View{
-    var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.green)
-                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                .frame(width: .none, height: 280)
-
-            VStack{
-                HStack(spacing:63){
-                    Text("MAR")
-                    Text("APR")
-                    Text("MAY")
-                }
-                HStack{
-                    VStack(alignment: .center ,spacing:12){
-                        Text("SUN")
-                        Text("MON")
-                        Text("TUE")
-                        Text("WED")
-                        Text("THU")
-                        Text("FRI")
-                        Text("SAT")
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
-                    ScrollView(.horizontal) {
-                        VStack(alignment: .center, spacing: 3) {
-                                    ForEach(0...6, id: \.self) { row in
-                                        HStack(alignment: .center, spacing: 3) {
-                                            ForEach(0...50, id: \.self) { item in
-                                                RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                    .fill(Color(hex: "#EFF0EF"))
-                                                    //.fill(Color(red: 52 / 255, green: 152 / 255, blue: 219 / 255))
-                                                    .frame(width: 29, height: 29)
-                                                    .background(Color.green)
-                                                   
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                    
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
-                }
-            }
-
-
-        }
-    }
-    
-}
-
