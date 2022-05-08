@@ -38,7 +38,10 @@ class compltedLIstVM: ObservableObject {
 
             })
         }
-        
+        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "")).first
+        try! realm?.write {
+//            realm?.delete(item!)
+        }
 //        try? realm?.write {
 //            realm?.add(CompletedList(today: "2022-04-29", iter: ["2022-04-30 06:25:51", "2022-04-30 07:04:02"]), update: .modified)
 //        }
@@ -86,6 +89,68 @@ class compltedLIstVM: ObservableObject {
 //        print(realm!.objects(CompletedList.self).filter(myFilter))
 
         return realm!.objects(CompletedList.self).filter("date == \"" + date + "\"").count
+    }
+    
+    func getStatics(staticCase: Total) -> Int{
+        print("get statics")
+        
+        let calendar = Calendar(identifier: .gregorian)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let str_today = dateFormatter.string(from: Date())
+        let date_today = dateFormatter.date(from: str_today)!
+        
+        var ans = 0
+        let object = realm!.objects(CompletedList.self)
+        let todayComps = Calendar.current.dateComponents([.year, .month, .weekday], from: date_today)
+        
+        let year = todayComps.year!
+        let month = todayComps.month!
+        let weekDay = todayComps.weekday!
+
+
+        let dayOffset = DateComponents(day: -weekDay)
+        let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
+        
+
+        switch staticCase {
+        case .week:
+            for item in object.reversed(){
+                print("in week", item.date)
+                if item.date > weekAgo{
+                    ans += item.completed.count
+                }
+                else{
+                    break
+                }
+            }
+            print("week")
+            
+        case .month:
+
+            let str = "0000-00-00"
+            let start = str.index(str.startIndex, offsetBy: 5)
+            let end = str.index(str.endIndex, offsetBy: -3)
+            for item in object{
+                if Int(item.date.substring(with:start..<end)) == month{
+                    ans += item.completed.count
+                }
+            }
+        case .year:
+            for item in object{
+                if Int(item.date.prefix(4)) == year{
+                    ans += item.completed.count
+                }
+            }
+
+        case .all:
+            for item in object{
+                ans += item.completed.count
+            }
+        }
+        
+        return ans
     }
 }
 

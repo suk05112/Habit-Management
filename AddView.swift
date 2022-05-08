@@ -26,7 +26,7 @@ struct AddView: View{
                         .shadow(radius: 5)
                         .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                         .frame(width: .none, height: 120)
-                    VStack(alignment: .leading){
+                    VStack(alignment: .center){
                         TextField("제목을 입력하세요", text: $name)
                             .textFieldStyle(.roundedBorder)
                             .font(.system(size: 25))
@@ -36,15 +36,18 @@ struct AddView: View{
                             ForEach(1..<8){
                                 WeekButton(weekOfDay: $0, iter: $iter)
                             }
-                        }.padding(.leading, 30)
-                        
-                        Text("저장")
+                        }
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.green)
+                            .frame(width: 60, height: 30)
+                            .overlay(                        Text("저장")
+                             )
+
                             .onTapGesture {
                                 show = false
                                 ViewModel.addItem(name: name, iter: iter)
 
                             }
-                            .frame(alignment: .center)
 
                     }
                     
@@ -85,7 +88,7 @@ struct WeekButton: View{
         }){
             ZStack{
                 Circle()
-                    .fill(OnOff ? Color.green: Color.yellow)
+                    .fill(OnOff ? Color.green: Color.white)
                     .frame(width: 35, height: 35)
                 Text(getWeekOfDay(num:weekOfDay).description).foregroundColor(Color.black)
             }

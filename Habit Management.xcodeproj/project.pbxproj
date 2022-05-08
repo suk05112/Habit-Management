@@ -29,6 +29,8 @@
 		03CFE08A27EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */; };
 		03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE0DC27F58D3F004C54B6 /* AddView.swift */; };
 		03DBC27A282111DD000848BF /* StaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC279282111DD000848BF /* StaticsView.swift */; };
+		03DBC27C2827C999000848BF /* LessMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC27B2827C999000848BF /* LessMore.swift */; };
+		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		2460F682C8D2ACB9EA742D3F /* Pods_Habit_Management_Habit_ManagementUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB19D28789C8C2E67D0F6FD /* Pods_Habit_Management_Habit_ManagementUITests.framework */; };
 		26895DB5D011AA4B89753225 /* Pods_Habit_ManagementTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */; };
 		8086D5AE99F30F9CCD0414F6 /* Pods_Habit_Management.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884949A78425940E1FD1043F /* Pods_Habit_Management.framework */; };
@@ -78,6 +80,8 @@
 		03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		03CFE0DC27F58D3F004C54B6 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		03DBC279282111DD000848BF /* StaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsView.swift; sourceTree = "<group>"; };
+		03DBC27B2827C999000848BF /* LessMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessMore.swift; sourceTree = "<group>"; };
+		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Habit_ManagementTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		400D3B7BD7BFB1207BEC7302 /* Pods-Habit Management-Habit ManagementUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; sourceTree = "<group>"; };
 		401E6E5122DBF10BBCEDD366 /* Pods-Habit Management-Habit ManagementUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -226,15 +230,33 @@
 		03CFE0DB27F4952B004C54B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				03DBC27E2827CF02000848BF /* Static */,
+				03DBC27D2827CEEE000848BF /* Main */,
 				03CFE06927EC46D1004C54B6 /* MainView.swift */,
 				03CFE0DC27F58D3F004C54B6 /* AddView.swift */,
 				0392B412280695AD006C1E04 /* DetailView.swift */,
 				036D03B02813241000EE607B /* ItemView.swift */,
 				036D03B92818384300EE607B /* scrollView.swift */,
-				03DBC279282111DD000848BF /* StaticsView.swift */,
+				03DBC27B2827C999000848BF /* LessMore.swift */,
 			);
 			name = View;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		03DBC27D2827CEEE000848BF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		03DBC27E2827CF02000848BF /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				03DBC279282111DD000848BF /* StaticsView.swift */,
+				03DBC2802827CF2F000848BF /* Graph.swift */,
+			);
+			path = Static;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -494,6 +516,7 @@
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
+				03DBC27C2827C999000848BF /* LessMore.swift in Sources */,
 				036D03B12813241000EE607B /* ItemView.swift in Sources */,
 				036D03B3281339FD00EE607B /* CompletedList.swift in Sources */,
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
@@ -501,6 +524,7 @@
 				036D03B728145D9700EE607B /* ScrollData.swift in Sources */,
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
 				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
+				03DBC2812827CF2F000848BF /* Graph.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

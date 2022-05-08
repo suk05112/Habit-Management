@@ -52,8 +52,8 @@ struct MainView: View {
                                 .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: true, vertical: true)
-//                            
-                            scrollView()
+//
+                            scrollView(ratio: 1)
                         }
 
                     }

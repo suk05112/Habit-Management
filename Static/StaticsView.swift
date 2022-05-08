@@ -10,9 +10,15 @@ import SwiftUI
 
 struct StaticsView: View {
 
+    @State var ratio: Double = Double(5/6)
+    @StateObject var completedVM = compltedLIstVM.shared
+
+
     var body: some View {
         VStack{
-            scrollView()
+            Text("Statics")
+                .font(.system(size: 30))
+            scrollView(ratio: 5/6)
 
             
             ZStack{
@@ -40,13 +46,14 @@ struct StaticsView: View {
                 }
                 
             }
-            
+            Graph(ratio: 1)
+            Spacer()
             HStack{
                 
-                TotalView()
-                TotalView()
-                TotalView()
-                TotalView()
+                TotalView(.week, countStatic: completedVM.getStatics(staticCase: ))
+                TotalView(.month, countStatic: completedVM.getStatics(staticCase: ))
+                TotalView(.year, countStatic: completedVM.getStatics(staticCase: ))
+                TotalView(.all, countStatic: completedVM.getStatics(staticCase: ))
 
             }
 
@@ -56,6 +63,16 @@ struct StaticsView: View {
 
 struct TotalView: View{
     
+    var staticStr: String
+    var count = 0
+
+
+    
+    init(_ staticCase: Total, countStatic: (Total) -> (Int)){
+        staticStr = staticCase.rawValue
+        count = countStatic(staticCase)
+    }
+    
     var body: some View {
         
         ZStack{
@@ -64,13 +81,20 @@ struct TotalView: View{
                 .frame(width: 85, height: 57)
                 .shadow(radius: 1)
             VStack{
-                Text("2")
+                Text("\(count)")
                     .font(.system(size: 23, weight: .thin))
-                Text("이번주")
+                Text("\(staticStr)")
                     .font(.system(size: 12, weight: .regular))
             }
             
         }
     }
 
+}
+
+enum Total: String{
+    case week = "이번주"
+    case month = "이번달"
+    case year = "올해"
+    case all = "전체"
 }

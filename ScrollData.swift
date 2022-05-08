@@ -49,6 +49,7 @@ class ScrollData {
         
         month = " "
 
+        //일-1, 토-6
         for i in stride(from: 0, to: todayWeek.weekday!, by: 1){
             DayArray[52][i] = dateFormatter.string(from: startDate)
             let str = DayArray[52][i]
