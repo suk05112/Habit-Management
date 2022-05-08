@@ -16,11 +16,28 @@ struct StaticsView: View {
 
             
             ZStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .frame(width: 150, height: 100)
-                    .shadow(radius: 1)
-                Text("연속기록")
+                ZStack{
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(radius: 5)
+                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                        .frame(width: .none, height: 80)
+
+                    HStack{
+                        VStack(alignment: .leading){
+                            Text("지난 주 보다 '물마시기'를 2번 더 완료했어요!")
+                                .font(.system(size: 15, weight: .medium))
+                            Text("지난 주 대비 20% up")
+                                .font(.system(size: 12))
+                            
+                        }
+                        Spacer()
+                        HStack{}
+                    }
+                    .padding(20)
+                    
+
+                }
                 
             }
             
@@ -44,9 +61,15 @@ struct TotalView: View{
         ZStack{
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(width: 100, height: 70)
+                .frame(width: 85, height: 57)
                 .shadow(radius: 1)
-            Text("test2")
+            VStack{
+                Text("2")
+                    .font(.system(size: 23, weight: .thin))
+                Text("이번주")
+                    .font(.system(size: 12, weight: .regular))
+            }
+            
         }
     }
 

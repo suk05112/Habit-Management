@@ -41,12 +41,18 @@ struct MainView: View {
                 VStack{
                     ZStack(alignment: .topLeading){
                         Rectangle()
-                            .fill(Color(hex: "#C7F0C8"))
-                            .frame(height: 242, alignment: .top)
+                            .fill(Color(hex: "#B8D9B9"))
+                            .edgesIgnoringSafeArea(.all)
+                            .customStyle(color: .blue)
+//                            .frame(height: 242, alignment: .top)
                         VStack(alignment: .leading){
                             Text("수진님!\n3일째 물마시기 실천 중!")
-                                .bold()
+                                .font(.system(size: 25, weight: .bold))
+//                                .bold()
                                 .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: true, vertical: true)
+//                            
                             scrollView()
                         }
 
@@ -112,8 +118,7 @@ struct MainView: View {
                     Image(systemName: "gear")
                     Text("통계")
                 }
-
-            
+  
         }
         
 
@@ -128,8 +133,42 @@ struct MainView: View {
         return 0
 
     }
+    
 
 }
+struct SizePreferenceKey: PreferenceKey {
+  static var defaultValue: CGSize = .zero
+  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
+}
+
+struct CustomViewModifier: ViewModifier {
+    var color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .frame(height: 242, alignment: .top)
+            .readSize { newSize in
+              print("The new child size is: \(newSize)")
+            }
+    }
+}
+
+extension View {
+    func customStyle(color: Color) -> some View {
+        modifier(CustomViewModifier(color: color))
+    }
+    
+    func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
+      background(
+        GeometryReader { geometryProxy in
+          Color.clear
+            .preference(key: SizePreferenceKey.self, value: geometryProxy.size)
+        }
+      )
+      .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
+    }
+}
+
 
 private let itemFormatter: DateFormatter = {
     let formatter = DateFormatter()

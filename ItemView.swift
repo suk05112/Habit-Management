@@ -33,14 +33,14 @@ struct ItemView: View{
                     Image(systemName: "trash")
                         .font(.title)
                         .foregroundColor(.white)
-                        .frame(width: 70, height: 50)
+                        .frame(width: 80, height: 50)
                         
                 }
                 Button(action: {self.check(myItem.id!)}){
                     Image(systemName: "checkmark")
                         .font(.title)
                         .foregroundColor(.white)
-                        .frame(width: 70, height: 50)
+                        .frame(width: 80, height: 50)
                         
                 }
             }
@@ -50,14 +50,15 @@ struct ItemView: View{
                     .fill(Color.white)
                     .shadow(radius: 5)
                     .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                    .frame(width: .none, height: 70)
+                    .frame(width: .none, height: 80)
 
                 HStack{
                     VStack(alignment: .leading){
+                        Text("3일째 실천 중🔥")
+                            .font(.system(size: 12))
                         Text(myItem.name)
-                            .font(.title2)
-                        Text("3일째 실천 중")
-                            .font(.body)
+                            .font(.system(size: 23, weight: .medium))
+                        
                     }
                     Spacer()
                     HStack{}
