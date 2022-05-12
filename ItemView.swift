@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ItemView: View{
-    
+    var staticVM = StaticVM.shared
+
     var delete: (Habit) -> ()
     var check: (String) -> ()
     @Binding var myItem: Habit
@@ -18,9 +19,6 @@ struct ItemView: View{
     
     var body: some View {
         ZStack{
-            
-//            LinearGradient(gradient: .init(colors: [Color.blue, Color.blue]), startPoint: .leading, endPoint: .trailing)
-//                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(Color.blue)
                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
@@ -36,7 +34,10 @@ struct ItemView: View{
                         .frame(width: 80, height: 50)
                         
                 }
-                Button(action: {self.check(myItem.id!)}){
+                Button(action: {
+                    self.check(myItem.id!)
+//                    staticVM.addOrUpdate()
+                }){
                     Image(systemName: "checkmark")
                         .font(.title)
                         .foregroundColor(.white)
@@ -54,8 +55,23 @@ struct ItemView: View{
 
                 HStack{
                     VStack(alignment: .leading){
-                        Text("3일째 실천 중🔥")
-                            .font(.system(size: 12))
+                        HStack{
+                            Text("\(myItem.continuity)일")
+                                .font(.system(size: 12))
+                                .bold()
+                                .foregroundColor(Color(hex: "#38AC3C"))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+//                                .border(.yellow)
+
+        
+                            Text("째 실천 중🔥")
+                                .font(.system(size: 12))
+                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
+//                                .border(.yellow)
+                                            
+                            Spacer()
+                        }
+                        
                         Text(myItem.name)
                             .font(.system(size: 23, weight: .medium))
                         
@@ -75,14 +91,12 @@ struct ItemView: View{
             }
             .offset(x: offset)
             .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
-
             
         }
         
     }
     
     func onChanged(value: DragGesture.Value){
-//        print("on changed",offset)
         
         if value.translation.width < 0 {
             if myItem.isSwipe{

@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 
 class ScrollData {
+    
+    static let shared = ScrollData()
     let dateFormatter = DateFormatter()
     
     var MonthArray: [String] = []
     var DayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)
 
-    init(){
+    private init(){
         let calendar = Calendar.current
         let todayWeek = calendar.dateComponents([.weekday], from: Date())
         //sun-1, sat-7
@@ -49,7 +51,7 @@ class ScrollData {
         
         month = " "
 
-        //일-1, 토-6
+        //일-1, 토-7
         for i in stride(from: 0, to: todayWeek.weekday!, by: 1){
             DayArray[52][i] = dateFormatter.string(from: startDate)
             let str = DayArray[52][i]
@@ -73,6 +75,9 @@ class ScrollData {
 
 //            print(DayArray)
 //            print(MonthArray)
+        
+
+        
         
     }
     

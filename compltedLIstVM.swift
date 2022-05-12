@@ -98,12 +98,15 @@ class compltedLIstVM: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "yyyy-MM-dd-w"
+        
         let str_today = dateFormatter.string(from: Date())
         let date_today = dateFormatter.date(from: str_today)!
         
         var ans = 0
         let object = realm!.objects(CompletedList.self)
-        let todayComps = Calendar.current.dateComponents([.year, .month, .weekday], from: date_today)
+        let todayComps = Calendar.current.dateComponents([.year, .month, .weekday, .weekOfMonth], from: date_today)
         
         let year = todayComps.year!
         let month = todayComps.month!
@@ -112,12 +115,13 @@ class compltedLIstVM: ObservableObject {
 
         let dayOffset = DateComponents(day: -weekDay)
         let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
-        
+
 
         switch staticCase {
         case .week:
             for item in object.reversed(){
                 print("in week", item.date)
+
                 if item.date > weekAgo{
                     ans += item.completed.count
                 }

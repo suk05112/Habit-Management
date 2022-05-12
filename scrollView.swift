@@ -11,7 +11,7 @@ import SwiftUI
 struct scrollView: View{
     
     
-    let scroll_data = ScrollData()
+    let scroll_data = ScrollData.shared
     var frame_size: CGFloat = CGFloat(24)
 
 

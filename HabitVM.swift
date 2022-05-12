@@ -11,9 +11,6 @@ import SwiftUI
 
 class HabitVM: ObservableObject {
     
-//    @Published var habit: Habits? = nil
-//    @Published var result: [Habits]? = nil
-    
     let dateFormatter = DateFormatter()
 
     @Published var result: [Habit] = []
@@ -30,17 +27,18 @@ class HabitVM: ObservableObject {
         
         print("view model init")
         
-        let realm = try? Realm()
-        self.realm = realm
+        realm = try! Realm()
+//        self.realm = realm
         fetchItem()
+        
+        print(realm?.objects(Habit.self))
 
         if let group = realm?.objects(Habit.self) {
             self.habit = group
 //            self.todayHabit = getTodayHabit(i: 3)
 
         }else {
-            
-            try? realm?.write({
+            try! realm?.write({
                 let group = Habit()
                 realm?.add(group)
 
@@ -64,7 +62,7 @@ class HabitVM: ObservableObject {
         })
         
         getContinuity()
-        print("result =", result)
+//        print("result =", result)
         print(Realm.Configuration.defaultConfiguration.fileURL!)
 
     }
@@ -121,8 +119,7 @@ class HabitVM: ObservableObject {
             for completedItem in realm!.objects(CompletedList.self).sorted(by: {$0.date>$1.date}){
 
                 if completedItem.date != day || completedItem.completed.contains($0.id!) == false {
-
-                    print("날짜 연속되지 않음")
+//                    print("날짜 연속되지 않음")
                     return
                 }
                 else{

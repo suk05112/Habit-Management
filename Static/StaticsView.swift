@@ -16,10 +16,14 @@ struct StaticsView: View {
 
     var body: some View {
         VStack{
-            Text("Statics")
-                .font(.system(size: 30))
+            HStack{
+                Text("Statics")
+                    .font(.system(size: 30))
+                Spacer()
+                
+            }
+            .padding()
             scrollView(ratio: 5/6)
-
             
             ZStack{
                 ZStack{
@@ -33,8 +37,16 @@ struct StaticsView: View {
                         VStack(alignment: .leading){
                             Text("지난 주 보다 '물마시기'를 2번 더 완료했어요!")
                                 .font(.system(size: 15, weight: .medium))
-                            Text("지난 주 대비 20% up")
-                                .font(.system(size: 12))
+                            HStack{
+                                Text("지난 주 대비")
+                                    .font(.system(size: 12))
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                                Text("20% up")
+                                    .font(.system(size: 12))
+                                    .bold()
+                                    .foregroundColor(Color(hex: "#38AC3C"))
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                            }
                             
                         }
                         Spacer()
@@ -56,7 +68,7 @@ struct StaticsView: View {
                 TotalView(.all, countStatic: completedVM.getStatics(staticCase: ))
 
             }
-
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0))
         }
     }
 }
@@ -65,8 +77,6 @@ struct TotalView: View{
     
     var staticStr: String
     var count = 0
-
-
     
     init(_ staticCase: Total, countStatic: (Total) -> (Int)){
         staticStr = staticCase.rawValue

@@ -31,6 +31,8 @@
 		03DBC27A282111DD000848BF /* StaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC279282111DD000848BF /* StaticsView.swift */; };
 		03DBC27C2827C999000848BF /* LessMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC27B2827C999000848BF /* LessMore.swift */; };
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
+		03DBC285282BAA74000848BF /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC284282BAA74000848BF /* Statics.swift */; };
+		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
 		2460F682C8D2ACB9EA742D3F /* Pods_Habit_Management_Habit_ManagementUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB19D28789C8C2E67D0F6FD /* Pods_Habit_Management_Habit_ManagementUITests.framework */; };
 		26895DB5D011AA4B89753225 /* Pods_Habit_ManagementTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */; };
 		8086D5AE99F30F9CCD0414F6 /* Pods_Habit_Management.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884949A78425940E1FD1043F /* Pods_Habit_Management.framework */; };
@@ -82,6 +84,8 @@
 		03DBC279282111DD000848BF /* StaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsView.swift; sourceTree = "<group>"; };
 		03DBC27B2827C999000848BF /* LessMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessMore.swift; sourceTree = "<group>"; };
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		03DBC284282BAA74000848BF /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
+		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
 		0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Habit_ManagementTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		400D3B7BD7BFB1207BEC7302 /* Pods-Habit Management-Habit ManagementUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; sourceTree = "<group>"; };
 		401E6E5122DBF10BBCEDD366 /* Pods-Habit Management-Habit ManagementUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				0392B4162806C444006C1E04 /* Week.swift */,
 				036D03B2281339FD00EE607B /* CompletedList.swift */,
 				036D03B628145D9700EE607B /* ScrollData.swift */,
+				03DBC284282BAA74000848BF /* Statics.swift */,
 			);
 			name = Model;
 			path = ..;
@@ -220,6 +225,7 @@
 		03CFE0DA27F4949C004C54B6 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				03DBC288282BAB3E000848BF /* StaticVM.swift */,
 				038FB457280D61F600740AA6 /* HabitVM.swift */,
 				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
 			);
@@ -514,10 +520,12 @@
 				0392B413280695AD006C1E04 /* DetailView.swift in Sources */,
 				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
+				03DBC285282BAA74000848BF /* Statics.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
 				03DBC27C2827C999000848BF /* LessMore.swift in Sources */,
 				036D03B12813241000EE607B /* ItemView.swift in Sources */,
+				03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */,
 				036D03B3281339FD00EE607B /* CompletedList.swift in Sources */,
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
