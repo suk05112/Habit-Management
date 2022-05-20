@@ -14,18 +14,36 @@ class StaticVM: ObservableObject {
     
     static let shared = StaticVM()
 
-//    @Published var items = RealmSwift.List<Year>()
+    @Published var day:[Int] = []
+    @Published var week:[Int] = []
+    @Published var month:[Int] = []
+    @Published var yearTotal:Int = 0
+    @Published var total:Int = 0
+
+    
     var selectedGroup: Statics? = nil
 
     var realm: Realm? = try? Realm()
     var Static: Results<Statics>?
     let calendar = Calendar(identifier: .gregorian)
     let dateFormatter = DateFormatter()
-
+    
+    let formatter_year = DateFormatter()
+    let current_year: Int
+    
     private init() {
         
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        print("Static init")
 
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        formatter_year.dateFormat = "yyyy"
+        current_year = Int(formatter_year.string(from: Date()))!
+        
+        day = NSArray(array: Array(get7days().0)) as! [Int]
+        week = NSArray(array: Array(getWeeks().0)) as! [Int]
+        month = NSArray(array: Array(getMonth().0)) as! [Int]
+        yearTotal = getYearTotal()
+        
         let realm = try? Realm()
         self.realm = realm
         
@@ -34,61 +52,73 @@ class StaticVM: ObservableObject {
         }else {
             
             try? realm?.write({
-                let group = Statics()
+                let group = Statics(year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal)
                 realm?.add(group)
-                
-//                group.items.append(Year(dayArray: get7days(), weekArray: getWeeks(), monthArray: getMonth()))
 
             })
         }
+        total = getTotal()
+
+//        addOrUpdate()
         
-//        add()
     }
     
     func addOrUpdate(){
-        try? realm!.write{
-            realm!.add(Statics(dayArray: get7days(), weekArray: getWeeks(), monthArray: getMonth(), total: getTotal()))
-        }
-    }
-    
-    func getData(selected: Int) -> [Int]{
-        switch selected{
-        case 1:
-            return get7days()
-        case 2:
-            return getWeeks()
-        case 3:
-            return getMonth()
-            
-        default:
-            return []
-        }
-    }
-    
-    func get7days() -> [Int]{
-        let object = realm!.objects(CompletedList.self)
 
+        day = NSArray(array: Array(get7days().0)) as! [Int]
+        week = NSArray(array: Array(getWeeks().0)) as! [Int]
+        month = NSArray(array: Array(getMonth().0)) as! [Int]
+        yearTotal = getYearTotal()
+
+        try? realm!.write{
+            realm!.add(Statics(year: current_year ,dayArray: get7days().0, weekArray: getWeeks().0, monthArray: getMonth().0, total: getYearTotal()), update: .modified)
+        }
+        total = getTotal()
+
+    }
+    
+    
+    func get7days() -> ([Int],[String]){ //최근 7일
+        let object = realm!.objects(CompletedList.self)
+        
+        let graph_dateFormatter = DateFormatter()
+
+        graph_dateFormatter.dateFormat = "MM월\ndd일"
+
+        var dayStr: [String] = []
         var dayArray: [Int] = []
         let str_today = dateFormatter.string(from: Date())
         let date_today = dateFormatter.date(from: str_today)!
 
-        var i = 7
+        var i = 0
         var dayOffset = DateComponents(day: -7)
         let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
+        print("week ago =" , weekAgo)
+        var day = dateFormatter.string(for: calendar.date(byAdding: DateComponents(day: -i), to: date_today))!
         
         for item in object.reversed(){
-            var day = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
 
-            if weekAgo < item.date && i>1{
-                while(item.date != day && i>1){
+            if weekAgo < day && i<7{
+                while(item.date != day){
                     dayArray.append(0)
-                    i -= 1
+//                    print("그래프 포매터", graph_dateFormatter.string(for: day))
+                    dayStr.append(day.convert())
+
+                    i += 1
                     dayOffset = DateComponents(day: -i)
                     day = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
+                }
 
-                    
+                i += 1
+                dayOffset = DateComponents(day: -i)
+                day = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
+                
+                if weekAgo > day{
+                    break
                 }
                 dayArray.append(item.completed.count)
+                dayStr.append(day.convert())
+
             }
             else{
                 break
@@ -97,11 +127,12 @@ class StaticVM: ObservableObject {
         }
         
         print(dayArray.reversed())
-        return dayArray.reversed()
+        print(dayStr.reversed())
+        return (dayArray.reversed(), dayStr.reversed())
         
     }
     
-    func getWeeks()->[Int]{
+    func getWeeks()->([Int], [String]){ //52주에 대한 데이터
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
         
@@ -124,7 +155,7 @@ class StaticVM: ObservableObject {
         var day = Calendar.current.dateComponents([.day], from: Date()).day!
         
         for _ in 0..<5{
-            weekStr.append("\(month)월 - \(weekno)주")
+            weekStr.append("\(month)월\n\(weekno)주")
             weekno -= 1
             if weekno < 1{
                 month -= 1
@@ -140,8 +171,7 @@ class StaticVM: ObservableObject {
         let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
         let a = b-5
 
-        
-        return Array(weekArray[a..<b])
+        return (Array(weekArray[a..<b]), weekStr)
     }
     
     func getWeekOfNO(date: Date) -> Int{
@@ -159,12 +189,16 @@ class StaticVM: ObservableObject {
         return weekNo
     }
     
-    func getMonth() -> [Int]{
+    func getMonth() -> ([Int], [String]){
 
         let object = realm!.objects(CompletedList.self)
 
         var monthArray: [Int] = Array(repeating: 0, count: 12)
+        var monthStr: [String] = []
         
+        for i in 1...12{
+            monthStr.append(Month(rawValue: i)!.description)
+        }
         //월 구하기
         let str = "0000-00-00"
         let start = str.index(str.startIndex, offsetBy: 5)
@@ -172,18 +206,97 @@ class StaticVM: ObservableObject {
         
         for item in object{
             var month1 = Int(item.date.substring(with:start..<end))!
-            monthArray[month1-1] += 1
+            monthArray[month1-1] += item.completed.count
 
         }
         
-        return monthArray
+        return (monthArray, monthStr)
         
     }
     
-    func getTotal() -> Int{
-        return getMonth().count
+    func getYearTotal() -> Int{
+        return getMonth().0.reduce(0, +)
     }
     
+    func getTotal() -> Int{
+        print("get total")
+        let object = realm!.objects(Statics.self)
+        print("total object arr", object)
+        print(Array(object).reduce(0){ $0 + $1.total})
 
+        return Array(object).reduce(0){ $0 + $1.total}
+    }
+    
+    func getData(selected: Int)-> [Int]{
+        
+        switch selected{
+        case 1:
+            return day
+        case 2:
+            return week
+        case 3:
+            return month
+        default:
+            return []
+        }
+    }
+    
+    func getStr(selected: Int)-> [String]{
+        
+        switch selected{
+        case 1:
+            return get7days().1
+        case 2:
+            return getWeeks().1
+        case 3:
+            return getMonth().1
+        default:
+            return []
+        }
+    }
     
 }
+
+extension String {
+    func toDate() -> Date? {//"yyyy-MM-dd HH:mm:ss"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
+    func toString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM월\ndd일"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        return dateFormatter.string(from: self.toDate()!)
+    }
+    
+    func convert() -> String{
+        let monthFormatter = DateFormatter()
+        let dayFormatter = DateFormatter()
+        monthFormatter.timeZone = TimeZone(identifier: "UTC")
+        dayFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        monthFormatter.dateFormat = "MM"
+        dayFormatter.dateFormat = "dd"
+        
+        let month = Int(monthFormatter.string(from: self.toDate()!))!
+        let day = dayFormatter.string(from: self.toDate()!)
+
+        return "\(Month(rawValue: month)!.description)\n\(day)"
+    }
+}
+
+extension Date {
+    func toString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM월\ndd일"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        return dateFormatter.string(from: self)
+    }
+}
+

@@ -13,7 +13,7 @@ struct Graph: View{
     var ratio:Double
     @State var selected = 1
     @State var width:CGFloat = 13
-    var staticVM = StaticVM.shared
+    @StateObject var staticVM = StaticVM.shared
     
     init(ratio: Double){
         self.ratio = ratio
@@ -28,7 +28,6 @@ struct Graph: View{
                     .frame(width: .none, height: 30)
                 
                 HStack{
-                    
                     selectView(name: "최근 7일", id: 1, select: $selected)
                         .onTapGesture {
                             selected = 1
@@ -73,21 +72,34 @@ struct Graph: View{
                     HStack(alignment: .bottom) {
                         ForEach(staticVM.getData(selected: selected), id: \.self) { month in
                                 let max = staticVM.getData(selected: selected).max()!
-
                                 let h1 = Int(month)*Int(150)
                                 let h2 = Double(h1)/Double(max)
                                 Rectangle()
                                     .fill(Color(hex: "#639F70"))
                                     .frame(width: width, height: h2==0 ? CGFloat(1) : CGFloat(h2))
                                 Spacer()
-
                         }
-
                     }
                     .frame(width: 300)
 
                     Divider().background(Color.black)
                         .frame(width: 340)
+                    
+                    HStack(alignment: .bottom) {
+                        ForEach(0..<staticVM.getData(selected: selected).count, id: \.self) { i in
+                                Text("\(staticVM.getStr(selected: selected)[i])")
+                                    .font(.system(size: 15, weight: .regular))
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+
+                            Spacer()
+
+                            }
+                        }
+                    .frame(width: 300)
+
+                    }
                 }
                
             }
@@ -95,9 +107,22 @@ struct Graph: View{
         .frame(width: 364, height: 150)
         .padding(30)
 
-        }
-        
     }
+        
+    func getData(selected: Int)-> [Int]{
+        
+        switch selected{
+        case 1:
+            return staticVM.day
+        case 2:
+            return staticVM.week
+        case 3:
+            return staticVM.month
+        default:
+            return []
+        }
+    }
+        
 }
 
 struct selectView: View{

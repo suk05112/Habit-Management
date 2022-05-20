@@ -40,7 +40,8 @@ struct AddView: View{
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.green)
                             .frame(width: 60, height: 30)
-                            .overlay(                        Text("저장")
+                            .overlay(
+                                Text("저장")
                              )
 
                             .onTapGesture {

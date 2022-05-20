@@ -25,9 +25,13 @@ class compltedLIstVM: ObservableObject {
         
         let realm = try? Realm()
         self.realm = realm
+        
+        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "2022-05-15"))
+//        try! realm?.write {
+//            realm?.delete(item!)
+//        }
 //        delete()
 
-        
         if let group = realm?.objects(CompletedList.self).first {
             self.list = group
         }else {
@@ -38,10 +42,9 @@ class compltedLIstVM: ObservableObject {
 
             })
         }
-        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "")).first
-        try! realm?.write {
-//            realm?.delete(item!)
-        }
+//        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "")).first
+
+        
 //        try? realm?.write {
 //            realm?.add(CompletedList(today: "2022-04-29", iter: ["2022-04-30 06:25:51", "2022-04-30 07:04:02"]), update: .modified)
 //        }

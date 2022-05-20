@@ -6,7 +6,18 @@
 //
 
 import SwiftUI
+import UIKit
 import RealmSwift
+
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        print("my code~~~")
+        return true
+        
+    }
+}
 
 @main
 struct Habit_ManagementApp: SwiftUI.App {
@@ -15,11 +26,12 @@ struct Habit_ManagementApp: SwiftUI.App {
     
     init(){
         let config = RealmSwift.Realm.Configuration(
-            schemaVersion: 2, // 새로운 스키마 버전 설정
+            schemaVersion: 3, // 새로운 스키마 버전 설정
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 2 {
+                if oldSchemaVersion < 3 {
                     // 1-1. 마이그레이션 수행(버전 2보다 작은 경우 버전 2에 맞게 데이터베이스 수정)
                     migration.enumerateObjects(ofType: Statics.className()) { oldObject, newObject in
+                        newObject!["year"] = []
                         newObject!["days"] = []
                         newObject!["week"] = []
                         newObject!["month"] = []

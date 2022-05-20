@@ -13,6 +13,9 @@
 		036D03B728145D9700EE607B /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B628145D9700EE607B /* ScrollData.swift */; };
 		036D03BA2818384300EE607B /* scrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B92818384300EE607B /* scrollView.swift */; };
 		038FB458280D61F600740AA6 /* HabitVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitVM.swift */; };
+		039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DC2830F08D00CA0028 /* ScrollVM.swift */; };
+		039164E0283120DA00CA0028 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DF283120DA00CA0028 /* Total.swift */; };
+		039164E22831213000CA0028 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164E12831213000CA0028 /* Month.swift */; };
 		0392B413280695AD006C1E04 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B412280695AD006C1E04 /* DetailView.swift */; };
 		0392B4152806BE5B006C1E04 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B4142806BE5B006C1E04 /* Habit.swift */; };
 		0392B4172806C444006C1E04 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B4162806C444006C1E04 /* Week.swift */; };
@@ -63,6 +66,9 @@
 		036D03B628145D9700EE607B /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		036D03B92818384300EE607B /* scrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollView.swift; sourceTree = "<group>"; };
 		038FB457280D61F600740AA6 /* HabitVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitVM.swift; sourceTree = "<group>"; };
+		039164DC2830F08D00CA0028 /* ScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollVM.swift; sourceTree = "<group>"; };
+		039164DF283120DA00CA0028 /* Total.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
+		039164E12831213000CA0028 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		0392B412280695AD006C1E04 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		0392B4142806BE5B006C1E04 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		0392B4162806C444006C1E04 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
@@ -137,6 +143,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		039164DE283120C600CA0028 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				039164DF283120DA00CA0028 /* Total.swift */,
+				0392B4162806C444006C1E04 /* Week.swift */,
+				039164E12831213000CA0028 /* Month.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		0392B41C28080DB1006C1E04 /* RealmManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +187,7 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
 				03CFE0DB27F4952B004C54B6 /* View */,
 				03CFE0DA27F4949C004C54B6 /* View Model */,
@@ -213,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				0392B4142806BE5B006C1E04 /* Habit.swift */,
-				0392B4162806C444006C1E04 /* Week.swift */,
 				036D03B2281339FD00EE607B /* CompletedList.swift */,
 				036D03B628145D9700EE607B /* ScrollData.swift */,
 				03DBC284282BAA74000848BF /* Statics.swift */,
@@ -228,6 +244,7 @@
 				03DBC288282BAB3E000848BF /* StaticVM.swift */,
 				038FB457280D61F600740AA6 /* HabitVM.swift */,
 				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
+				039164DC2830F08D00CA0028 /* ScrollVM.swift */,
 			);
 			name = "View Model";
 			path = ..;
@@ -513,6 +530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039164E0283120DA00CA0028 /* Total.swift in Sources */,
 				0392B4152806BE5B006C1E04 /* Habit.swift in Sources */,
 				0392B4172806C444006C1E04 /* Week.swift in Sources */,
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
@@ -522,6 +540,7 @@
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				03DBC285282BAA74000848BF /* Statics.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
+				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
 				03DBC27C2827C999000848BF /* LessMore.swift in Sources */,
 				036D03B12813241000EE607B /* ItemView.swift in Sources */,
@@ -531,6 +550,7 @@
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
 				036D03B728145D9700EE607B /* ScrollData.swift in Sources */,
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
+				039164E22831213000CA0028 /* Month.swift in Sources */,
 				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
 				03DBC2812827CF2F000848BF /* Graph.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,

@@ -26,15 +26,11 @@ struct MainView: View {
     
     @StateObject var ViewModel = HabitVM()
     @StateObject var completedVM = compltedLIstVM.shared
+    var staticVM = StaticVM.shared
     var realm: Realm? = try? Realm()
 
     init(){
-//        ScrollData()
-//        ViewModel.getContinuity()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-
-        
-        
     }
     
     var body: some View {
@@ -64,7 +60,10 @@ struct MainView: View {
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(ViewModel.result) { list in
-                            ItemView(delete: ViewModel.deleteItem(at:), check: completedVM.complete(id:), myItem: $ViewModel.result[getItem(habit: list)],
+                            ItemView(delete: ViewModel.deleteItem(at:),
+                                     check: completedVM.complete(id:),
+                                     getcontinue: ViewModel.getContinuity(),
+                                     myItem: $ViewModel.result[getItem(habit: list)],
                                  showingModal: $showingDetail,
                                  offset: $ViewModel.result[getItem(habit: list)].offset)
                         }
@@ -72,7 +71,6 @@ struct MainView: View {
                     
                     Spacer()
 
-                    
                     AddView(name: $name, show: $showingAdd, iter: $iter)
                     Button(action: {
                         //add item
@@ -100,6 +98,7 @@ struct MainView: View {
                 print("Show details for user")
                 print(iter)
                 ViewModel.addItem(name: name, iter: iter)
+                staticVM.addOrUpdate()
                 name = ""
                 iter = []
                 

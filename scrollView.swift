@@ -17,6 +17,7 @@ struct scrollView: View{
 
     var ratio:Double
     @StateObject var completedVM = compltedLIstVM.shared
+    @StateObject var scrollVM = ScrollVM.shared
     @Namespace var endPoint
     
     
@@ -35,30 +36,11 @@ struct scrollView: View{
                 .frame(width: .none, height: 250*ratio)
             
             VStack{
-                HStack{
+                HStack(alignment: .bottom){
                     VStack(alignment: .center ,spacing:12){
-                        Text("SUN")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                            
-                        Text("MON")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                        Text("TUE")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                        Text("WED")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                        Text("THU")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                        Text("FRI")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
-                        Text("SAT")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(Color.white)
+                        ForEach(1...7, id: \.self){ i in
+                            WeekView(week: i)
+                        }
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
                     
@@ -68,11 +50,10 @@ struct scrollView: View{
                             
                             VStack(alignment: .center, spacing: 3){
                                 HStack(alignment: .center, spacing: 3) {
-                                    ForEach(scroll_data.MonthArray, id: \.self) { item in
+                                    ForEach(scrollVM.MonthArray, id: \.self) { item in
                                         Text(item)
                                             .font(.system(size: 13, weight: .bold))
                                             .foregroundColor(Color.white)
-    //                                        .foregroundColor(.black)
                                             .frame(width: frame_size, height: frame_size)
                                             
                                     }
@@ -80,14 +61,14 @@ struct scrollView: View{
                                 
                                 HStack(alignment: .center, spacing: 3) {
                                     
-                                    ForEach(scroll_data.DayArray, id:\.self){i in
+                                    ForEach(scrollVM.DayArray, id:\.self){i in
                                         VStack(alignment: .center, spacing: 3) {
                                             ForEach(i, id:\.self){j in
                                                 Text("\(j)")
                                                     .frame(width: frame_size, height: frame_size)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 4, style: .continuous)
-                                                            .fill(j == "" ? Color.green: getColor(date: j))
+                                                            .fill(j == "" ? Color(hex: "#639F70"): getColor(date: j))
                                                             .frame(width: frame_size, height: frame_size)
                                                     )
                                             }
@@ -133,4 +114,20 @@ struct scrollView: View{
         
     }
     
+}
+
+
+struct WeekView: View{
+    
+    let weekStr: String
+    init(week: Int){
+        weekStr = Week(rawValue: week)!.description
+    }
+    var body: some View {
+        Text("\(weekStr)")
+            .font(.system(size: 13, weight: .bold))
+            .foregroundColor(Color.white)
+            .frame(height: 16)
+            .padding((EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)))
+    }
 }

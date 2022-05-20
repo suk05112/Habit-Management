@@ -31,11 +31,10 @@ class HabitVM: ObservableObject {
 //        self.realm = realm
         fetchItem()
         
-        print(realm?.objects(Habit.self))
+//        print(realm?.objects(Habit.self))
 
         if let group = realm?.objects(Habit.self) {
             self.habit = group
-//            self.todayHabit = getTodayHabit(i: 3)
 
         }else {
             try! realm?.write({
@@ -61,8 +60,6 @@ class HabitVM: ObservableObject {
             }
         })
         
-        getContinuity()
-//        print("result =", result)
         print(Realm.Configuration.defaultConfiguration.fileURL!)
 
     }
@@ -74,8 +71,9 @@ class HabitVM: ObservableObject {
                 realm.add(Habit(name: name, iter: iter))
                 fetchItem()
             }
-        }
+            getContinuity()
 
+        }
     }
     
     func deleteItem(at habit: Habit){
@@ -86,7 +84,9 @@ class HabitVM: ObservableObject {
     }
     
     public func fetchItem(){
+//        getContinuity()
         result = getTodayHabit()!
+
 //        result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
 
     }
@@ -97,8 +97,6 @@ class HabitVM: ObservableObject {
         //나중에 지우기
         todayWeek = 3
         let todayHabit = Array(realm!.objects(Habit.self)).filter{ $0.weekIter.contains(todayWeek)}
-        
-//        print("filtered list= ", filteredList)
         
         return todayHabit
     }
@@ -119,7 +117,7 @@ class HabitVM: ObservableObject {
             for completedItem in realm!.objects(CompletedList.self).sorted(by: {$0.date>$1.date}){
 
                 if completedItem.date != day || completedItem.completed.contains($0.id!) == false {
-//                    print("날짜 연속되지 않음")
+                    print("날짜 연속되지 않음")
                     return
                 }
                 else{
@@ -127,7 +125,6 @@ class HabitVM: ObservableObject {
                         data.continuity += 1
                         realm!.add(data, update: .modified)
                     }
-                     
                 }
                 
                 day = dateFormatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: dateFormatter.date(from: day)!)!)

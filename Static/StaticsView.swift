@@ -12,7 +12,7 @@ struct StaticsView: View {
 
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
-
+    @StateObject var staticVM = StaticVM.shared
 
     var body: some View {
         VStack{
@@ -53,19 +53,16 @@ struct StaticsView: View {
                         HStack{}
                     }
                     .padding(20)
-                    
-
                 }
-                
             }
+            Spacer()
             Graph(ratio: 1)
             Spacer()
             HStack{
-                
-                TotalView(.week, countStatic: completedVM.getStatics(staticCase: ))
-                TotalView(.month, countStatic: completedVM.getStatics(staticCase: ))
-                TotalView(.year, countStatic: completedVM.getStatics(staticCase: ))
-                TotalView(.all, countStatic: completedVM.getStatics(staticCase: ))
+                TotalView(.week, staticVM: staticVM)
+                TotalView(.month, staticVM: staticVM)
+                TotalView(.year, staticVM: staticVM)
+                TotalView(.all, staticVM: staticVM)
 
             }
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0))
@@ -75,12 +72,36 @@ struct StaticsView: View {
 
 struct TotalView: View{
     
+    var staticVM: StaticVM = StaticVM.shared
     var staticStr: String
     var count = 0
     
-    init(_ staticCase: Total, countStatic: (Total) -> (Int)){
-        staticStr = staticCase.rawValue
-        count = countStatic(staticCase)
+    let todayComps = Calendar.current.dateComponents([.year, .month, .weekday, .weekOfMonth], from: Date())
+    
+    init(_ staticCase: Total, staticVM: StaticVM){
+        
+        self.staticVM = staticVM
+        switch staticCase{
+        case .week:
+            let week = staticVM.day
+            print("week", week)
+            print("weekday =", todayComps.weekday)
+            print(week[(7-todayComps.weekday!)..<week.endIndex])
+            count = week[(7-todayComps.weekday!)..<week.endIndex].reduce(0, +)
+        case .month:
+            let month = staticVM.month
+            print("mont = ", month)
+            count = month[todayComps.month!-1]
+        case .year:
+            count = staticVM.yearTotal
+
+        case .all:
+            count = staticVM.total
+            print("all")
+        }
+        
+        staticStr = String(staticCase.rawValue)
+
     }
     
     var body: some View {
@@ -102,9 +123,3 @@ struct TotalView: View{
 
 }
 
-enum Total: String{
-    case week = "이번주"
-    case month = "이번달"
-    case year = "올해"
-    case all = "전체"
-}
