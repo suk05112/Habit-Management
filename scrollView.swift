@@ -103,13 +103,20 @@ struct scrollView: View{
     func getColor(date: String) -> Color{
         
         let count = completedVM.getCount(d: date)
+        let total = StaticVM.shared.getTotal()
         //        print("cout =", count)
         
         if count == 0 {
             return Color(hex: "#EFF0EF")
         }
+        else if count == 1 || (count/total)*100 < 33{
+            return Color(hex: "#CFEECB")
+        }
+        else if (count/total)*100 > 33 && (count/total)*100 < 66{
+            return Color(hex: "#7BE084")
+        }
         else{
-            return Color(hex: "#C7F0C8")
+            return Color(hex: "#118E15")
         }
         
     }

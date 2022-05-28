@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 import RealmSwift
-
+import PartialSheet
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -23,6 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct Habit_ManagementApp: SwiftUI.App {
 
     let persistenceController = PersistenceController.shared
+    private var isAddViewShow = false
     
     init(){
         let config = RealmSwift.Realm.Configuration(
@@ -46,9 +47,19 @@ struct Habit_ManagementApp: SwiftUI.App {
         Realm.Configuration.defaultConfiguration = config
     }
     var body: some Scene {
+        let setting = Setting()
+        
         WindowGroup {
             MainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(setting)
         }
+        
+    }
+    
+    func checkUserDefault(){
+        
     }
 }
+
+  

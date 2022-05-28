@@ -15,113 +15,159 @@ struct MainView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
+    
     private var items: FetchedResults<Item>
+    @EnvironmentObject var setting: Setting
+
     
     @State private var showingDetail = false
     @State private var showingAdd = false
+    @State private var modalPresented: Bool = false
+    @State private var isEdit = false
+    @State private var selectedItem = Habit()
+    @State private var hideCompleted = false
+    @State private var showAll = false
+    
     
     @State private var name: String = ""
     @State var iter: [Int] = []
-
     
-    @StateObject var ViewModel = HabitVM()
+    @StateObject var ViewModel = HabitVM.shared
     @StateObject var completedVM = compltedLIstVM.shared
     var staticVM = StaticVM.shared
     var realm: Realm? = try? Realm()
 
     init(){
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+        if UserDefaults.standard.object(forKey: "showAll") == nil{
+            UserDefaults.standard.set(false, forKey: "showAll")
+        }
+        if UserDefaults.standard.object(forKey: "hideCompleted") == nil{
+            UserDefaults.standard.set(false, forKey: "hideCompleted")
+        }
+        self.showAll = UserDefaults.standard.bool(forKey: "showAll")
+        self.hideCompleted = UserDefaults.standard.bool(forKey: "hideCompleted")
+
+        UserDefaults.standard.set(false, forKey: "showAll")
+        self.showAll = UserDefaults.standard.bool(forKey: "showAll")
+
     }
     
     var body: some View {
-        
-        TabView{
-            ZStack{
-                VStack{
-                    ZStack(alignment: .topLeading){
-                        Rectangle()
-                            .fill(Color(hex: "#B8D9B9"))
-                            .edgesIgnoringSafeArea(.all)
-                            .customStyle(color: .blue)
-//                            .frame(height: 242, alignment: .top)
-                        VStack(alignment: .leading){
-                            Text("수진님!\n3일째 물마시기 실천 중!")
-                                .font(.system(size: 25, weight: .bold))
-                                .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: true, vertical: true)
-//
-                            scrollView(ratio: 1)
+        ZStack{
+            TabView{
+                ZStack{
+                    VStack{
+                        ZStack(alignment: .topLeading){
+                            Rectangle()
+                                .fill(Color(hex: "#B8D9B9"))
+                                .edgesIgnoringSafeArea(.all)
+                                .customStyle(color: .blue)
+                            
+                            VStack(alignment: .leading){
+                                
+                                Text("수진님!\n3일째 물마시기 실천 중!")
+                                    .font(.system(size: 25, weight: .bold))
+                                    .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: true, vertical: true)
+                                
+                                scrollView(ratio: 1)
+                            }
+                            
                         }
+                        Spacer()
+                        
+                        HStack{
+                            Text(showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
+                                .onTapGesture {
+                                    showAll.toggle()
+                                    UserDefaults.standard.set(showAll, forKey: "showAll")
+                                    print("isshowAll 값", UserDefaults.standard.bool(forKey: "showAll"))
 
-                    }
-                    
-                    Spacer()
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(ViewModel.result) { list in
-                            ItemView(delete: ViewModel.deleteItem(at:),
-                                     check: completedVM.complete(id:),
-                                     getcontinue: ViewModel.getContinuity(),
-                                     myItem: $ViewModel.result[getItem(habit: list)],
-                                 showingModal: $showingDetail,
-                                 offset: $ViewModel.result[getItem(habit: list)].offset)
+                                }
+                            Spacer()
+                            Text(hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
+                                .onTapGesture {
+                                    hideCompleted.toggle()
+                                }
                         }
-                    }
-                    
-                    Spacer()
+                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
 
-                    AddView(name: $name, show: $showingAdd, iter: $iter)
-                    Button(action: {
-                        //add item
-                        showingAdd.toggle()
-
+                        Spacer()
+                        
+                        ScrollView(.vertical, showsIndicators: false) {
+                            ForEach(ViewModel.result) { list in
+                                ItemView(delete: ViewModel.deleteItem(at:),
+                                         check: completedVM.complete(id:),
+                                         myItem: $ViewModel.result[getItem(habit: list)],
+                                         showingModal: $showingDetail,
+                                         offset: $ViewModel.result[getItem(habit: list)].offset,
+                                         isAddView: $showingAdd,
+                                         selectedItem: $selectedItem,
+                                         isEdit: $isEdit,
+                                         hideCompleted: $hideCompleted,
+                                         showAll: $showAll)
+                            }
+                        }
+                        
+                        Spacer()
+                        Button(action: {
+                            //add item
+                            showingAdd.toggle()
+                            modalPresented = true
                         }) {
                             Image(systemName: "plus")
                                 .foregroundColor(Color.black)
                         }
                         .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
                         .opacity(showingAdd ? 0 : 1)
-
-                    Spacer()
+                        
+                        Spacer()
+                        
+                    }
+                    
+                    if $showingDetail.wrappedValue {
+                        DetailView(showingModal: $showingDetail)
+                        
+                    }
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    showingAdd = false
+                    print("Show details for user")
+                    print(iter)
+                    ViewModel.addItem(name: name, iter: iter)
+                    staticVM.addOrUpdate()
+                    name = ""
+                    iter = []
                     
                 }
-                  if $showingDetail.wrappedValue {
-                      DetailView(showingModal: $showingDetail)
-
-                  }
-            }
-            
-            .contentShape(Rectangle())
-            .onTapGesture {
-                showingAdd = false
-                print("Show details for user")
-                print(iter)
-                ViewModel.addItem(name: name, iter: iter)
-                staticVM.addOrUpdate()
-                name = ""
-                iter = []
+                .tabItem{
+                    Image(systemName: "house")
+                    Text("홈")
+                }
                 
+                Text("글쓰기")
+                    .tabItem{
+                        Image(systemName: "square.and.pencil")
+                        Text("글쓰기")
+                    }
+                
+                StaticsView()
+                    .tabItem{
+                        Image(systemName: "gear")
+                        Text("통계")
+                        Label("label", systemImage: "list.dash")
+                        
+                    }
             }
-            .tabItem{
-                Image(systemName: "house")
-                Text("홈")
-            }
-            
-            Text("글쓰기")
-                .tabItem{
-                    Image(systemName: "square.and.pencil")
-                    Text("글쓰기")
-                }
-            
-            StaticsView()
-                .tabItem{
-                    Image(systemName: "gear")
-                    Text("통계")
-                }
-        }
-        
 
+            if $showingAdd.wrappedValue{
+                AddView(name: $name, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
+            }
+        }
     }
     
     func getItem(habit: Habit)->Int{
@@ -133,9 +179,8 @@ struct MainView: View {
         return 0
 
     }
-    
-
 }
+
 struct SizePreferenceKey: PreferenceKey {
   static var defaultValue: CGSize = .zero
   static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
@@ -176,7 +221,6 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
-
 
 
 struct ContentView_Previews: PreviewProvider {

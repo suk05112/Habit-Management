@@ -43,7 +43,7 @@ struct Graph: View{
                     selectView(name: "월", id: 3, select: $selected)
                         .onTapGesture {
                             selected = 3
-                            width = 13
+                            width = 15
                         }
 
                 }
@@ -52,52 +52,59 @@ struct Graph: View{
             
             HStack(alignment: .bottom){
                 
-                VStack{
-
-                    Text("\(staticVM.getData(selected: selected).max()!)")
-                        .font(.system(size: 12))
-
-                    Spacer()
-                    Text("\(staticVM.getData(selected: selected).max()!/2)")
-                        .font(.system(size: 12))
-
-                    Spacer()
-                    Text("0")
-                        .font(.system(size: 12))
-
-                }
-
                 Spacer(minLength: 3)
                 VStack{
-                    HStack(alignment: .bottom) {
-                        ForEach(staticVM.getData(selected: selected), id: \.self) { month in
-                                let max = staticVM.getData(selected: selected).max()!
-                                let h1 = Int(month)*Int(150)
-                                let h2 = Double(h1)/Double(max)
-                                Rectangle()
-                                    .fill(Color(hex: "#639F70"))
-                                    .frame(width: width, height: h2==0 ? CGFloat(1) : CGFloat(h2))
-                                Spacer()
-                        }
-                    }
-                    .frame(width: 300)
+                    HStack{
+                        VStack{
+                            Text("\(staticVM.getData(selected: selected).max()!)")
+                                .font(.system(size: 12))
 
-                    Divider().background(Color.black)
-                        .frame(width: 340)
+                            Spacer()
+                            Text("\(staticVM.getData(selected: selected).max()!/2)")
+                                .font(.system(size: 12))
+
+                            Spacer()
+                            Text("0")
+                                .font(.system(size: 12))
+                        }
+                        .frame(width: 20, height: 150)
+                        
+                        VStack{
+                            HStack(alignment: .bottom) {
+                                ForEach(staticVM.getData(selected: selected), id: \.self) { month in
+                                        let max = staticVM.getData(selected: selected).max()!
+                                        let h1 = Int(month)*Int(150)
+                                        let h2 = Double(h1)/Double(max)
+                                        Rectangle()
+                                            .fill(Color(hex: "#639F70"))
+                                            .frame(width: width, height: h2==0 ? CGFloat(1) : CGFloat(h2))
+                                        Spacer()
+                                }
+                            }
+                            .frame(width: 300)
+
+                            Divider().background(Color.black)
+                                .frame(width: 340)
+                        }
+                        
+                    }
                     
-                    HStack(alignment: .bottom) {
+                    
+                    HStack(alignment: .top) {
+                        VStack{}.frame(width: 20)
                         ForEach(0..<staticVM.getData(selected: selected).count, id: \.self) { i in
                                 Text("\(staticVM.getStr(selected: selected)[i])")
-                                    .font(.system(size: 15, weight: .regular))
+                                    .font(.system(size: 12, weight: .regular))
                                     .multilineTextAlignment(.center)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
+//                                    .frame(width:20)
 
                             Spacer()
 
                             }
                         }
-                    .frame(width: 300)
+                    .frame(width: 340)
 
                     }
                 }

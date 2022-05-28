@@ -73,7 +73,7 @@ class ScrollVM: ObservableObject{
             DayArray[52][i] = dateFormatter.string(from: startDate)
             let str = DayArray[52][i]
             
-//            일 구하기
+            //일 구하기
 //            let start = str.index(str.endIndex, offsetBy: -2)
 //            let end = str.endIndex
 //            let range = start..<end

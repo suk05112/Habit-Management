@@ -74,6 +74,13 @@ class compltedLIstVM: ObservableObject {
                     object.completed.append(id)
                 }
             }
+            else{
+                try? realm?.write {
+                    if let index = object.completed.firstIndex(of: id) {
+                        object.completed.remove(at: index)
+                    }
+                }
+            }
         }
         else{
             try? realm?.write {
@@ -158,6 +165,19 @@ class compltedLIstVM: ObservableObject {
         }
         
         return ans
+    }
+    
+    func istodaydone(id: String) -> Bool?{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let str_today = dateFormatter.string(from: Date())
+
+//        print("is today done")
+//
+//        print(realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed)
+//        print(realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed.contains(id))
+        
+        return realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed.contains(id)
     }
 }
 

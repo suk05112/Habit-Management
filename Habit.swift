@@ -13,7 +13,7 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable{
     let dateFormatter = DateFormatter()
 
     @Persisted(primaryKey: true) var id: String?
-    @Persisted var name: String = "dafault name"
+    @Persisted var name: String = ""
     @Persisted var weekIter: List<Int> = List<Int>()
     @Persisted var continuity: Int = 0
 
