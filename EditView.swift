@@ -51,40 +51,42 @@ struct EditView: View{
             }
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -5))
             
-            Button(action: {
-    //                    deleteItem()
-                self.isAddView = true
-                self.isEdit = true
-                self.selectedItem = myItem
-                withAnimation(.easeOut){
-                    offset = 0
+            if !myItem.isInvalidated{
+                Button(action: {
+        //                    deleteItem()
+                    self.isAddView = true
+                    self.isEdit = true
+                    self.selectedItem = myItem
+                    withAnimation(.easeOut){
+                        offset = 0
+                    }
+                }){
+                    Image(systemName: "pencil")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 80)
+                        .background(Color(hex: "#92BCA3"))
+                        .cornerRadius(10)
+                    
                 }
-            }){
-                Image(systemName: "pencil")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 50, height: 80)
-                    .background(Color(hex: "#92BCA3"))
-                    .cornerRadius(10)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
-            }
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-            
-            Spacer()
-            Button(action: {
-                self.check(myItem.id!)
-                staticVM.addOrUpdate()
-                withAnimation(.easeOut){
-                    offset = 0
+                Spacer()
+                Button(action: {
+                    self.check(myItem.id!)
+                    staticVM.addOrUpdate()
+                    withAnimation(.easeOut){
+                        offset = 0
+                    }
+                    scrollVM.getThisWeekDayArray()
+                }){
+                    Image(systemName: "checkmark")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 80)
+                        .background(Color(hex: "#D4DED8"))
+                        .cornerRadius(10)
                 }
-                scrollVM.getThisWeekDayArray()
-            }){
-                Image(systemName: "checkmark")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .frame(width: 50, height: 80)
-                    .background(Color(hex: "#D4DED8"))
-                    .cornerRadius(10)
             }
         }
         .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))

@@ -15,46 +15,48 @@ struct ItemView: View{
     @Binding var name: String
     
     var body: some View {
-                    
-        ZStack{
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(Color.white)
-                .shadow(radius: 5)
-                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                .frame(width: .none, height: 80)
-            
-            HStack{
-                VStack(alignment: .leading){
-                    HStack{
-                        Text("\(myItem.continuity)일")
-                            .font(.system(size: 12))
-                            .bold()
-                            .foregroundColor(Color(hex: "#38AC3C"))
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                        Text("연속 실천 중🔥")
-                            .font(.system(size: 12))
-                            .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
-                        Spacer()
+        
+        if !myItem.isInvalidated{
+            ZStack{
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(radius: 5)
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                    .frame(width: .none, height: 80)
+                
+                HStack{
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("\(myItem.continuity)일")
+                                .font(.system(size: 12))
+                                .bold()
+                                .foregroundColor(Color(hex: "#38AC3C"))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                            Text("연속 실천 중🔥")
+                                .font(.system(size: 12))
+                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
+                            Spacer()
+                        }
+                        
+                        Text(myItem.name)
+                            .font(.system(size: 23, weight: .medium))
                     }
-                    
-                    Text(myItem.name)
-                        .font(.system(size: 23, weight: .medium))
+                    Spacer()
+                    HStack{}
                 }
-                Spacer()
-                HStack{}
+                .padding(20)
+    //            .opacity(isTodaydone() ? 0.5 : 1)
+                
             }
-            .padding(20)
-//            .opacity(isTodaydone() ? 0.5 : 1)
-            
+            .contentShape(Rectangle())
+            .onTapGesture {
+                print("item touch")
+                showingModal = true
+                
+            }
+            .offset(x: offset)
+            .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
         }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            print("item touch")
-            showingModal = true
-            
-        }
-        .offset(x: offset)
-        .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
     }
     
     func isTodaydone() -> Bool{
