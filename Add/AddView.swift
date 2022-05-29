@@ -45,22 +45,34 @@ public struct AddView: View{
                                     WeekButton(weekOfDay: $0, iter: $iter, OnOff: Array(self.selectedItem.weekIter).contains($0) ? true : false)
                                 }
                             }
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .fill(Color.green)
-                                .frame(width: 60, height: 30)
-                                .overlay(
-                                    Text("저장")
-                                 )
-                                .onTapGesture {
-                                    show = false
-                                    if !isEdit{
-                                        ViewModel.addItem(name: selectedItem.name, iter: iter)
+                            HStack{
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .fill(Color.green)
+                                    .frame(width: 60, height: 30)
+                                    .overlay(
+                                        Text("저장")
+                                     )
+                                    .onTapGesture {
+                                        show = false
+                                        if !isEdit{
+                                            ViewModel.addItem(name: selectedItem.name, iter: iter)
+                                        }
+                                        else{
+                                            ViewModel.updateItem(name: selectedItem.name, iter: iter, at: selectedItem)
+                                            self.isEdit = false
+                                        }
                                     }
-                                    else{
-                                        ViewModel.updateItem(name: selectedItem.name, iter: iter, at: selectedItem)
-                                        self.isEdit = false
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .fill(Color.green)
+                                    .frame(width: 60, height: 30)
+                                    .overlay(
+                                        Text("취소")
+                                     )
+                                    .onTapGesture {
+                                        show = false
                                     }
-                                }
+                            }
+                            
                         }
                     }
                     .onTapGesture {

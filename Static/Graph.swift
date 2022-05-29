@@ -43,7 +43,7 @@ struct Graph: View{
                     selectView(name: "월", id: 3, select: $selected)
                         .onTapGesture {
                             selected = 3
-                            width = 15
+                            width = 10
                         }
 
                 }
@@ -98,7 +98,7 @@ struct Graph: View{
                                     .multilineTextAlignment(.center)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: false, vertical: true)
-//                                    .frame(width:20)
+                                    .frame(width:width)
 
                             Spacer()
 

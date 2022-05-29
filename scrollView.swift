@@ -103,7 +103,7 @@ struct scrollView: View{
     func getColor(date: String) -> Color{
         
         let count = completedVM.getCount(d: date)
-        let total = StaticVM.shared.getTotal()
+        let total = HabitVM.shared.getNumOfTodayHabit()
         //        print("cout =", count)
         
         if count == 0 {

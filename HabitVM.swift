@@ -14,7 +14,10 @@ class HabitVM: ObservableObject {
     let dateFormatter = DateFormatter()
 
     @Published var result: [Habit] = []
-    
+    var hideCompleted: Bool = false
+    var isTodaydone: Bool = false
+    var showAll: Bool = false
+
     var habit: Results<Habit>?
     var token: NotificationToken? = nil
     var realm: Realm?
@@ -51,7 +54,8 @@ class HabitVM: ObservableObject {
                 print("initial")
                 
             case .update(_, deletions: let deletions, insertions: let insertions, modifications: let modifications):
-//                print("update")
+                print("update")
+//                fetchItem()
 //                self.objectWillChange.send()
                 break
             }
@@ -64,16 +68,20 @@ class HabitVM: ObservableObject {
         if name != "", let realm = habit?.realm{
             try? realm.write{
                 realm.add(Habit(name: name, iter: iter))
-                fetchItem()
             }
+            fetchItem()
         }
     }
     
     func deleteItem(at habit: Habit){
-        try! realm?.write {
-            realm?.delete(habit)
-            fetchItem()
+        print("delete")
+        if realm!.objects(Habit.self).contains(habit){
+            try! realm?.write {
+                realm?.delete(habit)
+            }
         }
+//        fetchItem()
+
     }
     
     func updateItem(name: String, iter: [Int], at item: Habit){
@@ -84,21 +92,64 @@ class HabitVM: ObservableObject {
                 item.weekIter.removeAll()
                 item.weekIter.append(objectsIn: iter.map{$0})
 //                realm.add(Habit(name: name, iter: iter), update: .modified)
-                fetchItem()
             }
-
+            fetchItem()
         }
+    }
+    
+    public func setting(hideCompleted: Bool,showAll: Bool ){
+        self.hideCompleted = hideCompleted
+        self.showAll = showAll
+        fetchItem()
     }
     public func fetchItem(){
         print("fetchItem")
-//        result = getTodayHabit()!
-        result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
-        getContinuity()
+//        getContinuity()
 
+        var temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
+
+        if showAll{
+            temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
+        }
+        else{
+            temp_result = getTodayHabit()
+        }
+        
+        if hideCompleted{
+            temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)!}
+        }
+        
+        print(result)
+        
+        result = temp_result
+
+    }
+    
+    func getTodayHabit() -> [Habit]{
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var result:[Habit] = []
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(todayWeek){
+                result.append($0)
+            }
+        }
+        return result
     }
     
     func getArrayIter(at habit: Habit) -> [Int]{
         return Array(habit.weekIter)
+    }
+    
+    func getNumOfTodayHabit() -> Int{
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var count = 0
+        
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(todayWeek){
+                count += 1
+            }
+        }
+        return count
     }
     
     func getContinuity(){

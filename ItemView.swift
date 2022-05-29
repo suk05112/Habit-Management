@@ -11,7 +11,7 @@ import SwiftUI
 struct ItemView: View{
     var staticVM = StaticVM.shared
     @StateObject var scrollVM = ScrollVM.shared
-
+    
     var delete: (Habit) -> ()
     var check: (String) -> ()
     @Binding var myItem: Habit
@@ -19,129 +19,134 @@ struct ItemView: View{
     @Binding var offset: CGFloat
     @Binding var isAddView : Bool
     @Binding var selectedItem: Habit
-    @Binding var isEdit: Bool
-    @Binding var hideCompleted: Bool
+    @Binding var isEdit : Bool
+
     
     @State private var showingAlert = false
     
-    @Binding var showAll: Bool
     var body: some View {
-        if !hideCompleted ||  (hideCompleted && !isTodaydone()){
-            if showAll || (!showAll && isTodayHabit()){
-                ZStack{
-                    HStack{
-                        Button(action: {
-                            self.showingAlert.toggle()
-                            withAnimation(.easeOut){
-                                offset = 0
-                            }
-                        }){
-                            Image(systemName: "trash")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 80)
-                                .background(Color.red)
-                                .cornerRadius(10)
-                                .alert(isPresented: $showingAlert) {
-                                    Alert(title: Text("삭제하시겠습니까?"), message: Text("이 습관을 삭제해도 완료한 기록은 유지됩니다."), primaryButton: .destructive(Text("확인"), action: {
-                                        deleteItem()
-                                    }), secondaryButton: .cancel(Text("취소")))
-                                }
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -5))
-                        
-                        Button(action: {
-                            //                    deleteItem()
-                            self.isAddView = true
-                            self.isEdit = true
-                            self.selectedItem = myItem
-                            withAnimation(.easeOut){
-                                offset = 0
-                            }
-                        }){
-                            Image(systemName: "pencil")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 80)
-                                .background(Color(hex: "#92BCA3"))
-                                .cornerRadius(10)
-                            
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        
-                        Spacer()
-                        Button(action: {
-                            self.check(myItem.id!)
-//                            self.getcontinue
-                            staticVM.addOrUpdate()
-                            withAnimation(.easeOut){
-                                offset = 0
-                            }
-                            scrollVM.getThisWeekDayArray()
-                        }){
-                            Image(systemName: "checkmark")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 80)
-                                .background(Color(hex: "#D4DED8"))
-                                .cornerRadius(10)
-                        }
+        
+        if !myItem.isInvalidated{
+        ZStack{
+            HStack{
+                Button(action: {
+                    self.showingAlert.toggle()
+                    withAnimation(.easeOut){
+                        offset = 0
                     }
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                }){
+                    Image(systemName: "trash")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 80)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                }
+                .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
+                    Button("확인", role: .destructive, action: {
+                        deleteItem()
+                        print("delete finished")
+                    })
                     
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.white)
-                            .shadow(radius: 5)
-                            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                            .frame(width: .none, height: 80)
-                        
-                        HStack{
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Text("\(myItem.continuity)일")
-                                        .font(.system(size: 12))
-                                        .bold()
-                                        .foregroundColor(Color(hex: "#38AC3C"))
-                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                                    Text("연속 실천 중🔥")
-                                        .font(.system(size: 12))
-                                        .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
-                                    Spacer()
-                                }
-                                
-                                Text(myItem.name)
-                                    .font(.system(size: 23, weight: .medium))
-                                
-                            }
-                            Spacer()
-                            HStack{}
-                        }
-                        .padding(20)
-                        .opacity(isTodaydone() ? 0.5 : 1)
-                        
+                    Button("취소", role: .cancel){}
+                } message: {
+                    Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
+                }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -5))
+                
+                Button(action: {
+//                    deleteItem()
+                    self.isAddView = true
+                    self.isEdit = true
+                    self.selectedItem = myItem
+                    withAnimation(.easeOut){
+                        offset = 0
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        print("item touch")
-                        showingModal = true
-                        
-                    }
-                    .offset(x: offset)
-                    .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+                }){
+                    Image(systemName: "pencil")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 80)
+                        .background(Color(hex: "#92BCA3"))
+                        .cornerRadius(10)
                     
                 }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                
+                Spacer()
+                Button(action: {
+                    self.check(myItem.id!)
+                    //self.getcontinue
+                    staticVM.addOrUpdate()
+                    withAnimation(.easeOut){
+                        offset = 0
+                    }
+                    scrollVM.getThisWeekDayArray()
+                }){
+                    Image(systemName: "checkmark")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .frame(width: 50, height: 80)
+                        .background(Color(hex: "#D4DED8"))
+                        .cornerRadius(10)
+                }
             }
+            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
             
+            ZStack{
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(Color.white)
+                    .shadow(radius: 5)
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                    .frame(width: .none, height: 80)
+                
+                HStack{
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("\(myItem.continuity)일")
+                                .font(.system(size: 12))
+                                .bold()
+                                .foregroundColor(Color(hex: "#38AC3C"))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                            Text("연속 실천 중🔥")
+                                .font(.system(size: 12))
+                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
+                            Spacer()
+                        }
+                        
+                        Text(myItem.name)
+                            .font(.system(size: 23, weight: .medium))
+                        
+                    }
+                    Spacer()
+                    HStack{}
+                }
+                .padding(20)
+                .opacity(isTodaydone() ? 0.5 : 1)
+                
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                print("item touch")
+                showingModal = true
+                
+            }
+            .offset(x: offset)
+            .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+            
+        }
         }
     }
     
     func deleteItem(){
+        print("deleteItem")
         self.delete(myItem)
+        print("after delete")
     }
     
     func isTodaydone() -> Bool{
-        if compltedLIstVM.shared.istodaydone(id: myItem.id!)! {
+        let done = compltedLIstVM.shared.istodaydone(id: myItem.id!)
+        if  done != nil && done == true {
             return true
         }
         else{
@@ -232,10 +237,10 @@ extension View {
 }
 
 struct RoundedCorner: Shape {
-
+    
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-
+    
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)

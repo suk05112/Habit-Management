@@ -83,6 +83,8 @@ struct MainView: View {
                             Text(showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
                                 .onTapGesture {
                                     showAll.toggle()
+//                                    ViewModel.showAll = showAll
+                                    ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
                                     UserDefaults.standard.set(showAll, forKey: "showAll")
                                     print("isshowAll 값", UserDefaults.standard.bool(forKey: "showAll"))
 
@@ -91,6 +93,8 @@ struct MainView: View {
                             Text(hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
                                 .onTapGesture {
                                     hideCompleted.toggle()
+//                                    ViewModel.hideCompleted = hideCompleted
+                                    ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
                                 }
                         }
                         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
@@ -98,6 +102,22 @@ struct MainView: View {
                         Spacer()
                         
                         ScrollView(.vertical, showsIndicators: false) {
+                            /*
+                            ForEach($ViewModel.result) { list in
+                                ItemView(delete: ViewModel.deleteItem(at:),
+                                         check: completedVM.complete(id:),
+                                         myItem: list,
+                                         showingModal: $showingDetail,
+                                         offset: list.offset,
+                                         isAddView: $showingAdd,
+                                         selectedItem: $selectedItem,
+                                         isEdit: $isEdit,
+                                         hideCompleted: $hideCompleted,
+                                         showAll: $showAll)
+                            }
+                            
+                            */
+                            
                             ForEach(ViewModel.result) { list in
                                 ItemView(delete: ViewModel.deleteItem(at:),
                                          check: completedVM.complete(id:),
@@ -106,15 +126,15 @@ struct MainView: View {
                                          offset: $ViewModel.result[getItem(habit: list)].offset,
                                          isAddView: $showingAdd,
                                          selectedItem: $selectedItem,
-                                         isEdit: $isEdit,
-                                         hideCompleted: $hideCompleted,
-                                         showAll: $showAll)
+                                         isEdit: $isEdit
+                                         )
                             }
                         }
                         
                         Spacer()
                         Button(action: {
                             //add item
+                            selectedItem = isEdit ? selectedItem : Habit(name: "", iter: [])
                             showingAdd.toggle()
                             modalPresented = true
                         }) {
