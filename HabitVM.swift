@@ -80,7 +80,7 @@ class HabitVM: ObservableObject {
                 realm?.delete(habit)
             }
         }
-//        fetchItem()
+        fetchItem()
 
     }
     
@@ -119,10 +119,31 @@ class HabitVM: ObservableObject {
             temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)!}
         }
         
+        print(temp_result)
+        temp_result = temp_result.filter{!$0.isInvalidated}
+//        temp_result.forEach{
+//            if !$0.isInvalidated{
+//                print("object is invalidate")
+//                result.append($0)
+//            }
+//
+//
+//        }
+        result = temp_result
+        print("result")
         print(result)
         
-        result = temp_result
+//        result = temp_result
 
+    }
+    
+    func getResult(habit: Habit) -> Habit{
+        var myresult:[Habit] = result
+        if let index = result.firstIndex(where: { $0 == habit}){
+            return myresult[index]
+
+        }
+        return Habit()
     }
     
     func getTodayHabit() -> [Habit]{

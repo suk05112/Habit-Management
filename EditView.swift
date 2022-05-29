@@ -9,62 +9,90 @@ import Foundation
 import SwiftUI
 
 struct EditView: View{
-    @Binding var isEdit: Bool
-    var delete: (Habit) -> ()
-    @Binding var myItem: Habit
+    var staticVM = StaticVM.shared
+    @StateObject var scrollVM = ScrollVM.shared
+
     @State private var showingAlert = false
-    @State var iter:[Int] = []
-    @State var isShow = false
-    
+
+    var delete: (Habit) -> ()
+    var check: (String) -> ()
+    @Binding var myItem: Habit
+    @Binding var isAddView : Bool
+    @Binding var isEdit : Bool
+    @Binding var selectedItem: Habit
+    @Binding var offset: CGFloat
+
     var body: some View {
-//        iter = Array(myItem.weekIter)
-
-        if isEdit{
-            ZStack{
-                HStack{
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(Color(hex: "#77AC83"))
-                        .frame(width: 120, height: 30)
-                        .overlay(
-                            Text("삭제")
-                                .alert(isPresented: $showingAlert) {
-                                    Alert(title: Text("삭제하시겠습니까?"), message: Text("이 습관을 삭제해도 완료한 기록은 유지됩니다."), primaryButton: .destructive(Text("확인"), action: {
-                                        self.delete(myItem)
-                                    }), secondaryButton: .cancel(Text("취소")))
-                                }
-                                .onTapGesture {
-                                    self.showingAlert.toggle()
-                                }
-                         )
-                        
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(Color(hex: "#77AC83"))
-                        .frame(width: 120, height: 30)
-                        .overlay(
-                            Text("수정")
-                         )
-                        .onTapGesture {
-                            isShow.toggle()
-                        }
-                    
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(Color(hex: "#77AC83"))
-                        .frame(width: 120, height: 30)
-                        .overlay(
-                            Text("중지")
-                         )
-                        .onTapGesture {
-                            
-                        }
+        HStack{
+            Button(action: {
+                self.showingAlert.toggle()
+//                deleteItem()
+    //                    HabitVM.shared.fetchItem()
+                withAnimation(.easeOut){
+                            offset = 0
                 }
+            }){
+                Image(systemName: "trash")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 80)
+                    .background(Color.red)
+                    .cornerRadius(10)
+            }
+            .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
+                Button("확인", role: .destructive, action: {
+                    deleteItem()
+                    print("delete finished")
+                })
 
-                if isShow{
-//                    AddView(name: $myItem.name, show: true, iter: $iter)
-
+                Button("취소", role: .cancel){}
+            } message: {
+                Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
+            }
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -5))
+            
+            Button(action: {
+    //                    deleteItem()
+                self.isAddView = true
+                self.isEdit = true
+                self.selectedItem = myItem
+                withAnimation(.easeOut){
+                    offset = 0
                 }
+            }){
+                Image(systemName: "pencil")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 80)
+                    .background(Color(hex: "#92BCA3"))
+                    .cornerRadius(10)
+                
+            }
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            
+            Spacer()
+            Button(action: {
+                self.check(myItem.id!)
+                staticVM.addOrUpdate()
+                withAnimation(.easeOut){
+                    offset = 0
+                }
+                scrollVM.getThisWeekDayArray()
+            }){
+                Image(systemName: "checkmark")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .frame(width: 50, height: 80)
+                    .background(Color(hex: "#D4DED8"))
+                    .cornerRadius(10)
             }
         }
-
+        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
     }
-
+    
+    func deleteItem(){
+        print("deleteItem")
+        self.delete(myItem)
+        print("after delete")
+    }
 }

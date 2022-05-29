@@ -83,17 +83,13 @@ struct MainView: View {
                             Text(showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
                                 .onTapGesture {
                                     showAll.toggle()
-//                                    ViewModel.showAll = showAll
                                     ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
                                     UserDefaults.standard.set(showAll, forKey: "showAll")
-                                    print("isshowAll 값", UserDefaults.standard.bool(forKey: "showAll"))
-
                                 }
                             Spacer()
                             Text(hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
                                 .onTapGesture {
                                     hideCompleted.toggle()
-//                                    ViewModel.hideCompleted = hideCompleted
                                     ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
                                 }
                         }
@@ -102,33 +98,31 @@ struct MainView: View {
                         Spacer()
                         
                         ScrollView(.vertical, showsIndicators: false) {
-                            /*
-                            ForEach($ViewModel.result) { list in
-                                ItemView(delete: ViewModel.deleteItem(at:),
-                                         check: completedVM.complete(id:),
-                                         myItem: list,
-                                         showingModal: $showingDetail,
-                                         offset: list.offset,
-                                         isAddView: $showingAdd,
-                                         selectedItem: $selectedItem,
-                                         isEdit: $isEdit,
-                                         hideCompleted: $hideCompleted,
-                                         showAll: $showAll)
-                            }
-                            
-                            */
-                            
                             ForEach(ViewModel.result) { list in
-                                ItemView(delete: ViewModel.deleteItem(at:),
-                                         check: completedVM.complete(id:),
-                                         myItem: $ViewModel.result[getItem(habit: list)],
-                                         showingModal: $showingDetail,
-                                         offset: $ViewModel.result[getItem(habit: list)].offset,
-                                         isAddView: $showingAdd,
-                                         selectedItem: $selectedItem,
-                                         isEdit: $isEdit
-                                         )
+                                ZStack{
+                                    EditView(delete: ViewModel.deleteItem(at:),
+                                             check: completedVM.complete(id:),
+                                             myItem: $ViewModel.result[getItem(habit: list)],
+                                             isAddView: $showingAdd,
+                                             isEdit: $isEdit,
+                                             selectedItem: $selectedItem,
+                                             offset: $ViewModel.result[getItem(habit: list)].offset)
+//                                    ItemView(myItem: $ViewModel.getResult(habit: list),
+//                                             showingModal: $showingDetail,
+//                                             offset: $ViewModel.result[getItem(habit: list)].offset,
+//                                             name: $ViewModel.result[getItem(habit: list)].name
+//                                             )
+                                    ItemView(myItem: $ViewModel.result[getItem(habit: list)],
+                                             showingModal: $showingDetail,
+                                             offset: $ViewModel.result[getItem(habit: list)].offset,
+                                             name: $ViewModel.result[getItem(habit: list)].name
+                                             )
+                                    
+
+                                }
+
                             }
+
                         }
                         
                         Spacer()
