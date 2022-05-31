@@ -53,7 +53,6 @@ struct EditView: View{
             
             if !myItem.isInvalidated{
                 Button(action: {
-        //                    deleteItem()
                     self.isAddView = true
                     self.isEdit = true
                     self.selectedItem = myItem
@@ -97,4 +96,17 @@ struct EditView: View{
         self.delete(myItem)
         print("after delete")
     }
+    
+    /*
+    func isTodaydone() -> Bool{
+        let done = compltedLIstVM.shared.istodaydone(id: myItem.id!)
+        todaydone = done
+        if  done != nil && done == true {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+     */
 }

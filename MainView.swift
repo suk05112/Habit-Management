@@ -107,18 +107,12 @@ struct MainView: View {
                                              isEdit: $isEdit,
                                              selectedItem: $selectedItem,
                                              offset: $ViewModel.result[getItem(habit: list)].offset)
-//                                    ItemView(myItem: $ViewModel.getResult(habit: list),
-//                                             showingModal: $showingDetail,
-//                                             offset: $ViewModel.result[getItem(habit: list)].offset,
-//                                             name: $ViewModel.result[getItem(habit: list)].name
-//                                             )
+
                                     ItemView(myItem: $ViewModel.result[getItem(habit: list)],
                                              showingModal: $showingDetail,
                                              offset: $ViewModel.result[getItem(habit: list)].offset,
                                              name: $ViewModel.result[getItem(habit: list)].name
                                              )
-                                    
-
                                 }
 
                             }

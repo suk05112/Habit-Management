@@ -89,7 +89,7 @@ struct Graph: View{
                         
                     }
                     
-                    
+                    /*
                     HStack(alignment: .top) {
                         VStack{}.frame(width: 20)
                         ForEach(0..<staticVM.getData(selected: selected).count, id: \.self) { i in
@@ -105,7 +105,7 @@ struct Graph: View{
                             }
                         }
                     .frame(width: 340)
-
+*/
                     }
                 }
                

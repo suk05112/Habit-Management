@@ -19,7 +19,7 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable{
 
     var offset:CGFloat = 0.0
     var isSwipe:Bool = false
-
+    
     var dataArray: [Int] {
             get {
                 return weekIter.map{$0}

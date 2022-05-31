@@ -12,16 +12,17 @@ import SwiftUI
 class compltedLIstVM: ObservableObject {
     
     static let shared = compltedLIstVM()
-
     let dateFormatter = DateFormatter()
 
     var realm: Realm?
     var list: CompletedList?
+    @Published var todayDoneList: CompletedList
 
     private init(){
         
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        let today = dateFormatter.string(from: Date())
         
         let realm = try? Realm()
         self.realm = realm
@@ -42,6 +43,15 @@ class compltedLIstVM: ObservableObject {
 
             })
         }
+        
+        if let todaydone = realm?.object(ofType: CompletedList.self, forPrimaryKey: today){
+            todayDoneList = todaydone
+        }
+        else{
+            todayDoneList = CompletedList()
+        }
+        print("today done list", todayDoneList)
+
 //        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "")).first
 
         
@@ -88,6 +98,10 @@ class compltedLIstVM: ObservableObject {
             }
         }
         
+        
+        if let todaydone = realm?.object(ofType: CompletedList.self, forPrimaryKey: today){
+            todayDoneList = todaydone
+        }
 
     }
     
@@ -167,17 +181,18 @@ class compltedLIstVM: ObservableObject {
         return ans
     }
     
-    func istodaydone(id: String) -> Bool?{
+    func istodaydone(id: String) -> Bool{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let str_today = dateFormatter.string(from: Date())
 
-//        print("is today done")
-//
-//        print(realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed)
-//        print(realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed.contains(id))
-        
-        return realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today)?.completed.contains(id)
+        if let completed = realm?.object(ofType: CompletedList.self, forPrimaryKey: str_today){
+            if completed.completed.contains(id){
+                return true
+            }
+        }
+        return false
+
     }
 }
 

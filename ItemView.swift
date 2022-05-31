@@ -14,6 +14,8 @@ struct ItemView: View{
     @Binding var offset: CGFloat
     @Binding var name: String
     
+    @StateObject var completedVM = compltedLIstVM.shared
+    
     var body: some View {
         
         if !myItem.isInvalidated{
@@ -45,7 +47,7 @@ struct ItemView: View{
                     HStack{}
                 }
                 .padding(20)
-    //            .opacity(isTodaydone() ? 0.5 : 1)
+                .opacity(completedVM.todayDoneList.completed.contains(myItem.id!) ? 0.5 : 1)
                 
             }
             .contentShape(Rectangle())
@@ -59,15 +61,7 @@ struct ItemView: View{
         }
     }
     
-    func isTodaydone() -> Bool{
-        let done = compltedLIstVM.shared.istodaydone(id: myItem.id!)
-        if  done != nil && done == true {
-            return true
-        }
-        else{
-            return false
-        }
-    }
+ 
     
     func isTodayHabit() -> Bool{
         let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!

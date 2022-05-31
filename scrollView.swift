@@ -10,10 +10,8 @@ import SwiftUI
 
 struct scrollView: View{
     
-    
     let scroll_data = ScrollData.shared
     var frame_size: CGFloat = CGFloat(24)
-
 
     var ratio:Double
     @StateObject var completedVM = compltedLIstVM.shared
@@ -55,7 +53,6 @@ struct scrollView: View{
                                             .font(.system(size: 13, weight: .bold))
                                             .foregroundColor(Color.white)
                                             .frame(width: frame_size, height: frame_size)
-                                            
                                     }
                                 }
                                 
