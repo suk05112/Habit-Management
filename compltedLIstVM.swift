@@ -112,7 +112,14 @@ class compltedLIstVM: ObservableObject {
 //        print(realm!.objects(CompletedList.self).filter("date == \"" + date + "\""))
 //        print(realm!.objects(CompletedList.self).filter(myFilter))
 
-        return realm!.objects(CompletedList.self).filter("date == \"" + date + "\"").count
+        print(realm!.objects(CompletedList.self).filter("date == \"" + date + "\""))
+        
+        if let object = realm!.objects(CompletedList.self).filter("date == \"" + date + "\"").first{
+            print(object.completed.count)
+            return object.completed.count
+        }
+        return 0
+        
     }
     
     func getStatics(staticCase: Total) -> Int{

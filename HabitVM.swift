@@ -97,6 +97,17 @@ class HabitVM: ObservableObject {
         }
     }
     
+    func setContiuity(at item: Habit){
+        try? realm!.write{
+            if compltedLIstVM.shared.todayDoneList.completed.contains(item.id!){
+                item.continuity += 1
+            }else{
+                item.continuity -= 1
+
+            }
+        }
+    }
+    
     public func setting(hideCompleted: Bool,showAll: Bool ){
         self.hideCompleted = hideCompleted
         self.showAll = showAll
@@ -115,13 +126,10 @@ class HabitVM: ObservableObject {
             temp_result = getTodayHabit()
         }
         
-        print("hide completed 전", hideCompleted)
-        print(temp_result)
         if hideCompleted{
             temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)}
         }
-        print("hide completed 후")
-        print(temp_result)
+
         temp_result = temp_result.filter{!$0.isInvalidated}
         result = temp_result
         
@@ -163,6 +171,27 @@ class HabitVM: ObservableObject {
         return count
     }
     
+    func getAllDoneContinuity() -> Int{
+        var allDoneContinuity = 0
+        let today_total = getNumOfTodayHabit()
+        let today_done = StaticVM.shared.getData(selected: 1).last!
+        
+        if UserDefaults.standard.object(forKey: "allDoneContinuity") != nil {
+            allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+
+            if today_total == today_done{
+                UserDefaults.standard.set(allDoneContinuity += 1, forKey: "allDoneContinuity")
+
+            }
+            else{
+                UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+
+            }
+
+        }
+
+        return allDoneContinuity
+    }
     func getContinuity(){
         print("in get continue")
         

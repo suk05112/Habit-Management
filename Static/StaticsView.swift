@@ -13,6 +13,7 @@ struct StaticsView: View {
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
     @StateObject var staticVM = StaticVM.shared
+    
 
     var body: some View {
         VStack{
@@ -23,38 +24,11 @@ struct StaticsView: View {
                 
             }
             .padding()
-            scrollView(ratio: 5/6)
             
-            ZStack{
-                ZStack{
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color.white)
-                        .shadow(radius: 5)
-                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                        .frame(width: .none, height: 80)
+            scrollView(ratio: 1)
 
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text("지난 주 보다 '물마시기'를 2번 더 완료했어요!")
-                                .font(.system(size: 15, weight: .medium))
-                            HStack{
-                                Text("지난 주 대비")
-                                    .font(.system(size: 12))
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                                Text("20% up")
-                                    .font(.system(size: 12))
-                                    .bold()
-                                    .foregroundColor(Color(hex: "#38AC3C"))
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                            }
-                            
-                        }
-                        Spacer()
-                        HStack{}
-                    }
-                    .padding(20)
-                }
-            }
+            ReportView()
+            
             Spacer()
             Graph(ratio: 1)
             Spacer()
@@ -68,6 +42,7 @@ struct StaticsView: View {
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0))
         }
     }
+    
 }
 
 struct TotalView: View{

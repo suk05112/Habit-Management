@@ -157,7 +157,8 @@ struct MainView: View {
                     Text("홈")
                 }
                 
-                Text("글쓰기")
+//                Text("글쓰기")
+                TestView()
                     .tabItem{
                         Image(systemName: "square.and.pencil")
                         Text("글쓰기")

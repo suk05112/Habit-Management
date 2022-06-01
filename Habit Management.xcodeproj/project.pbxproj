@@ -13,6 +13,8 @@
 		036D03B728145D9700EE607B /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B628145D9700EE607B /* ScrollData.swift */; };
 		036D03BA2818384300EE607B /* scrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B92818384300EE607B /* scrollView.swift */; };
 		037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAEB28421AE800BD3C0E /* Setting.swift */; };
+		037FFAF7284614F400BD3C0E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAF6284614F400BD3C0E /* TestView.swift */; };
+		037FFAFB2847C43D00BD3C0E /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAFA2847C43D00BD3C0E /* ReportView.swift */; };
 		038FB458280D61F600740AA6 /* HabitVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitVM.swift */; };
 		039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DC2830F08D00CA0028 /* ScrollVM.swift */; };
 		039164E0283120DA00CA0028 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DF283120DA00CA0028 /* Total.swift */; };
@@ -73,6 +75,8 @@
 		036D03B628145D9700EE607B /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		036D03B92818384300EE607B /* scrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollView.swift; sourceTree = "<group>"; };
 		037FFAEB28421AE800BD3C0E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		037FFAF6284614F400BD3C0E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		037FFAFA2847C43D00BD3C0E /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		038FB457280D61F600740AA6 /* HabitVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitVM.swift; sourceTree = "<group>"; };
 		039164DC2830F08D00CA0028 /* ScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollVM.swift; sourceTree = "<group>"; };
 		039164DF283120DA00CA0028 /* Total.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
@@ -157,6 +161,24 @@
 				8CAE1D3E970C585D984D2C0A /* Pods-Habit ManagementTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		037FFAF4284606C200BD3C0E /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				039164F9283752B900CA0028 /* EditView.swift */,
+				036D03B02813241000EE607B /* ItemView.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		037FFAF5284606DC00BD3C0E /* Scroll */ = {
+			isa = PBXGroup;
+			children = (
+				03DBC27B2827C999000848BF /* LessMore.swift */,
+				036D03B92818384300EE607B /* scrollView.swift */,
+			);
+			path = Scroll;
 			sourceTree = "<group>";
 		};
 		039164DE283120C600CA0028 /* Utility */ = {
@@ -281,15 +303,14 @@
 		03CFE0DB27F4952B004C54B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				037FFAF5284606DC00BD3C0E /* Scroll */,
+				037FFAF4284606C200BD3C0E /* Item */,
 				0391650E283B5DE800CA0028 /* Add */,
 				03DBC27E2827CF02000848BF /* Static */,
 				03DBC27D2827CEEE000848BF /* Main */,
 				03CFE06927EC46D1004C54B6 /* MainView.swift */,
 				0392B412280695AD006C1E04 /* DetailView.swift */,
-				036D03B02813241000EE607B /* ItemView.swift */,
-				036D03B92818384300EE607B /* scrollView.swift */,
-				03DBC27B2827C999000848BF /* LessMore.swift */,
-				039164F9283752B900CA0028 /* EditView.swift */,
+				037FFAF6284614F400BD3C0E /* TestView.swift */,
 			);
 			name = View;
 			path = ..;
@@ -307,6 +328,7 @@
 			children = (
 				03DBC279282111DD000848BF /* StaticsView.swift */,
 				03DBC2802827CF2F000848BF /* Graph.swift */,
+				037FFAFA2847C43D00BD3C0E /* ReportView.swift */,
 			);
 			path = Static;
 			sourceTree = "<group>";
@@ -573,11 +595,13 @@
 				0392B4172806C444006C1E04 /* Week.swift in Sources */,
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
 				03916514283B6B1D00CA0028 /* KeyboardGuardian.swift in Sources */,
+				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				0392B413280695AD006C1E04 /* DetailView.swift in Sources */,
 				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				03916510283B5E4D00CA0028 /* ActionSheedCard.swift in Sources */,
+				037FFAFB2847C43D00BD3C0E /* ReportView.swift in Sources */,
 				03DBC285282BAA74000848BF /* Statics.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,

@@ -18,7 +18,6 @@ struct scrollView: View{
     @StateObject var scrollVM = ScrollVM.shared
     @Namespace var endPoint
     
-    
     init(ratio: Double){
         self.ratio = ratio
         frame_size = CGFloat(24*ratio)
@@ -101,6 +100,8 @@ struct scrollView: View{
         
         let count = completedVM.getCount(d: date)
         let total = HabitVM.shared.getNumOfTodayHabit()
+        print(date)
+        print("total=", total, "count=", count)
         //        print("cout =", count)
         
         if count == 0 {

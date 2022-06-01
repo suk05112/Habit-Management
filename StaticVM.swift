@@ -74,8 +74,14 @@ class StaticVM: ObservableObject {
     }
     
     func get7days() -> ([Int],[String]){ //최근 7일
-        let object = realm!.objects(CompletedList.self)
+        var object = Array(realm!.objects(CompletedList.self))
 
+        if object.count<7{
+            for _ in 0..<(7-object.count){
+                object.append(CompletedList())
+            }
+                    
+        }
         var dayStr: [String] = []
         var dayArray: [Int] = Array(repeating: 0, count: 7)
         let str_today = dateFormatter.string(from: Date())
@@ -114,17 +120,23 @@ class StaticVM: ObservableObject {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
         
-        let object = realm!.objects(CompletedList.self)
-
+        var object = realm?.objects(CompletedList.self)
         var weekArray: [Int] = Array(repeating: 0, count: 52)
-                
-        for item in object{
-            let date = dateFormatter.date(from: item.date)!
-            let weekNO = Calendar.current.dateComponents([.weekOfYear], from: date).weekOfYear!
-            
-            weekArray[weekNO-1] += item.completed.count
 
+        print("in getweeks")
+        print(object)
+ 
+        if object?.first?.date != "" {
+                    
+            for item in object!{
+                let date = dateFormatter.date(from: item.date)!
+                let weekNO = Calendar.current.dateComponents([.weekOfYear], from: date).weekOfYear!
+                
+                weekArray[weekNO-1] += item.completed.count
+
+            }
         }
+
         
         var weekStr: [String] = []
         var weekno = getWeekOfNO(date: Date())
@@ -167,7 +179,7 @@ class StaticVM: ObservableObject {
     
     func getMonth() -> ([Int], [String]){
 
-        let object = realm!.objects(CompletedList.self)
+        let object = realm?.objects(CompletedList.self)
 
         var monthArray: [Int] = Array(repeating: 0, count: 12)
         var monthStr: [String] = []
@@ -180,9 +192,12 @@ class StaticVM: ObservableObject {
         let start = str.index(str.startIndex, offsetBy: 5)
         let end = str.index(str.endIndex, offsetBy: -3)
         
-        for item in object{
-            var month1 = Int(item.date.substring(with:start..<end))!
-            monthArray[month1-1] += item.completed.count
+        if object?.first?.date != "" {
+
+            for item in object!{
+                var month1 = Int(item.date.substring(with:start..<end))!
+                monthArray[month1-1] += item.completed.count
+            }
         }
         
         return (monthArray, monthStr)

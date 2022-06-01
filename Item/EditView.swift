@@ -74,6 +74,7 @@ struct EditView: View{
                 Button(action: {
                     self.check(myItem.id!)
                     staticVM.addOrUpdate()
+                    HabitVM.shared.setContiuity(at: myItem)
                     withAnimation(.easeOut){
                         offset = 0
                     }

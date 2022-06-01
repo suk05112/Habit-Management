@@ -23,29 +23,34 @@ struct ItemView: View{
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.white)
                     .shadow(radius: 5)
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
                     .frame(width: .none, height: 80)
-                
+                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+
                 HStack{
                     VStack(alignment: .leading){
-                        HStack{
-                            Text("\(myItem.continuity)일")
-                                .font(.system(size: 12))
-                                .bold()
-                                .foregroundColor(Color(hex: "#38AC3C"))
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                            Text("연속 실천 중🔥")
-                                .font(.system(size: 12))
-                                .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
-                            Spacer()
-                        }
                         
+                        Text("\(getWeekStr()) 반복")
+                            .font(.system(size: 12))
+                            .bold()
+                            .foregroundColor(Color(hex: "#38AC3C"))
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
                         Text(myItem.name)
                             .font(.system(size: 23, weight: .medium))
                     }
+
                     Spacer()
-                    HStack{}
+                    HStack(){
+                        Text("\(myItem.continuity)일")
+                            .font(.system(size: 23))
+                            .bold()
+                            .foregroundColor(Color(hex: "#38AC3C"))
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                        Text("연속 실천 중🔥")
+                            .font(.system(size: 23))
+                            .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
+                    }
                 }
+
                 .padding(20)
                 .opacity(completedVM.todayDoneList.completed.contains(myItem.id!) ? 0.5 : 1)
                 
@@ -72,6 +77,27 @@ struct ItemView: View{
         else{
             return false
         }
+    }
+    
+    func getWeekStr() -> String{
+        var str = ""
+        let sorted = myItem.weekIter.sorted(by: <)
+        if sorted == [2,3,4,5,6]{
+            str = "평일"
+        }
+        else if sorted == [1, 7]{
+            str = "주말"
+        }
+        else if sorted == [1,2,3,4,5,6,7]{
+            str = "매일"
+        }
+        else{
+            sorted.forEach{
+                str += Week(rawValue: $0)!.kor
+            }
+        }
+
+        return str
     }
 }
 
