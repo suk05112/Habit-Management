@@ -21,7 +21,8 @@ class compltedLIstVM: ObservableObject {
     private init(){
         
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         let today = dateFormatter.string(from: Date())
         
         let realm = try? Realm()
@@ -72,7 +73,7 @@ class compltedLIstVM: ObservableObject {
     
     func complete(id: String){
         let today = dateFormatter.string(from: Date())
-        
+        print("today=", today )
         let object2 = realm?.object(ofType: CompletedList.self, forPrimaryKey: today)
         print("id = ", id)
         print(object2)

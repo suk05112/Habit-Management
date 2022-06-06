@@ -77,11 +77,11 @@ struct Graph: View{
                                         let h2 = Double(h1)/Double(max)
                                         Rectangle()
                                             .fill(Color(hex: "#639F70"))
-                                            .frame(width: width, height: h2==0 ? CGFloat(1) : CGFloat(h2))
+                                            .frame(width: width, height: h2==0 ? CGFloat(0) : CGFloat(h2))
                                         Spacer()
                                 }
                             }
-                            .frame(width: 300)
+                            .frame(width: 300, height: 150)
 
                             Divider().background(Color.black)
                                 .frame(width: 340)

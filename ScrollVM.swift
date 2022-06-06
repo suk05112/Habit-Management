@@ -14,6 +14,7 @@ class ScrollVM: ObservableObject{
     static let shared = ScrollVM()
     
     @Published var DayArray = ScrollData().DayArray
+    @Published var lastWeek = ScrollData().DayArray[52]
 //    @Published var scrollData: [[String]] = [[]]
     
 //    var DayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)

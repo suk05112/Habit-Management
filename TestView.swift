@@ -109,7 +109,7 @@ struct CubeRotationModifier: AnimatableModifier {
             content
                 .rotation3DEffect(
                     Angle(degrees: calcRotation()),
-                    axis: (x: 1.0, y: 0.0, z: 0.0),
+                    axis: (x: 1.0, y: 0.0, z: 0.01),
                     anchor: direction == .enter ? .leading : .trailing,
                     anchorZ: 0,
                     perspective: 0.0

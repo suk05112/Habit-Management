@@ -14,6 +14,9 @@ struct ItemView: View{
     @Binding var offset: CGFloat
     @Binding var name: String
     
+    @State var slideRight = false
+    @State var slideLeft = false
+    
     @StateObject var completedVM = compltedLIstVM.shared
     
     var body: some View {
@@ -41,24 +44,27 @@ struct ItemView: View{
                     Spacer()
                     HStack(){
                         Text("\(myItem.continuity)일")
-                            .font(.system(size: 23))
+                            .font(.system(size: 20))
                             .bold()
                             .foregroundColor(Color(hex: "#38AC3C"))
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
                         Text("연속 실천 중🔥")
-                            .font(.system(size: 23))
+                            .font(.system(size: 20))
                             .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
                     }
                 }
 
-                .padding(20)
+                .padding(25)
                 .opacity(completedVM.todayDoneList.completed.contains(myItem.id!) ? 0.5 : 1)
                 
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 print("item touch")
-                showingModal = true
+//                showingModal = true
+                slideLeft = false
+                slideRight = false
+                offset = 0
                 
             }
             .offset(x: offset)
@@ -103,62 +109,64 @@ struct ItemView: View{
 
 
 extension ItemView{
+    
     func onChanged(value: DragGesture.Value){
         print("offset", value.translation.width)
-        
+       
         if value.translation.width < 0 {
-            if myItem.isSwipe{
-                offset = value.translation.width - 90
+            print("2-2번걸림")
+            
+            if (-value.translation.width < -UIScreen.main.bounds.width/2){
+                offset = slideLeft ? value.translation.width - 60 : value.translation.width
             }
             else{
-                offset = value.translation.width
+                offset = value.translation.width - 60
             }
+            
         }
         else{
-            if myItem.isSwipe{
-                offset = value.translation.width + 90
+            print("2번걸림")
+
+            if (value.translation.width < UIScreen.main.bounds.width/2){
+                offset = slideRight ? value.translation.width + 110 : value.translation.width
             }
             else{
-                offset = value.translation.width
+                offset =  UIScreen.main.bounds.width/2
             }
+            
         }
+
     }
     
     func onEnd(value: DragGesture.Value){
         
         withAnimation(.easeOut){
+
             if value.translation.width < 0{
-                
-                if -value.translation.width > UIScreen.main.bounds.width/2{
-                    offset = -1000
-//                    deleteItem()
-                }
-                else if -myItem.offset > 50{
-                    myItem.isSwipe = true
-                    offset = -90
-                }
-                else{
-                    myItem.isSwipe = false
+                print("여기 걸림~!")
+                if slideRight{
+                    slideRight = false
                     offset = 0
                 }
+
+                else{
+                    slideLeft = true
+                    offset = -60
+                }
+
             }
             else{
-                //                myItem.isSwipe = false
-                //                offset = 0
-                
-                if value.translation.width > UIScreen.main.bounds.width/2{
-                    offset = 1000
-                }
-                else if myItem.offset > 50{
-                    myItem.isSwipe = true
-                    offset = 90
-                }
-                else{
-                    myItem.isSwipe = false
+                if slideLeft{
+                    slideLeft = false
                     offset = 0
                 }
-                
+                else{
+                    slideRight = true
+                    offset = 110
+
+                }
             }
+
         }
         
     }

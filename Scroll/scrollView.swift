@@ -11,7 +11,7 @@ import SwiftUI
 struct scrollView: View{
     
     let scroll_data = ScrollData.shared
-    var frame_size: CGFloat = CGFloat(24)
+    var frame_size: CGFloat = CGFloat(20)
 
     var ratio:Double
     @StateObject var completedVM = compltedLIstVM.shared
@@ -20,7 +20,7 @@ struct scrollView: View{
     
     init(ratio: Double){
         self.ratio = ratio
-        frame_size = CGFloat(24*ratio)
+        frame_size = CGFloat(20*ratio)
     }
     
     var body: some View {
@@ -30,16 +30,16 @@ struct scrollView: View{
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                 .fill(Color(hex: "#639F70"))
                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                .frame(width: .none, height: 250*ratio)
+                .frame(width: .none, height: 220*ratio)
             
             VStack{
                 HStack(alignment: .bottom){
-                    VStack(alignment: .center ,spacing:12){
+                    VStack(alignment: .center ,spacing:3){
                         ForEach(1...7, id: \.self){ i in
                             WeekView(week: i)
                         }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 3))
                     
                     ScrollViewReader { proxy in
                         
@@ -49,7 +49,7 @@ struct scrollView: View{
                                 HStack(alignment: .center, spacing: 3) {
                                     ForEach(scrollVM.MonthArray, id: \.self) { item in
                                         Text(item)
-                                            .font(.system(size: 13, weight: .bold))
+                                            .font(.system(size: 10, weight: .bold))
                                             .foregroundColor(Color.white)
                                             .frame(width: frame_size, height: frame_size)
                                     }
@@ -57,7 +57,7 @@ struct scrollView: View{
                                 
                                 HStack(alignment: .center, spacing: 3) {
                                     
-                                    ForEach(scrollVM.DayArray, id:\.self){i in
+                                    ForEach(scrollVM.DayArray[0..<52], id:\.self){i in
                                         VStack(alignment: .center, spacing: 3) {
                                             ForEach(i, id:\.self){j in
                                                 Text("\(j)")
@@ -70,10 +70,23 @@ struct scrollView: View{
                                             }
                                         }
                                     }
+                                    VStack(alignment: .center, spacing: 3) {
+                                        ForEach(scrollVM.DayArray[52], id:\.self){j in
+                                            Text("\(j)")
+                                                .frame(width: frame_size, height: frame_size)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                                        .fill(j == "" ? Color(hex: "#639F70"): getColor(date: j))
+                                                        .frame(width: frame_size, height: frame_size)
+                                                )
+
+                                        }
+
+                                    }
                                     HStack{}.id(endPoint)
-                                    
+
                                 }
-                                
+
                             }
                         }
                         .onAppear(){
@@ -100,9 +113,8 @@ struct scrollView: View{
         
         let count = completedVM.getCount(d: date)
         let total = HabitVM.shared.getNumOfTodayHabit()
-        print(date)
-        print("total=", total, "count=", count)
-        //        print("cout =", count)
+//        print(date)
+//        print("total=", total, "count=", count)
         
         if count == 0 {
             return Color(hex: "#EFF0EF")
@@ -130,9 +142,9 @@ struct WeekView: View{
     }
     var body: some View {
         Text("\(weekStr)")
-            .font(.system(size: 13, weight: .bold))
+            .font(.system(size: 10, weight: .bold))
             .foregroundColor(Color.white)
-            .frame(height: 16)
+            .frame(height: 20)
             .padding((EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)))
     }
 }

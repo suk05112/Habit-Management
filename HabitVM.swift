@@ -14,24 +14,35 @@ class HabitVM: ObservableObject {
     let dateFormatter = DateFormatter()
 
     @Published var result: [Habit] = []
-    var hideCompleted: Bool = false
-    var isTodaydone: Bool = false
-    var showAll: Bool = false
+    @Published var hideCompleted: Bool
+    @Published var showAll: Bool
 
+    var isTodaydone: Bool = false
     var habit: Results<Habit>?
     var token: NotificationToken? = nil
     var realm: Realm?
 
     init(){
+
+        if UserDefaults.standard.object(forKey: "showAll") == nil{
+            print("show nil")
+            UserDefaults.standard.set(false, forKey: "showAll")
+        }
+        if UserDefaults.standard.object(forKey: "hideCompleted") == nil{
+            print("hide nil")
+            UserDefaults.standard.set(false, forKey: "hideCompleted")
+        }
+        showAll = UserDefaults.standard.bool(forKey: "showAll")
+        hideCompleted = UserDefaults.standard.bool(forKey: "hideCompleted")
+        
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         
         print("view model init")
         
         realm = try! Realm()
-//        self.realm = realm
         fetchItem()
-
 
         if let group = realm?.objects(Habit.self) {
             self.habit = group
@@ -55,7 +66,6 @@ class HabitVM: ObservableObject {
                 
             case .update(_, deletions: let deletions, insertions: let insertions, modifications: let modifications):
                 print("update")
-//                fetchItem()
 //                self.objectWillChange.send()
                 break
             }
@@ -63,6 +73,48 @@ class HabitVM: ObservableObject {
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
+
+}
+
+
+//get result
+extension HabitVM{
+    public func fetchItem(){
+        print("fetchItem")
+
+        var temp_result :[Habit]
+
+        if showAll{
+            temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
+        }
+        else{
+            temp_result = getTodayHabit()
+        }
+        
+        if hideCompleted{
+            temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)}
+        }
+
+        temp_result = temp_result.filter{!$0.isInvalidated}
+        result = temp_result
+        
+    }
+    
+    func getTodayHabit() -> [Habit]{
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var result:[Habit] = []
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(todayWeek){
+                result.append($0)
+            }
+        }
+        return result
+    }
+
+}
+
+//crud
+extension HabitVM{
     func addItem(name: String, iter: [Int]){
         print("add item")
         if name != "", let realm = habit?.realm{
@@ -97,6 +149,10 @@ class HabitVM: ObservableObject {
         }
     }
     
+}
+
+//continuity
+extension HabitVM{
     func setContiuity(at item: Habit){
         try? realm!.write{
             if compltedLIstVM.shared.todayDoneList.completed.contains(item.id!){
@@ -108,90 +164,6 @@ class HabitVM: ObservableObject {
         }
     }
     
-    public func setting(hideCompleted: Bool,showAll: Bool ){
-        self.hideCompleted = hideCompleted
-        self.showAll = showAll
-        fetchItem()
-    }
-    public func fetchItem(){
-        print("fetchItem")
-//        getContinuity()
-
-        var temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
-
-        if showAll{
-            temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
-        }
-        else{
-            temp_result = getTodayHabit()
-        }
-        
-        if hideCompleted{
-            temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)}
-        }
-
-        temp_result = temp_result.filter{!$0.isInvalidated}
-        result = temp_result
-        
-    }
-    
-    func getResult(habit: Habit) -> Habit{
-        var myresult:[Habit] = result
-        if let index = result.firstIndex(where: { $0 == habit}){
-            return myresult[index]
-
-        }
-        return Habit()
-    }
-    
-    func getTodayHabit() -> [Habit]{
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
-        var result:[Habit] = []
-        realm!.objects(Habit.self).forEach{
-            if $0.weekIter.contains(todayWeek){
-                result.append($0)
-            }
-        }
-        return result
-    }
-    
-    func getArrayIter(at habit: Habit) -> [Int]{
-        return Array(habit.weekIter)
-    }
-    
-    func getNumOfTodayHabit() -> Int{
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
-        var count = 0
-        
-        realm!.objects(Habit.self).forEach{
-            if $0.weekIter.contains(todayWeek){
-                count += 1
-            }
-        }
-        return count
-    }
-    
-    func getAllDoneContinuity() -> Int{
-        var allDoneContinuity = 0
-        let today_total = getNumOfTodayHabit()
-        let today_done = StaticVM.shared.getData(selected: 1).last!
-        
-        if UserDefaults.standard.object(forKey: "allDoneContinuity") != nil {
-            allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
-
-            if today_total == today_done{
-                UserDefaults.standard.set(allDoneContinuity += 1, forKey: "allDoneContinuity")
-
-            }
-            else{
-                UserDefaults.standard.set(0, forKey: "allDoneContinuity")
-
-            }
-
-        }
-
-        return allDoneContinuity
-    }
     func getContinuity(){
         print("in get continue")
         
@@ -222,8 +194,60 @@ class HabitVM: ObservableObject {
 
     }
     
+    func getAllDoneContinuity() -> Int{
+        var allDoneContinuity = 0
+        let today_total = getNumOfTodayHabit()
+        let today_done = StaticVM.shared.getData(selected: 1).last!
+        
+        if UserDefaults.standard.object(forKey: "allDoneContinuity") != nil {
+            allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+
+            if today_total == today_done{
+                UserDefaults.standard.set(allDoneContinuity += 1, forKey: "allDoneContinuity")
+
+            }
+            else{
+                UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+
+            }
+
+        }
+
+        return allDoneContinuity
+    }
+
 }
 
+extension HabitVM{
+    
+    func getArrayIter(at habit: Habit) -> [Int]{
+        return Array(habit.weekIter)
+    }
+    
+    func getNumOfTodayHabit() -> Int{
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var count = 0
+        
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(todayWeek){
+                count += 1
+            }
+        }
+        return count
+    }
+}
 
-
-
+//setting
+extension HabitVM{
+    func toggleHideComplete(){
+        hideCompleted.toggle()
+        UserDefaults.standard.set(hideCompleted, forKey: "hideCompleted")
+        fetchItem()
+    }
+    
+    func toggleShowAll(){
+        showAll.toggle()
+        UserDefaults.standard.set(showAll, forKey: "showAll")
+        fetchItem()
+    }
+}

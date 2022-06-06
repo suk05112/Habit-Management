@@ -75,9 +75,7 @@ struct EditView: View{
                     self.check(myItem.id!)
                     staticVM.addOrUpdate()
                     HabitVM.shared.setContiuity(at: myItem)
-                    withAnimation(.easeOut){
-                        offset = 0
-                    }
+                    HabitVM.shared.fetchItem()
                     scrollVM.getThisWeekDayArray()
                 }){
                     Image(systemName: "checkmark")

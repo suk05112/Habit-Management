@@ -19,14 +19,13 @@ struct MainView: View {
     private var items: FetchedResults<Item>
     @EnvironmentObject var setting: Setting
 
-    
     @State private var showingDetail = false
     @State private var showingAdd = false
     @State private var modalPresented: Bool = false
     @State private var isEdit = false
     @State private var selectedItem = Habit()
-    @State private var hideCompleted = false
-    @State private var showAll = false
+//    @State private var hideCompleted = false
+//    @State private var showAll = false
     
     
     @State private var name: String = ""
@@ -39,18 +38,6 @@ struct MainView: View {
 
     init(){
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        
-        if UserDefaults.standard.object(forKey: "showAll") == nil{
-            UserDefaults.standard.set(false, forKey: "showAll")
-        }
-        if UserDefaults.standard.object(forKey: "hideCompleted") == nil{
-            UserDefaults.standard.set(false, forKey: "hideCompleted")
-        }
-        self.showAll = UserDefaults.standard.bool(forKey: "showAll")
-        self.hideCompleted = UserDefaults.standard.bool(forKey: "hideCompleted")
-
-        UserDefaults.standard.set(false, forKey: "showAll")
-        self.showAll = UserDefaults.standard.bool(forKey: "showAll")
 
     }
     
@@ -80,20 +67,19 @@ struct MainView: View {
                         Spacer()
                         
                         HStack{
-                            Text(showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
+                            Text(ViewModel.showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
                                 .onTapGesture {
-                                    showAll.toggle()
-                                    ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
-                                    UserDefaults.standard.set(showAll, forKey: "showAll")
+                                    ViewModel.toggleShowAll()
+
                                 }
                             Spacer()
-                            Text(hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
+                            Text(ViewModel.hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
                                 .onTapGesture {
-                                    hideCompleted.toggle()
-                                    ViewModel.setting(hideCompleted: hideCompleted, showAll: showAll)
+                                    ViewModel.toggleHideComplete()
+
                                 }
                         }
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
 
                         Spacer()
                         
@@ -188,6 +174,8 @@ struct MainView: View {
         return 0
 
     }
+    
+
 }
 
 struct SizePreferenceKey: PreferenceKey {

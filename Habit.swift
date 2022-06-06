@@ -36,7 +36,8 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable{
         self.dataArray = iter
         
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         print("date = ", dateFormatter.string(from: Date()))
         self.id = dateFormatter.string(from: Date())
         }

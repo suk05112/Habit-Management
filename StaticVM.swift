@@ -67,7 +67,8 @@ class StaticVM: ObservableObject {
         yearTotal = getYearTotal()
 
         try? realm!.write{
-            realm!.add(Statics(year: current_year ,dayArray: get7days().0, weekArray: getWeeks().0, monthArray: getMonth().0, total: getYearTotal()), update: .modified)
+//            realm!.add(Statics(year: current_year ,dayArray: get7days().0, weekArray: getWeeks().0, monthArray: getMonth().0, total: getYearTotal()))
+            realm!.add(Statics(year: current_year ,dayArray:day, weekArray: week, monthArray: month, total: yearTotal), update: .modified)
         }
         total = getTotal()
 
@@ -120,46 +121,63 @@ class StaticVM: ObservableObject {
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
         
-        var object = realm?.objects(CompletedList.self)
-        var weekArray: [Int] = Array(repeating: 0, count: 52)
+        
+        let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+        
+        var weekArray: [Int]
+        
+        if let week = realm?.objects(Statics.self).filter(NSPredicate(format: "year == \(2022)")).first?.week{
+            weekArray = Array(week)
+        }
+        else{
+            weekArray = Array(repeating: 0, count: 52)
+        }
+        
+
 
         print("in getweeks")
-        print(object)
  
+        if let completed = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", dateFormatter.string(from: Date()))).first?.completed {
+            print(completed)
+            weekArray[weekNO-1] = completed.count
+        }
+        
+        
+        /*
+        let object = realm?.objects(CompletedList.self)
         if object?.first?.date != "" {
                     
             for item in object!{
                 let date = dateFormatter.date(from: item.date)!
                 let weekNO = Calendar.current.dateComponents([.weekOfYear], from: date).weekOfYear!
                 
-                weekArray[weekNO-1] += item.completed.count
+                weekArray[weekNO-1] = item.completed.count
 
             }
         }
-
+        */
         
         var weekStr: [String] = []
         var weekno = getWeekOfNO(date: Date())
 
         var month = Calendar.current.dateComponents([.month], from: Date()).month!
-        var day = Calendar.current.dateComponents([.day], from: Date()).day!
+        let day = Calendar.current.dateComponents([.day], from: Date()).day!
         
         for _ in 0..<5{
             weekStr.append("\(month)월\n\(weekno)주")
             weekno -= 1
             if weekno < 1{
                 month -= 1
-                let prevMonth = DateComponents(year: 2020, month: month-1, day: 18, hour: 21)
+
                 weekno = getWeekOfNO(date: calendar.date(byAdding: .day, value: -day, to: Date())!)
             }
         }
         
 //        print(weekStr)
         
-        let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-        let a = b-5
 
-        return (Array(weekArray[a..<b]), weekStr.reversed())
+
+        return (Array(weekArray), weekStr.reversed())
     }
     
     func getWeekOfNO(date: Date) -> Int{
@@ -195,7 +213,7 @@ class StaticVM: ObservableObject {
         if object?.first?.date != "" {
 
             for item in object!{
-                var month1 = Int(item.date.substring(with:start..<end))!
+                let month1 = Int(item.date.substring(with:start..<end))!
                 monthArray[month1-1] += item.completed.count
             }
         }
@@ -218,7 +236,9 @@ class StaticVM: ObservableObject {
         case 1:
             return day
         case 2:
-            return week
+            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            let a = b-5
+            return Array(week[a..<b])
         case 3:
             return month
         default:
@@ -246,7 +266,10 @@ extension String {
     func toDate() -> Date? {//"yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+
+//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
         if let date = dateFormatter.date(from: self) {
             return date
@@ -257,15 +280,19 @@ extension String {
     func toString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter.string(from: self.toDate()!)
     }
     
     func convert() -> String{
         let monthFormatter = DateFormatter()
         let dayFormatter = DateFormatter()
-        monthFormatter.timeZone = TimeZone(identifier: "UTC")
-        dayFormatter.timeZone = TimeZone(identifier: "UTC")
+        monthFormatter.locale = Locale(identifier: "ko_KR")
+        dayFormatter.locale = Locale(identifier: "ko_KR")
+
+        monthFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dayFormatter.timeZone = TimeZone(abbreviation: "KST")
 
         monthFormatter.dateFormat = "MM"
         dayFormatter.dateFormat = "dd"
@@ -283,7 +310,8 @@ extension Date {
     func toString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter.string(from: self)
     }
 }
