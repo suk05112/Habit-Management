@@ -21,6 +21,7 @@ struct EditView: View{
     @Binding var isEdit : Bool
     @Binding var selectedItem: Habit
     @Binding var offset: CGFloat
+    @Binding var name: String
 
     var body: some View {
         HStack{
@@ -35,7 +36,7 @@ struct EditView: View{
                 Image(systemName: "trash")
                     .font(.title)
                     .foregroundColor(.white)
-                    .frame(width: 50, height: 80)
+                    .scaledFrame(width: 50, height: 80)
                     .background(Color.red)
                     .cornerRadius(10)
             }
@@ -56,6 +57,7 @@ struct EditView: View{
                     self.isAddView = true
                     self.isEdit = true
                     self.selectedItem = myItem
+                    self.name = myItem.name
                     withAnimation(.easeOut){
                         offset = 0
                     }
@@ -63,7 +65,7 @@ struct EditView: View{
                     Image(systemName: "pencil")
                         .font(.title)
                         .foregroundColor(.white)
-                        .frame(width: 50, height: 80)
+                        .scaledFrame(width: 50, height: 80)
                         .background(Color(hex: "#92BCA3"))
                         .cornerRadius(10)
                     
@@ -76,12 +78,12 @@ struct EditView: View{
                     staticVM.addOrUpdate()
                     HabitVM.shared.setContiuity(at: myItem)
                     HabitVM.shared.fetchItem()
-                    scrollVM.getThisWeekDayArray()
+                    staticVM.getThisWeekDayArray()
                 }){
                     Image(systemName: "checkmark")
                         .font(.title)
                         .foregroundColor(.white)
-                        .frame(width: 50, height: 80)
+                        .scaledFrame(width: 50, height: 80)
                         .background(Color(hex: "#D4DED8"))
                         .cornerRadius(10)
                 }

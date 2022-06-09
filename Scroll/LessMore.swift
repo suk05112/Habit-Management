@@ -9,28 +9,22 @@ import Foundation
 import SwiftUI
 
 struct LessMore: View {
-
+    @EnvironmentObject var setting: Setting
+    var colors = ["#E6E6E6", "#CFEECB", "#7BE084", "#118E15"]
+    
     var body: some View {
         HStack{
             Text("Less")
-                .font(.system(size: 13, weight: .bold))
+                .scaledText(size: 13, weight: .semibold)
                 .foregroundColor(Color.white)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(Color(hex: "#E6E6E6"))
-                .frame(width: 16, height: 16)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(Color(hex: "#CFEECB"))
-                .frame(width: 16, height: 16)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(Color(hex: "#7BE084"))
-                .frame(width: 16, height: 16)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(Color(hex: "#118E15"))
-                .frame(width: 16, height: 16)
+            
+            ForEach(colors, id: \.self) { color in
+                RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
+                    .LessMoreStyle(color: color )
+            }
             Text("More")
-                .font(.system(size: 13, weight: .bold))
+                .scaledText(size: 13, weight: .semibold)
                 .foregroundColor(Color.white)
-
         }
 
     }
@@ -41,3 +35,22 @@ struct LessMore_Previews: PreviewProvider {
         LessMore().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
+
+struct LessMoreModifier: ViewModifier {
+    var color: String
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color(hex: color))
+            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: -3)
+            .scaledFrame(width: 16, height: 16, isScroll: true)
+
+    }
+}
+
+extension View {
+    func LessMoreStyle(color: String) -> some View{
+        modifier(LessMoreModifier(color: color))
+    }
+
+}
+

@@ -38,7 +38,7 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable{
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        print("date = ", dateFormatter.string(from: Date()))
+//        print("date = ", dateFormatter.string(from: Date()))
         self.id = dateFormatter.string(from: Date())
         }
 }

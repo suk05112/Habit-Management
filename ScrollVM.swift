@@ -13,26 +13,22 @@ class ScrollVM: ObservableObject{
     
     static let shared = ScrollVM()
     
-    @Published var DayArray = ScrollData().DayArray
-    @Published var lastWeek = ScrollData().DayArray[52]
-//    @Published var scrollData: [[String]] = [[]]
+    var DayArray = ScrollData().DayArray
+    @Published var thisWeek = ScrollData().DayArray[52]
     
 //    var DayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)
-    var MonthArray: [String] = []
+    var MonthArray: [String] = [" "]
     
     let dateFormatter = DateFormatter()
     let calendar = Calendar.current
     let todayWeek = Calendar.current.dateComponents([.weekday], from: Date())
 
     private init(){
+        print("scroll init")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         getScrollData()
-        getThisWeekDayArray()
-//        
-//        scrollData.DayArray = DayArray
-//        scrollData.MonthArray = MonthArray
+//        getThisWeekDayArray()
     }
-    
 
     func getScrollData(){
 
@@ -63,32 +59,5 @@ class ScrollVM: ObservableObject{
             MonthArray.append(month)
         }
     }
-    
-    func getThisWeekDayArray(){
-        var startDate = Date(timeIntervalSinceNow: TimeInterval(-3600*24*(todayWeek.weekday!-1)))
-        
-        var month = " "
 
-        //일-1, 토-7
-        for i in stride(from: 0, to: todayWeek.weekday!, by: 1){
-            DayArray[52][i] = dateFormatter.string(from: startDate)
-            let str = DayArray[52][i]
-            
-            //일 구하기
-//            let start = str.index(str.endIndex, offsetBy: -2)
-//            let end = str.endIndex
-//            let range = start..<end
-            
-            //월 구하기
-            let start = str.index(str.startIndex, offsetBy: 5)
-            let end = str.index(str.endIndex, offsetBy: -3)
-            
-            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
-            if str != "", str.substring(with:start..<end) == "01"{
-                month = str.substring(with:start..<end)
-            }
-            
-        }
-        MonthArray.append(month)
-    }
 }

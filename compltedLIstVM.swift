@@ -73,11 +73,12 @@ class compltedLIstVM: ObservableObject {
     
     func complete(id: String){
         let today = dateFormatter.string(from: Date())
+        var cancel = false
         print("today=", today )
         let object2 = realm?.object(ofType: CompletedList.self, forPrimaryKey: today)
         print("id = ", id)
         print(object2)
-
+        print("end")
         
         if let object = object2{
             if object2?.completed.contains(id) == false{
@@ -91,6 +92,7 @@ class compltedLIstVM: ObservableObject {
                         object.completed.remove(at: index)
                     }
                 }
+                cancel = true
             }
         }
         else{
@@ -104,6 +106,31 @@ class compltedLIstVM: ObservableObject {
             todayDoneList = todaydone
         }
 
+        getAllDoneContinuity(cancel)
+
+        
+    }
+    func getAllDoneContinuity(_ cancel: Bool){
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        
+        if UserDefaults.standard.object(forKey: "allDoneContinuity") == nil {
+            UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+
+        }
+        let allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+
+        if todayDoneList.completed.count == Week(rawValue: todayWeek)!.total{
+            UserDefaults.standard.set(allDoneContinuity+1, forKey: "allDoneContinuity")
+
+        }
+        else if (todayDoneList.completed.count+1 == Week(rawValue: todayWeek)!.total) && cancel{
+            UserDefaults.standard.set(allDoneContinuity-1, forKey: "allDoneContinuity")
+
+        }
+
+//        UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+        print("alldone Continue", UserDefaults.standard.integer(forKey: "allDoneContinuity"))
+//        return allDoneContinuity
     }
     
     func getCount(d: String) -> Int{

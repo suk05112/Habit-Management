@@ -195,8 +195,8 @@
 		0391650E283B5DE800CA0028 /* Add */ = {
 			isa = PBXGroup;
 			children = (
-				03CFE0DC27F58D3F004C54B6 /* AddView.swift */,
 				0391650F283B5E4D00CA0028 /* ActionSheedCard.swift */,
+				03CFE0DC27F58D3F004C54B6 /* AddView.swift */,
 				03916511283B5E6200CA0028 /* GreyOutOfFocusView.swift */,
 			);
 			path = Add;

@@ -11,6 +11,8 @@ import UIKit
 import RealmSwift
 
 public struct AddView: View{
+    @ObservedObject var textfield = TextLimiter()
+
     @Binding var name: String
     @Binding var show: Bool
     @Binding var isEdit: Bool
@@ -33,8 +35,9 @@ public struct AddView: View{
                             .frame(width: 400, height: 300)
                             .foregroundColor(Color.white)
                             
+                            
                         VStack(alignment: .center){
-                            TextField("제목을 입력하세요", text: $selectedItem.name)
+                            TextField("제목을 입력하세요", text: $name)
                                 .textFieldStyle(.roundedBorder)
                                 .font(.system(size: 25))
                                 .foregroundColor(Color.black)
@@ -55,12 +58,15 @@ public struct AddView: View{
                                     .onTapGesture {
                                         show = false
                                         if !isEdit{
-                                            ViewModel.addItem(name: selectedItem.name, iter: iter)
+                                            ViewModel.addItem(name: name, iter: iter)
                                         }
                                         else{
-                                            ViewModel.updateItem(name: selectedItem.name, iter: iter, at: selectedItem)
+
+                                            ViewModel.updateItem(name: name, iter: iter, at: selectedItem)
                                             self.isEdit = false
                                         }
+                                        self.name = ""
+
                                     }
                                 RoundedRectangle(cornerRadius: 15, style: .continuous)
                                     .fill(Color.green)
@@ -69,6 +75,7 @@ public struct AddView: View{
                                         Text("취소")
                                      )
                                     .onTapGesture {
+                                        self.name = ""
                                         show = false
                                     }
                             }
@@ -80,7 +87,6 @@ public struct AddView: View{
 
                     }
                 }
-                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
 
             }
             .contentShape(Rectangle())
@@ -144,4 +150,20 @@ extension View {
 }
 #endif
 
+
+class TextLimiter: ObservableObject {
+    private let limit: Int = 8
+    let endIdx: String.Index = "abcdabcd".index("abcdabcd".startIndex, offsetBy: 8)
+    
+    @Published var value = "" {
+        didSet {
+            if value.count > 9 {
+                value = String(value.prefix(8))
+
+            }
+            
+        }
+    }
+
+}
 

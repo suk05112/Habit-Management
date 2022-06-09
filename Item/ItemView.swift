@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ItemView: View{
+    @EnvironmentObject var setting: Setting
+
     @Binding var myItem: Habit
     @Binding var showingModal: Bool
     @Binding var offset: CGFloat
@@ -26,35 +28,36 @@ struct ItemView: View{
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.white)
                     .shadow(radius: 5)
-                    .frame(width: .none, height: 80)
-                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                    .scaledFrame(width: .none, height: 80)
+                    .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
 
                 HStack{
                     VStack(alignment: .leading){
                         
                         Text("\(getWeekStr()) 반복")
-                            .font(.system(size: 12))
-                            .bold()
+                            .scaledText(size: 12, weight: .semibold)
                             .foregroundColor(Color(hex: "#38AC3C"))
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                         Text(myItem.name)
-                            .font(.system(size: 23, weight: .medium))
+                            .scaledText(size: 23, weight: .medium)
+
                     }
 
                     Spacer()
                     HStack(){
                         Text("\(myItem.continuity)일")
-                            .font(.system(size: 20))
-                            .bold()
+                            .scaledText(size: 20, weight: .semibold)
                             .foregroundColor(Color(hex: "#38AC3C"))
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
+                            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+
                         Text("연속 실천 중🔥")
-                            .font(.system(size: 20))
-                            .padding(EdgeInsets(top: 0, leading: -8, bottom: 0, trailing:0 ))
+                            .scaledText(size: 20, weight: .none)
+                            .scaledPadding(top: 0, leading: -8, bottom: 0, trailing: 0)
+
                     }
                 }
 
-                .padding(25)
+                .padding(23*setting.HeightRatio)
                 .opacity(completedVM.todayDoneList.completed.contains(myItem.id!) ? 0.5 : 1)
                 
             }

@@ -21,7 +21,7 @@ struct ReportView: View{
     var list: [String] = []
     
     init(){
-        list = getReportText()
+//        list = getReportText()
         index = list.count
     }
     
@@ -32,7 +32,7 @@ struct ReportView: View{
                  .fill(Color.white)
                  .shadow(radius: 5)
                  .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                 .frame(width: .none, height: 80)
+                 .scaledFrame(width: .none, height: 80)
                  
 
              ZStack{
@@ -43,6 +43,8 @@ struct ReportView: View{
                              
                              Text("\(list[i])")
                                  .font(.system(size: 15, weight: .medium))
+                                 
+
                              HStack{
                                  Text("지난 주 대비")
                                      .font(.system(size: 12))
@@ -73,87 +75,5 @@ struct ReportView: View{
     }
     
     
-    func getReportText() -> [String]{
-        var list:[String] = []
-        
-        if let todayText = getTodayText() {
-            list.append(todayText)
-        }
 
-        list.append(getYesterDayText())
-        list.append(getWeekText())
-        list.append(getMonthText())
-        if let continuity = getCotinuityText() {
-            list.append(continuity)
-        }
-
-        print(list)
-        return list
-    }
-    
-    func getTodayText() -> String?{
-
-        if today_total == today_done+1{
-            return "이 습관만 완료하면 오늘 예정된 모든 습관을 완료할 수 있어요!"
-        }
-        return nil
-
-    }
-    func getYesterDayText() -> String{
-        var text: String
-
-
-        if today_done > yesterday_done{
-            text = "어제보다 예정된 습관을 \(today_done-yesterday_done)개 더 완료했어요!"
-        }
-        else{
-            text = "어제보다 예정된 습관을 \(yesterday_done - today_done)개를 덜 완료했어요!"
-        }
-        return text
-    }
-    
-    func getWeekText() -> String{
-        var text: String
-
-        let thisWeek  = StaticVM.shared.week.last!
-        let lastWeek = StaticVM.shared.week[3]
-        
-        if thisWeek > lastWeek{
-            text = "지난주보다 예정된 습관을 \(thisWeek - lastWeek)개 더 완료했어요!"
-        }
-        else{
-            text = "지난주보다 예정된 습관을 \(lastWeek - thisWeek)개 덜 완료했어요!"
-        }
-        
-        return text
-
-    }
-    
-    func getMonthText() -> String{
-        var text: String
-
-        let thisMonth  = StaticVM.shared.week.last!
-        let lastMonth = StaticVM.shared.week[3]
-        
-        if thisMonth > lastMonth{
-            text = "지난달보다 예정된 습관을 \(thisMonth - lastMonth)개 더 완료했어요!"
-        }
-        else{
-            text = "지난달보다 예정된 습관을 \(lastMonth - thisMonth)개 덜 완료했어요!"
-        }
-        return text
-
-    }
-    
-    func getCotinuityText() -> String?{
-        var text: String?
-        let allDoneContinuity = HabitVM.shared.getAllDoneContinuity()
-        
-        if allDoneContinuity != 0{
-            text = "\(allDoneContinuity)일 연속 모든 습관을 완료했어요!"
-        }
-        
-
-        return text
-    }
 }

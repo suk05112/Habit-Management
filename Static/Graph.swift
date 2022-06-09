@@ -25,7 +25,7 @@ struct Graph: View{
             ZStack{
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color(hex: "#E8E8E8"))
-                    .frame(width: .none, height: 30)
+                    .scaledFrame(width: .none, height: 30)
                 
                 HStack{
                     selectView(name: "최근 7일", id: 1, select: $selected)
@@ -48,8 +48,8 @@ struct Graph: View{
 
                 }
             }
-            .padding()
-            
+            .scaledPadding(top: 0, leading: 0, bottom: 20, trailing: 0)
+
             HStack(alignment: .bottom){
                 
                 Spacer(minLength: 3)
@@ -57,17 +57,18 @@ struct Graph: View{
                     HStack{
                         VStack{
                             Text("\(staticVM.getData(selected: selected).max()!)")
-                                .font(.system(size: 12))
-
+                                .scaledText(size: 12, weight: .none)
+                            
                             Spacer()
                             Text("\(staticVM.getData(selected: selected).max()!/2)")
-                                .font(.system(size: 12))
+                                .scaledText(size: 12, weight: .none)
 
                             Spacer()
                             Text("0")
-                                .font(.system(size: 12))
+                                .scaledText(size: 12, weight: .none)
+
                         }
-                        .frame(width: 20, height: 150)
+                        .scaledFrame(width: 20, height: 150)
                         
                         VStack{
                             HStack(alignment: .bottom) {
@@ -77,14 +78,14 @@ struct Graph: View{
                                         let h2 = Double(h1)/Double(max)
                                         Rectangle()
                                             .fill(Color(hex: "#639F70"))
-                                            .frame(width: width, height: h2==0 ? CGFloat(0) : CGFloat(h2))
+                                            .scaledFrame(width: width, height: max==0 ? CGFloat(0) : CGFloat(h2))
                                         Spacer()
                                 }
                             }
-                            .frame(width: 300, height: 150)
+                            .scaledFrame(width: 300, height: 150)
 
                             Divider().background(Color.black)
-                                .frame(width: 340)
+                                .scaledFrame(width: 340, height: .none)
                         }
                         
                     }
@@ -111,7 +112,7 @@ struct Graph: View{
                
             }
 
-        .frame(width: 364, height: 150)
+        .scaledFrame(width: 364, height: 150)
         .padding(30)
 
     }
@@ -147,10 +148,10 @@ struct selectView: View{
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(selected==id ? Color(hex: "#77AC83"): Color(hex: "#E8E8E8"))
-            .frame(width: .none, height: 30)
+            .scaledFrame(width: .none, height: 30)
             .overlay{
                 Text("\(str)")
-                    .font(.system(size: 15))
+                    .scaledText(size: 15, weight: .none)
             }
     }
 }

@@ -18,6 +18,9 @@ class StaticVM: ObservableObject {
     @Published var month:[Int] = []
     @Published var yearTotal:Int = 0
     @Published var total:Int = 0
+    
+    @Published var thisWeek: [String] = []
+
 
     var selectedGroup: Statics? = nil
 
@@ -41,6 +44,8 @@ class StaticVM: ObservableObject {
         week = NSArray(array: Array(getWeeks().0)) as! [Int]
         month = NSArray(array: Array(getMonth().0)) as! [Int]
         yearTotal = getYearTotal()
+        getThisWeekDayArray()
+
         
         let realm = try? Realm()
         self.realm = realm
@@ -71,9 +76,77 @@ class StaticVM: ObservableObject {
             realm!.add(Statics(year: current_year ,dayArray:day, weekArray: week, monthArray: month, total: yearTotal), update: .modified)
         }
         total = getTotal()
+        getThisWeekDayArray()
 
     }
+      
+    func getWeekOfNO(date: Date) -> Int{
+                
+        let components = Calendar.current.dateComponents([.year, .month], from: date)
+        let startOfMonth = calendar.date(from: components)! //이번달 1일
+        var weekNo = Calendar.current.dateComponents([.weekOfMonth], from: date).weekOfMonth! //오늘이 이번 달 몇주차인지
+        
+        if Calendar.current.dateComponents([.weekday], from: startOfMonth).weekday! > 4{
+            weekNo -= 1
+        }
+        
+        return weekNo
+    }
     
+    func getData(selected: Int)-> [Int]{
+        switch selected{
+        case 1:
+            return day
+        case 2:
+            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            let a = b-5
+            return Array(week[a..<b])
+        case 3:
+            return month
+        default:
+            return []
+        }
+    }
+    
+    func getStr(selected: Int)-> [String]{
+        
+        switch selected{
+        case 1:
+            return get7days().1
+        case 2:
+            return getWeeks().1
+        case 3:
+            return getMonth().1
+        default:
+            return []
+        }
+    }
+    
+    func getThisWeekDayArray(){
+        var temp: [String] = []
+//        thisWeek = []
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var startDate = Date(timeIntervalSinceNow: TimeInterval(-3600*24*(todayWeek-1)))
+        print("thisweek")
+        //일-1, 토-7
+        for _ in stride(from: 0, to: todayWeek, by: 1){
+            let date = dateFormatter.string(from: startDate)
+            temp.append(date)
+            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
+
+        }
+        
+        for _ in 0..<(7-todayWeek){
+            temp.append("")
+        }
+        thisWeek = temp
+        print(thisWeek)
+        
+    }
+    
+}
+
+extension StaticVM{
     func get7days() -> ([Int],[String]){ //최근 7일
         var object = Array(realm!.objects(CompletedList.self))
 
@@ -81,8 +154,8 @@ class StaticVM: ObservableObject {
             for _ in 0..<(7-object.count){
                 object.append(CompletedList())
             }
-                    
         }
+        
         var dayStr: [String] = []
         var dayArray: [Int] = Array(repeating: 0, count: 7)
         let str_today = dateFormatter.string(from: Date())
@@ -97,6 +170,7 @@ class StaticVM: ObservableObject {
             dayStr.append(myday)
             
         }
+        
         for item in object.reversed()[0..<7]{
             for i in 0..<dayStr.count{
                 if dayStr[i] == item.date{
@@ -111,8 +185,6 @@ class StaticVM: ObservableObject {
                 dayStr[index] = str.convert()
             }
         }
-//        print(dayArray.reversed())
-//        print(dayStr.reversed())
         return (dayArray.reversed(), dayStr.reversed())
         
     }
@@ -132,8 +204,6 @@ class StaticVM: ObservableObject {
         else{
             weekArray = Array(repeating: 0, count: 52)
         }
-        
-
 
         print("in getweeks")
  
@@ -175,24 +245,7 @@ class StaticVM: ObservableObject {
         
 //        print(weekStr)
         
-
-
         return (Array(weekArray), weekStr.reversed())
-    }
-    
-    func getWeekOfNO(date: Date) -> Int{
-        
-//        print("in getWeekOfNO date", date)
-        
-        let components = Calendar.current.dateComponents([.year, .month], from: date)
-        let startOfMonth = calendar.date(from: components)! //이번달 1일
-        var weekNo = Calendar.current.dateComponents([.weekOfMonth], from: date).weekOfMonth! //오늘이 이번 달 몇주차인지
-        
-        if Calendar.current.dateComponents([.weekday], from: startOfMonth).weekday! > 4{
-            weekNo -= 1
-        }
-        
-        return weekNo
     }
     
     func getMonth() -> ([Int], [String]){
@@ -210,11 +263,13 @@ class StaticVM: ObservableObject {
         let start = str.index(str.startIndex, offsetBy: 5)
         let end = str.index(str.endIndex, offsetBy: -3)
         
-        if object?.first?.date != "" {
-
-            for item in object!{
-                let month1 = Int(item.date.substring(with:start..<end))!
-                monthArray[month1-1] += item.completed.count
+        if let object = realm?.objects(CompletedList.self){
+            for item in object{
+                if item.date != "" {
+                    let month1 = Int(item.date.substring(with:start..<end))!
+                    monthArray[month1-1] += item.completed.count
+                }
+                
             }
         }
         
@@ -230,46 +285,14 @@ class StaticVM: ObservableObject {
         let object = realm!.objects(Statics.self)
         return Array(object).reduce(0){ $0 + $1.total}
     }
-    
-    func getData(selected: Int)-> [Int]{
-        switch selected{
-        case 1:
-            return day
-        case 2:
-            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-            let a = b-5
-            return Array(week[a..<b])
-        case 3:
-            return month
-        default:
-            return []
-        }
-    }
-    
-    func getStr(selected: Int)-> [String]{
-        
-        switch selected{
-        case 1:
-            return get7days().1
-        case 2:
-            return getWeeks().1
-        case 3:
-            return getMonth().1
-        default:
-            return []
-        }
-    }
-    
 }
 
 extension String {
-    func toDate() -> Date? {//"yyyy-MM-dd HH:mm:ss"
+    func toDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-
-//        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
         if let date = dateFormatter.date(from: self) {
             return date

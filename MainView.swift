@@ -24,11 +24,9 @@ struct MainView: View {
     @State private var modalPresented: Bool = false
     @State private var isEdit = false
     @State private var selectedItem = Habit()
-//    @State private var hideCompleted = false
-//    @State private var showAll = false
     
     
-    @State private var name: String = ""
+    @ObservedObject private var name = TextLimiter()
     @State var iter: [Int] = []
     
     @StateObject var ViewModel = HabitVM.shared
@@ -50,17 +48,17 @@ struct MainView: View {
                             Rectangle()
                                 .fill(Color(hex: "#B8D9B9"))
                                 .edgesIgnoringSafeArea(.all)
-                                .customStyle(color: .blue)
+                                .scaledFrame(width: .none, height: 242)
                             
                             VStack(alignment: .leading){
                                 
                                 Text("수진님!\n3일째 물마시기 실천 중!")
-                                    .font(.system(size: 25, weight: .bold))
-                                    .padding(EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 0))
+                                    .scaledText(size: 25, weight: .bold)
+                                    .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: true, vertical: true)
                                 
-                                scrollView(ratio: 1)
+                                scrollView()
                             }
                             
                         }
@@ -70,17 +68,15 @@ struct MainView: View {
                             Text(ViewModel.showAll ? "예정된 습관만 보기" : "습관 모두 보기" )
                                 .onTapGesture {
                                     ViewModel.toggleShowAll()
-
                                 }
                             Spacer()
                             Text(ViewModel.hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
                                 .onTapGesture {
                                     ViewModel.toggleHideComplete()
-
                                 }
                         }
-                        .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-
+                        .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
+                        
                         Spacer()
                         
                         ScrollView(.vertical, showsIndicators: false) {
@@ -92,7 +88,7 @@ struct MainView: View {
                                              isAddView: $showingAdd,
                                              isEdit: $isEdit,
                                              selectedItem: $selectedItem,
-                                             offset: $ViewModel.result[getItem(habit: list)].offset)
+                                             offset: $ViewModel.result[getItem(habit: list)].offset, name: $name.value)
 
                                     ItemView(myItem: $ViewModel.result[getItem(habit: list)],
                                              showingModal: $showingDetail,
@@ -115,40 +111,35 @@ struct MainView: View {
                             Image(systemName: "plus")
                                 .foregroundColor(Color.black)
                         }
-                        .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                        .scaledPadding(top: 5, leading: 0, bottom: 5, trailing: 0)
                         .opacity(showingAdd ? 0 : 1)
                         
                         Spacer()
                         
                     }
                     
-                    if $showingDetail.wrappedValue {
-                        DetailView(showingModal: $showingDetail)
-                        
-                    }
+//                    if $showingDetail.wrappedValue {
+//                        DetailView(showingModal: $showingDetail)
+//                        
+//                    }
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
                     showingAdd = false
                     print("Show details for user")
-                    print(iter)
-                    ViewModel.addItem(name: name, iter: iter)
-                    staticVM.addOrUpdate()
-                    name = ""
-                    iter = []
-                    
+
                 }
                 .tabItem{
                     Image(systemName: "house")
                     Text("홈")
                 }
                 
-//                Text("글쓰기")
-                TestView()
-                    .tabItem{
-                        Image(systemName: "square.and.pencil")
-                        Text("글쓰기")
-                    }
+////                Text("글쓰기")
+//                TestView()
+//                    .tabItem{
+//                        Image(systemName: "square.and.pencil")
+//                        Text("글쓰기")
+//                    }
                 
                 StaticsView()
                     .tabItem{
@@ -160,45 +151,92 @@ struct MainView: View {
             }
 
             if $showingAdd.wrappedValue{
-                AddView(name: $name, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
+                AddView(name: $name.value, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
+                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+
+
             }
         }
     }
     
     func getItem(habit: Habit)->Int{
-
         if let index = ViewModel.result.firstIndex(where: { $0 == habit}){
             return index
         }
-
         return 0
-
     }
+
+}
+
+
+
+struct FrameModifier: ViewModifier {
+    @EnvironmentObject var setting: Setting
+
+    var isScroll:Bool?
+    var width: CGFloat?
+    var height: CGFloat?
     
-
-}
-
-struct SizePreferenceKey: PreferenceKey {
-  static var defaultValue: CGSize = .zero
-  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
-}
-
-struct CustomViewModifier: ViewModifier {
-    var color: Color
+    var size: CGFloat?
+    var weight: Font.Weight?
+    
+    var top: CGFloat?
+    var leading: CGFloat?
+    var bottom: CGFloat?
+    var trailing: CGFloat?
     
     func body(content: Content) -> some View {
-        content
-            .frame(height: 242, alignment: .top)
-            .readSize { newSize in
-              print("The new child size is: \(newSize)")
+        if height != nil || width != nil{
+            if isScroll!{
+                content
+                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.WidthRatio)
             }
+            else{
+                content
+                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.HeightRatio)
+            }
+            
+        }
+        if size != nil{
+            if let weight = weight {
+                content
+                    .font(.system(size: size! * setting.WidthRatio, weight: weight))
+            }
+            else{
+                content.font(.system(size: size! * setting.WidthRatio))
+            }
+        }
+        
+        if top != nil{
+            content
+                .padding(EdgeInsets(top: top! * setting.WidthRatio,
+                                    leading: leading! *
+                                    setting.WidthRatio,
+                                    bottom: bottom! * setting.WidthRatio,
+                                    trailing: trailing! * setting.WidthRatio))
+        }
+
+
     }
+    
+    
 }
 
 extension View {
-    func customStyle(color: Color) -> some View {
-        modifier(CustomViewModifier(color: color))
+
+    func scaledFrame(width: CGFloat?, height: CGFloat?, isScroll: Bool = false) -> some View {
+        modifier(FrameModifier(isScroll: isScroll, width: width, height: height))
+
     }
+    
+    func scaledText(size: CGFloat, weight: Font.Weight?) -> some View{
+        modifier(FrameModifier(size: size, weight: weight))
+    }
+    
+    func scaledPadding(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> some View{
+        modifier(FrameModifier(top: top, leading: leading, bottom: bottom, trailing: trailing))
+    }
+    
     
     func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
       background(

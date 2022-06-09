@@ -194,27 +194,7 @@ extension HabitVM{
 
     }
     
-    func getAllDoneContinuity() -> Int{
-        var allDoneContinuity = 0
-        let today_total = getNumOfTodayHabit()
-        let today_done = StaticVM.shared.getData(selected: 1).last!
-        
-        if UserDefaults.standard.object(forKey: "allDoneContinuity") != nil {
-            allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
 
-            if today_total == today_done{
-                UserDefaults.standard.set(allDoneContinuity += 1, forKey: "allDoneContinuity")
-
-            }
-            else{
-                UserDefaults.standard.set(0, forKey: "allDoneContinuity")
-
-            }
-
-        }
-
-        return allDoneContinuity
-    }
 
 }
 
@@ -224,8 +204,8 @@ extension HabitVM{
         return Array(habit.weekIter)
     }
     
-    func getNumOfTodayHabit() -> Int{
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+    func getNumOfTodayHabit(todayWeek: Int =  Calendar.current.dateComponents([.weekday], from: Date()).weekday!) -> Int{
+//        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
         var count = 0
         
         realm!.objects(Habit.self).forEach{

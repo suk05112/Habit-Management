@@ -35,4 +35,18 @@ enum Week: Int{
 
       }
     }
+    
+    var total : Int{
+        switch self {
+            case .sun: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 1)
+            case .mon: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 2)
+            case .tue: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 3)
+            case .wed: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 4)
+            case .thu: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 5)
+            case .fri: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 6)
+            case .sat: return HabitVM.shared.getNumOfTodayHabit(todayWeek: 7)
+   
+        }
+        
+    }
 }
