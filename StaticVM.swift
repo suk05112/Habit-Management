@@ -35,7 +35,9 @@ class StaticVM: ObservableObject {
     private init() {
         
         print("Static init")
-
+//        let realm = try? Realm()
+//        self.realm = realm
+        
         dateFormatter.dateFormat = "yyyy-MM-dd"
         formatter_year.dateFormat = "yyyy"
         current_year = Int(formatter_year.string(from: Date()))!
@@ -45,21 +47,19 @@ class StaticVM: ObservableObject {
         month = NSArray(array: Array(getMonth().0)) as! [Int]
         yearTotal = getYearTotal()
         getThisWeekDayArray()
+//        let myFilter = NSPredicate(format: "year == %@", current_year)
 
-        
-        let realm = try? Realm()
-        self.realm = realm
-        
-        if let group = realm?.objects(Statics.self) {
-            self.Static = group
-        }else {
-            
+//        if let group = realm?.objects(Statics.self) {
+        if realm!.objects(Statics.self).where({($0.classification == "Todo")}).first != nil{
+            self.Static = realm?.objects(Statics.self)
+        }
+        else{
             try? realm?.write({
-                let group = Statics(year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal)
-                realm?.add(group)
-
+                realm?.add(Statics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                realm?.add(Statics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
             })
         }
+        
         total = getTotal()
         
     }
@@ -71,9 +71,14 @@ class StaticVM: ObservableObject {
         month = NSArray(array: Array(getMonth().0)) as! [Int]
         yearTotal = getYearTotal()
 
+        let object = realm!.objects(Statics.self).where{$0.classification == "Done"}.first!
         try? realm!.write{
-//            realm!.add(Statics(year: current_year ,dayArray: get7days().0, weekArray: getWeeks().0, monthArray: getMonth().0, total: getYearTotal()))
-            realm!.add(Statics(year: current_year ,dayArray:day, weekArray: week, monthArray: month, total: yearTotal), update: .modified)
+
+            object.dayArray = day
+            object.weekArray = week
+            object.monthArray = month
+            object.total = yearTotal
+
         }
         total = getTotal()
         getThisWeekDayArray()
@@ -124,10 +129,9 @@ class StaticVM: ObservableObject {
     
     func getThisWeekDayArray(){
         var temp: [String] = []
-//        thisWeek = []
         let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
         var startDate = Date(timeIntervalSinceNow: TimeInterval(-3600*24*(todayWeek-1)))
-        print("thisweek")
+
         //일-1, 토-7
         for _ in stride(from: 0, to: todayWeek, by: 1){
             let date = dateFormatter.string(from: startDate)
@@ -140,7 +144,7 @@ class StaticVM: ObservableObject {
             temp.append("")
         }
         thisWeek = temp
-        print(thisWeek)
+//        print(thisWeek)
         
     }
     
@@ -163,6 +167,7 @@ extension StaticVM{
 
         let dayOffset = DateComponents(day: -7)
         let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
+        
         print("week ago =" , weekAgo)
 
         for i in 0..<7{
@@ -193,40 +198,52 @@ extension StaticVM{
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
         
+        var weekArray: [Int] = Array(repeating: 0, count: 52)
         
-        let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-        
-        var weekArray: [Int]
-        
+        /*
         if let week = realm?.objects(Statics.self).filter(NSPredicate(format: "year == \(2022)")).first?.week{
             weekArray = Array(week)
         }
         else{
             weekArray = Array(repeating: 0, count: 52)
         }
+        */
 
-        print("in getweeks")
- 
-        if let completed = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", dateFormatter.string(from: Date()))).first?.completed {
-            print(completed)
-            weekArray[weekNO-1] = completed.count
-        }
+        //print("in getweeks")
         
-        
+        let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+
         /*
+        var total = 0
+
+        for item in object.reversed()[0..<7]{
+            let itemWeekNo = Calendar.current.dateComponents([.weekOfYear], from: dateFormatter.date(from: item.date)!).weekOfYear!
+            if itemWeekNo == weekNO{
+                total += item.completed.count
+            }
+            else{
+                break
+            }
+            
+        }
+        weekArray[weekNO-1] = total
+
+        */
+        
         let object = realm?.objects(CompletedList.self)
-        if object?.first?.date != "" {
-                    
-            for item in object!{
-                let date = dateFormatter.date(from: item.date)!
-                let weekNO = Calendar.current.dateComponents([.weekOfYear], from: date).weekOfYear!
-                
-                weekArray[weekNO-1] = item.completed.count
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if object!.count>1 {
+            for item in object!.reversed()[0..<object!.endIndex-1]{
+                if weekNO != Calendar.current.dateComponents([.weekOfYear], from: dateFormatter.date(from: item.date)!).weekOfYear!{
+                    break
+                }
+                weekArray[weekNO-1] += item.completed.count
 
             }
         }
-        */
-        
+
         var weekStr: [String] = []
         var weekno = getWeekOfNO(date: Date())
 
@@ -269,7 +286,6 @@ extension StaticVM{
                     let month1 = Int(item.date.substring(with:start..<end))!
                     monthArray[month1-1] += item.completed.count
                 }
-                
             }
         }
         
@@ -285,6 +301,83 @@ extension StaticVM{
         let object = realm!.objects(Statics.self)
         return Array(object).reduce(0){ $0 + $1.total}
     }
+}
+
+extension StaticVM{
+    
+    func setnumOfToDoPerDay(){
+        
+        let object = Array(realm!.objects(Habit.self))
+        var dayArray = Array(repeating: 0, count: 7)
+        
+        for item in object{
+            item.weekIter.forEach{
+                dayArray[$0-1] += 1
+            }
+        }
+
+        try? realm!.write{
+            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
+        }
+        
+    }
+    
+    
+    func setnumOfToDoPerWeek2(add: Bool, numOfIter: Int){
+        var weekArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray)
+        let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+        
+        if weekArray[weekNO-1] == 0{
+            weekArray[weekNO-1] = weekArray[weekNO-2]
+        }
+        
+        if add{
+            weekArray[weekNO-1] += numOfIter
+        }
+        else{
+            weekArray[weekNO-1] -= numOfIter
+        }
+        
+        try? realm!.write{
+            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
+        }
+        
+    }
+    
+
+    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int){
+        var monthArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray)
+        let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
+        
+        
+        if monthArray[todayMonth-1] == 0{
+            monthArray[todayMonth-1] = monthArray[todayMonth-2]
+        }
+
+        if add{
+            monthArray[todayMonth-1] += numOfIter
+        }
+        else{
+            monthArray[todayMonth-1] -= numOfIter
+        }
+            
+        try? realm!.write{
+            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
+        }
+
+    }
+    
+    func getnumOfToDoPerDay() -> [Int]{
+        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.days)
+    }
+    func getnumOfToDoPerWeek() -> [Int]{
+        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.week)
+    }
+    
+    func getnumOfToDoPerMonth() -> [Int]{
+        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.month)
+    }
+
 }
 
 extension String {
@@ -338,4 +431,3 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
-

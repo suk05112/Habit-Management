@@ -20,7 +20,6 @@ public struct AddView: View{
     @State var iter: [Int]
     @StateObject var ViewModel = HabitVM.shared
     
-//    @Binding var showingModal: Bool
 
     public var body: some View {
         if show{
@@ -32,114 +31,82 @@ public struct AddView: View{
                     Spacer()
                     ZStack{
                         RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .frame(width: 400, height: 300)
+                            .scaledFrame(width: .none, height: 250)
+                            .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 5)
                             .foregroundColor(Color.white)
                             
-                            
                         VStack(alignment: .center){
-                            TextField("제목을 입력하세요", text: $name)
-                                .textFieldStyle(.roundedBorder)
-                                .font(.system(size: 25))
-                                .foregroundColor(Color.black)
-                                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
-                                
                             HStack{
-                                ForEach(1..<8){
-                                    WeekButton(weekOfDay: $0, iter: $iter, OnOff: Array(self.selectedItem.weekIter).contains($0) ? true : false)
+                                Text("취소")
+                                .onTapGesture {
+                                    self.name = ""
+                                    show = false
                                 }
-                            }
-                            HStack{
-                                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                    .fill(Color.green)
-                                    .frame(width: 60, height: 30)
-                                    .overlay(
-                                        Text("저장")
-                                     )
+                                Spacer()
+
+                                Text("저장")
                                     .onTapGesture {
                                         show = false
                                         if !isEdit{
                                             ViewModel.addItem(name: name, iter: iter)
                                         }
                                         else{
-
                                             ViewModel.updateItem(name: name, iter: iter, at: selectedItem)
                                             self.isEdit = false
                                         }
                                         self.name = ""
-
-                                    }
-                                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                    .fill(Color.green)
-                                    .frame(width: 60, height: 30)
-                                    .overlay(
-                                        Text("취소")
-                                     )
-                                    .onTapGesture {
-                                        self.name = ""
-                                        show = false
+                                        StaticVM.shared.setnumOfToDoPerDay()
+                                        StaticVM.shared.setnumOfToDoPerWeek2(add: true, numOfIter: iter.count)
+                                        StaticVM.shared.setnumOfToDoPerMonth(add: true, numOfIter: iter.count)
+                                        compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .add, isToday: isTodayHabit() ? true : false)
+                                        
                                     }
                             }
-                            
+                            .scaledPadding(top: 15, leading: 25, bottom: 10, trailing: 25)
+
+                            TextField("제목을 입력하세요", text: $name)
+                                .textFieldStyle(.roundedBorder)
+                                .scaledText(size: 25, weight: .none)
+                                .foregroundColor(Color.black)
+                                .scaledPadding(top: 0, leading: 25, bottom: 0, trailing: 25)
+                                
+                            HStack{
+                                ForEach(1..<8){
+                                    WeekButton(weekOfDay: $0, iter: $iter, OnOff: Array(self.selectedItem.weekIter).contains($0) ? true : false)
+                                }
+                            }
+                            .scaledPadding(top: 10, leading: 25, bottom: 10, trailing: 25)
+                            Spacer()
+
                         }
-                    }
-                    .onTapGesture {
-                        print("modal view touch!")
+                        .scaledFrame(width: .none, height: 250)
 
                     }
+
                 }
 
             }
             .contentShape(Rectangle())
-            .onTapGesture {
-                print("바깥쪽 터치됨")
-            }
+
           
         }
 
     }
-
-}
-
-struct WeekButton: View{
-    @State var weekOfDay: Int
-    @Binding var iter: [Int]
-    @State var OnOff: Bool
     
-//    init(weekOfDay: Int, iter: [Int]){
-//        self.weekOfDay = weekOfDay
-//        self.iter = iter
-//        OnOff = iter.contains(weekOfDay) ? true : false
-//    }
-    
-    var body: some View {
-        Button(action:{
-            OnOff.toggle()
-            if iter.contains(getWeekOfDay(num: weekOfDay).rawValue){
-                iter.removeAll(where: {$0 == getWeekOfDay(num: weekOfDay).rawValue})
-            }
-            else{
-                iter.append(Week(rawValue: getWeekOfDay(num: weekOfDay).rawValue)!.rawValue)
-            }
-            
-//            print(iter)
-
-        }){
-            ZStack{
-                Circle()
-                    .fill(OnOff ? Color.green: Color.white)
-                    .frame(width: 35, height: 35)
-                Text(getWeekOfDay(num:weekOfDay).description).foregroundColor(Color.black)
-            }
+    func isTodayHabit() -> Bool{
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        
+        if iter.contains(todayWeek){
+            return true
         }
-
-    }
-
-    
-    func getWeekOfDay(num: Int) -> Week{
-        return Week(rawValue: num)!
+        else{
+            return false
+        }
     }
 
 }
+
+
 
 #if canImport(UIKit)
 extension View {
@@ -151,19 +118,4 @@ extension View {
 #endif
 
 
-class TextLimiter: ObservableObject {
-    private let limit: Int = 8
-    let endIdx: String.Index = "abcdabcd".index("abcdabcd".startIndex, offsetBy: 8)
-    
-    @Published var value = "" {
-        didSet {
-            if value.count > 9 {
-                value = String(value.prefix(8))
-
-            }
-            
-        }
-    }
-
-}
 

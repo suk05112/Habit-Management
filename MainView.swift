@@ -10,6 +10,8 @@ import CoreData
 import RealmSwift
 
 struct MainView: View {
+    @State private var showToast = false
+
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -18,7 +20,10 @@ struct MainView: View {
     
     private var items: FetchedResults<Item>
     @EnvironmentObject var setting: Setting
-
+    @State var mainReport = "아직 완료된 습관이 없습니다"
+    @State var mainContinuity = ""
+    @State var userName = ""
+    
     @State private var showingDetail = false
     @State private var showingAdd = false
     @State private var modalPresented: Bool = false
@@ -35,8 +40,9 @@ struct MainView: View {
     var realm: Realm? = try? Realm()
 
     init(){
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//        UserDefaults.standard.set(1, forKey: "allDoneContinuity")
 
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
     var body: some View {
@@ -52,8 +58,8 @@ struct MainView: View {
                             
                             VStack(alignment: .leading){
                                 
-                                Text("수진님!\n3일째 물마시기 실천 중!")
-                                    .scaledText(size: 25, weight: .bold)
+                                Text("\(userName)님!\n\(mainReport)")
+                                    .scaledText(size: 25, weight: .semibold)
                                     .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
                                     .lineLimit(nil)
                                     .fixedSize(horizontal: true, vertical: true)
@@ -88,7 +94,8 @@ struct MainView: View {
                                              isAddView: $showingAdd,
                                              isEdit: $isEdit,
                                              selectedItem: $selectedItem,
-                                             offset: $ViewModel.result[getItem(habit: list)].offset, name: $name.value)
+                                             offset: $ViewModel.result[getItem(habit: list)].offset, name: $name.value,
+                                             showToast: $showToast)
 
                                     ItemView(myItem: $ViewModel.result[getItem(habit: list)],
                                              showingModal: $showingDetail,
@@ -116,12 +123,9 @@ struct MainView: View {
                         
                         Spacer()
                         
+                            
                     }
                     
-//                    if $showingDetail.wrappedValue {
-//                        DetailView(showingModal: $showingDetail)
-//                        
-//                    }
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
@@ -129,10 +133,23 @@ struct MainView: View {
                     print("Show details for user")
 
                 }
+                .toast(message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
+                        isShowing: $showToast,
+                        duration: Toast.long)
+                .onAppear{
+                    print("main appear")
+                    if UserDefaults.standard.object(forKey: "userName") != nil{
+                        userName = UserDefaults.standard.string(forKey: "userName")!
+                    }
+                    mainReport = ReportData.shared.getMainReport()
+                }
+                
+                
                 .tabItem{
                     Image(systemName: "house")
                     Text("홈")
                 }
+                
                 
 ////                Text("글쓰기")
 //                TestView()
@@ -143,9 +160,9 @@ struct MainView: View {
                 
                 StaticsView()
                     .tabItem{
-                        Image(systemName: "gear")
+                        Image(systemName: "chart.bar.fill")
                         Text("통계")
-                        Label("label", systemImage: "list.dash")
+                        Label("label", systemImage: "chart.bar.fill")
                         
                     }
             }
@@ -154,9 +171,14 @@ struct MainView: View {
                 AddView(name: $name.value, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
                     .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
 
+            }
+            if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore"){
+                FirstLaunchView(userName: $userName)
+                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
 
             }
         }
+ 
     }
     
     func getItem(habit: Habit)->Int{
@@ -167,7 +189,6 @@ struct MainView: View {
     }
 
 }
-
 
 
 struct FrameModifier: ViewModifier {
@@ -215,7 +236,6 @@ struct FrameModifier: ViewModifier {
                                     bottom: bottom! * setting.WidthRatio,
                                     trailing: trailing! * setting.WidthRatio))
         }
-
 
     }
     

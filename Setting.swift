@@ -18,6 +18,7 @@ class Setting: ObservableObject {
     let screenHeight = UIScreen.main.bounds.size.height
     var WidthRatio: Double
     var HeightRatio: Double = 1
+    @State var wasLaunchedBefore = false
     
     init(){
         print("11size", screenWidth, screenHeight)
@@ -26,6 +27,8 @@ class Setting: ObservableObject {
         print(WidthRatio, HeightRatio)
         self.isShowAll = UserDefaults.standard.bool(forKey: "showAll")
         self.isHideCompleted = UserDefaults.standard.bool(forKey: "isHideCompleted")
+        
+        wasLaunchedBefore = firstLaunch()
     }
     
     func setratio() {
@@ -35,7 +38,6 @@ class Setting: ObservableObject {
         }
         else if screenHeight == 926 {
             print("iPhone 12proMax")
-//            WidthRatio = screenWidth/standardWidth
         }
         else if screenHeight == 844 {
             print("iPhone 12, 12pro")
@@ -49,6 +51,15 @@ class Setting: ObservableObject {
         else {
             print("iPhone 12 mini, iPhone XS")
         }
+    }
+    
+    func firstLaunch() -> Bool{
+
+        if UserDefaults.standard.object(forKey: "wasLaunchedBefore") == nil{
+            UserDefaults.standard.set(false, forKey: "wasLaunchedBefore")
+        }
+        
+        return UserDefaults.standard.bool(forKey: "wasLaunchedBefore")
     }
 }
 

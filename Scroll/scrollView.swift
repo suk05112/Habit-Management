@@ -25,7 +25,7 @@ struct scrollView: View{
             RoundedRectangle(cornerRadius: 15*setting.WidthRatio, style: .continuous)
                 .fill(Color(hex: "#639F70"))
                 .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
-                .scaledFrame(width: .none, height: 220)
+                .scaledFrame(width: .none, height: 230)
             
             VStack{
                 HStack(alignment: .bottom){
@@ -58,7 +58,6 @@ struct scrollView: View{
                 }
                 .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
 
-                
                 HStack{
                     HStack{}
                     Spacer()
@@ -66,14 +65,12 @@ struct scrollView: View{
                 }
                 .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
 
-
             }
 
         }
     }
     
     func getColor(date: String) -> Color{
-//        print("date=", date)
 
         let count = completedVM.getCount(d: date)
         let dateFormatter = DateFormatter()
@@ -82,21 +79,20 @@ struct scrollView: View{
         
         let todayWeek = Calendar.current.dateComponents([.weekday], from: dateFormatter.date(from: date)!).weekday!
         let total = Week(rawValue: todayWeek)!.total
-        print("total=", total, "count=", count)
-        print("계산된 값", (Double(count)/Double(total))*Double(100))
+
 
         let percent = (Double(count)/Double(total))*Double(100)
         if count == 0 {
-            return Color(hex: "#EFF0EF")
+            return Color(hex: "#E6E6E6")
         }
         else if percent < 33{
-            return Color(hex: "#CFEECB")
+            return Color(hex: "#D5EBD3")
         }
         else if percent > 33 && percent < 66{
-            return Color(hex: "#7BE084")
+            return Color(hex: "#9ECAA4")
         }
         else{
-            return Color(hex: "#118E15")
+            return Color(hex: "#36793F")
         }
         
     }

@@ -63,7 +63,7 @@ struct ItemView: View{
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                print("item touch")
+                //print("item touch")
 //                showingModal = true
                 slideLeft = false
                 slideRight = false
@@ -76,17 +76,6 @@ struct ItemView: View{
     }
     
  
-    
-    func isTodayHabit() -> Bool{
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
-        
-        if myItem.weekIter.contains(todayWeek){
-            return true
-        }
-        else{
-            return false
-        }
-    }
     
     func getWeekStr() -> String{
         var str = ""
@@ -114,10 +103,9 @@ struct ItemView: View{
 extension ItemView{
     
     func onChanged(value: DragGesture.Value){
-        print("offset", value.translation.width)
+        //print("offset", value.translation.width)
        
         if value.translation.width < 0 {
-            print("2-2번걸림")
             
             if (-value.translation.width < -UIScreen.main.bounds.width/2){
                 offset = slideLeft ? value.translation.width - 60 : value.translation.width
@@ -128,7 +116,6 @@ extension ItemView{
             
         }
         else{
-            print("2번걸림")
 
             if (value.translation.width < UIScreen.main.bounds.width/2){
                 offset = slideRight ? value.translation.width + 110 : value.translation.width
@@ -146,7 +133,6 @@ extension ItemView{
         withAnimation(.easeOut){
 
             if value.translation.width < 0{
-                print("여기 걸림~!")
                 if slideRight{
                     slideRight = false
                     offset = 0

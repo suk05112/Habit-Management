@@ -17,9 +17,11 @@ class compltedLIstVM: ObservableObject {
     var realm: Realm?
     var list: CompletedList?
     @Published var todayDoneList: CompletedList
-
+    var todayAllDone = false
+    var isTodayHabit = false
+    
     private init(){
-        
+
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(abbreviation: "KST")
@@ -28,11 +30,10 @@ class compltedLIstVM: ObservableObject {
         let realm = try? Realm()
         self.realm = realm
         
-        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "2022-05-15"))
+        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "2022-06-14"))
 //        try! realm?.write {
 //            realm?.delete(item!)
 //        }
-//        delete()
 
         if let group = realm?.objects(CompletedList.self).first {
             self.list = group
@@ -51,8 +52,12 @@ class compltedLIstVM: ObservableObject {
         else{
             todayDoneList = CompletedList()
         }
-        print("today done list", todayDoneList)
-
+        
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        if isTodayHabitComplete() == Week(rawValue: todayWeek)!.total{
+            todayAllDone = true
+        }
+        //print("today done list", todayDoneList)
 //        let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "")).first
 
         
@@ -63,28 +68,23 @@ class compltedLIstVM: ObservableObject {
     
     func delete(){
         print("Delete")
-        print(realm?.objects(CompletedList.self))
+        //print(realm?.objects(CompletedList.self))
         let item = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", "2022-04-30")).first
         try! realm?.write {
             realm?.delete(item!)
         }
-        print(realm?.objects(CompletedList.self))
     }
     
     func complete(id: String){
         let today = dateFormatter.string(from: Date())
-        var cancel = false
-        print("today=", today )
         let object2 = realm?.object(ofType: CompletedList.self, forPrimaryKey: today)
-        print("id = ", id)
-        print(object2)
-        print("end")
         
         if let object = object2{
             if object2?.completed.contains(id) == false{
                 try? realm?.write {
                     object.completed.append(id)
                 }
+                compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .complete, isToday: isTodayHabit)
             }
             else{
                 try? realm?.write {
@@ -92,13 +92,15 @@ class compltedLIstVM: ObservableObject {
                         object.completed.remove(at: index)
                     }
                 }
-                cancel = true
+
+                compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .cancel, isToday: isTodayHabit)
             }
         }
         else{
             try? realm?.write {
                 realm?.add(CompletedList(today: today, iter: [id]))
             }
+            compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .complete, isToday: isTodayHabit)
         }
         
         
@@ -106,31 +108,57 @@ class compltedLIstVM: ObservableObject {
             todayDoneList = todaydone
         }
 
-        getAllDoneContinuity(cancel)
 
-        
     }
-    func getAllDoneContinuity(_ cancel: Bool){
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+    
+    func setAllDoneContinuityUntilYesterDay(){
+
+        let yesterDayDate = Date(timeInterval: -60*60*24, since: Date())
+        let yesterDay = dateFormatter.string(from: yesterDayDate)
+        let yerterDayComplete = realm?.object(ofType: CompletedList.self, forPrimaryKey: yesterDay)
         
-        if UserDefaults.standard.object(forKey: "allDoneContinuity") == nil {
-            UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+        let todoCount = StaticVM.shared.getnumOfToDoPerDay()
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
 
-        }
-        let allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+        let yesterdayTodo = todoCount[(todayWeek-2+7)%7]
 
-        if todayDoneList.completed.count == Week(rawValue: todayWeek)!.total{
-            UserDefaults.standard.set(allDoneContinuity+1, forKey: "allDoneContinuity")
-
-        }
-        else if (todayDoneList.completed.count+1 == Week(rawValue: todayWeek)!.total) && cancel{
-            UserDefaults.standard.set(allDoneContinuity-1, forKey: "allDoneContinuity")
-
+        if UserDefaults.standard.object(forKey: "allDoneContinuity") == nil ||
+            yerterDayComplete == nil ||  yesterdayTodo != isYesterdayHabitComplete(){
+                UserDefaults.standard.set(0, forKey: "allDoneContinuity")
         }
 
-//        UserDefaults.standard.set(0, forKey: "allDoneContinuity")
+    }
+    
+    func setAllDoneContinuityUntilToday(status: CompleteStatus, isToday: Bool){
+        if isToday{
+            setAllDoneContinuityUntilYesterDay()
+
+            let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+            let allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+
+            var today: Int = 0
+            if !todayAllDone{ //오늘 모든 습관을 완료 못했을 때
+                if isTodayHabitComplete() == Week(rawValue: todayWeek)!.total{
+                    todayAllDone = true
+                    today = 1
+                }
+
+            }
+            else if todayAllDone{ //오늘 모든 습관을 완료 했을 때
+                if status == .cancel || status == .add {// 취소 또는 습관추가
+                    todayAllDone = false
+                    if allDoneContinuity > 0{
+                        today = -1
+                    }
+                }
+                    
+            }
+            
+            UserDefaults.standard.set(allDoneContinuity + today, forKey: "allDoneContinuity")
+        }
+
+
         print("alldone Continue", UserDefaults.standard.integer(forKey: "allDoneContinuity"))
-//        return allDoneContinuity
     }
     
     func getCount(d: String) -> Int{
@@ -140,10 +168,8 @@ class compltedLIstVM: ObservableObject {
 //        print(realm!.objects(CompletedList.self).filter("date == \"" + date + "\""))
 //        print(realm!.objects(CompletedList.self).filter(myFilter))
 
-        print(realm!.objects(CompletedList.self).filter("date == \"" + date + "\""))
-        
-        if let object = realm!.objects(CompletedList.self).filter("date == \"" + date + "\"").first{
-            print(object.completed.count)
+        if let object = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", date)).first{
+            //print(object.completed.count)
             return object.completed.count
         }
         return 0
@@ -151,7 +177,7 @@ class compltedLIstVM: ObservableObject {
     }
     
     func getStatics(staticCase: Total) -> Int{
-        print("get statics")
+        // print("get statics")
         
         let calendar = Calendar(identifier: .gregorian)
         let dateFormatter = DateFormatter()
@@ -179,7 +205,7 @@ class compltedLIstVM: ObservableObject {
         switch staticCase {
         case .week:
             for item in object.reversed(){
-                print("in week", item.date)
+                //print("in week", item.date)
 
                 if item.date > weekAgo{
                     ans += item.completed.count
@@ -188,7 +214,6 @@ class compltedLIstVM: ObservableObject {
                     break
                 }
             }
-            print("week")
             
         case .month:
 
@@ -229,6 +254,36 @@ class compltedLIstVM: ObservableObject {
         return false
 
     }
+    func isTodayHabitComplete() -> Int{
+        var count = 0
+        for item in HabitVM.shared.getTodayHabit(){
+            if !istodaydone(id: item.id!){
+                return -1
+            }
+            count += 1
+        }
+        return count
+    }
+    
+    func isYesterdayHabitComplete() -> Int{
+        var count = 0
+        
+        for item in HabitVM.shared.getYesterdayHabit(){ //어제 할 일
+            if !HabitVM.shared.isDoneYesterDay(id: item.id!){ //어제 한 일
+                return -1
+            }
+            count += 1
+        }
+        return count
+    }
+    
+    func setIsToday(isToday: Bool){
+        isTodayHabit = isToday
+
+    }
+    func settodayAllDone(isToday: Bool){
+        self.todayAllDone = false
+    }
 }
 
 //'id =
@@ -240,3 +295,10 @@ class compltedLIstVM: ObservableObject {
 //let myFilter2 = NSPredicate(format: "count == %d AND name BEGINSWITH %@", "10", "B")
 //let myFilter3 = NSPredicate(format: "count ==\(count)")
 //let person = realm.objects(Person.self).filter(myFilter)
+
+enum CompleteStatus{
+    case complete
+    case add
+    case delete
+    case cancel
+}

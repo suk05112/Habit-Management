@@ -27,7 +27,6 @@ class ScrollVM: ObservableObject{
         print("scroll init")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         getScrollData()
-//        getThisWeekDayArray()
     }
 
     func getScrollData(){
@@ -50,7 +49,7 @@ class ScrollVM: ObservableObject{
                 let end = DayArray[i][j].index(DayArray[i][j].endIndex, offsetBy: -3)
                 
                 if DayArray[i][j].substring(from: index) == "01"{
-                    print(DayArray[i][j], " ", DayArray[i][j].substring(from: index), "1일",DayArray[i][j].substring(with:start..<end))
+                    //print(DayArray[i][j], " ", DayArray[i][j].substring(from: index), "1일",DayArray[i][j].substring(with:start..<end))
                     
                     month = DayArray[i][j].substring(with:start..<end)
                 }

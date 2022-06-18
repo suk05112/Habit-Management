@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+//cube slide 애니메이션 테스트
 struct TestView: View{
     
     @State var index: Int = 0

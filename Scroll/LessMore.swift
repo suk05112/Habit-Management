@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LessMore: View {
     @EnvironmentObject var setting: Setting
-    var colors = ["#E6E6E6", "#CFEECB", "#7BE084", "#118E15"]
+    var colors = ["#E6E6E6", "#D5EBD3", "#9ECAA4", "#36793F"]
     
     var body: some View {
         HStack{

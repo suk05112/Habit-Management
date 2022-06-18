@@ -25,11 +25,9 @@ class HabitVM: ObservableObject {
     init(){
 
         if UserDefaults.standard.object(forKey: "showAll") == nil{
-            print("show nil")
             UserDefaults.standard.set(false, forKey: "showAll")
         }
         if UserDefaults.standard.object(forKey: "hideCompleted") == nil{
-            print("hide nil")
             UserDefaults.standard.set(false, forKey: "hideCompleted")
         }
         showAll = UserDefaults.standard.bool(forKey: "showAll")
@@ -58,19 +56,21 @@ class HabitVM: ObservableObject {
         token = habit?.observe({ (changes) in
             switch changes {
             case .error(_):
-                print("error")
+                //print("error")
                 break
     
             case .initial(_):
                 print("initial")
                 
             case .update(_, deletions: let deletions, insertions: let insertions, modifications: let modifications):
-                print("update")
+                //print("update")
 //                self.objectWillChange.send()
                 break
             }
         })
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+        getnumOfToDoPerWeek()
+//        getContinuity()
     }
     
 
@@ -110,13 +110,27 @@ extension HabitVM{
         }
         return result
     }
+    
+    func getYesterdayHabit() -> [Habit]{
+        var yesdayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!-1
+        if yesdayWeek == 0 {
+            yesdayWeek = 7
+        }
+        var result:[Habit] = []
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(yesdayWeek){
+                result.append($0)
+            }
+        }
+        return result
+    }
 
 }
 
 //crud
 extension HabitVM{
     func addItem(name: String, iter: [Int]){
-        print("add item")
+//        print("add item")
         if name != "", let realm = habit?.realm{
             try? realm.write{
                 realm.add(Habit(name: name, iter: iter))
@@ -126,7 +140,7 @@ extension HabitVM{
     }
     
     func deleteItem(at habit: Habit){
-        print("delete")
+//        print("delete")
         if realm!.objects(Habit.self).contains(habit){
             try! realm?.write {
                 realm?.delete(habit)
@@ -137,7 +151,7 @@ extension HabitVM{
     }
     
     func updateItem(name: String, iter: [Int], at item: Habit){
-        print("update Item")
+        //print("update Item")
         if name != "", let realm = habit?.realm{
             try? realm.write{
                 item.name = name
@@ -155,9 +169,12 @@ extension HabitVM{
 extension HabitVM{
     func setContiuity(at item: Habit){
         try? realm!.write{
+            if !isDoneYesterDay(id: item.id!){
+                item.continuity = 0
+            }
             if compltedLIstVM.shared.todayDoneList.completed.contains(item.id!){
                 item.continuity += 1
-            }else{
+            }else if item.continuity != 0{
                 item.continuity -= 1
 
             }
@@ -165,37 +182,30 @@ extension HabitVM{
     }
     
     func getContinuity(){
-        print("in get continue")
-        
         realm!.objects(Habit.self).forEach{
-            let data = $0
-            try! realm?.write {
-                data.continuity = 0
-                realm!.add(data, update: .modified)
-            }
-        }
-        
-        let completed = realm!.objects(CompletedList.self)
-        completed.last?.completed.forEach{
-            var count = 0
-            for completedItem in completed.reversed(){
-                if completedItem.completed.contains($0){
-                    count += 1
-                }
-                else{
-                    break
+            let item = $0
+            try? realm!.write{
+                if !isDoneYesterDay(id: item.id!){
+                    item.continuity = 0
                 }
             }
-            let object = realm?.object(ofType: Habit.self, forPrimaryKey: $0)
-            try! realm?.write {
-                object?.continuity = count
-            }
         }
-
     }
     
+    func isDoneYesterDay(id: String) -> Bool{
+        let yesterDayDate = Date(timeInterval: -60*60*24, since: Date())
+        let yesterDay = dateFormatter.string(from: yesterDayDate)
+        
+        if let completedYesterDay = realm?.object(ofType: CompletedList.self, forPrimaryKey: yesterDay){
+            if completedYesterDay.completed.contains(id){
+                return true
+            }
 
-
+        }
+        
+        return false
+    }
+    
 }
 
 extension HabitVM{
@@ -229,5 +239,37 @@ extension HabitVM{
         showAll.toggle()
         UserDefaults.standard.set(showAll, forKey: "showAll")
         fetchItem()
+    }
+}
+
+extension HabitVM{
+    func getnumOfToDoPerWeek() -> [Int]{
+        var weekTotal = [0,0,0,0,0,0,0]
+        
+        for item in realm!.objects(Habit.self){
+            item.weekIter.forEach{
+                weekTotal[$0-1] += 1
+            }
+            
+        }
+        
+        try? realm!.write{
+            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.dayArray = weekTotal
+        }
+        return weekTotal
+    }
+    
+    func getMonthTotal() -> (Int, Int){
+        let weekTotal = getnumOfToDoPerWeek()
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "ko")
+        let nextMonth = calendar.date(byAdding: .month, value: +1, to: Date())
+        let endOfMonth = calendar.date(byAdding: .day, value: -1, to:nextMonth!)
+        let endOfLastMonth = calendar.date(byAdding: .day, value: -2, to:nextMonth!)
+
+        let numOfthisMonth = calendar.dateComponents([.day,.weekday,.weekOfMonth], from: endOfMonth!).month!
+        let numOflastMonth = calendar.dateComponents([.day,.weekday,.weekOfMonth], from: endOfLastMonth!).month!
+        
+        return (numOfthisMonth, numOflastMonth)
     }
 }

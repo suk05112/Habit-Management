@@ -71,18 +71,35 @@ struct Graph: View{
                         .scaledFrame(width: 20, height: 150)
                         
                         VStack{
-                            HStack(alignment: .bottom) {
-                                ForEach(staticVM.getData(selected: selected), id: \.self) { month in
-                                        let max = staticVM.getData(selected: selected).max()!
-                                        let h1 = Int(month)*Int(150)
-                                        let h2 = Double(h1)/Double(max)
-                                        Rectangle()
-                                            .fill(Color(hex: "#639F70"))
-                                            .scaledFrame(width: width, height: max==0 ? CGFloat(0) : CGFloat(h2))
-                                        Spacer()
+                            ZStack{
+                                Rectangle()
+                                    .foregroundColor(Color.white)
+                                    .scaledFrame(width: 300, height: 150)
+                                    .overlay{
+                                        Text("No Data")
+                                            .scaledText(size: 15, weight: .none)
+
+                                    }
+                                if staticVM.getData(selected: 1).filter{$0 != 0}.count != 0{
+                                    HStack(alignment: .bottom) {
+                                        ForEach(staticVM.getData(selected: selected), id: \.self) { month in
+                                                let max = staticVM.getData(selected: selected).max()!
+                                                let h1 = Int(month)*Int(150)
+                                                let h2 = Double(h1)/Double(max)
+                                                Rectangle()
+                                                    .fill(Color(hex: "#639F70"))
+                                                    .scaledFrame(width: width, height: max==0 ? CGFloat(0) : CGFloat(h2))
+                                                Spacer()
+                                        }
+                                    }
+                                    .background(Color.white)
+                                    .scaledFrame(width: 300, height: 150)
+
                                 }
+                                
+
                             }
-                            .scaledFrame(width: 300, height: 150)
+                            
 
                             Divider().background(Color.black)
                                 .scaledFrame(width: 340, height: .none)

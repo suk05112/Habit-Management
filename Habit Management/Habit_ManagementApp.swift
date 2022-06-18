@@ -27,16 +27,17 @@ struct Habit_ManagementApp: SwiftUI.App {
     
     init(){
         let config = RealmSwift.Realm.Configuration(
-            schemaVersion: 3, // 새로운 스키마 버전 설정
+            schemaVersion: 5, // 새로운 스키마 버전 설정
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 3 {
+                if oldSchemaVersion < 5 {
                     // 1-1. 마이그레이션 수행(버전 2보다 작은 경우 버전 2에 맞게 데이터베이스 수정)
                     migration.enumerateObjects(ofType: Statics.className()) { oldObject, newObject in
-                        newObject!["year"] = []
+                        newObject!["year"] = 0
                         newObject!["days"] = []
                         newObject!["week"] = []
                         newObject!["month"] = []
                         newObject!["total"] = 0
+                        newObject!["classification"] = "Done"
 
                     }
                 }
@@ -47,19 +48,14 @@ struct Habit_ManagementApp: SwiftUI.App {
         Realm.Configuration.defaultConfiguration = config
     }
     var body: some Scene {
-        let setting = Setting()
         
         WindowGroup {
-            MainView()
+            ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(setting)
         }
         
     }
-    
-    func checkUserDefault(){
-        
-    }
+
 }
 
   

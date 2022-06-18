@@ -10,11 +10,14 @@ import RealmSwift
 
 class Statics: Object {
     
-    @Persisted(primaryKey: true) var year: Int
+//    @Persisted(primaryKey: true) var year: Int = 0
+    @Persisted var year: Int = 0
     @Persisted var days: List<Int> = List<Int>()
     @Persisted var week: List<Int> = List<Int>()
     @Persisted var month: List<Int> = List<Int>()
     @Persisted var total: Int
+    @Persisted var classification: String
+
     
     var dayArray: [Int] {
             get {
@@ -46,9 +49,10 @@ class Statics: Object {
             }
         }
     
-    convenience init(year: Int, dayArray: [Int], weekArray: [Int], monthArray: [Int], total: Int){
+    convenience init(classification: String, year: Int, dayArray: [Int], weekArray: [Int], monthArray: [Int], total: Int){
         self.init()
 
+        self.classification = classification
         self.year = year
         self.dayArray = dayArray
         self.weekArray = weekArray
