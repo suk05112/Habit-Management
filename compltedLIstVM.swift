@@ -157,7 +157,6 @@ class compltedLIstVM: ObservableObject {
             UserDefaults.standard.set(allDoneContinuity + today, forKey: "allDoneContinuity")
         }
 
-
         print("alldone Continue", UserDefaults.standard.integer(forKey: "allDoneContinuity"))
     }
     
@@ -183,9 +182,6 @@ class compltedLIstVM: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "yyyy-MM-dd-w"
-        
         let str_today = dateFormatter.string(from: Date())
         let date_today = dateFormatter.date(from: str_today)!
         
@@ -209,8 +205,7 @@ class compltedLIstVM: ObservableObject {
 
                 if item.date > weekAgo{
                     ans += item.completed.count
-                }
-                else{
+                } else{
                     break
                 }
             }

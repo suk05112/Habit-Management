@@ -7,13 +7,19 @@
 
 import Foundation
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     let setting = Setting()
 
+
+    init(){
+
+    }
     var body: some View {
         MainView()
             .environmentObject(setting)
+           
         /*
         switch setting.wasLaunchedBefore {
         case false: FirstLaunchView()
@@ -24,5 +30,10 @@ struct ContentView: View {
                 .transition(.opacity)
         }
         */
+    }
+    
+    
+    func didDismissPostCommentNotification() {
+        print("함수 안!!")
     }
 }

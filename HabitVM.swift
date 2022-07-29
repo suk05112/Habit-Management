@@ -45,7 +45,7 @@ class HabitVM: ObservableObject {
         if let group = realm?.objects(Habit.self) {
             self.habit = group
 
-        }else {
+        } else {
             try! realm?.write({
                 let group = Habit()
                 realm?.add(group)
@@ -72,7 +72,6 @@ class HabitVM: ObservableObject {
         getnumOfToDoPerWeek()
 //        getContinuity()
     }
-    
 
 }
 
@@ -86,8 +85,7 @@ extension HabitVM{
 
         if showAll{
             temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
-        }
-        else{
+        } else{
             temp_result = getTodayHabit()
         }
         
@@ -213,18 +211,7 @@ extension HabitVM{
     func getArrayIter(at habit: Habit) -> [Int]{
         return Array(habit.weekIter)
     }
-    
-    func getNumOfTodayHabit(todayWeek: Int =  Calendar.current.dateComponents([.weekday], from: Date()).weekday!) -> Int{
-//        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
-        var count = 0
-        
-        realm!.objects(Habit.self).forEach{
-            if $0.weekIter.contains(todayWeek){
-                count += 1
-            }
-        }
-        return count
-    }
+
 }
 
 //setting
@@ -243,6 +230,19 @@ extension HabitVM{
 }
 
 extension HabitVM{
+    
+    func getNumOfTodayHabit(todayWeek: Int =  Calendar.current.dateComponents([.weekday], from: Date()).weekday!) -> Int{
+//        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var count = 0
+        
+        realm!.objects(Habit.self).forEach{
+            if $0.weekIter.contains(todayWeek){
+                count += 1
+            }
+        }
+        return count
+    }
+    
     func getnumOfToDoPerWeek() -> [Int]{
         var weekTotal = [0,0,0,0,0,0,0]
         
@@ -250,7 +250,6 @@ extension HabitVM{
             item.weekIter.forEach{
                 weekTotal[$0-1] += 1
             }
-            
         }
         
         try? realm!.write{

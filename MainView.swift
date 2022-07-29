@@ -39,10 +39,11 @@ struct MainView: View {
     @StateObject var completedVM = compltedLIstVM.shared
     var staticVM = StaticVM.shared
     var realm: Realm? = try? Realm()
-
+    
     init(){
+        print("init main")
+        
 //        UserDefaults.standard.set(1, forKey: "allDoneContinuity")
-
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     

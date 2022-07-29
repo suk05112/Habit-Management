@@ -11,6 +11,7 @@
 		032EED5A285E252800994E5B /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED59285E252800994E5B /* TextLimiter.swift */; };
 		032EED5C285E255D00994E5B /* WeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* WeekButton.swift */; };
 		032EED5E285E25B400994E5B /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5D285E25B400994E5B /* TotalView.swift */; };
+		0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346333528913B24000D1E61 /* NotificationCenterManager.swift */; };
 		036D03B12813241000EE607B /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B02813241000EE607B /* ItemView.swift */; };
 		036D03B3281339FD00EE607B /* CompletedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B2281339FD00EE607B /* CompletedList.swift */; };
 		036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* compltedLIstVM.swift */; };
@@ -18,7 +19,7 @@
 		036D03BA2818384300EE607B /* scrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B92818384300EE607B /* scrollView.swift */; };
 		037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAEB28421AE800BD3C0E /* Setting.swift */; };
 		037FFAF7284614F400BD3C0E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAF6284614F400BD3C0E /* TestView.swift */; };
-		037FFAFB2847C43D00BD3C0E /* ReportView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAFA2847C43D00BD3C0E /* ReportView2.swift */; };
+		037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAFA2847C43D00BD3C0E /* AnimationView.swift */; };
 		038FB458280D61F600740AA6 /* HabitVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitVM.swift */; };
 		039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DC2830F08D00CA0028 /* ScrollVM.swift */; };
 		039164E0283120DA00CA0028 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DF283120DA00CA0028 /* Total.swift */; };
@@ -78,6 +79,7 @@
 		032EED59285E252800994E5B /* TextLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
 		032EED5B285E255D00994E5B /* WeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekButton.swift; sourceTree = "<group>"; };
 		032EED5D285E25B400994E5B /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
+		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B2281339FD00EE607B /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
@@ -85,7 +87,7 @@
 		036D03B92818384300EE607B /* scrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollView.swift; sourceTree = "<group>"; };
 		037FFAEB28421AE800BD3C0E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		037FFAF6284614F400BD3C0E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		037FFAFA2847C43D00BD3C0E /* ReportView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView2.swift; sourceTree = "<group>"; };
+		037FFAFA2847C43D00BD3C0E /* AnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationView.swift; sourceTree = "<group>"; };
 		038FB457280D61F600740AA6 /* HabitVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitVM.swift; sourceTree = "<group>"; };
 		039164DC2830F08D00CA0028 /* ScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollVM.swift; sourceTree = "<group>"; };
 		039164DF283120DA00CA0028 /* Total.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				039164E12831213000CA0028 /* Month.swift */,
 				032EED57285E24D000994E5B /* Toast.swift */,
 				032EED59285E252800994E5B /* TextLimiter.swift */,
+				0346333528913B24000D1E61 /* NotificationCenterManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -340,7 +343,7 @@
 			children = (
 				03DBC279282111DD000848BF /* StaticsView.swift */,
 				03DBC2802827CF2F000848BF /* Graph.swift */,
-				037FFAFA2847C43D00BD3C0E /* ReportView2.swift */,
+				037FFAFA2847C43D00BD3C0E /* AnimationView.swift */,
 				0392B412280695AD006C1E04 /* ReportView.swift */,
 				03A06E5D2858D74A0069C3CB /* ReportListView.swift */,
 				032EED5D285E25B400994E5B /* TotalView.swift */,
@@ -619,7 +622,7 @@
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
 				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
-				037FFAFB2847C43D00BD3C0E /* ReportView2.swift in Sources */,
+				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
 				03DBC285282BAA74000848BF /* Statics.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
@@ -640,6 +643,7 @@
 				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
 				03DBC2812827CF2F000848BF /* Graph.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,
+				0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,7 +826,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -852,7 +856,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

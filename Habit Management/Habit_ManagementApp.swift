@@ -9,22 +9,54 @@ import SwiftUI
 import UIKit
 import RealmSwift
 import PartialSheet
+import UserNotifications
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    let gcmMessageIDKey = "gcm.message_id"
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
-        print("my code~~~")
+        print("didfinish")
+
+        if #available(iOS 10.0, *) {
+          // For iOS 10 display notification (sent via APNS)
+          UNUserNotificationCenter.current().delegate = self
+
+          let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+          UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+        } else {
+          let settings: UIUserNotificationSettings =
+          UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+          application.registerUserNotificationSettings(settings)
+        }
+
+        application.registerForRemoteNotifications()
         return true
-        
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+
+        print("didreceive")
+
+      print(userInfo)
+
+      completionHandler(UIBackgroundFetchResult.newData)
     }
 }
 
 @main
 struct Habit_ManagementApp: SwiftUI.App {
-
+    
+    @Environment(\.scenePhase) var scenePhase
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     let persistenceController = PersistenceController.shared
     private var isAddViewShow = false
     
+    let notification = NotificationCenterManager()
+
     init(){
         let config = RealmSwift.Realm.Configuration(
             schemaVersion: 5, // 새로운 스키마 버전 설정
@@ -53,6 +85,19 @@ struct Habit_ManagementApp: SwiftUI.App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        .onChange(of: scenePhase) { newScenePhase in
+                   switch newScenePhase {
+                   case .active:
+                       print("App is active")
+                   case .inactive:
+                       notification.sendNotification(seconds: 10)
+                       print("App is inactive")
+                   case .background:
+                       print("App is in background")
+                   @unknown default:
+                       print("unexpected Value")
+                   }
+               }
         
     }
 

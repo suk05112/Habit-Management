@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ReportView2: View{
+struct AnimationView: View{
     @StateObject var staticVM = StaticVM.shared
     let today_total = HabitVM.shared.getNumOfTodayHabit()
     let today_done = StaticVM.shared.getData(selected: 1).last!

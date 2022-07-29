@@ -41,4 +41,9 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable{
 //        print("date = ", dateFormatter.string(from: Date()))
         self.id = dateFormatter.string(from: Date())
         }
+    
+    func isWeekValidate() -> Bool {
+        if weekIter.isEmpty { return false }
+        return true
+    }
 }
