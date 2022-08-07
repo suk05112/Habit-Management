@@ -34,7 +34,7 @@ struct ItemView: View{
                 HStack{
                     VStack(alignment: .leading){
                         
-                        Text("\(getWeekStr()) 반복")
+                        Text("\(HabitVM.shared.getWeekStr(habit: myItem)) 반복")
                             .scaledText(size: 12, weight: .semibold)
                             .foregroundColor(Color(hex: "#38AC3C"))
                             .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
@@ -77,26 +77,7 @@ struct ItemView: View{
     
  
     
-    func getWeekStr() -> String{
-        var str = ""
-        let sorted = myItem.weekIter.sorted(by: <)
-        if sorted == [2,3,4,5,6]{
-            str = "평일"
-        }
-        else if sorted == [1, 7]{
-            str = "주말"
-        }
-        else if sorted == [1,2,3,4,5,6,7]{
-            str = "매일"
-        }
-        else{
-            sorted.forEach{
-                str += Week(rawValue: $0)!.kor
-            }
-        }
 
-        return str
-    }
 }
 
 

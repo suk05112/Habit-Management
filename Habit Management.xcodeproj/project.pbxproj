@@ -80,6 +80,7 @@
 		032EED5B285E255D00994E5B /* WeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekButton.swift; sourceTree = "<group>"; };
 		032EED5D285E25B400994E5B /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
+		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B2281339FD00EE607B /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
@@ -249,6 +250,7 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
 				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
 				03CFE0DB27F4952B004C54B6 /* View */,
@@ -811,12 +813,18 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
 				DEVELOPMENT_TEAM = F2YB4PBTB4;
 				ENABLE_PREVIEWS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Management-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -841,12 +849,18 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
 				DEVELOPMENT_TEAM = F2YB4PBTB4;
 				ENABLE_PREVIEWS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Management-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

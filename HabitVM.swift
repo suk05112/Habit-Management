@@ -68,7 +68,7 @@ class HabitVM: ObservableObject {
                 break
             }
         })
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         getnumOfToDoPerWeek()
 //        getContinuity()
     }
@@ -121,6 +121,24 @@ extension HabitVM{
             }
         }
         return result
+    }
+    
+    func getWeekStr(habit: Habit) -> String{
+        var str = ""
+        let sorted = habit.weekIter.sorted(by: <)
+        if sorted == [2,3,4,5,6]{
+            str = "평일"
+        } else if sorted == [1, 7]{
+            str = "주말"
+        } else if sorted == [1,2,3,4,5,6,7]{
+            str = "매일"
+        } else{
+            sorted.forEach{
+                str += Week(rawValue: $0)!.kor
+            }
+        }
+
+        return str
     }
 
 }

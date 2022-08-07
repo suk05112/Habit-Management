@@ -6,14 +6,21 @@
 //
 
 import XCTest
+import RealmSwift
 @testable import Habit_Management
 
 class Habit_ManagementTests: XCTestCase {
+//    let name = "test"
     let habit = Habit(name: "test", iter: [1, 2, 3, 4])
-                      
+    // Test Code
+    let realmPath = URL(fileURLWithPath: "...")
+    var habitVM: HabitVM?
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
+        self.habitVM = HabitVM()
 
     }
 
@@ -40,6 +47,41 @@ class Habit_ManagementTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    func testgetWeekStr() {
+        let realm = try! Realm()
+        let habit = Habit(name: "test name", iter: [1,7])
+        
+        let result = habitVM!.getWeekStr(habit: habit)
+        
+        XCTAssert(result == "주말")
+
+    }
+    
+    func testgetArrayIter() {
+        let habit = Habit(name: "test name", iter: [1,7])
+        let result = habitVM!.getArrayIter(at: habit)
+        XCTAssert(result==[1,7])
+    }
+
+    func testWithProjection() {
+        let realm = try! Realm()
+        // Create a Realm object, populate it with values
+        let habit = Habit(name: "test name", iter: [1,2,3])
+        try! realm.write {
+            realm.add(habit)
+        }
+        let person = realm.objects(Habit.self).first(where: { $0.name == "test name" })!
+        XCTAssert(person.name == "test name")
+
+        XCTAssert(Array(person.weekIter) == [1,2,3])
+        // Change a value on the class projection
+        try! realm.write {
+            person.name = "David"
+        }
+
+        XCTAssert(person.name == "David")
     }
 
 }

@@ -26,7 +26,7 @@ struct AnimationView: View{
     }
     
     var body: some View {
-        
+
          ZStack{
              RoundedRectangle(cornerRadius: 10, style: .continuous)
                  .fill(Color.white)

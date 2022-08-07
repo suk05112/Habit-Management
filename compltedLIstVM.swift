@@ -211,7 +211,6 @@ class compltedLIstVM: ObservableObject {
             }
             
         case .month:
-
             let str = "0000-00-00"
             let start = str.index(str.startIndex, offsetBy: 5)
             let end = str.index(str.endIndex, offsetBy: -3)
