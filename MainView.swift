@@ -9,6 +9,7 @@
 import SwiftUI
 import CoreData
 import RealmSwift
+import Firebase
 
 struct MainView: View {
     @State private var showToast = false
@@ -40,11 +41,26 @@ struct MainView: View {
     var staticVM = StaticVM.shared
     var realm: Realm? = try? Realm()
     
+    var ref: DatabaseReference!
+    
     init(){
         print("init main")
         
 //        UserDefaults.standard.set(1, forKey: "allDoneContinuity")
         print(Realm.Configuration.defaultConfiguration.fileURL!)
+
+
+        ref = Database.database().reference()
+        self.ref.child("users").child("child").setValue(["username": "sujin"])
+        
+        ref.child("users/child/username").getData(completion:  { error, snapshot in
+          guard error == nil else {
+            print(error!.localizedDescription)
+            return;
+          }
+          let userName = snapshot?.value as? String ?? "Unknown"
+            print(userName, "읽어옴")
+        })
     }
     
     var body: some View {

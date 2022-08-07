@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 import PartialSheet
 import UserNotifications
-
+import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     let gcmMessageIDKey = "gcm.message_id"
@@ -31,7 +31,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
           UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
           application.registerUserNotificationSettings(settings)
         }
-
+        
+        FirebaseApp.configure()
         application.registerForRemoteNotifications()
         return true
     }
