@@ -7,10 +7,16 @@
 
 import SwiftUI
 import UIKit
-import RealmSwift
-import PartialSheet
 import UserNotifications
+import PartialSheet
+
+import RealmSwift
 import FirebaseCore
+
+import KakaoSDKCommon
+import KakaoSDKAuth
+
+import AuthenticationServices
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     let gcmMessageIDKey = "gcm.message_id"
@@ -34,6 +40,24 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         FirebaseApp.configure()
         application.registerForRemoteNotifications()
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: "shfqndhktnrs@naver.com") { (credentialState, error) in
+          switch credentialState {
+          case .authorized:
+              print("autho")
+            // Authorization Logic
+          case .revoked, .notFound:
+              print("else")
+            // Not Authorization Logic
+//            DispatchQueue.main.async {
+//              self.window?.rootViewController?.showLoginViewController()
+//            }
+          default:
+            break
+          }
+        }
+        
         return true
     }
 
@@ -41,16 +65,25 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
         print("didreceive")
+        print(userInfo)
 
-      print(userInfo)
-
-      completionHandler(UIBackgroundFetchResult.newData)
+        completionHandler(UIBackgroundFetchResult.newData)
         
     }
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         // 세로방향 고정
         return UIInterfaceOrientationMask.portrait
     }
+    
+    
+    
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+//                return AuthController.handleOpenUrl(url: url)
+//            }
+//
+//            return false
+//        }
 }
 
 @main
@@ -84,12 +117,22 @@ struct Habit_ManagementApp: SwiftUI.App {
         
         // 2. Realm이 새로운 Object를 쓸 수 있도록 설정
         Realm.Configuration.defaultConfiguration = config
+        KakaoSDK.initSDK(appKey: "2d8dea59c34ee74dafeb016892e75e33")
+        
+
+        print("app ininininit")
+
     }
     var body: some Scene {
         
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onOpenURL(perform: { url in
+                    if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                        AuthController.handleOpenUrl(url: url)
+                    }
+                })
         }
         .onChange(of: scenePhase) { newScenePhase in
                    switch newScenePhase {
@@ -104,6 +147,7 @@ struct Habit_ManagementApp: SwiftUI.App {
                        print("unexpected Value")
                    }
                }
+        
         
     }
 

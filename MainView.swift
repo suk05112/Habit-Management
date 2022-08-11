@@ -10,6 +10,7 @@ import SwiftUI
 import CoreData
 import RealmSwift
 import Firebase
+import KakaoSDKAuth
 
 struct MainView: View {
     @State private var showToast = false
@@ -61,6 +62,8 @@ struct MainView: View {
           let userName = snapshot?.value as? String ?? "Unknown"
             print(userName, "읽어옴")
         })
+        
+
     }
     
     var body: some View {
@@ -183,6 +186,12 @@ struct MainView: View {
                         Label("label", systemImage: "chart.bar.fill")
                         
                     }
+                LoginView()
+                    .tabItem{
+                        Image(systemName: "house")
+                        Text("홈")
+                    }
+                    
             }
 
             if $showingAdd.wrappedValue{

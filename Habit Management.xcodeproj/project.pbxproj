@@ -17,6 +17,13 @@
 		03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */; };
 		0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03463349289FA7F9000D1E61 /* FirebaseDatabase */; };
 		0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */; };
+		0346334F28A17151000D1E61 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346334E28A17151000D1E61 /* LoginView.swift */; };
+		0346335228A1725A000D1E61 /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0346335128A1725A000D1E61 /* KakaoSDK */; };
+		0346335428A1725A000D1E61 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0346335328A1725A000D1E61 /* KakaoSDKAuth */; };
+		0346335628A1725A000D1E61 /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 0346335528A1725A000D1E61 /* KakaoSDKShare */; };
+		0346335828A1725A000D1E61 /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 0346335728A1725A000D1E61 /* KakaoSDKTalk */; };
+		0346335A28A1725A000D1E61 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 0346335928A1725A000D1E61 /* KakaoSDKUser */; };
+		0346335D28A268B4000D1E61 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346335C28A268B4000D1E61 /* KakaoLoginManager.swift */; };
 		036D03B12813241000EE607B /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B02813241000EE607B /* ItemView.swift */; };
 		036D03B3281339FD00EE607B /* CompletedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B2281339FD00EE607B /* CompletedList.swift */; };
 		036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* compltedLIstVM.swift */; };
@@ -56,6 +63,14 @@
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC285282BAA74000848BF /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC284282BAA74000848BF /* Statics.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
+		03E64B3F28A2E2980003881D /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B3E28A2E2980003881D /* AppleLoginManager.swift */; };
+		03E64B4528A2F2260003881D /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 03E64B4028A2EC140003881D /* Config.xcconfig */; };
+		03E64B5528A44A180003881D /* SignInWithAppleDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5428A44A180003881D /* SignInWithAppleDelegates.swift */; };
+		03E64B5928A44BCF0003881D /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5828A44BCF0003881D /* Keychain.swift */; };
+		03E64B5B28A44BEA0003881D /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5A28A44BEA0003881D /* UserData.swift */; };
+		03E64B5D28A44BFC0003881D /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5C28A44BFC0003881D /* UserDataKeychain.swift */; };
+		03E64B5F28A44C230003881D /* WebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5E28A44C230003881D /* WebApi.swift */; };
+		03E64B6128A451680003881D /* EnvironmentWindowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B6028A451680003881D /* EnvironmentWindowKey.swift */; };
 		2460F682C8D2ACB9EA742D3F /* Pods_Habit_Management_Habit_ManagementUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB19D28789C8C2E67D0F6FD /* Pods_Habit_Management_Habit_ManagementUITests.framework */; };
 		26895DB5D011AA4B89753225 /* Pods_Habit_ManagementTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */; };
 		8086D5AE99F30F9CCD0414F6 /* Pods_Habit_Management.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884949A78425940E1FD1043F /* Pods_Habit_Management.framework */; };
@@ -87,6 +102,8 @@
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
 		03463342289FA695000D1E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0346334E28A17151000D1E61 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		0346335C28A268B4000D1E61 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B2281339FD00EE607B /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
@@ -129,6 +146,15 @@
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC284282BAA74000848BF /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
+		03E64B3D28A2E22E0003881D /* Habit Management.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Management.entitlements"; sourceTree = "<group>"; };
+		03E64B3E28A2E2980003881D /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
+		03E64B4028A2EC140003881D /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		03E64B5428A44A180003881D /* SignInWithAppleDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegates.swift; sourceTree = "<group>"; };
+		03E64B5828A44BCF0003881D /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		03E64B5A28A44BEA0003881D /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		03E64B5C28A44BFC0003881D /* UserDataKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataKeychain.swift; sourceTree = "<group>"; };
+		03E64B5E28A44C230003881D /* WebApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebApi.swift; sourceTree = "<group>"; };
+		03E64B6028A451680003881D /* EnvironmentWindowKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentWindowKey.swift; sourceTree = "<group>"; };
 		0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Habit_ManagementTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		400D3B7BD7BFB1207BEC7302 /* Pods-Habit Management-Habit ManagementUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.release.xcconfig"; sourceTree = "<group>"; };
 		401E6E5122DBF10BBCEDD366 /* Pods-Habit Management-Habit ManagementUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; path = "Target Support Files/Pods-Habit Management-Habit ManagementUITests/Pods-Habit Management-Habit ManagementUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,12 +171,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */,
+				0346335228A1725A000D1E61 /* KakaoSDK in Frameworks */,
 				0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */,
 				039165032837650100CA0028 /* PartialSheet in Frameworks */,
 				8086D5AE99F30F9CCD0414F6 /* Pods_Habit_Management.framework in Frameworks */,
 				03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */,
 				039165082837744900CA0028 /* ActionSheetCard in Frameworks */,
+				0346335828A1725A000D1E61 /* KakaoSDKTalk in Frameworks */,
+				0346335A28A1725A000D1E61 /* KakaoSDKUser in Frameworks */,
+				0346335628A1725A000D1E61 /* KakaoSDKShare in Frameworks */,
 				03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */,
+				0346335428A1725A000D1E61 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +215,24 @@
 				8CAE1D3E970C585D984D2C0A /* Pods-Habit ManagementTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		0346334D28A17128000D1E61 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				0346334E28A17151000D1E61 /* LoginView.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		0346335B28A2678F000D1E61 /* LoginManager */ = {
+			isa = PBXGroup;
+			children = (
+				03E64B5628A44B8A0003881D /* AppleLoginManager */,
+				0346335C28A268B4000D1E61 /* KakaoLoginManager.swift */,
+				03E64B3E28A2E2980003881D /* AppleLoginManager.swift */,
+			);
+			path = LoginManager;
 			sourceTree = "<group>";
 		};
 		037FFAF4284606C200BD3C0E /* Item */ = {
@@ -260,6 +309,9 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				03E64B4028A2EC140003881D /* Config.xcconfig */,
+				03E64B3D28A2E22E0003881D /* Habit Management.entitlements */,
+				0346335B28A2678F000D1E61 /* LoginManager */,
 				03463342289FA695000D1E61 /* GoogleService-Info.plist */,
 				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
 				039164DE283120C600CA0028 /* Utility */,
@@ -330,6 +382,7 @@
 		03CFE0DB27F4952B004C54B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0346334D28A17128000D1E61 /* MyPage */,
 				037FFAF5284606DC00BD3C0E /* Scroll */,
 				037FFAF4284606C200BD3C0E /* Item */,
 				0391650E283B5DE800CA0028 /* Add */,
@@ -362,6 +415,27 @@
 				032EED5D285E25B400994E5B /* TotalView.swift */,
 			);
 			path = Static;
+			sourceTree = "<group>";
+		};
+		03E64B5628A44B8A0003881D /* AppleLoginManager */ = {
+			isa = PBXGroup;
+			children = (
+				03E64B5728A44BA90003881D /* CredentialStorage */,
+				03E64B5428A44A180003881D /* SignInWithAppleDelegates.swift */,
+				03E64B5E28A44C230003881D /* WebApi.swift */,
+				03E64B6028A451680003881D /* EnvironmentWindowKey.swift */,
+			);
+			path = AppleLoginManager;
+			sourceTree = "<group>";
+		};
+		03E64B5728A44BA90003881D /* CredentialStorage */ = {
+			isa = PBXGroup;
+			children = (
+				03E64B5828A44BCF0003881D /* Keychain.swift */,
+				03E64B5A28A44BEA0003881D /* UserData.swift */,
+				03E64B5C28A44BFC0003881D /* UserDataKeychain.swift */,
+			);
+			path = CredentialStorage;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -401,6 +475,11 @@
 				03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */,
 				03463349289FA7F9000D1E61 /* FirebaseDatabase */,
 				0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */,
+				0346335128A1725A000D1E61 /* KakaoSDK */,
+				0346335328A1725A000D1E61 /* KakaoSDKAuth */,
+				0346335528A1725A000D1E61 /* KakaoSDKShare */,
+				0346335728A1725A000D1E61 /* KakaoSDKTalk */,
+				0346335928A1725A000D1E61 /* KakaoSDKUser */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -479,6 +558,7 @@
 			mainGroup = 03CFE05B27EC46D1004C54B6;
 			packageReferences = (
 				03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -496,6 +576,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03E64B4528A2F2260003881D /* Config.xcconfig in Resources */,
 				03CFE06F27EC46D6004C54B6 /* Preview Assets.xcassets in Resources */,
 				03CFE06C27EC46D6004C54B6 /* Assets.xcassets in Resources */,
 				03463343289FA695000D1E61 /* GoogleService-Info.plist in Resources */,
@@ -628,6 +709,7 @@
 			files = (
 				039164E0283120DA00CA0028 /* Total.swift in Sources */,
 				03A06E642858F7870069C3CB /* FirstLaunchView.swift in Sources */,
+				03E64B5F28A44C230003881D /* WebApi.swift in Sources */,
 				039164FA283752B900CA0028 /* EditView.swift in Sources */,
 				03A06E5E2858D74A0069C3CB /* ReportListView.swift in Sources */,
 				0392B4152806BE5B006C1E04 /* Habit.swift in Sources */,
@@ -642,6 +724,10 @@
 				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
+				03E64B3F28A2E2980003881D /* AppleLoginManager.swift in Sources */,
+				0346335D28A268B4000D1E61 /* KakaoLoginManager.swift in Sources */,
+				0346334F28A17151000D1E61 /* LoginView.swift in Sources */,
+				03E64B5B28A44BEA0003881D /* UserData.swift in Sources */,
 				03DBC285282BAA74000848BF /* Statics.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
@@ -652,10 +738,13 @@
 				03A06E602858D9490069C3CB /* ReportData.swift in Sources */,
 				03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */,
 				036D03B3281339FD00EE607B /* CompletedList.swift in Sources */,
+				03E64B5D28A44BFC0003881D /* UserDataKeychain.swift in Sources */,
 				03A06E622858ED0B0069C3CB /* ContentView.swift in Sources */,
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
+				03E64B6128A451680003881D /* EnvironmentWindowKey.swift in Sources */,
 				036D03B728145D9700EE607B /* ScrollData.swift in Sources */,
+				03E64B5528A44A180003881D /* SignInWithAppleDelegates.swift in Sources */,
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
 				039164E22831213000CA0028 /* Month.swift in Sources */,
 				037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */,
@@ -663,6 +752,7 @@
 				03DBC2812827CF2F000848BF /* Graph.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,
 				0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */,
+				03E64B5928A44BCF0003881D /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +915,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
@@ -861,6 +952,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
@@ -971,6 +1063,280 @@
 			};
 			name = Release;
 		};
+		03E64B4628A2F2AB0003881D /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release copy";
+		};
+		03E64B4728A2F2AB0003881D /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03E64B4028A2EC140003881D /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				ENABLE_PREVIEWS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Management-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = "Release copy";
+		};
+		03E64B4828A2F2AB0003881D /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8CAE1D3E970C585D984D2C0A /* Pods-Habit ManagementTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Habit Management.app/Habit Management";
+			};
+			name = "Release copy";
+		};
+		03E64B4928A2F2AB0003881D /* Release copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 400D3B7BD7BFB1207BEC7302 /* Pods-Habit Management-Habit ManagementUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Habit Management";
+			};
+			name = "Release copy";
+		};
+		03E64B4A28A2F2DD0003881D /* Debug copy */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Debug copy";
+		};
+		03E64B4B28A2F2DD0003881D /* Debug copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03E64B4028A2EC140003881D /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				ENABLE_PREVIEWS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Habit-Management-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = "Debug copy";
+		};
+		03E64B4C28A2F2DD0003881D /* Debug copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1785FC2FF4E53DFD4EBF7A4 /* Pods-Habit ManagementTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Habit Management.app/Habit Management";
+			};
+			name = "Debug copy";
+		};
+		03E64B4D28A2F2DD0003881D /* Debug copy */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 401E6E5122DBF10BBCEDD366 /* Pods-Habit Management-Habit ManagementUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Habit Management";
+			};
+			name = "Debug copy";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -978,7 +1344,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03CFE08B27EC46D6004C54B6 /* Debug */,
+				03E64B4A28A2F2DD0003881D /* Debug copy */,
 				03CFE08C27EC46D6004C54B6 /* Release */,
+				03E64B4628A2F2AB0003881D /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -987,7 +1355,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03CFE08E27EC46D6004C54B6 /* Debug */,
+				03E64B4B28A2F2DD0003881D /* Debug copy */,
 				03CFE08F27EC46D6004C54B6 /* Release */,
+				03E64B4728A2F2AB0003881D /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -996,7 +1366,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03CFE09127EC46D6004C54B6 /* Debug */,
+				03E64B4C28A2F2DD0003881D /* Debug copy */,
 				03CFE09227EC46D6004C54B6 /* Release */,
+				03E64B4828A2F2AB0003881D /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1005,7 +1377,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03CFE09427EC46D6004C54B6 /* Debug */,
+				03E64B4D28A2F2DD0003881D /* Debug copy */,
 				03CFE09527EC46D6004C54B6 /* Release */,
+				03E64B4928A2F2AB0003881D /* Release copy */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1019,6 +1393,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 9.0.0;
+			};
+		};
+		0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1043,6 +1425,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabaseSwift;
+		};
+		0346335128A1725A000D1E61 /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+		0346335328A1725A000D1E61 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		0346335528A1725A000D1E61 /* KakaoSDKShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKShare;
+		};
+		0346335728A1725A000D1E61 /* KakaoSDKTalk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKTalk;
+		};
+		0346335928A1725A000D1E61 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0346335028A1725A000D1E61 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 		039165022837650100CA0028 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  Habit Management
+//
+//  Created by 한수진 on 2022/08/10.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+ 
+KAKAO_NATIVE_APP_KEY = 2d8dea59c34ee74dafeb016892e75e33
+
