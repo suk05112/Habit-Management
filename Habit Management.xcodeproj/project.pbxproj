@@ -219,14 +219,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		0346334D28A17128000D1E61 /* MyPage */ = {
-			isa = PBXGroup;
-			children = (
-				0346334E28A17151000D1E61 /* LoginView.swift */,
-			);
-			path = MyPage;
-			sourceTree = "<group>";
-		};
 		0346335B28A2678F000D1E61 /* LoginManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,24 +227,6 @@
 				03E64B3E28A2E2980003881D /* AppleLoginManager.swift */,
 			);
 			path = LoginManager;
-			sourceTree = "<group>";
-		};
-		037FFAF4284606C200BD3C0E /* Item */ = {
-			isa = PBXGroup;
-			children = (
-				039164F9283752B900CA0028 /* EditView.swift */,
-				036D03B02813241000EE607B /* ItemView.swift */,
-			);
-			path = Item;
-			sourceTree = "<group>";
-		};
-		037FFAF5284606DC00BD3C0E /* Scroll */ = {
-			isa = PBXGroup;
-			children = (
-				036D03B92818384300EE607B /* scrollView.swift */,
-				03DBC27B2827C999000848BF /* LessMore.swift */,
-			);
-			path = Scroll;
 			sourceTree = "<group>";
 		};
 		038DB34528A7D83C006BD1E3 /* View Model */ = {
@@ -267,6 +241,78 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
+		038DB34628A7D9DA006BD1E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				038DB34C28A7DA12006BD1E3 /* Main */,
+				038DB34B28A7DA08006BD1E3 /* Static */,
+				038DB34A28A7DA01006BD1E3 /* Add */,
+				038DB34928A7D9F8006BD1E3 /* Item */,
+				038DB34828A7D9ED006BD1E3 /* Scroll */,
+				038DB34728A7D9E7006BD1E3 /* MyPage */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		038DB34728A7D9E7006BD1E3 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				0346334E28A17151000D1E61 /* LoginView.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		038DB34828A7D9ED006BD1E3 /* Scroll */ = {
+			isa = PBXGroup;
+			children = (
+				036D03B92818384300EE607B /* scrollView.swift */,
+				03DBC27B2827C999000848BF /* LessMore.swift */,
+			);
+			path = Scroll;
+			sourceTree = "<group>";
+		};
+		038DB34928A7D9F8006BD1E3 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				039164F9283752B900CA0028 /* EditView.swift */,
+				036D03B02813241000EE607B /* ItemView.swift */,
+			);
+			path = Item;
+			sourceTree = "<group>";
+		};
+		038DB34A28A7DA01006BD1E3 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				03CFE0DC27F58D3F004C54B6 /* AddView.swift */,
+				032EED5B285E255D00994E5B /* WeekButton.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		038DB34B28A7DA08006BD1E3 /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				03DBC279282111DD000848BF /* StaticsView.swift */,
+				03DBC2802827CF2F000848BF /* Graph.swift */,
+				037FFAFA2847C43D00BD3C0E /* AnimationView.swift */,
+				0392B412280695AD006C1E04 /* ReportView.swift */,
+				03A06E5D2858D74A0069C3CB /* ReportListView.swift */,
+				032EED5D285E25B400994E5B /* TotalView.swift */,
+			);
+			path = Static;
+			sourceTree = "<group>";
+		};
+		038DB34C28A7DA12006BD1E3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				03A06E612858ED0B0069C3CB /* ContentView.swift */,
+				03CFE06927EC46D1004C54B6 /* MainView.swift */,
+				03A06E632858F7870069C3CB /* FirstLaunchView.swift */,
+				037FFAF6284614F400BD3C0E /* TestView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		039164DE283120C600CA0028 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,15 +324,6 @@
 				0346333528913B24000D1E61 /* NotificationCenterManager.swift */,
 			);
 			path = Utility;
-			sourceTree = "<group>";
-		};
-		0391650E283B5DE800CA0028 /* Add */ = {
-			isa = PBXGroup;
-			children = (
-				03CFE0DC27F58D3F004C54B6 /* AddView.swift */,
-				032EED5B285E255D00994E5B /* WeekButton.swift */,
-			);
-			path = Add;
 			sourceTree = "<group>";
 		};
 		0392B41C28080DB1006C1E04 /* RealmManager */ = {
@@ -323,6 +360,7 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				038DB34628A7D9DA006BD1E3 /* View */,
 				03E64B4028A2EC140003881D /* Config.xcconfig */,
 				03E64B3D28A2E22E0003881D /* Habit Management.entitlements */,
 				0346335B28A2678F000D1E61 /* LoginManager */,
@@ -331,7 +369,6 @@
 				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
 				038DB34528A7D83C006BD1E3 /* View Model */,
-				03CFE0DB27F4952B004C54B6 /* View */,
 				03CFE0D727F4947F004C54B6 /* Model */,
 				03CFE06727EC46D1004C54B6 /* Habit_ManagementApp.swift */,
 				03CFE06B27EC46D6004C54B6 /* Assets.xcassets */,
@@ -378,44 +415,6 @@
 			);
 			name = Model;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		03CFE0DB27F4952B004C54B6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0346334D28A17128000D1E61 /* MyPage */,
-				037FFAF5284606DC00BD3C0E /* Scroll */,
-				037FFAF4284606C200BD3C0E /* Item */,
-				0391650E283B5DE800CA0028 /* Add */,
-				03DBC27E2827CF02000848BF /* Static */,
-				03DBC27D2827CEEE000848BF /* Main */,
-				037FFAF6284614F400BD3C0E /* TestView.swift */,
-				03A06E612858ED0B0069C3CB /* ContentView.swift */,
-			);
-			name = View;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		03DBC27D2827CEEE000848BF /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				03CFE06927EC46D1004C54B6 /* MainView.swift */,
-				03A06E632858F7870069C3CB /* FirstLaunchView.swift */,
-			);
-			name = Main;
-			sourceTree = "<group>";
-		};
-		03DBC27E2827CF02000848BF /* Static */ = {
-			isa = PBXGroup;
-			children = (
-				03DBC279282111DD000848BF /* StaticsView.swift */,
-				03DBC2802827CF2F000848BF /* Graph.swift */,
-				037FFAFA2847C43D00BD3C0E /* AnimationView.swift */,
-				0392B412280695AD006C1E04 /* ReportView.swift */,
-				03A06E5D2858D74A0069C3CB /* ReportListView.swift */,
-				032EED5D285E25B400994E5B /* TotalView.swift */,
-			);
-			path = Static;
 			sourceTree = "<group>";
 		};
 		03E64B5628A44B8A0003881D /* AppleLoginManager */ = {
