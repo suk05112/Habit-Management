@@ -13,16 +13,18 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 import AuthenticationServices
+import FirebaseAuth
 
 
 struct LoginView: View {
     let kakoManager = KakaoLoginManager.shared
-    
+    @State var myemail = ""
     @Environment(\.window) var window: UIWindow?
     @State var appleSignInDelegates: SignInWithAppleDelegates! = nil
 
     var body: some View {
         VStack{
+            Text("\(myemail)")
             Button(action : {
                 kakoManager.checkToken()
             })
@@ -38,14 +40,63 @@ struct LoginView: View {
             
             SignInWithApple()
               .frame(width: 280, height: 60)
-              .onTapGesture(perform: showAppleLogin)
-
+              .onTapGesture {
+                      appleLogin()
+                  getprofile()
+                    }
+//              .onTapGesture(perform: showAppleLogin)
+            Button(action : {
+                appleSignInDelegates.logout()
+                myemail = ""
+                getprofile()
+            })
+            {
+                Text("애플 로그아웃")
+            }
         }
-        .onAppear {
-          self.performExistingAccountSetupFlows()
-        }
+//        .onAppear {
+//          self.performExistingAccountSetupFlows()
+//        }
+        
+        
     }
     
+    func getprofile(){
+        let user = Auth.auth().currentUser
+//        var myemail = ""
+        if let user = user {
+          // The user's ID, unique to the Firebase project.
+          // Do NOT use this value to authenticate with your backend server,
+          // if you have one. Use getTokenWithCompletion:completion: instead.
+          let uid = user.uid
+          let email = user.email
+          let photoURL = user.photoURL
+          var multiFactorString = "MultiFactor: "
+          for info in user.multiFactor.enrolledFactors {
+            multiFactorString += info.displayName ?? "[DispayName]"
+            multiFactorString += " "
+          }
+          // ...
+            myemail = email!
+
+        }
+        print("파베 이메일", myemail)
+
+//        return myemail
+
+    }
+    
+    func appleLogin() {
+//        appleSignInDelegates = SignInWithAppleDelegates(window: window)
+        appleSignInDelegates = SignInWithAppleDelegates(window: window) { success in
+          if success {
+            // update UI
+          } else {
+            // show the user an error
+          }
+        }
+        appleSignInDelegates?.startSignInWithAppleFlow()
+    }
     
     private func showAppleLogin() {
       let request = ASAuthorizationAppleIDProvider().createRequest()
@@ -68,6 +119,8 @@ struct LoginView: View {
     }
 
     private func performSignIn(using requests: [ASAuthorizationRequest]) {
+//        appleSignInDelegates = SignInWithAppleDelegates(window: window)
+
       appleSignInDelegates = SignInWithAppleDelegates(window: window) { success in
         if success {
           // update UI

@@ -71,6 +71,7 @@
 		03E64B5D28A44BFC0003881D /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5C28A44BFC0003881D /* UserDataKeychain.swift */; };
 		03E64B5F28A44C230003881D /* WebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B5E28A44C230003881D /* WebApi.swift */; };
 		03E64B6128A451680003881D /* EnvironmentWindowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E64B6028A451680003881D /* EnvironmentWindowKey.swift */; };
+		03E64B6328A523750003881D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 03E64B6228A523750003881D /* FirebaseAuth */; };
 		2460F682C8D2ACB9EA742D3F /* Pods_Habit_Management_Habit_ManagementUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB19D28789C8C2E67D0F6FD /* Pods_Habit_Management_Habit_ManagementUITests.framework */; };
 		26895DB5D011AA4B89753225 /* Pods_Habit_ManagementTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980B5CD073165562A72A8BB /* Pods_Habit_ManagementTests.framework */; };
 		8086D5AE99F30F9CCD0414F6 /* Pods_Habit_Management.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884949A78425940E1FD1043F /* Pods_Habit_Management.framework */; };
@@ -180,6 +181,7 @@
 				0346335828A1725A000D1E61 /* KakaoSDKTalk in Frameworks */,
 				0346335A28A1725A000D1E61 /* KakaoSDKUser in Frameworks */,
 				0346335628A1725A000D1E61 /* KakaoSDKShare in Frameworks */,
+				03E64B6328A523750003881D /* FirebaseAuth in Frameworks */,
 				03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */,
 				0346335428A1725A000D1E61 /* KakaoSDKAuth in Frameworks */,
 			);
@@ -253,6 +255,18 @@
 			path = Scroll;
 			sourceTree = "<group>";
 		};
+		038DB34528A7D83C006BD1E3 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				03DBC288282BAB3E000848BF /* StaticVM.swift */,
+				038FB457280D61F600740AA6 /* HabitVM.swift */,
+				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
+				039164DC2830F08D00CA0028 /* ScrollVM.swift */,
+				037FFAEB28421AE800BD3C0E /* Setting.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		039164DE283120C600CA0028 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,8 +330,8 @@
 				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
 				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
+				038DB34528A7D83C006BD1E3 /* View Model */,
 				03CFE0DB27F4952B004C54B6 /* View */,
-				03CFE0DA27F4949C004C54B6 /* View Model */,
 				03CFE0D727F4947F004C54B6 /* Model */,
 				03CFE06727EC46D1004C54B6 /* Habit_ManagementApp.swift */,
 				03CFE06B27EC46D6004C54B6 /* Assets.xcassets */,
@@ -363,19 +377,6 @@
 				03A06E5F2858D9490069C3CB /* ReportData.swift */,
 			);
 			name = Model;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		03CFE0DA27F4949C004C54B6 /* View Model */ = {
-			isa = PBXGroup;
-			children = (
-				03DBC288282BAB3E000848BF /* StaticVM.swift */,
-				038FB457280D61F600740AA6 /* HabitVM.swift */,
-				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
-				039164DC2830F08D00CA0028 /* ScrollVM.swift */,
-				037FFAEB28421AE800BD3C0E /* Setting.swift */,
-			);
-			name = "View Model";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -480,6 +481,7 @@
 				0346335528A1725A000D1E61 /* KakaoSDKShare */,
 				0346335728A1725A000D1E61 /* KakaoSDKTalk */,
 				0346335928A1725A000D1E61 /* KakaoSDKUser */,
+				03E64B6228A523750003881D /* FirebaseAuth */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -1458,6 +1460,11 @@
 		039165072837744900CA0028 /* ActionSheetCard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ActionSheetCard;
+		};
+		03E64B6228A523750003881D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 
