@@ -313,6 +313,18 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		038DB34D28A7DB5D006BD1E3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0392B4142806BE5B006C1E04 /* Habit.swift */,
+				036D03B2281339FD00EE607B /* CompletedList.swift */,
+				036D03B628145D9700EE607B /* ScrollData.swift */,
+				03DBC284282BAA74000848BF /* Statics.swift */,
+				03A06E5F2858D9490069C3CB /* ReportData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		039164DE283120C600CA0028 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +372,7 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				038DB34D28A7DB5D006BD1E3 /* Model */,
 				038DB34628A7D9DA006BD1E3 /* View */,
 				03E64B4028A2EC140003881D /* Config.xcconfig */,
 				03E64B3D28A2E22E0003881D /* Habit Management.entitlements */,
@@ -369,7 +382,6 @@
 				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
 				038DB34528A7D83C006BD1E3 /* View Model */,
-				03CFE0D727F4947F004C54B6 /* Model */,
 				03CFE06727EC46D1004C54B6 /* Habit_ManagementApp.swift */,
 				03CFE06B27EC46D6004C54B6 /* Assets.xcassets */,
 				03CFE07027EC46D6004C54B6 /* Persistence.swift */,
@@ -402,19 +414,6 @@
 				03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */,
 			);
 			path = "Habit ManagementUITests";
-			sourceTree = "<group>";
-		};
-		03CFE0D727F4947F004C54B6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0392B4142806BE5B006C1E04 /* Habit.swift */,
-				036D03B2281339FD00EE607B /* CompletedList.swift */,
-				036D03B628145D9700EE607B /* ScrollData.swift */,
-				03DBC284282BAA74000848BF /* Statics.swift */,
-				03A06E5F2858D9490069C3CB /* ReportData.swift */,
-			);
-			name = Model;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		03E64B5628A44B8A0003881D /* AppleLoginManager */ = {
