@@ -59,12 +59,10 @@ class SignInWithAppleDelegates: NSObject {
 
 extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
   private func registerNewAccount(credential: ASAuthorizationAppleIDCredential) {
-    // 1
     let userData = UserData(email: credential.email!,
                             name: credential.fullName!,
                             identifier: credential.user)
 
-    // 2
     let keychain = UserDataKeychain()
     do {
       try keychain.store(userData)
@@ -72,7 +70,6 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
       self.signInSucceeded(false)
     }
 
-    // 3
     do {
       let success = try WebApi.Register(user: userData,
                                         identityToken: credential.identityToken,
