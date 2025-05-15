@@ -63,6 +63,12 @@
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC285282BAA74000848BF /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC284282BAA74000848BF /* Statics.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
+		B5E3C0442DD59BD8000622FD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
+		B5E3C0462DD59BD8000622FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0452DD59BD8000622FD /* SwiftUI.framework */; };
+		B5E3C0512DD59BD9000622FD /* HabitManagementWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B5E3C05C2DD59BEB000622FD /* HabitManagementWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */; };
+		B5E3C05D2DD59BEB000622FD /* HabitManagementWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */; };
+		B5E3C05E2DD59BEB000622FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E3C0572DD59BEB000622FD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +86,28 @@
 			remoteGlobalIDString = 03CFE06327EC46D1004C54B6;
 			remoteInfo = "Habit Management";
 		};
+		B5E3C04F2DD59BD9000622FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CFE05C27EC46D1004C54B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5E3C0412DD59BD8000622FD;
+			remoteInfo = HabitManagementWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B5E3C0522DD59BD9000622FD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B5E3C0512DD59BD9000622FD /* HabitManagementWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		032EED57285E24D000994E5B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -130,6 +157,13 @@
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC284282BAA74000848BF /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
+		B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitManagementWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5E3C0432DD59BD8000622FD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B5E3C0452DD59BD8000622FD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B5E3C0572DD59BEB000622FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitManagementWidget.swift; sourceTree = "<group>"; };
+		B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitManagementWidgetBundle.swift; sourceTree = "<group>"; };
+		B5E3C05A2DD59BEB000622FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +198,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5E3C03F2DD59BD8000622FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5E3C0462DD59BD8000622FD /* SwiftUI.framework in Frameworks */,
+				B5E3C0442DD59BD8000622FD /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +268,7 @@
 				03CFE06627EC46D1004C54B6 /* Habit Management */,
 				03CFE07C27EC46D6004C54B6 /* Habit ManagementTests */,
 				03CFE08627EC46D6004C54B6 /* Habit ManagementUITests */,
+				B5E3C05B2DD59BEB000622FD /* HabitManagementWidget */,
 				03CFE06527EC46D1004C54B6 /* Products */,
 				BB4933070CD0FEA51B66A680 /* Frameworks */,
 			);
@@ -236,6 +280,7 @@
 				03CFE06427EC46D1004C54B6 /* Habit Management.app */,
 				03CFE07927EC46D6004C54B6 /* Habit ManagementTests.xctest */,
 				03CFE08327EC46D6004C54B6 /* Habit ManagementUITests.xctest */,
+				B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,9 +392,22 @@
 			path = Static;
 			sourceTree = "<group>";
 		};
+		B5E3C05B2DD59BEB000622FD /* HabitManagementWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B5E3C0572DD59BEB000622FD /* Assets.xcassets */,
+				B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */,
+				B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */,
+				B5E3C05A2DD59BEB000622FD /* Info.plist */,
+			);
+			path = HabitManagementWidget;
+			sourceTree = "<group>";
+		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5E3C0432DD59BD8000622FD /* WidgetKit.framework */,
+				B5E3C0452DD59BD8000622FD /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -364,10 +422,12 @@
 				03CFE06027EC46D1004C54B6 /* Sources */,
 				03CFE06127EC46D1004C54B6 /* Frameworks */,
 				03CFE06227EC46D1004C54B6 /* Resources */,
+				B5E3C0522DD59BD9000622FD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B5E3C0502DD59BD9000622FD /* PBXTargetDependency */,
 			);
 			name = "Habit Management";
 			packageProductDependencies = (
@@ -425,6 +485,25 @@
 			productReference = 03CFE08327EC46D6004C54B6 /* Habit ManagementUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5E3C0562DD59BD9000622FD /* Build configuration list for PBXNativeTarget "HabitManagementWidgetExtension" */;
+			buildPhases = (
+				B5E3C03E2DD59BD8000622FD /* Sources */,
+				B5E3C03F2DD59BD8000622FD /* Frameworks */,
+				B5E3C0402DD59BD8000622FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HabitManagementWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = HabitManagementWidgetExtension;
+			productReference = B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -432,7 +511,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					03CFE06327EC46D1004C54B6 = {
@@ -445,6 +524,9 @@
 					03CFE08227EC46D6004C54B6 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 03CFE06327EC46D1004C54B6;
+					};
+					B5E3C0412DD59BD8000622FD = {
+						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
@@ -471,6 +553,7 @@
 				03CFE06327EC46D1004C54B6 /* Habit Management */,
 				03CFE07827EC46D6004C54B6 /* Habit ManagementTests */,
 				03CFE08227EC46D6004C54B6 /* Habit ManagementUITests */,
+				B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -497,6 +580,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5E3C0402DD59BD8000622FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5E3C05E2DD59BEB000622FD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +655,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B5E3C03E2DD59BD8000622FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5E3C05C2DD59BEB000622FD /* HabitManagementWidget.swift in Sources */,
+				B5E3C05D2DD59BEB000622FD /* HabitManagementWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -576,6 +676,11 @@
 			isa = PBXTargetDependency;
 			target = 03CFE06327EC46D1004C54B6 /* Habit Management */;
 			targetProxy = 03CFE08427EC46D6004C54B6 /* PBXContainerItemProxy */;
+		};
+		B5E3C0502DD59BD9000622FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */;
+			targetProxy = B5E3C04F2DD59BD9000622FD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -773,7 +878,6 @@
 		03CFE09127EC46D6004C54B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -793,7 +897,6 @@
 		03CFE09227EC46D6004C54B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -813,7 +916,6 @@
 		03CFE09427EC46D6004C54B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F2YB4PBTB4;
@@ -831,7 +933,6 @@
 		03CFE09527EC46D6004C54B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F2YB4PBTB4;
@@ -843,6 +944,75 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Habit Management";
+			};
+			name = Release;
+		};
+		B5E3C0532DD59BD9000622FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HabitManagementWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HabitManagementWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management.HabitManagementWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B5E3C0542DD59BD9000622FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HabitManagementWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HabitManagementWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management.HabitManagementWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -881,6 +1051,15 @@
 			buildConfigurations = (
 				03CFE09427EC46D6004C54B6 /* Debug */,
 				03CFE09527EC46D6004C54B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5E3C0562DD59BD9000622FD /* Build configuration list for PBXNativeTarget "HabitManagementWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5E3C0532DD59BD9000622FD /* Debug */,
+				B5E3C0542DD59BD9000622FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
