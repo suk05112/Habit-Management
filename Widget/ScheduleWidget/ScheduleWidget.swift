@@ -1,8 +1,8 @@
 //
-//  HabitManagementWidget.swift
-//  HabitManagementWidget
+//  ScheduleWidget.swift
+//  ScheduleWidget
 //
-//  Created by 강동영 on 5/15/25.
+//  Created by 서충원 on 5/18/25.
 //
 
 import WidgetKit
@@ -43,7 +43,7 @@ struct SimpleEntry: TimelineEntry {
     let emoji: String
 }
 
-struct HabitManagementWidgetEntryView : View {
+struct ScheduleWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -57,27 +57,27 @@ struct HabitManagementWidgetEntryView : View {
     }
 }
 
-struct HabitManagementWidget: Widget {
-    let kind: String = "HabitManagementWidget"
+struct ScheduleWidget: Widget {
+    let kind: String = "ScheduleWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
-                HabitManagementWidgetEntryView(entry: entry)
+                ScheduleWidgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
-                HabitManagementWidgetEntryView(entry: entry)
+                ScheduleWidgetEntryView(entry: entry)
                     .padding()
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("오늘의 일정 확인")
+        .description("오늘의 일정을 확인하고 완료 체크를 할 수 있습니다.")
     }
 }
 
 #Preview(as: .systemSmall) {
-    HabitManagementWidget()
+    ScheduleWidget()
 } timeline: {
     SimpleEntry(date: .now, emoji: "😀")
     SimpleEntry(date: .now, emoji: "🤩")
