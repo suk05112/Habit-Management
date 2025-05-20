@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class Habit: Object, Identifiable, ObjectKeyIdentifiable{
+class Habit: Object, Identifiable, ObjectKeyIdentifiable {
     
     let dateFormatter = DateFormatter()
 
