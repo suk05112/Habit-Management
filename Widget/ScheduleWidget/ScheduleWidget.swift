@@ -7,53 +7,67 @@
 
 import WidgetKit
 import SwiftUI
+import AppIntents
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        SimpleEntry(date: Date(), toggleState: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
-        completion(entry)
+        let state =  UserDefaults(suiteName: "group.your.app.group")?.bool(forKey: "isToggled") ?? false
+        completion(SimpleEntry(date: Date(), toggleState: state))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        //UserDefaults에서 받는 형식이 좀 다른거같은데..?
+        let state = UserDefaults(suiteName: "group.your.app.group")?.bool(forKey: "isToggled") ?? false
+        let entry = SimpleEntry(date: Date(), toggleState: state)
+        completion(Timeline(entries: [entry], policy: .never))
     }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let toggleState: Bool
 }
 
 struct ScheduleWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        VStack(alignment: .leading, spacing: 12) {
+            Text("토글 상태: \(entry.toggleState ? "ON" : "OFF")")
+                .font(.headline)
+            HStack(spacing: 12) {
+                // ⏺ Toggle 역할의 intent button
+                Button(intent: ToggleButtonIntent()) {
+                    Image(systemName: entry.toggleState ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(entry.toggleState ? .green : .gray)
+                }
+                
+                // ⏺ 일반 버튼 (예: 상태 변경)
+                Button(intent: ToggleButtonIntent()) {
+                    Text("새로고침")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+            }
+            .padding()
+            .containerBackground(.background, for: .widget)
         }
+    }
+}
+
+struct ToggleButtonIntent: AppIntent {
+    static var title: LocalizedStringResource = "토글 상태 변경"
+
+    func perform() async throws -> some IntentResult {
+        // 상태 저장 로직 (UserDefaults, App Group 등 사용해야 함)
+        let current = UserDefaults(suiteName: "group.your.app.group")?.bool(forKey: "isToggled") ?? false
+        UserDefaults(suiteName: "group.your.app.group")?.set(!current, forKey: "isToggled")
+        
+        WidgetCenter.shared.reloadAllTimelines()
+        return .result()
     }
 }
 
@@ -62,23 +76,19 @@ struct ScheduleWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                ScheduleWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                ScheduleWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            ScheduleWidgetEntryView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("오늘의 일정 확인")
         .description("오늘의 일정을 확인하고 완료 체크를 할 수 있습니다.")
+        .supportedFamilies([.systemMedium, .systemLarge])
+
     }
 }
 
 #Preview(as: .systemSmall) {
     ScheduleWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    SimpleEntry(date: .now, toggleState: true)
+    SimpleEntry(date: .now, toggleState: false)
 }
