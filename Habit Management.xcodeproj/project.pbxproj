@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -692,6 +692,7 @@
 				039E8CBD2DD392C8005BC622 /* XCRemoteSwiftPackageReference "SwiftUI-Action-Sheet-Card" */,
 				039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				B5606DA12DDE1ED4004C1B3C /* XCLocalSwiftPackageReference "HMDesign" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -1451,6 +1452,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B5606DA12DDE1ED4004C1B3C /* XCLocalSwiftPackageReference "HMDesign" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = HMDesign;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
