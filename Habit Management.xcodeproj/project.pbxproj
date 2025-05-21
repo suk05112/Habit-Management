@@ -62,6 +62,7 @@
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC285282BAA74000848BF /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC284282BAA74000848BF /* Statics.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
+		4E3B3D902DDE17C700A0EFCA /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */; };
 		4E965C762DD9DF35008F9833 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E965C752DD9DF35008F9833 /* AppIntent.swift */; };
 		4EBE8DA22DD9B41100776524 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8DA12DD9B41100776524 /* GoogleService-Info.plist */; };
 		4EBE8DA82DD9BA7700776524 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
@@ -215,6 +216,7 @@
 			files = (
 				039E8CB92DD3917C005BC622 /* protoc-gen-swift in Frameworks */,
 				039E8CB72DD3917C005BC622 /* SwiftProtobufPluginLibrary in Frameworks */,
+				4E3B3D902DDE17C700A0EFCA /* ComposableArchitecture in Frameworks */,
 				039E8CBF2DD392C8005BC622 /* ActionSheetCard in Frameworks */,
 				039E8CC42DD396A7005BC622 /* RealmSwift in Frameworks */,
 				0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */,
@@ -543,6 +545,7 @@
 				039E8CBE2DD392C8005BC622 /* ActionSheetCard */,
 				039E8CC12DD396A7005BC622 /* Realm */,
 				039E8CC32DD396A7005BC622 /* RealmSwift */,
+				4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -688,6 +691,7 @@
 				039E8CBA2DD391A8005BC622 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 				039E8CBD2DD392C8005BC622 /* XCRemoteSwiftPackageReference "SwiftUI-Action-Sheet-Card" */,
 				039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -1489,6 +1493,14 @@
 				version = 10.33.0;
 			};
 		};
+		4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1554,6 +1566,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 
