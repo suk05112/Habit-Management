@@ -60,6 +60,7 @@
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
 		2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA862DDDF23500FFD336 /* Color.swift */; };
+		2F6EDA892DDDF50F00FFD336 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA882DDDF50F00FFD336 /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
 		2F6EDA862DDDF23500FFD336 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		2F6EDA882DDDF50F00FFD336 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -349,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				2F6EDA862DDDF23500FFD336 /* Color.swift */,
+				2F6EDA882DDDF50F00FFD336 /* View.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				0392B413280695AD006C1E04 /* ReportView.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
 				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
+				2F6EDA892DDDF50F00FFD336 /* View.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
