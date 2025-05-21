@@ -59,6 +59,7 @@
 		03DBC27C2827C999000848BF /* LessMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC27B2827C999000848BF /* LessMore.swift */; };
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
+		2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA862DDDF23500FFD336 /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +86,7 @@
 		032EED5D285E25B400994E5B /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
-		03463342289FA695000D1E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		03463342289FA695000D1E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
 		036D03B92818384300EE607B /* scrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollView.swift; sourceTree = "<group>"; };
@@ -121,6 +122,7 @@
 		03DBC27B2827C999000848BF /* LessMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessMore.swift; sourceTree = "<group>"; };
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
+		2F6EDA862DDDF23500FFD336 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -243,6 +245,7 @@
 			children = (
 				0324EFB02DDE13AB006D89CD /* App */,
 				0324EFAA2DDE137D006D89CD /* Feature */,
+				2F6EDA842DDDF21300FFD336 /* Core */,
 				039E8CC72DDCC00E005BC622 /* Model */,
 				03463342289FA695000D1E61 /* GoogleService-Info.plist */,
 				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
@@ -332,6 +335,22 @@
 				032EED5D285E25B400994E5B /* TotalView.swift */,
 			);
 			path = Static;
+			sourceTree = "<group>";
+		};
+		2F6EDA842DDDF21300FFD336 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2F6EDA852DDDF22100FFD336 /* Extension */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		2F6EDA852DDDF22100FFD336 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				2F6EDA862DDDF23500FFD336 /* Color.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -509,6 +528,7 @@
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
 				032EED5A285E252800994E5B /* TextLimiter.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
+				2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */,
 				032EED5E285E25B400994E5B /* TotalView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				0392B413280695AD006C1E04 /* ReportView.swift in Sources */,
