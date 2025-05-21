@@ -61,6 +61,7 @@
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
 		2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA862DDDF23500FFD336 /* Color.swift */; };
 		2F6EDA892DDDF50F00FFD336 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA882DDDF50F00FFD336 /* View.swift */; };
+		2F6EDA8B2DDDF5B800FFD336 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
 		2F6EDA862DDDF23500FFD336 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2F6EDA882DDDF50F00FFD336 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -352,6 +354,7 @@
 			children = (
 				2F6EDA862DDDF23500FFD336 /* Color.swift */,
 				2F6EDA882DDDF50F00FFD336 /* View.swift */,
+				2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
+				2F6EDA8B2DDDF5B800FFD336 /* DateFormatter.swift in Sources */,
 				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
 				03DBC27C2827C999000848BF /* LessMore.swift in Sources */,
