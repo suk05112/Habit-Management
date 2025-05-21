@@ -63,6 +63,7 @@
 		2F6EDA892DDDF50F00FFD336 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA882DDDF50F00FFD336 /* View.swift */; };
 		2F6EDA8B2DDDF5B800FFD336 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */; };
 		2F6EDA8E2DDDF6BC00FFD336 /* FrameModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA8D2DDDF6BC00FFD336 /* FrameModifier.swift */; };
+		2F6EDA922DDDF80B00FFD336 /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA912DDDF80B00FFD336 /* MainFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		2F6EDA882DDDF50F00FFD336 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2F6EDA8D2DDDF6BC00FFD336 /* FrameModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameModifier.swift; sourceTree = "<group>"; };
+		2F6EDA912DDDF80B00FFD336 /* MainFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -370,6 +372,22 @@
 			path = ViewModifier;
 			sourceTree = "<group>";
 		};
+		2F6EDA8F2DDDF7F300FFD336 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				2F6EDA902DDDF7FC00FFD336 /* Main */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		2F6EDA902DDDF7FC00FFD336 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2F6EDA912DDDF80B00FFD336 /* MainFeature.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +563,7 @@
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
 				032EED5A285E252800994E5B /* TextLimiter.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
+				2F6EDA922DDDF80B00FFD336 /* MainFeature.swift in Sources */,
 				2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */,
 				032EED5E285E25B400994E5B /* TotalView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
