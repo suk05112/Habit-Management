@@ -124,8 +124,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0324EFAA2DDE137D006D89CD /* Feature */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Feature; sourceTree = "<group>"; };
+		0324EFB02DDE13AB006D89CD /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
 		039E8CC72DDCC00E005BC622 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
-		039E8CC82DDCC044005BC622 /* Habit */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Habit; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,7 +241,8 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
-				039E8CC82DDCC044005BC622 /* Habit */,
+				0324EFB02DDE13AB006D89CD /* App */,
+				0324EFAA2DDE137D006D89CD /* Feature */,
 				039E8CC72DDCC00E005BC622 /* Model */,
 				03463342289FA695000D1E61 /* GoogleService-Info.plist */,
 				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
@@ -355,8 +357,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0324EFAA2DDE137D006D89CD /* Feature */,
+				0324EFB02DDE13AB006D89CD /* App */,
 				039E8CC72DDCC00E005BC622 /* Model */,
-				039E8CC82DDCC044005BC622 /* Habit */,
 			);
 			name = "Habit Management";
 			packageProductDependencies = (
