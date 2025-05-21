@@ -20,7 +20,6 @@ public struct AddView: View{
     @State var iter: [Int]
     @StateObject var ViewModel = HabitVM.shared
     
-
     public var body: some View {
         if show{
             ZStack{
@@ -46,6 +45,11 @@ public struct AddView: View{
 
                                 Text("저장")
                                     .onTapGesture {
+                                        
+                                        let defaults = UserDefaults(suiteName: "group.habit-management")
+                                        defaults?.set(name, forKey: "testValue")
+                                        print(defaults?.string(forKey: "testValue") ?? "")
+                                        
                                         show = false
                                         if !isEdit{
                                             ViewModel.addItem(name: name, iter: iter)
@@ -59,7 +63,6 @@ public struct AddView: View{
                                         StaticVM.shared.setnumOfToDoPerWeek2(add: true, numOfIter: iter.count)
                                         StaticVM.shared.setnumOfToDoPerMonth(add: true, numOfIter: iter.count)
                                         compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .add, isToday: isTodayHabit() ? true : false)
-                                        
                                     }
                             }
                             .scaledPadding(top: 15, leading: 25, bottom: 10, trailing: 25)

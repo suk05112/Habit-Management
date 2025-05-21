@@ -12,7 +12,6 @@
 		032EED5C285E255D00994E5B /* WeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* WeekButton.swift */; };
 		032EED5E285E25B400994E5B /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5D285E25B400994E5B /* TotalView.swift */; };
 		0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346333528913B24000D1E61 /* NotificationCenterManager.swift */; };
-		03463343289FA695000D1E61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03463342289FA695000D1E61 /* GoogleService-Info.plist */; };
 		03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 03463345289FA7F9000D1E61 /* FirebaseAnalytics */; };
 		03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */; };
 		0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03463349289FA7F9000D1E61 /* FirebaseDatabase */; };
@@ -63,12 +62,27 @@
 		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC285282BAA74000848BF /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC284282BAA74000848BF /* Statics.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
-		B5E3C0442DD59BD8000622FD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
-		B5E3C0462DD59BD8000622FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0452DD59BD8000622FD /* SwiftUI.framework */; };
-		B5E3C0512DD59BD9000622FD /* HabitManagementWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B5E3C05C2DD59BEB000622FD /* HabitManagementWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */; };
-		B5E3C05D2DD59BEB000622FD /* HabitManagementWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */; };
-		B5E3C05E2DD59BEB000622FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E3C0572DD59BEB000622FD /* Assets.xcassets */; };
+		4E3B3D902DDE17C700A0EFCA /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */; };
+		4E965C762DD9DF35008F9833 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E965C752DD9DF35008F9833 /* AppIntent.swift */; };
+		4EBE8DA22DD9B41100776524 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8DA12DD9B41100776524 /* GoogleService-Info.plist */; };
+		4EBE8DA82DD9BA7700776524 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
+		4EBE8DA92DD9BA7700776524 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0452DD59BD8000622FD /* SwiftUI.framework */; };
+		4EBE8DB42DD9BA7800776524 /* LaunchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4EBE8DA72DD9BA7700776524 /* LaunchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4EBE8DD22DD9BBDA00776524 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8DCC2DD9BBDA00776524 /* Assets.xcassets */; };
+		4EBE8DD32DD9BBDA00776524 /* LaunchWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8DCF2DD9BBDA00776524 /* LaunchWidgetBundle.swift */; };
+		4EBE8DD42DD9BBDA00776524 /* LaunchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8DCE2DD9BBDA00776524 /* LaunchWidget.swift */; };
+		4EBE8DDA2DD9CC0400776524 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
+		4EBE8DDB2DD9CC0400776524 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0452DD59BD8000622FD /* SwiftUI.framework */; };
+		4EBE8DE62DD9CC0500776524 /* GrassWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4EBE8DD92DD9CC0400776524 /* GrassWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4EBE8DF02DD9CC1000776524 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8DEB2DD9CC1000776524 /* Assets.xcassets */; };
+		4EBE8DF22DD9CC1000776524 /* GrassWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8DEC2DD9CC1000776524 /* GrassWidget.swift */; };
+		4EBE8DF32DD9CC1000776524 /* GrassWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8DED2DD9CC1000776524 /* GrassWidgetBundle.swift */; };
+		4EBE8DF92DD9CCF000776524 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
+		4EBE8DFA2DD9CCF000776524 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0452DD59BD8000622FD /* SwiftUI.framework */; };
+		4EBE8E052DD9CCF100776524 /* ScheduleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4EBE8DF82DD9CCF000776524 /* ScheduleWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4EBE8E0F2DD9CCFB00776524 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8E0A2DD9CCFB00776524 /* Assets.xcassets */; };
+		4EBE8E112DD9CCFB00776524 /* ScheduleWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8E0C2DD9CCFB00776524 /* ScheduleWidget.swift */; };
+		4EBE8E122DD9CCFB00776524 /* ScheduleWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBE8E0D2DD9CCFB00776524 /* ScheduleWidgetBundle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,12 +100,26 @@
 			remoteGlobalIDString = 03CFE06327EC46D1004C54B6;
 			remoteInfo = "Habit Management";
 		};
-		B5E3C04F2DD59BD9000622FD /* PBXContainerItemProxy */ = {
+		4EBE8DB22DD9BA7800776524 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CFE05C27EC46D1004C54B6 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B5E3C0412DD59BD8000622FD;
-			remoteInfo = HabitManagementWidgetExtension;
+			remoteGlobalIDString = 4EBE8DA62DD9BA7700776524;
+			remoteInfo = LaunchWidgetExtension;
+		};
+		4EBE8DE42DD9CC0500776524 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CFE05C27EC46D1004C54B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4EBE8DD82DD9CC0400776524;
+			remoteInfo = GrassWidgetExtension;
+		};
+		4EBE8E032DD9CCF100776524 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CFE05C27EC46D1004C54B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4EBE8DF72DD9CCF000776524;
+			remoteInfo = ScheduleWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -102,7 +130,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B5E3C0512DD59BD9000622FD /* HabitManagementWidgetExtension.appex in Embed Foundation Extensions */,
+				4EBE8DB42DD9BA7800776524 /* LaunchWidgetExtension.appex in Embed Foundation Extensions */,
+				4EBE8DE62DD9CC0500776524 /* GrassWidgetExtension.appex in Embed Foundation Extensions */,
+				4EBE8E052DD9CCF100776524 /* ScheduleWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,7 +146,6 @@
 		032EED5D285E25B400994E5B /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
-		03463342289FA695000D1E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B2281339FD00EE607B /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
@@ -157,13 +186,27 @@
 		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC284282BAA74000848BF /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
-		B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitManagementWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E3B3D8C2DDD88CE00A0EFCA /* Habit Management.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Management.entitlements"; sourceTree = "<group>"; };
+		4E3B3D8D2DDD88D600A0EFCA /* ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
+		4E965C752DD9DF35008F9833 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		4EBE8DA12DD9B41100776524 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4EBE8DA72DD9BA7700776524 /* LaunchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LaunchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EBE8DCC2DD9BBDA00776524 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4EBE8DCD2DD9BBDA00776524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EBE8DCE2DD9BBDA00776524 /* LaunchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchWidget.swift; sourceTree = "<group>"; };
+		4EBE8DCF2DD9BBDA00776524 /* LaunchWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchWidgetBundle.swift; sourceTree = "<group>"; };
+		4EBE8DD92DD9CC0400776524 /* GrassWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GrassWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EBE8DEB2DD9CC1000776524 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4EBE8DEC2DD9CC1000776524 /* GrassWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassWidget.swift; sourceTree = "<group>"; };
+		4EBE8DED2DD9CC1000776524 /* GrassWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassWidgetBundle.swift; sourceTree = "<group>"; };
+		4EBE8DEE2DD9CC1000776524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EBE8DF82DD9CCF000776524 /* ScheduleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ScheduleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EBE8E0A2DD9CCFB00776524 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4EBE8E0B2DD9CCFB00776524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EBE8E0C2DD9CCFB00776524 /* ScheduleWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleWidget.swift; sourceTree = "<group>"; };
+		4EBE8E0D2DD9CCFB00776524 /* ScheduleWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleWidgetBundle.swift; sourceTree = "<group>"; };
 		B5E3C0432DD59BD8000622FD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B5E3C0452DD59BD8000622FD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		B5E3C0572DD59BEB000622FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitManagementWidget.swift; sourceTree = "<group>"; };
-		B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitManagementWidgetBundle.swift; sourceTree = "<group>"; };
-		B5E3C05A2DD59BEB000622FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +216,7 @@
 			files = (
 				039E8CB92DD3917C005BC622 /* protoc-gen-swift in Frameworks */,
 				039E8CB72DD3917C005BC622 /* SwiftProtobufPluginLibrary in Frameworks */,
+				4E3B3D902DDE17C700A0EFCA /* ComposableArchitecture in Frameworks */,
 				039E8CBF2DD392C8005BC622 /* ActionSheetCard in Frameworks */,
 				039E8CC42DD396A7005BC622 /* RealmSwift in Frameworks */,
 				0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */,
@@ -201,12 +245,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B5E3C03F2DD59BD8000622FD /* Frameworks */ = {
+		4EBE8DA42DD9BA7700776524 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5E3C0462DD59BD8000622FD /* SwiftUI.framework in Frameworks */,
-				B5E3C0442DD59BD8000622FD /* WidgetKit.framework in Frameworks */,
+				4EBE8DA92DD9BA7700776524 /* SwiftUI.framework in Frameworks */,
+				4EBE8DA82DD9BA7700776524 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DD62DD9CC0400776524 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8DDB2DD9CC0400776524 /* SwiftUI.framework in Frameworks */,
+				4EBE8DDA2DD9CC0400776524 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DF52DD9CCF000776524 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8DFA2DD9CCF000776524 /* SwiftUI.framework in Frameworks */,
+				4EBE8DF92DD9CCF000776524 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,10 +327,11 @@
 		03CFE05B27EC46D1004C54B6 = {
 			isa = PBXGroup;
 			children = (
+				4E3B3D8D2DDD88D600A0EFCA /* ScheduleWidgetExtension.entitlements */,
 				03CFE06627EC46D1004C54B6 /* Habit Management */,
 				03CFE07C27EC46D6004C54B6 /* Habit ManagementTests */,
 				03CFE08627EC46D6004C54B6 /* Habit ManagementUITests */,
-				B5E3C05B2DD59BEB000622FD /* HabitManagementWidget */,
+				4EBE8DD12DD9BBDA00776524 /* Widget */,
 				03CFE06527EC46D1004C54B6 /* Products */,
 				BB4933070CD0FEA51B66A680 /* Frameworks */,
 			);
@@ -280,7 +343,9 @@
 				03CFE06427EC46D1004C54B6 /* Habit Management.app */,
 				03CFE07927EC46D6004C54B6 /* Habit ManagementTests.xctest */,
 				03CFE08327EC46D6004C54B6 /* Habit ManagementUITests.xctest */,
-				B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */,
+				4EBE8DA72DD9BA7700776524 /* LaunchWidgetExtension.appex */,
+				4EBE8DD92DD9CC0400776524 /* GrassWidgetExtension.appex */,
+				4EBE8DF82DD9CCF000776524 /* ScheduleWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -288,7 +353,8 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
-				03463342289FA695000D1E61 /* GoogleService-Info.plist */,
+				4E3B3D8C2DDD88CE00A0EFCA /* Habit Management.entitlements */,
+				4EBE8DA12DD9B41100776524 /* GoogleService-Info.plist */,
 				0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */,
 				039164DE283120C600CA0028 /* Utility */,
 				0392B41C28080DB1006C1E04 /* RealmManager */,
@@ -392,15 +458,48 @@
 			path = Static;
 			sourceTree = "<group>";
 		};
-		B5E3C05B2DD59BEB000622FD /* HabitManagementWidget */ = {
+		4EBE8DD02DD9BBDA00776524 /* LaunchWidget */ = {
 			isa = PBXGroup;
 			children = (
-				B5E3C0572DD59BEB000622FD /* Assets.xcassets */,
-				B5E3C0582DD59BEB000622FD /* HabitManagementWidget.swift */,
-				B5E3C0592DD59BEB000622FD /* HabitManagementWidgetBundle.swift */,
-				B5E3C05A2DD59BEB000622FD /* Info.plist */,
+				4EBE8DCC2DD9BBDA00776524 /* Assets.xcassets */,
+				4EBE8DCD2DD9BBDA00776524 /* Info.plist */,
+				4EBE8DCE2DD9BBDA00776524 /* LaunchWidget.swift */,
+				4EBE8DCF2DD9BBDA00776524 /* LaunchWidgetBundle.swift */,
 			);
-			path = HabitManagementWidget;
+			path = LaunchWidget;
+			sourceTree = "<group>";
+		};
+		4EBE8DD12DD9BBDA00776524 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				4EBE8DD02DD9BBDA00776524 /* LaunchWidget */,
+				4EBE8DEF2DD9CC1000776524 /* GrassWidget */,
+				4EBE8E0E2DD9CCFB00776524 /* ScheduleWidget */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		4EBE8DEF2DD9CC1000776524 /* GrassWidget */ = {
+			isa = PBXGroup;
+			children = (
+				4E965C752DD9DF35008F9833 /* AppIntent.swift */,
+				4EBE8DEB2DD9CC1000776524 /* Assets.xcassets */,
+				4EBE8DEC2DD9CC1000776524 /* GrassWidget.swift */,
+				4EBE8DED2DD9CC1000776524 /* GrassWidgetBundle.swift */,
+				4EBE8DEE2DD9CC1000776524 /* Info.plist */,
+			);
+			path = GrassWidget;
+			sourceTree = "<group>";
+		};
+		4EBE8E0E2DD9CCFB00776524 /* ScheduleWidget */ = {
+			isa = PBXGroup;
+			children = (
+				4EBE8E0A2DD9CCFB00776524 /* Assets.xcassets */,
+				4EBE8E0B2DD9CCFB00776524 /* Info.plist */,
+				4EBE8E0C2DD9CCFB00776524 /* ScheduleWidget.swift */,
+				4EBE8E0D2DD9CCFB00776524 /* ScheduleWidgetBundle.swift */,
+			);
+			path = ScheduleWidget;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -427,7 +526,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				B5E3C0502DD59BD9000622FD /* PBXTargetDependency */,
+				4EBE8DB32DD9BA7800776524 /* PBXTargetDependency */,
+				4EBE8DE52DD9CC0500776524 /* PBXTargetDependency */,
+				4EBE8E042DD9CCF100776524 /* PBXTargetDependency */,
 			);
 			name = "Habit Management";
 			packageProductDependencies = (
@@ -444,6 +545,7 @@
 				039E8CBE2DD392C8005BC622 /* ActionSheetCard */,
 				039E8CC12DD396A7005BC622 /* Realm */,
 				039E8CC32DD396A7005BC622 /* RealmSwift */,
+				4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -485,23 +587,61 @@
 			productReference = 03CFE08327EC46D6004C54B6 /* Habit ManagementUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */ = {
+		4EBE8DA62DD9BA7700776524 /* LaunchWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B5E3C0562DD59BD9000622FD /* Build configuration list for PBXNativeTarget "HabitManagementWidgetExtension" */;
+			buildConfigurationList = 4EBE8DB62DD9BA7800776524 /* Build configuration list for PBXNativeTarget "LaunchWidgetExtension" */;
 			buildPhases = (
-				B5E3C03E2DD59BD8000622FD /* Sources */,
-				B5E3C03F2DD59BD8000622FD /* Frameworks */,
-				B5E3C0402DD59BD8000622FD /* Resources */,
+				4EBE8DA32DD9BA7700776524 /* Sources */,
+				4EBE8DA42DD9BA7700776524 /* Frameworks */,
+				4EBE8DA52DD9BA7700776524 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = HabitManagementWidgetExtension;
+			name = LaunchWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = HabitManagementWidgetExtension;
-			productReference = B5E3C0422DD59BD8000622FD /* HabitManagementWidgetExtension.appex */;
+			productName = LaunchWidgetExtension;
+			productReference = 4EBE8DA72DD9BA7700776524 /* LaunchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		4EBE8DD82DD9CC0400776524 /* GrassWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EBE8DE82DD9CC0500776524 /* Build configuration list for PBXNativeTarget "GrassWidgetExtension" */;
+			buildPhases = (
+				4EBE8DD52DD9CC0400776524 /* Sources */,
+				4EBE8DD62DD9CC0400776524 /* Frameworks */,
+				4EBE8DD72DD9CC0400776524 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GrassWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = GrassWidgetExtension;
+			productReference = 4EBE8DD92DD9CC0400776524 /* GrassWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		4EBE8DF72DD9CCF000776524 /* ScheduleWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EBE8E072DD9CCF100776524 /* Build configuration list for PBXNativeTarget "ScheduleWidgetExtension" */;
+			buildPhases = (
+				4EBE8DF42DD9CCF000776524 /* Sources */,
+				4EBE8DF52DD9CCF000776524 /* Frameworks */,
+				4EBE8DF62DD9CCF000776524 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScheduleWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ScheduleWidgetExtension;
+			productReference = 4EBE8DF82DD9CCF000776524 /* ScheduleWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -511,7 +651,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					03CFE06327EC46D1004C54B6 = {
@@ -525,8 +665,14 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 03CFE06327EC46D1004C54B6;
 					};
-					B5E3C0412DD59BD8000622FD = {
-						CreatedOnToolsVersion = 16.1;
+					4EBE8DA62DD9BA7700776524 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					4EBE8DD82DD9CC0400776524 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					4EBE8DF72DD9CCF000776524 = {
+						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
@@ -545,6 +691,7 @@
 				039E8CBA2DD391A8005BC622 /* XCRemoteSwiftPackageReference "PartialSheet" */,
 				039E8CBD2DD392C8005BC622 /* XCRemoteSwiftPackageReference "SwiftUI-Action-Sheet-Card" */,
 				039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -553,7 +700,9 @@
 				03CFE06327EC46D1004C54B6 /* Habit Management */,
 				03CFE07827EC46D6004C54B6 /* Habit ManagementTests */,
 				03CFE08227EC46D6004C54B6 /* Habit ManagementUITests */,
-				B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */,
+				4EBE8DA62DD9BA7700776524 /* LaunchWidgetExtension */,
+				4EBE8DD82DD9CC0400776524 /* GrassWidgetExtension */,
+				4EBE8DF72DD9CCF000776524 /* ScheduleWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -564,8 +713,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03CFE06F27EC46D6004C54B6 /* Preview Assets.xcassets in Resources */,
+				4EBE8DA22DD9B41100776524 /* GoogleService-Info.plist in Resources */,
 				03CFE06C27EC46D6004C54B6 /* Assets.xcassets in Resources */,
-				03463343289FA695000D1E61 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,11 +732,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B5E3C0402DD59BD8000622FD /* Resources */ = {
+		4EBE8DA52DD9BA7700776524 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5E3C05E2DD59BEB000622FD /* Assets.xcassets in Resources */,
+				4EBE8DD22DD9BBDA00776524 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DD72DD9CC0400776524 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8DF02DD9CC1000776524 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DF62DD9CCF000776524 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8E0F2DD9CCFB00776524 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,12 +820,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B5E3C03E2DD59BD8000622FD /* Sources */ = {
+		4EBE8DA32DD9BA7700776524 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5E3C05C2DD59BEB000622FD /* HabitManagementWidget.swift in Sources */,
-				B5E3C05D2DD59BEB000622FD /* HabitManagementWidgetBundle.swift in Sources */,
+				4EBE8DD32DD9BBDA00776524 /* LaunchWidgetBundle.swift in Sources */,
+				4EBE8DD42DD9BBDA00776524 /* LaunchWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DD52DD9CC0400776524 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8DF22DD9CC1000776524 /* GrassWidget.swift in Sources */,
+				4EBE8DF32DD9CC1000776524 /* GrassWidgetBundle.swift in Sources */,
+				4E965C762DD9DF35008F9833 /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EBE8DF42DD9CCF000776524 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EBE8E112DD9CCFB00776524 /* ScheduleWidget.swift in Sources */,
+				4EBE8E122DD9CCFB00776524 /* ScheduleWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,10 +861,20 @@
 			target = 03CFE06327EC46D1004C54B6 /* Habit Management */;
 			targetProxy = 03CFE08427EC46D6004C54B6 /* PBXContainerItemProxy */;
 		};
-		B5E3C0502DD59BD9000622FD /* PBXTargetDependency */ = {
+		4EBE8DB32DD9BA7800776524 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B5E3C0412DD59BD8000622FD /* HabitManagementWidgetExtension */;
-			targetProxy = B5E3C04F2DD59BD9000622FD /* PBXContainerItemProxy */;
+			target = 4EBE8DA62DD9BA7700776524 /* LaunchWidgetExtension */;
+			targetProxy = 4EBE8DB22DD9BA7800776524 /* PBXContainerItemProxy */;
+		};
+		4EBE8DE52DD9CC0500776524 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4EBE8DD82DD9CC0400776524 /* GrassWidgetExtension */;
+			targetProxy = 4EBE8DE42DD9CC0500776524 /* PBXContainerItemProxy */;
+		};
+		4EBE8E042DD9CCF100776524 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4EBE8DF72DD9CCF000776524 /* ScheduleWidgetExtension */;
+			targetProxy = 4EBE8E032DD9CCF100776524 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -810,10 +1004,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -832,7 +1027,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -845,10 +1040,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Management/Habit Management.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -867,7 +1063,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -881,11 +1077,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-ManagementTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -900,11 +1098,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-ManagementTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -918,10 +1118,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-ManagementUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -935,10 +1137,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-ManagementUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-ManagementUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -947,7 +1151,7 @@
 			};
 			name = Release;
 		};
-		B5E3C0532DD59BD9000622FD /* Debug */ = {
+		4EBE8DB72DD9BA7800776524 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -957,14 +1161,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HabitManagementWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HabitManagementWidget;
+				INFOPLIST_FILE = Widget/LaunchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LaunchWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,9 +1176,13 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management.HabitManagementWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.LaunchWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -982,7 +1190,7 @@
 			};
 			name = Debug;
 		};
-		B5E3C0542DD59BD9000622FD /* Release */ = {
+		4EBE8DB82DD9BA7800776524 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -992,14 +1200,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = B44YL23J9X;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HabitManagementWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HabitManagementWidget;
+				INFOPLIST_FILE = Widget/LaunchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LaunchWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1007,9 +1215,169 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management.HabitManagementWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.LaunchWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4EBE8DE92DD9CC0500776524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B44YL23J9X;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/GrassWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GrassWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.GrassWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4EBE8DEA2DD9CC0500776524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B44YL23J9X;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/GrassWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = GrassWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.GrassWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4EBE8E082DD9CCF100776524 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = ScheduleWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B44YL23J9X;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/ScheduleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.ScheduleWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4EBE8E092DD9CCF100776524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = ScheduleWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B44YL23J9X;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/ScheduleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ScheduleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "seosieve.Habit-Management.ScheduleWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1055,11 +1423,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B5E3C0562DD59BD9000622FD /* Build configuration list for PBXNativeTarget "HabitManagementWidgetExtension" */ = {
+		4EBE8DB62DD9BA7800776524 /* Build configuration list for PBXNativeTarget "LaunchWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B5E3C0532DD59BD9000622FD /* Debug */,
-				B5E3C0542DD59BD9000622FD /* Release */,
+				4EBE8DB72DD9BA7800776524 /* Debug */,
+				4EBE8DB82DD9BA7800776524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EBE8DE82DD9CC0500776524 /* Build configuration list for PBXNativeTarget "GrassWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EBE8DE92DD9CC0500776524 /* Debug */,
+				4EBE8DEA2DD9CC0500776524 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EBE8E072DD9CCF100776524 /* Build configuration list for PBXNativeTarget "ScheduleWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EBE8E082DD9CCF100776524 /* Debug */,
+				4EBE8E092DD9CCF100776524 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1105,6 +1491,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 10.33.0;
+			};
+		};
+		4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1172,6 +1566,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 

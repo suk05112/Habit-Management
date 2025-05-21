@@ -7,53 +7,135 @@
 
 import WidgetKit
 import SwiftUI
+import AppIntents
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        SimpleEntry(date: Date(), showImage: false, habitName: "Default")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
-        completion(entry)
+        let defaults = UserDefaults(suiteName: "group.habit-management")
+        let showImage = defaults?.bool(forKey: "showImage") ?? false
+        let habitName = defaults?.string(forKey: "testValue") ?? "Default"
+        completion(SimpleEntry(date: Date(), showImage: showImage, habitName: habitName))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        let defaults = UserDefaults(suiteName: "group.habit-management")
+        let showImage = defaults?.bool(forKey: "showImage") ?? false
+        let habitName = defaults?.string(forKey: "testValue") ?? "Default"
+        let entry = SimpleEntry(date: Date(), showImage: showImage, habitName: habitName)
+        completion(Timeline(entries: [entry], policy: .never))
     }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let showImage: Bool
+    let habitName: String
 }
 
 struct ScheduleWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+        VStack(alignment: .center, spacing: 8) {
+            Text("\(entry.habitName)")
+                .font(.headline)
+            HStack(spacing: 0) {
+                VStack() {
+                    Button(intent: ToggleButtonIntent()) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(.widgetBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .stroke(Color.gray, lineWidth: 2)
+                                )
+                            if entry.showImage {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        .frame(width: 80, height: 80)
+                    }
+                    .tint(.clear)
+                    
+                    Text("체크하기")
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                }
+                
+                VStack() {
+                    Button(intent: ToggleButtonIntent()) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(.widgetBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .stroke(Color.gray, lineWidth: 2)
+                                )
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.green)
+                        }
+                        .frame(width: 80, height: 80)
+                    }
+                    .tint(.clear)
+                    
+                    Text("체크하기")
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                }
+                
+                VStack() {
+                    Button(intent: ToggleButtonIntent()) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(.widgetBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .stroke(Color.gray, lineWidth: 2)
+                                )
+                            
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.green)
+                        }
+                        .frame(width: 80, height: 80)
+                    }
+                    .tint(.clear)
+                    
+                    Text("체크하기")
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                }
+            }
         }
+    }
+}
+
+struct ToggleButtonIntent: AppIntent {
+    static var title: LocalizedStringResource = "토글 상태 변경"
+
+    func perform() async throws -> some IntentResult {
+        let current = UserDefaults(suiteName: "group.habit-management")?.bool(forKey: "showImage") ?? true
+        UserDefaults(suiteName: "group.habit-management")?.set(!current, forKey: "showImage")
+        
+        let defaults = UserDefaults(suiteName: "group.habit-management")
+        print(defaults?.string(forKey: "testValue") ?? "")
+        
+        WidgetCenter.shared.reloadAllTimelines()
+        return .result()
     }
 }
 
@@ -62,23 +144,18 @@ struct ScheduleWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                ScheduleWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                ScheduleWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            ScheduleWidgetEntryView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("오늘의 일정 확인")
         .description("오늘의 일정을 확인하고 완료 체크를 할 수 있습니다.")
+        .supportedFamilies([.systemMedium, .systemLarge])
+
     }
 }
 
 #Preview(as: .systemSmall) {
     ScheduleWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    SimpleEntry(date: .now, showImage: false, habitName: "")
 }
