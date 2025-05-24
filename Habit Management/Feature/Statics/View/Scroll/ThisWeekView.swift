@@ -1,0 +1,31 @@
+//
+//  ThisWeekView.swift
+//  Habit Management
+//
+//  Created by 한수진 on 5/25/25.
+//
+
+import Foundation
+import SwiftUI
+
+struct ThisWeekView: View {
+    @EnvironmentObject var setting: Setting
+
+    @StateObject var staticVM = StaticVM.shared
+    @Binding var frame_size: CGFloat
+    var getColor: (String) -> Color
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+            ForEach(staticVM.thisWeek, id:\.self){date in
+                Text("\(date)")
+                    .scaledFrame(width: frame_size, height: frame_size)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
+                            .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
+                            .scaledFrame(width: frame_size, height: frame_size)
+                    )
+            }
+        }
+    }
+}

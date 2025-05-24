@@ -10,7 +10,6 @@ import SwiftUI
 
 struct EditView: View{
     var staticVM = StaticVM.shared
-    @StateObject var scrollVM = ScrollVM.shared
 
     @State private var showingAlert = false
     @State var isTodayHabit = false

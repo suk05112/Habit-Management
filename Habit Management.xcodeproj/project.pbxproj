@@ -10,7 +10,6 @@
 		032EED58285E24D000994E5B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED57285E24D000994E5B /* Toast.swift */; };
 		032EED5A285E252800994E5B /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED59285E252800994E5B /* TextLimiter.swift */; };
 		032EED5C285E255D00994E5B /* WeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* WeekButton.swift */; };
-		032EED5E285E25B400994E5B /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5D285E25B400994E5B /* TotalView.swift */; };
 		0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346333528913B24000D1E61 /* NotificationCenterManager.swift */; };
 		03463343289FA695000D1E61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03463342289FA695000D1E61 /* GoogleService-Info.plist */; };
 		03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 03463345289FA7F9000D1E61 /* FirebaseAnalytics */; };
@@ -19,18 +18,14 @@
 		0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */; };
 		036D03B12813241000EE607B /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B02813241000EE607B /* ItemView.swift */; };
 		036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* compltedLIstVM.swift */; };
-		036D03BA2818384300EE607B /* scrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B92818384300EE607B /* scrollView.swift */; };
 		037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAEB28421AE800BD3C0E /* Setting.swift */; };
 		037FFAF7284614F400BD3C0E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAF6284614F400BD3C0E /* TestView.swift */; };
-		037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAFA2847C43D00BD3C0E /* AnimationView.swift */; };
 		038FB458280D61F600740AA6 /* HabitVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitVM.swift */; };
-		039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DC2830F08D00CA0028 /* ScrollVM.swift */; };
 		039164E0283120DA00CA0028 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DF283120DA00CA0028 /* Total.swift */; };
 		039164E22831213000CA0028 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164E12831213000CA0028 /* Month.swift */; };
 		039164FA283752B900CA0028 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164F9283752B900CA0028 /* EditView.swift */; };
 		039165032837650100CA0028 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 039165022837650100CA0028 /* PartialSheet */; };
 		039165082837744900CA0028 /* ActionSheetCard in Frameworks */ = {isa = PBXBuildFile; productRef = 039165072837744900CA0028 /* ActionSheetCard */; };
-		0392B413280695AD006C1E04 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B412280695AD006C1E04 /* ReportView.swift */; };
 		0392B4172806C444006C1E04 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B4162806C444006C1E04 /* Week.swift */; };
 		0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B41828080A7F006C1E04 /* RealmManager.swift */; };
 		0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392B41A28080DA0006C1E04 /* RealmThread.swift */; };
@@ -42,7 +37,6 @@
 		039E8CC22DD396A7005BC622 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 039E8CC12DD396A7005BC622 /* Realm */; };
 		039E8CC42DD396A7005BC622 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 039E8CC32DD396A7005BC622 /* RealmSwift */; };
 		039E8CD42DDCC1F7005BC622 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 039E8CD32DDCC1F7005BC622 /* ComposableArchitecture */; };
-		03A06E5E2858D74A0069C3CB /* ReportListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A06E5D2858D74A0069C3CB /* ReportListView.swift */; };
 		03A06E622858ED0B0069C3CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A06E612858ED0B0069C3CB /* ContentView.swift */; };
 		03A06E642858F7870069C3CB /* FirstLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A06E632858F7870069C3CB /* FirstLaunchView.swift */; };
 		03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE06727EC46D1004C54B6 /* Habit_ManagementApp.swift */; };
@@ -55,9 +49,6 @@
 		03CFE08827EC46D6004C54B6 /* Habit_ManagementUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */; };
 		03CFE08A27EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */; };
 		03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE0DC27F58D3F004C54B6 /* AddView.swift */; };
-		03DBC27A282111DD000848BF /* StaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC279282111DD000848BF /* StaticsView.swift */; };
-		03DBC27C2827C999000848BF /* LessMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC27B2827C999000848BF /* LessMore.swift */; };
-		03DBC2812827CF2F000848BF /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC2802827CF2F000848BF /* Graph.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,26 +73,20 @@
 		032EED57285E24D000994E5B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		032EED59285E252800994E5B /* TextLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
 		032EED5B285E255D00994E5B /* WeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekButton.swift; sourceTree = "<group>"; };
-		032EED5D285E25B400994E5B /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
 		03463342289FA695000D1E61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
-		036D03B92818384300EE607B /* scrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollView.swift; sourceTree = "<group>"; };
 		037FFAEB28421AE800BD3C0E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		037FFAF6284614F400BD3C0E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		037FFAFA2847C43D00BD3C0E /* AnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationView.swift; sourceTree = "<group>"; };
 		038FB457280D61F600740AA6 /* HabitVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitVM.swift; sourceTree = "<group>"; };
-		039164DC2830F08D00CA0028 /* ScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollVM.swift; sourceTree = "<group>"; };
 		039164DF283120DA00CA0028 /* Total.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
 		039164E12831213000CA0028 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		039164F9283752B900CA0028 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
-		0392B412280695AD006C1E04 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		0392B4162806C444006C1E04 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		0392B41828080A7F006C1E04 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		0392B41A28080DA0006C1E04 /* RealmThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmThread.swift; sourceTree = "<group>"; };
-		03A06E5D2858D74A0069C3CB /* ReportListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListView.swift; sourceTree = "<group>"; };
 		03A06E612858ED0B0069C3CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		03A06E632858F7870069C3CB /* FirstLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLaunchView.swift; sourceTree = "<group>"; };
 		03CFE06427EC46D1004C54B6 /* Habit Management.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Management.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,9 +102,6 @@
 		03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITests.swift; sourceTree = "<group>"; };
 		03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		03CFE0DC27F58D3F004C54B6 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		03DBC279282111DD000848BF /* StaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsView.swift; sourceTree = "<group>"; };
-		03DBC27B2827C999000848BF /* LessMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessMore.swift; sourceTree = "<group>"; };
-		03DBC2802827CF2F000848BF /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,15 +157,6 @@
 				036D03B02813241000EE607B /* ItemView.swift */,
 			);
 			path = Item;
-			sourceTree = "<group>";
-		};
-		037FFAF5284606DC00BD3C0E /* Scroll */ = {
-			isa = PBXGroup;
-			children = (
-				036D03B92818384300EE607B /* scrollView.swift */,
-				03DBC27B2827C999000848BF /* LessMore.swift */,
-			);
-			path = Scroll;
 			sourceTree = "<group>";
 		};
 		039164DE283120C600CA0028 /* Utility */ = {
@@ -290,7 +263,6 @@
 				03DBC288282BAB3E000848BF /* StaticVM.swift */,
 				038FB457280D61F600740AA6 /* HabitVM.swift */,
 				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
-				039164DC2830F08D00CA0028 /* ScrollVM.swift */,
 				037FFAEB28421AE800BD3C0E /* Setting.swift */,
 			);
 			name = "View Model";
@@ -300,7 +272,6 @@
 		03CFE0DB27F4952B004C54B6 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				037FFAF5284606DC00BD3C0E /* Scroll */,
 				037FFAF4284606C200BD3C0E /* Item */,
 				0391650E283B5DE800CA0028 /* Add */,
 				03DBC27E2827CF02000848BF /* Static */,
@@ -324,12 +295,6 @@
 		03DBC27E2827CF02000848BF /* Static */ = {
 			isa = PBXGroup;
 			children = (
-				03DBC279282111DD000848BF /* StaticsView.swift */,
-				03DBC2802827CF2F000848BF /* Graph.swift */,
-				037FFAFA2847C43D00BD3C0E /* AnimationView.swift */,
-				0392B412280695AD006C1E04 /* ReportView.swift */,
-				03A06E5D2858D74A0069C3CB /* ReportListView.swift */,
-				032EED5D285E25B400994E5B /* TotalView.swift */,
 			);
 			path = Static;
 			sourceTree = "<group>";
@@ -504,22 +469,14 @@
 				039164E0283120DA00CA0028 /* Total.swift in Sources */,
 				03A06E642858F7870069C3CB /* FirstLaunchView.swift in Sources */,
 				039164FA283752B900CA0028 /* EditView.swift in Sources */,
-				03A06E5E2858D74A0069C3CB /* ReportListView.swift in Sources */,
 				0392B4172806C444006C1E04 /* Week.swift in Sources */,
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
 				032EED5A285E252800994E5B /* TextLimiter.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
-				032EED5E285E25B400994E5B /* TotalView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
-				0392B413280695AD006C1E04 /* ReportView.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
-				036D03BA2818384300EE607B /* scrollView.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
-				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
-				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
-				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
-				03DBC27C2827C999000848BF /* LessMore.swift in Sources */,
 				036D03B12813241000EE607B /* ItemView.swift in Sources */,
 				032EED58285E24D000994E5B /* Toast.swift in Sources */,
 				03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */,
@@ -530,7 +487,6 @@
 				039164E22831213000CA0028 /* Month.swift in Sources */,
 				037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */,
 				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
-				03DBC2812827CF2F000848BF /* Graph.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,
 				0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */,
 			);

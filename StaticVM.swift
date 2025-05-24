@@ -10,7 +10,6 @@ import RealmSwift
 import SwiftUI
 
 class StaticVM: ObservableObject {
-    
     static let shared = StaticVM()
 
     @Published var day:[Int] = []
@@ -20,7 +19,6 @@ class StaticVM: ObservableObject {
     @Published var total:Int = 0
     
     @Published var thisWeek: [String] = []
-
 
     var selectedGroup: Statics? = nil
 

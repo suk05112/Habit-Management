@@ -261,7 +261,8 @@ extension HabitVM{
         return count
     }
     
-    func getnumOfToDoPerWeek() -> [Int]{
+    func getnumOfToDoPerWeek() -> [Int] {
+        print("여기 걸림")
         var weekTotal = [0,0,0,0,0,0,0]
         
         for item in realm!.objects(Habit.self){
