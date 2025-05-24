@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import HMDesign
 
 enum GrassLevel: Int {
     case empty = 0

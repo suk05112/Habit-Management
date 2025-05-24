@@ -8,117 +8,72 @@
 import WidgetKit
 import SwiftUI
 import AppIntents
+import HMDesign
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), showImage: false, habitName: "Default")
+        SimpleEntry(date: Date(), remainHabitCount: 0, showImage: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let defaults = UserDefaults(suiteName: "group.habit-management")
+        let count = defaults?.integer(forKey: "habitCount") ?? 0
         let showImage = defaults?.bool(forKey: "showImage") ?? false
-        let habitName = defaults?.string(forKey: "testValue") ?? "Default"
-        completion(SimpleEntry(date: Date(), showImage: showImage, habitName: habitName))
+        
+        completion(SimpleEntry(date: Date(), remainHabitCount: count, showImage: showImage))
     }
-
+    
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let defaults = UserDefaults(suiteName: "group.habit-management")
+        
+        let count = defaults?.integer(forKey: "habitCount") ?? 0
         let showImage = defaults?.bool(forKey: "showImage") ?? false
-        let habitName = defaults?.string(forKey: "testValue") ?? "Default"
-        let entry = SimpleEntry(date: Date(), showImage: showImage, habitName: habitName)
-        completion(Timeline(entries: [entry], policy: .never))
+        
+        let entry = SimpleEntry(date: Date(), remainHabitCount: count, showImage: showImage)
+        
+        completion(Timeline(entries: [entry], policy: .atEnd))
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let remainHabitCount: Int
     let showImage: Bool
-    let habitName: String
 }
 
 struct ScheduleWidgetEntryView : View {
     var entry: Provider.Entry
     
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
+    }()
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            Text("\(entry.habitName)")
-                .font(.headline)
+        VStack(alignment: .center, spacing: 4) {
+            HStack {
+                Text("Habit Management")
+                    .foregroundColor(hex: "#9ECAA4")
+                    .fontWeight(.bold)
+                    .font(.system(size: 16, design: .rounded))
+                
+                Spacer()
+                Text("\(entry.remainHabitCount)")
+                    .foregroundColor(hex: "#36793F")
+                    .fontWeight(.bold)
+                    .font(.system(size: 24, design: .rounded))
+                    .contentTransition(.numericText())
+            }
+            .padding(.horizontal, 12)
+            .padding(.top, 8)
             HStack(spacing: 0) {
-                VStack() {
-                    Button(intent: ToggleButtonIntent()) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(.widgetBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Color.gray, lineWidth: 2)
-                                )
-                            if entry.showImage {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 32, height: 32)
-                                    .foregroundColor(.green)
-                            }
-                        }
-                        .frame(width: 80, height: 80)
-                    }
-                    .tint(.clear)
-                    
-                    Text("체크하기")
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                }
-                
-                VStack() {
-                    Button(intent: ToggleButtonIntent()) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(.widgetBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Color.gray, lineWidth: 2)
-                                )
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(.green)
-                        }
-                        .frame(width: 80, height: 80)
-                    }
-                    .tint(.clear)
-                    
-                    Text("체크하기")
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                }
-                
-                VStack() {
-                    Button(intent: ToggleButtonIntent()) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(.widgetBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .stroke(Color.gray, lineWidth: 2)
-                                )
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(.green)
-                        }
-                        .frame(width: 80, height: 80)
-                    }
-                    .tint(.clear)
-                    
-                    Text("체크하기")
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                }
+                HabitCheckView(entry: entry)
+                HabitCheckView(entry: entry)
+                HabitCheckView(entry: entry)
+//                Button(intent: ReduceHabitCountIntent()) {
+//                    Text("reduce")
+//                }
             }
         }
     }
@@ -128,11 +83,23 @@ struct ToggleButtonIntent: AppIntent {
     static var title: LocalizedStringResource = "토글 상태 변경"
 
     func perform() async throws -> some IntentResult {
-        let current = UserDefaults(suiteName: "group.habit-management")?.bool(forKey: "showImage") ?? true
-        UserDefaults(suiteName: "group.habit-management")?.set(!current, forKey: "showImage")
-        
         let defaults = UserDefaults(suiteName: "group.habit-management")
-        print(defaults?.string(forKey: "testValue") ?? "")
+        let current = defaults?.bool(forKey: "showImage") ?? false
+        defaults?.set(!current, forKey: "showImage")
+        
+        WidgetCenter.shared.reloadAllTimelines()
+        return .result()
+    }
+}
+
+struct ReduceHabitCountIntent: AppIntent {
+    static var title: LocalizedStringResource = "Habit Count Reduce"
+    
+    func perform() async throws -> some IntentResult {
+        let defaults = UserDefaults(suiteName: "group.habit-management")
+        var count: Int = defaults?.integer(forKey: "habitCount") ?? 0
+        count -= 1
+        defaults?.set(count, forKey: "habitCount")
         
         WidgetCenter.shared.reloadAllTimelines()
         return .result()
@@ -150,12 +117,11 @@ struct ScheduleWidget: Widget {
         .configurationDisplayName("오늘의 일정 확인")
         .description("오늘의 일정을 확인하고 완료 체크를 할 수 있습니다.")
         .supportedFamilies([.systemMedium, .systemLarge])
-
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: .systemMedium) {
     ScheduleWidget()
 } timeline: {
-    SimpleEntry(date: .now, showImage: false, habitName: "")
+    SimpleEntry(date: .now, remainHabitCount: 0, showImage: false)
 }

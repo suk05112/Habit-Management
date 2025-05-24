@@ -9,16 +9,19 @@ import Foundation
 import SwiftUI
 import UIKit
 import RealmSwift
+import WidgetKit
 
 public struct AddView: View{
     @ObservedObject var textfield = TextLimiter()
-
+    
     @Binding var name: String
     @Binding var show: Bool
     @Binding var isEdit: Bool
     @Binding var selectedItem: Habit
     @State var iter: [Int]
     @StateObject var ViewModel = HabitVM.shared
+    
+    @Environment(\.scenePhase) private var scenePhase
     
     public var body: some View {
         if show{
@@ -33,22 +36,26 @@ public struct AddView: View{
                             .scaledFrame(width: .none, height: 250)
                             .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 5)
                             .foregroundColor(Color.white)
-                            
+                        
                         VStack(alignment: .center){
                             HStack{
                                 Text("취소")
-                                .onTapGesture {
-                                    self.name = ""
-                                    show = false
-                                }
+                                    .onTapGesture {
+                                        self.name = ""
+                                        show = false
+                                    }
                                 Spacer()
-
+                                
                                 Text("저장")
                                     .onTapGesture {
-                                        
                                         let defaults = UserDefaults(suiteName: "group.habit-management")
-                                        defaults?.set(name, forKey: "testValue")
-                                        print(defaults?.string(forKey: "testValue") ?? "")
+                                        let count = defaults?.integer(forKey: "habitCount") ?? 0
+                                        defaults?.set(count+1, forKey: "habitCount")
+                                        
+                                        // 위젯 업데이트
+                                        WidgetCenter.shared.reloadAllTimelines()
+                                        print(defaults?.string(forKey: "habitCount") ?? "")
+                                        
                                         
                                         show = false
                                         if !isEdit{
@@ -66,13 +73,13 @@ public struct AddView: View{
                                     }
                             }
                             .scaledPadding(top: 15, leading: 25, bottom: 10, trailing: 25)
-
+                            
                             TextField("제목을 입력하세요", text: $name)
                                 .textFieldStyle(.roundedBorder)
                                 .scaledText(size: 25, weight: .none)
                                 .foregroundColor(Color.black)
                                 .scaledPadding(top: 0, leading: 25, bottom: 0, trailing: 25)
-                                
+                            
                             HStack{
                                 ForEach(1..<8){
                                     WeekButton(weekOfDay: $0, iter: $iter, OnOff: Array(self.selectedItem.weekIter).contains($0) ? true : false)
@@ -80,20 +87,20 @@ public struct AddView: View{
                             }
                             .scaledPadding(top: 10, leading: 25, bottom: 10, trailing: 25)
                             Spacer()
-
+                            
                         }
                         .scaledFrame(width: .none, height: 250)
-
+                        
                     }
-
+                    
                 }
-
+                
             }
             .contentShape(Rectangle())
-
-          
+            
         }
-
+        
+        
     }
     
     func isTodayHabit() -> Bool{
@@ -106,10 +113,8 @@ public struct AddView: View{
             return false
         }
     }
-
+    
 }
-
-
 
 #if canImport(UIKit)
 extension View {
