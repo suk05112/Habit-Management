@@ -68,6 +68,11 @@
 		4E86A2632DDEDD3400E432A6 /* HMDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A2622DDEDD3400E432A6 /* HMDesign */; };
 		4E86A2652DDEDD3A00E432A6 /* HMDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A2642DDEDD3A00E432A6 /* HMDesign */; };
 		4E86A2672DE02A9300E432A6 /* HabitCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86A2662DE02A9300E432A6 /* HabitCheckView.swift */; };
+		4E86A26C2DE1DC3500E432A6 /* HMUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A26B2DE1DC3500E432A6 /* HMUserDefaults */; };
+		4E86A26F2DE1DC6E00E432A6 /* HMUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A26E2DE1DC6E00E432A6 /* HMUserDefaults */; };
+		4E86A2712DE1DC8500E432A6 /* HMUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A2702DE1DC8500E432A6 /* HMUserDefaults */; };
+		4E86A2732DE1DC8C00E432A6 /* HMUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A2722DE1DC8C00E432A6 /* HMUserDefaults */; };
+		4E86A2752DE1DC9300E432A6 /* HMUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 4E86A2742DE1DC9300E432A6 /* HMUserDefaults */; };
 		4E965C762DD9DF35008F9833 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E965C752DD9DF35008F9833 /* AppIntent.swift */; };
 		4EBE8DA22DD9B41100776524 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4EBE8DA12DD9B41100776524 /* GoogleService-Info.plist */; };
 		4EBE8DA82DD9BA7700776524 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E3C0432DD59BD8000622FD /* WidgetKit.framework */; };
@@ -230,11 +235,13 @@
 				039165032837650100CA0028 /* PartialSheet in Frameworks */,
 				039E8CC22DD396A7005BC622 /* Realm in Frameworks */,
 				039E8CBC2DD391A8005BC622 /* PartialSheet in Frameworks */,
+				4E86A26C2DE1DC3500E432A6 /* HMUserDefaults in Frameworks */,
 				039E8CB52DD3917C005BC622 /* SwiftProtobuf in Frameworks */,
 				4E86A25F2DDEDD0700E432A6 /* HMDesign in Frameworks */,
 				03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */,
 				039165082837744900CA0028 /* ActionSheetCard in Frameworks */,
 				03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */,
+				4E86A26F2DE1DC6E00E432A6 /* HMUserDefaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +265,7 @@
 			files = (
 				4EBE8DA92DD9BA7700776524 /* SwiftUI.framework in Frameworks */,
 				4EBE8DA82DD9BA7700776524 /* WidgetKit.framework in Frameworks */,
+				4E86A2752DE1DC9300E432A6 /* HMUserDefaults in Frameworks */,
 				4E86A2632DDEDD3400E432A6 /* HMDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +276,7 @@
 			files = (
 				4EBE8DDB2DD9CC0400776524 /* SwiftUI.framework in Frameworks */,
 				4EBE8DDA2DD9CC0400776524 /* WidgetKit.framework in Frameworks */,
+				4E86A2732DE1DC8C00E432A6 /* HMUserDefaults in Frameworks */,
 				4E86A2652DDEDD3A00E432A6 /* HMDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +287,7 @@
 			files = (
 				4EBE8DFA2DD9CCF000776524 /* SwiftUI.framework in Frameworks */,
 				4EBE8DF92DD9CCF000776524 /* WidgetKit.framework in Frameworks */,
+				4E86A2712DE1DC8500E432A6 /* HMUserDefaults in Frameworks */,
 				4E86A2612DDEDD2100E432A6 /* HMDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,6 +576,8 @@
 				039E8CC32DD396A7005BC622 /* RealmSwift */,
 				4E3B3D8F2DDE17C700A0EFCA /* ComposableArchitecture */,
 				4E86A25E2DDEDD0700E432A6 /* HMDesign */,
+				4E86A26B2DE1DC3500E432A6 /* HMUserDefaults */,
+				4E86A26E2DE1DC6E00E432A6 /* HMUserDefaults */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -622,6 +634,7 @@
 			name = LaunchWidgetExtension;
 			packageProductDependencies = (
 				4E86A2622DDEDD3400E432A6 /* HMDesign */,
+				4E86A2742DE1DC9300E432A6 /* HMUserDefaults */,
 			);
 			productName = LaunchWidgetExtension;
 			productReference = 4EBE8DA72DD9BA7700776524 /* LaunchWidgetExtension.appex */;
@@ -642,6 +655,7 @@
 			name = GrassWidgetExtension;
 			packageProductDependencies = (
 				4E86A2642DDEDD3A00E432A6 /* HMDesign */,
+				4E86A2722DE1DC8C00E432A6 /* HMUserDefaults */,
 			);
 			productName = GrassWidgetExtension;
 			productReference = 4EBE8DD92DD9CC0400776524 /* GrassWidgetExtension.appex */;
@@ -662,6 +676,7 @@
 			name = ScheduleWidgetExtension;
 			packageProductDependencies = (
 				4E86A2602DDEDD2100E432A6 /* HMDesign */,
+				4E86A2702DE1DC8500E432A6 /* HMUserDefaults */,
 			);
 			productName = ScheduleWidgetExtension;
 			productReference = 4EBE8DF82DD9CCF000776524 /* ScheduleWidgetExtension.appex */;
@@ -716,6 +731,7 @@
 				039E8CC02DD396A7005BC622 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				4E3B3D8E2DDE17C700A0EFCA /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				4E86A25D2DDEDD0700E432A6 /* XCLocalSwiftPackageReference "HMDesign" */,
+				4E86A26D2DE1DC6E00E432A6 /* XCLocalSwiftPackageReference "HMUserDefaults" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -1488,6 +1504,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = HMDesign;
 		};
+		4E86A26D2DE1DC6E00E432A6 /* XCLocalSwiftPackageReference "HMUserDefaults" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = HMUserDefaults;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1628,6 +1648,29 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4E86A25D2DDEDD0700E432A6 /* XCLocalSwiftPackageReference "HMDesign" */;
 			productName = HMDesign;
+		};
+		4E86A26B2DE1DC3500E432A6 /* HMUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HMUserDefaults;
+		};
+		4E86A26E2DE1DC6E00E432A6 /* HMUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HMUserDefaults;
+		};
+		4E86A2702DE1DC8500E432A6 /* HMUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E86A26D2DE1DC6E00E432A6 /* XCLocalSwiftPackageReference "HMUserDefaults" */;
+			productName = HMUserDefaults;
+		};
+		4E86A2722DE1DC8C00E432A6 /* HMUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E86A26D2DE1DC6E00E432A6 /* XCLocalSwiftPackageReference "HMUserDefaults" */;
+			productName = HMUserDefaults;
+		};
+		4E86A2742DE1DC9300E432A6 /* HMUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E86A26D2DE1DC6E00E432A6 /* XCLocalSwiftPackageReference "HMUserDefaults" */;
+			productName = HMUserDefaults;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 import HMDesign
+import HMUserDefaults
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ScheduleWidgetEntry {
@@ -43,12 +44,6 @@ struct ScheduleWidgetEntry: TimelineEntry {
 
 struct ScheduleWidgetEntryView : View {
     var entry: Provider.Entry
-    
-    private let timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
-        return formatter
-    }()
     
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
