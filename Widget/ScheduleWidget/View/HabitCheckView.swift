@@ -19,7 +19,7 @@ struct HabitCheckView: View {
             Button(intent: ToggleButtonIntent()) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(.widgetBackground)
+                        .background(hex: "#D5EBD3")
                         .overlay(
                             RoundedRectangle(cornerRadius: 12, style: .continuous)
                                 .stroke(Color.gray, lineWidth: 2)
