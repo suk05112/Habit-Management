@@ -11,16 +11,16 @@ import AppIntents
 import HMDesign
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), remainHabitCount: 0, showImage: false)
+    func placeholder(in context: Context) -> ScheduleWidgetEntry {
+        ScheduleWidgetEntry(date: Date(), remainHabitCount: 0, showImage: false)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (ScheduleWidgetEntry) -> ()) {
         let defaults = UserDefaults(suiteName: "group.habit-management")
         let count = defaults?.integer(forKey: "habitCount") ?? 0
         let showImage = defaults?.bool(forKey: "showImage") ?? false
         
-        completion(SimpleEntry(date: Date(), remainHabitCount: count, showImage: showImage))
+        completion(ScheduleWidgetEntry(date: Date(), remainHabitCount: count, showImage: showImage))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
@@ -29,13 +29,13 @@ struct Provider: TimelineProvider {
         let count = defaults?.integer(forKey: "habitCount") ?? 0
         let showImage = defaults?.bool(forKey: "showImage") ?? false
         
-        let entry = SimpleEntry(date: Date(), remainHabitCount: count, showImage: showImage)
+        let entry = ScheduleWidgetEntry(date: Date(), remainHabitCount: count, showImage: showImage)
         
         completion(Timeline(entries: [entry], policy: .atEnd))
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct ScheduleWidgetEntry: TimelineEntry {
     let date: Date
     let remainHabitCount: Int
     let showImage: Bool
@@ -123,5 +123,5 @@ struct ScheduleWidget: Widget {
 #Preview(as: .systemMedium) {
     ScheduleWidget()
 } timeline: {
-    SimpleEntry(date: .now, remainHabitCount: 0, showImage: false)
+    ScheduleWidgetEntry(date: .now, remainHabitCount: 0, showImage: false)
 }

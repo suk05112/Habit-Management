@@ -12,7 +12,7 @@ import HMDesign
 
 struct HabitCheckView: View {
     
-    var entry: SimpleEntry
+    var entry: ScheduleWidgetEntry
     
     var body: some View {
         VStack(spacing: 0) {
@@ -26,10 +26,10 @@ struct HabitCheckView: View {
                         )
                     
                     Image(systemName: entry.showImage ? "checkmark.circle.fill" : "circle")
-                               .resizable()
-                               .scaledToFit()
-                               .frame(width: 32, height: 32)
-                               .foregroundColor(entry.showImage ? .green : .gray)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .foregroundColor(entry.showImage ? .green : .gray)
                 }
                 .frame(width: 80, height: 80)
             }
