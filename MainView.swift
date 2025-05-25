@@ -13,165 +13,46 @@ import Firebase
 import ComposableArchitecture
 
 struct MainView: View {
-    let store: StoreOf<MainFeature>
-
+    let store: StoreOf<AppFeature>
+    
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             ZStack {
                 TabView {
-                    VStack(spacing: 0) {
-                        MainHeaderView(userName: viewStore.userName,
-                                       mainReport: viewStore.mainReport)
-
-                        MainToggleBar(
-                            showAll: viewStore.showAll,
-                            hideCompleted: viewStore.hideCompleted,
-                            toggleShowAll: {
-                                viewStore.send(.toggleShowAll)
-                            },
-                            toggleHideCompleted: {
-                                viewStore.send(.toggleHideCompleted)
-                            }
+                    HabitView (
+                        store: store.scope(
+                            state: \.habit,
+                            action: AppFeature.Action.habit
                         )
-
-                        HabitListView(habits: viewStore.habits)
-
-                        MainAddButton {
-                            viewStore.send(.selectItem(nil))
-                            viewStore.send(.setEditMode(false))
-                        }
-
-                        Spacer()
-                    }
-                    .onAppear {
-                        viewStore.send(.onAppear)
-                    }
-                    .toast(
-                        message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                        isShowing: viewStore.binding(get: \.showToast, send: MainFeature.Action.setToast),
-                        duration: Toast.long
                     )
                     .tabItem {
                         Image(systemName: "house")
                         Text("홈")
                     }
-
+                    
                     StaticsView()
                         .tabItem {
                             Image(systemName: "chart.bar.fill")
                             Text("통계")
                         }
                 }
-
+                
                 if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
-                    OnboardingView(userName: viewStore.binding(get: \.userName, send: MainFeature.Action.setUserName))
+                    OnboardingView(userName: viewStore.binding(get: \.userName, send: AppFeature.Action.setUserName))
                 }
             }
         }
-    }
-}
-
-struct MainHeaderView: View {
-    let userName: String
-    let mainReport: String
-
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(Color(hex: "#B8D9B9"))
-                .edgesIgnoringSafeArea(.all)
-                .scaledFrame(width: nil, height: 242)
-
-            VStack(alignment: .leading) {
-                Text("\(userName)님!\n\(mainReport)")
-                    .scaledText(size: 25, weight: .semibold)
-                    .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: true, vertical: true)
-
-                scrollView() // 나중에 따로 추출해도 OK
-            }
-        }
-    }
-}
-
-
-struct MainToggleBar: View {
-    let showAll: Bool
-    let hideCompleted: Bool
-    let toggleShowAll: () -> Void
-    let toggleHideCompleted: () -> Void
-
-    var body: some View {
-        HStack {
-            Text(showAll ? "예정된 습관만 보기" : "습관 모두 보기")
-                .onTapGesture {
-                    toggleShowAll()
-                }
-            Spacer()
-            Text(hideCompleted ? "완료된 항목 보이기" : "완료된 항목 숨기기")
-                .onTapGesture {
-                    toggleHideCompleted()
-                }
-        }
-        .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
-    }
-}
-
-struct HabitListView: View {
-    let habits: [Habit]
-
-    var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ForEach(habits) { habit in
-                ZStack {
-                    EditView(
-                        delete: { _ in },
-                        check: { _ in },
-                        myItem: .constant(habit),
-                        isAddView: .constant(false),
-                        isEdit: .constant(false),
-                        selectedItem: .constant(habit),
-                        offset: .constant(0),
-                        name: .constant(habit.name),
-                        showToast: .constant(false)
-                    )
-
-                    ItemView(
-                        myItem: .constant(habit),
-                        showingModal: .constant(false),
-                        offset: .constant(0),
-                        name: .constant(habit.name)
-                    )
-                }
-            }
-        }
-    }
-}
-
-struct MainAddButton: View {
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: {
-            onTap()
-        }) {
-            Image(systemName: "plus")
-                .foregroundColor(.black)
-        }
-        .scaledPadding(top: 5, leading: 0, bottom: 5, trailing: 0)
     }
 }
 
 struct OnboardingView: View {
     @Binding var userName: String
-
+    
     var body: some View {
         FirstLaunchView(userName: $userName)
             .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
 }
-
 
 /*
 struct MainView: View {
@@ -371,6 +252,7 @@ struct MainView: View {
 
 }*/
 
+/*
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(
@@ -384,3 +266,4 @@ struct ContentView_Previews: PreviewProvider {
         )
     }
 }
+*/
