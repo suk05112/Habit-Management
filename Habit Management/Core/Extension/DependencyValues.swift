@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import ComposableArchitecture
+
+extension DependencyValues {
+    var habitClient: HabitClient {
+        get { self[HabitClient.self] }
+        set { self[HabitClient.self] = newValue }
+    }
+    
+    var completionClient: CompletionClient {
+        get { self[CompletionClient.self] }
+        set { self[CompletionClient.self] = newValue }
+    }
+}
