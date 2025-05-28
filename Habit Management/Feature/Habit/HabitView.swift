@@ -18,11 +18,11 @@ struct HabitView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(spacing: 0) {
                 MainHeaderView(userName: viewStore.userName,
-                               mainReport: viewStore.mainReport)
+                               mainReport: viewStore.mainReportText)
 
                 MainToggleBar(
-                    showAll: viewStore.showAll,
-                    hideCompleted: viewStore.hideCompleted,
+                    showAll: viewStore.isShowingAllHabits,
+                    hideCompleted: viewStore.isHidingCompletedHabits,
                     toggleShowAll: {
                         viewStore.send(.toggleShowAll)
                     },
@@ -32,7 +32,7 @@ struct HabitView: View {
                 )
 
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(viewStore.habits) { habit in
+                    ForEach(viewStore.habitList) { habit in
                         ZStack {
                             //Edit View
                             
@@ -53,7 +53,7 @@ struct HabitView: View {
             }
             .toast(
                 message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                isShowing: viewStore.$showToast,
+                isShowing: viewStore.$isToastVisible,
                 duration: Toast.long
             )
             .tabItem {

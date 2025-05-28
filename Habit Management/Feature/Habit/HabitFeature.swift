@@ -12,14 +12,15 @@ import RealmSwift
 
 struct HabitFeature: Reducer {
     struct State: Equatable {
-        var habits: [Habit] = []
-        var showAll: Bool = UserDefaults.standard.bool(forKey: "showAll")
-        var hideCompleted: Bool = UserDefaults.standard.bool(forKey: "hideCompleted")
-        var selectedItem: Habit? = nil
-        @BindingState var showToast: Bool = false
-        var isEdit: Bool = false
-        var userName: String = UserDefaults.standard.string(forKey: "userName") ?? "사용자"
-        var mainReport: String = ReportData.shared.getMainReport()
+        var habitList: [Habit] = []
+        var selectedHabit: Habit? = nil
+        var isShowingAllHabits: Bool = false
+        var isHidingCompletedHabits: Bool = false
+        var isEditingHabit: Bool = false
+        var userName: String = "사용자"
+        var mainReportText: String = ""
+        
+        @BindingState var isToastVisible: Bool = false
     }
     
     enum Action: BindableAction, Equatable {
@@ -45,8 +46,8 @@ struct HabitFeature: Reducer {
         switch action {
         case .onAppear:
             
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
@@ -54,15 +55,15 @@ struct HabitFeature: Reducer {
             }
             
         case let .loadHabits(habits):
-            state.habits = habits
+            state.habitList = habits
             return .none
             
         case .toggleShowAll:
-            state.showAll.toggle()
-            UserDefaults.standard.set(state.showAll, forKey: "showAll")
+            state.isShowingAllHabits.toggle()
+            UserDefaults.standard.set(state.isShowingAllHabits, forKey: "isShowingAllHabits")
             
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
@@ -70,11 +71,11 @@ struct HabitFeature: Reducer {
             }
             
         case .toggleHideCompleted:
-            state.hideCompleted.toggle()
-            UserDefaults.standard.set(state.hideCompleted, forKey: "hideCompleted")
+            state.isHidingCompletedHabits.toggle()
+            UserDefaults.standard.set(state.isHidingCompletedHabits, forKey: "isHidingCompletedHabits")
             
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
@@ -88,25 +89,25 @@ struct HabitFeature: Reducer {
             return .none
             
         case let .setMainReport(report):
-            state.mainReport = report
+            state.mainReportText = report
             return .none
             
         case let .setToast(flag):
-            state.showToast = flag
+            state.isToastVisible = flag
             return .none
             
         case let .selectItem(habit):
-            state.selectedItem = habit
+            state.selectedHabit = habit
             return .none
             
         case let .setEditMode(flag):
-            state.isEdit = flag
+            state.isEditingHabit = flag
             return .none
             
         case let .addHabit(name, iter):
             let habit = Habit(name: name, iter: iter)
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 try await habitClient.save(habit)
@@ -115,8 +116,8 @@ struct HabitFeature: Reducer {
             }
             
         case let .updateHabit(name, iter, habit):
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 try await habitClient.update(habit, name, iter)
@@ -125,8 +126,8 @@ struct HabitFeature: Reducer {
             }
             
         case let .deleteHabit(habit):
-            let showAll = state.showAll
-            let hideCompleted = state.hideCompleted
+            let showAll = state.isShowingAllHabits
+            let hideCompleted = state.isHidingCompletedHabits
             
             return .run { send in
                 try await habitClient.delete(habit)
