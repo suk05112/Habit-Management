@@ -10,7 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EditView: View{
-//    var staticVM = StaticVM.shared
     let store: StoreOf<StaticsFeature>
 
     @State private var showingAlert = false
@@ -54,9 +53,6 @@ struct EditView: View{
                         store.send(.setnumOfToDoPerDay)
                         store.send(.setnumOfToDoPerWeek(add: false, numOfIter: weekIter))
                         store.send(.setnumOfToDoPerMonth(add: false, numOfIter: weekIter))
-//                        StaticVM.shared.setnumOfToDoPerDay()
-//                        StaticVM.shared.setnumOfToDoPerWeek2(add: false, numOfIter: weekIter)
-//                        StaticVM.shared.setnumOfToDoPerMonth(add: false, numOfIter: weekIter)
                         
                         compltedLIstVM.shared.setIsToday(isToday: self.isTodayHabit)
                         compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: self.isTodayHabit)

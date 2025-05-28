@@ -15,12 +15,14 @@ struct MonthView: View {
     @Binding var frame_size: CGFloat
 
     var body: some View {
-        HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-            ForEach(store.monthArray, id: \.self) { item in
-                Text(item)
-                    .scaledText(size: 10, weight: .bold)
-                    .foregroundColor(Color.white)
-                    .scaledFrame(width: frame_size, height: frame_size)
+        WithPerceptionTracking {
+            HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+                ForEach(store.monthArray, id: \.self) { item in
+                    Text(item)
+                        .scaledText(size: 10, weight: .bold)
+                        .foregroundColor(Color.white)
+                        .scaledFrame(width: frame_size, height: frame_size)
+                }
             }
         }
     }

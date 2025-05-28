@@ -7,24 +7,28 @@
 
 import Foundation
 import SwiftUI
+import ComposableArchitecture
 
 struct ThisWeekView: View {
+    let store: StoreOf<StaticsFeature>
     @EnvironmentObject var setting: Setting
 
-    @StateObject var staticVM = StaticVM.shared
+//    @StateObject var staticVM = StaticVM.shared
     @Binding var frame_size: CGFloat
     var getColor: (String) -> Color
     
     var body: some View {
-        VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-            ForEach(staticVM.thisWeek, id:\.self){date in
-                Text("\(date)")
-                    .scaledFrame(width: frame_size, height: frame_size)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
-                            .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
-                            .scaledFrame(width: frame_size, height: frame_size)
-                    )
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+                ForEach(store.staticsData.thisWeek, id:\.self){ date in
+                    Text("\(date)")
+                        .scaledFrame(width: frame_size, height: frame_size)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
+                                .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
+                                .scaledFrame(width: frame_size, height: frame_size)
+                        )
+                }
             }
         }
     }

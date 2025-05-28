@@ -19,49 +19,51 @@ struct HabitGridView: View {
     @Namespace var endPoint
     
     var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 15*setting.WidthRatio, style: .continuous)
-                .fill(Color(hex: "#639F70"))
-                .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
-                .scaledFrame(width: .none, height: 230)
-            
-            VStack{
-                HStack(alignment: .bottom){
-                    VStack(alignment: .center ,spacing:3*setting.WidthRatio){
-                        ForEach(1...7, id: \.self){ i in
-                            WeekView(week: i)
-                        }
-                    }
-                    .scaledPadding(top: 0, leading: 20, bottom: 0, trailing: 3)
-                    
-                    ScrollViewReader { proxy in
-                        ScrollView(.horizontal) {
-                            VStack(alignment: .center, spacing: 3*setting.WidthRatio){
-                                MonthView(store: store, frame_size: $frame_size)
-                                
-                                HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-                                    YearView(store: store, frame_size: $frame_size, getColor: getColor(date:))
-                                    ThisWeekView(frame_size: $frame_size, getColor: getColor(date:))
-                                    HStack{}.id(endPoint)
-                                }
+        WithPerceptionTracking {
+            ZStack{
+                RoundedRectangle(cornerRadius: 15*setting.WidthRatio, style: .continuous)
+                    .fill(Color(hex: "#639F70"))
+                    .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
+                    .scaledFrame(width: .none, height: 230)
+                
+                VStack{
+                    HStack(alignment: .bottom){
+                        VStack(alignment: .center ,spacing:3*setting.WidthRatio){
+                            ForEach(1...7, id: \.self){ i in
+                                WeekView(week: i)
                             }
                         }
-                        .onAppear(){
-                            proxy.scrollTo(endPoint)
+                        .scaledPadding(top: 0, leading: 20, bottom: 0, trailing: 3)
+                        
+                        ScrollViewReader { proxy in
+                            ScrollView(.horizontal) {
+                                VStack(alignment: .center, spacing: 3*setting.WidthRatio){
+                                    MonthView(store: store, frame_size: $frame_size)
+                                    
+                                    HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+                                        YearView(store: store, frame_size: $frame_size, getColor: getColor(date:))
+                                        ThisWeekView(store: store, frame_size: $frame_size, getColor: getColor(date:))
+                                        HStack{}.id(endPoint)
+                                    }
+                                }
+                            }
+                            .onAppear(){
+                                proxy.scrollTo(endPoint)
+                            }
                         }
                     }
+                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
+                    
+                    HStack{
+                        HStack{}
+                        Spacer()
+                        LessMore()
+                    }
+                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
+                    
                 }
-                .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
-
-                HStack{
-                    HStack{}
-                    Spacer()
-                    LessMore()
-                }
-                .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
-
+                
             }
-
         }
         .onAppear() {
             print("HabitGridView appear")

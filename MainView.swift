@@ -40,7 +40,7 @@ struct MainView: View {
     
     @StateObject var ViewModel = HabitVM.shared
     @StateObject var completedVM = compltedLIstVM.shared
-    var staticVM = StaticVM.shared
+//    var staticVM = StaticVM.shared
     var realm: Realm? = try? Realm()
     
     var ref: DatabaseReference!
@@ -193,7 +193,7 @@ struct MainView: View {
                 }
                 
                 if $showingAdd.wrappedValue{
-                    AddView(name: $name.value, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
+                    AddView(store: store, name: $name.value, show: $showingAdd, isEdit: $isEdit, selectedItem: $selectedItem, iter: Array(selectedItem.weekIter))
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                     
                 }
