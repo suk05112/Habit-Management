@@ -37,6 +37,14 @@ struct HabitFeature: Reducer {
         case updateHabit(name: String, iter: [Int], habit: Habit)
         case deleteHabit(Habit)
         case binding(BindingAction<State>)
+        case fetchTodayHabitCount
+        case fetchedTodayHabitCount(Int)
+        case fetchWeeklyHabitStats
+        case fetchedWeeklyHabitStats([Int])
+        case fetchMonthSummary
+        case fetchedMonthSummary(Int, Int)
+        case updateContinuity
+        case resetContinuity
     }
     
     @Dependency(\..habitClient) var habitClient
@@ -137,6 +145,43 @@ struct HabitFeature: Reducer {
             
         case .binding(_):
             return .none
+            
+            
+        case .fetchTodayHabitCount:
+            return .run { send in
+                let count = try await habitClient.todayHabitCount()
+                await send(.fetchedTodayHabitCount(count))
+            }
+            
+        case .fetchedTodayHabitCount:
+            return .none
+            
+        case .fetchWeeklyHabitStats:
+            return .run { send in
+                let stats = try await habitClient.weeklyHabitStats()
+                await send(.fetchedWeeklyHabitStats(stats))
+            }
+            
+        case .fetchedWeeklyHabitStats:
+            return .none
+            
+        case .fetchMonthSummary:
+            return .run { send in
+                let (thisMonth, lastMonth) = try await habitClient.monthSummary()
+                await send(.fetchedMonthSummary(thisMonth, lastMonth))
+            }
+            
+        case .fetchedMonthSummary:
+            return .none
+            
+        case .updateContinuity:
+            return .run { _ in try await habitClient.updateContinuity() }
+            
+        case .resetContinuity:
+            return .run { _ in try await habitClient.resetContinuityIfNotDone() }
+            
+            
         }
     }
 }
+    
