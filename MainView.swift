@@ -64,6 +64,7 @@ struct MainView: View {
           let userName = snapshot?.value as? String ?? "Unknown"
             print(userName, "읽어옴")
         })
+        print("init main 끝")
     }
     
     var body: some View {
@@ -110,7 +111,8 @@ struct MainView: View {
                             ScrollView(.vertical, showsIndicators: false) {
                                 ForEach(ViewModel.result) { list in
                                     ZStack{
-                                        EditView(delete: ViewModel.deleteItem(at:),
+                                        EditView(store: store,
+                                            delete: ViewModel.deleteItem(at:),
                                                  check: completedVM.complete(id:),
                                                  myItem: $ViewModel.result[getItem(habit: list)],
                                                  isAddView: $showingAdd,
@@ -164,6 +166,7 @@ struct MainView: View {
                             userName = UserDefaults.standard.string(forKey: "userName")!
                         }
                         mainReport = ReportData.shared.getMainReport()
+                        print("main appear 끝")
                     }
                     
                     

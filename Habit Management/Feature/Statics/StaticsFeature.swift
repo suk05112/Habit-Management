@@ -25,6 +25,10 @@ struct StaticsFeature {
         case initiallizeStaticsData
         case computeTotalCounts
         case checkOnApper
+        case addOrUpdate
+        case setnumOfToDoPerDay
+        case setnumOfToDoPerWeek(add: Bool, numOfIter: Int)
+        case setnumOfToDoPerMonth(add: Bool, numOfIter: Int)
     }
     
     @Dependency(\.staticsClient) var staticsClient
@@ -46,7 +50,18 @@ struct StaticsFeature {
                     )
                 case .checkOnApper:
                     print("run checkOnApper")
-                return .none
+                    return .none
+                
+                case .addOrUpdate:
+                let staticsData = staticsClient.addOrUpdate()
+                
+                    state.staticsData.day = staticsData.day
+                    state.staticsData.month = staticsData.month
+                    state.staticsData.week = staticsData.week
+                    state.staticsData.thisWeek = staticsData.thisWeek
+                    state.staticsData.total = staticsData.total
+                    state.staticsData.yearTotal = staticsData.yearTotal
+                    return .none
 
                 case let .scrollDataLoaded(dayArray, monthArray, thisWeek):
                     state.dayArray = dayArray
@@ -91,7 +106,20 @@ struct StaticsFeature {
 
                     state.totalCounts = counts
                     return .none
+                
+                case .setnumOfToDoPerDay:
+                    staticsClient.setnumOfToDoPerDay()
+                    return .none
+                
+                case let .setnumOfToDoPerWeek(add, numOfIter):
+                    staticsClient.setnumOfToDoPerWeek(add, numOfIter)
+                    return .none
+                    
+                case let .setnumOfToDoPerMonth(add, numOfIter):
+                staticsClient.setnumOfToDoPerMonth(add, numOfIter)
+                    return .none
                 }
+        
             }
         }
     

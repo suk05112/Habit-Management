@@ -63,6 +63,9 @@ struct HabitGridView: View {
             }
 
         }
+        .onAppear() {
+            print("HabitGridView appear")
+        }
     }
     
     func getColor(date: String) -> Color{

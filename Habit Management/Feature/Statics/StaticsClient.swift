@@ -14,7 +14,7 @@ struct StaticsClient {
     var addOrUpdate: () -> StaticsData
     var getStr: (_ selected: Int)-> [String]
     var setnumOfToDoPerDay: () -> ()
-    var setnumOfToDoPerWeek2: (_ add: Bool, _ numOfIter: Int) -> ()
+    var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
     var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
     var getnumOfToDoPerDay: () -> [Int]
     var getnumOfToDoPerWeek: () -> [Int]
@@ -217,7 +217,6 @@ struct StaticsClient {
         let object = realm!.objects(Statics.self)
         return Array(object).reduce(0){ $0 + $1.total}
     }
-    
 }
 
 extension StaticsClient : DependencyKey {
@@ -312,7 +311,7 @@ extension StaticsClient : DependencyKey {
                 realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
             }
         },
-        setnumOfToDoPerWeek2: { add, numOfIter in
+        setnumOfToDoPerWeek: { add, numOfIter in
             var realm: Realm? = try? Realm()
             var weekArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray)
             let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!

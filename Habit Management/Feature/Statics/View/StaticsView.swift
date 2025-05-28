@@ -13,7 +13,6 @@ struct StaticsView: View {
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
-    @StateObject var staticVM = StaticVM.shared
     
     @State private var showingDetail = false
 
