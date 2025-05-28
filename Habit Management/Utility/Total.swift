@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Total: String{
+enum Total: String {
     case week = "이번주"
     case month = "이번달"
     case year = "올해"

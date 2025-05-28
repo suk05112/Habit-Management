@@ -15,28 +15,81 @@ struct StaticsFeature {
         var dayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)
         var monthArray: [String] = []
         var thisWeek: [String] = []
+        var staticsData: StaticsData = StaticsData()
+        var totalCounts: [Total: Int] = [:] // TotalView에 보여줄 count들을 저장
     }
   
     enum Action: Equatable {
         case onAppear
         case scrollDataLoaded(dayArray: [[String]], monthArray: [String], thisWeek: [String])
+        case initiallizeStaticsData
+        case computeTotalCounts
+        case checkOnApper
     }
+    
+    @Dependency(\.staticsClient) var staticsClient
             
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
                 case .onAppear:
                     let data = generateScrollData()
-                    return .send(.scrollDataLoaded(
+                return .merge(
+                    .send(.scrollDataLoaded(
                         dayArray: data.dayArray,
                         monthArray: data.monthArray,
                         thisWeek: data.thisWeek
-                    ))
+                    )),
+                    .send(.initiallizeStaticsData),
+                    .send(.computeTotalCounts),
+                    .send(.checkOnApper)
+                    )
+                case .checkOnApper:
+                    print("run checkOnApper")
+                return .none
 
                 case let .scrollDataLoaded(dayArray, monthArray, thisWeek):
                     state.dayArray = dayArray
                     state.monthArray = monthArray
                     state.thisWeek = thisWeek
+                    return .none
+                
+                case .initiallizeStaticsData:
+                    let staticsData = staticsClient.getInitialStaticsData()
+
+                    state.staticsData.day = staticsData.day
+                    state.staticsData.month = staticsData.month
+                    state.staticsData.week = staticsData.week
+                    state.staticsData.thisWeek = staticsData.thisWeek
+                    state.staticsData.total = staticsData.total
+                    state.staticsData.yearTotal = staticsData.yearTotal
+
+                    return .none
+            
+                case .computeTotalCounts:
+                    var counts: [Total: Int] = [:]
+                    let data = state.staticsData
+
+                    // 현재 요일
+                    let todayComps = Calendar.current.dateComponents([.year, .month, .weekday, .weekOfMonth], from: Date())
+                    let weekday = todayComps.weekday ?? 1
+
+                    // 주간 합산
+                    if data.day.count >= weekday {
+                        let weekSlice = data.day[(7 - weekday)..<data.day.endIndex]
+                        counts[.week] = weekSlice.reduce(0, +)
+                    }
+
+                    // 월간
+                    if data.month.count >= todayComps.month ?? 1 {
+                        counts[.month] = data.month[todayComps.month! - 1]
+                    }
+
+                    // 연간, 전체
+                    counts[.year] = data.yearTotal
+                    counts[.all] = data.total
+
+                    state.totalCounts = counts
                     return .none
                 }
             }
@@ -78,38 +131,4 @@ struct StaticsFeature {
 
         return (dayArray, monthArray, dayArray[52])
     }
-    
 }
-
-protocol StaticsServiceProtocol {
-    
-}
-
-//struct StaticsEnvironment {
-//    var staticsService: StaticsServiceProtocol
-//}
-//
-//final class StaticsServiceImpl: StaticsServiceProtocol {
-//    private let realm = try! Realm()
-//    
-//    
-//    func fetchTodayHabits() -> AnyPublisher<[Habit], Never> {
-//        let todayWeek = Calendar.current.component(.weekday, from: Date())
-//        let habits = realm.objects(HabitObject.self)
-//            .filter { $0.weekIter.contains(todayWeek) }
-//            .map { $0.toModel() }
-//        
-//        return Just(habits).eraseToAnyPublisher()
-//    }
-//    
-//    func addHabit(name: String, iter: [Int]) -> Effect<HabitAction, Never> {
-//        return .fireAndForget {
-//            let newHabit = HabitObject(name: name, iter: iter)
-//            try? self.realm.write {
-//                self.realm.add(newHabit)
-//            }
-//        }
-//    }
-//}
-//
-
