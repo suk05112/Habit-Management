@@ -7,142 +7,139 @@
 
 import Foundation
 import SwiftUI
+import ComposableArchitecture
 
 struct Graph: View{
-    
-    var ratio:Double
-    @State var selected = 1
+    let store: StoreOf<StaticsFeature>
+
+    var ratio: Double
+    @State var selected: Total = .week
+    @State private var selectedData: [Int] = []
+
     @State var width:CGFloat = 13
     @StateObject var staticVM = StaticVM.shared
     
-    init(ratio: Double){
+    init(store: StoreOf<StaticsFeature>, ratio: Double){
+        self.store = store
         self.ratio = ratio
     }
     
     var body: some View {
-        
-        VStack{
-            ZStack{
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(Color(hex: "#E8E8E8"))
-                    .scaledFrame(width: .none, height: 30)
-                
-                HStack{
-                    selectView(name: "최근 7일", id: 1, select: $selected)
-                        .onTapGesture {
-                            selected = 1
-                            width = 20
-                        }
-                    Spacer()
-                    selectView(name: "최근 5주", id: 2, select: $selected)
-                        .onTapGesture {
-                            selected = 2
-                            width = 30
-                        }
-                    Spacer()
-                    selectView(name: "월", id: 3, select: $selected)
-                        .onTapGesture {
-                            selected = 3
-                            width = 10
-                        }
-
-                }
-            }
-            .scaledPadding(top: 0, leading: 0, bottom: 20, trailing: 0)
-
-            HStack(alignment: .bottom){
-                
-                Spacer(minLength: 3)
+        WithPerceptionTracking {
+            WithViewStore(store, observe: { $0 }) { viewStore in
                 VStack{
-                    HStack{
-                        VStack{
-                            Text("\(staticVM.getData(selected: selected).max()!)")
-                                .scaledText(size: 12, weight: .none)
-                            
-                            Spacer()
-                            Text("\(staticVM.getData(selected: selected).max()!/2)")
-                                .scaledText(size: 12, weight: .none)
-
-                            Spacer()
-                            Text("0")
-                                .scaledText(size: 12, weight: .none)
-
-                        }
-                        .scaledFrame(width: 20, height: 150)
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5)
+                            .fill(Color(hex: "#E8E8E8"))
+                            .scaledFrame(width: .none, height: 30)
                         
-                        VStack{
-                            ZStack{
-                                Rectangle()
-                                    .foregroundColor(Color.white)
-                                    .scaledFrame(width: 300, height: 150)
-                                    .overlay{
-                                        Text("No Data")
-                                            .scaledText(size: 15, weight: .none)
-
-                                    }
-                                if staticVM.getData(selected: 1).filter{$0 != 0}.count != 0{
-                                    HStack(alignment: .bottom) {
-                                        ForEach(staticVM.getData(selected: selected), id: \.self) { month in
-                                                let max = staticVM.getData(selected: selected).max()!
-                                                let h1 = Int(month)*Int(150)
-                                                let h2 = Double(h1)/Double(max)
-                                                Rectangle()
-                                                    .fill(Color(hex: "#639F70"))
-                                                    .scaledFrame(width: width, height: max==0 ? CGFloat(0) : CGFloat(h2))
-                                                Spacer()
-                                        }
-                                    }
-                                    .background(Color.white)
-                                    .scaledFrame(width: 300, height: 150)
-
+                        HStack{
+                            selectView(name: "최근 7일", id: .week, select: $selected)
+                                .onTapGesture {
+                                    selected = .week
+                                    width = 20
                                 }
-                                
-
-                            }
-                            
-
-                            Divider().background(Color.black)
-                                .scaledFrame(width: 340, height: .none)
+                            Spacer()
+                            selectView(name: "최근 5주", id: .month, select: $selected)
+                                .onTapGesture {
+                                    selected = .month
+                                    width = 30
+                                }
+                            Spacer()
+                            selectView(name: "월", id: .year, select: $selected)
+                                .onTapGesture {
+                                    selected = .year
+                                    width = 10
+                                }
                         }
-                        
+                    }
+                    .scaledPadding(top: 0, leading: 0, bottom: 20, trailing: 0)
+                    .onChange(of: selected) { newSelected in
+                        selectedData = getData(selected: newSelected)
+                    }
+                    .onAppear {
+                        selectedData = getData(selected: selected)
                     }
                     
-                    /*
-                    HStack(alignment: .top) {
-                        VStack{}.frame(width: 20)
-                        ForEach(0..<staticVM.getData(selected: selected).count, id: \.self) { i in
-                                Text("\(staticVM.getStr(selected: selected)[i])")
-                                    .font(.system(size: 12, weight: .regular))
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(nil)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .frame(width:width)
+                    HStack(alignment: .bottom){
+                        Spacer(minLength: 3)
+                        VStack{
+                            HStack{
+                                VStack{
+                                    let maxValue = selectedData.max() ?? 1
+                                    
+                                    Text("\(maxValue)")
+                                        .scaledText(size: 12, weight: .none)
+                                    
+                                    Spacer()
+                                    
+                                    Text(maxValue == 1 ? "" : "\(maxValue/2)")
+                                        .scaledText(size: 12, weight: .none)
+                                    
+                                    Spacer()
+                                    Text("0")
+                                        .scaledText(size: 12, weight: .none)
+                                    
+                                }
+                                .scaledFrame(width: 20, height: 150)
+                                
+                                VStack{
+                                    ZStack{
+                                        Rectangle()
+                                            .foregroundColor(Color.white)
+                                            .scaledFrame(width: 300, height: 150)
+                                            .overlay{
+                                                Text("No Data")
+                                                    .scaledText(size: 15, weight: .none)
+                                            }
+                                        
+                                        if getData(selected: .week).filter({ $0 != 0}).count != 0 {
+                                            HStack(alignment: .bottom) {
+                                                ForEach(Array(selectedData.enumerated()), id: \.offset) { index, month in
+                                                    let max = selectedData.max() ?? 1
+                                                    let h1 = Int(month)*Int(150)
+                                                    let h2: Double = (max == 1 && month != 0) ? 150.0 : Double(h1) / Double(max)
 
-                            Spacer()
-
+                                                    Rectangle()
+                                                        .fill(Color(hex: "#639F70"))
+                                                        .scaledFrame(width: width, height: max==0 ? CGFloat(0) : CGFloat(h2))
+                                                    Spacer()
+                                                }
+                                            }
+                                            .background(Color.white)
+                                            .scaledFrame(width: 300, height: 150)
+                                        }
+                                    }
+                                    Divider().background(Color.black)
+                                        .scaledFrame(width: 340, height: .none)
+                                }
+                                
                             }
                         }
-                    .frame(width: 340)
-*/
                     }
+                    
                 }
-               
             }
-
+        }
         .scaledFrame(width: 364, height: 150)
         .padding(30)
-
     }
         
-    func getData(selected: Int)-> [Int]{
-        
-        switch selected{
-        case 1:
-            return staticVM.day
-        case 2:
-            return staticVM.week
-        case 3:
-            return staticVM.month
+    func getData(selected: Total)-> [Int]{
+        switch selected {
+        case .week:
+            return store.staticsData.day
+        case .month:
+            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            var a = b-5
+            
+            if a < 1 {
+                a = 12 - a
+            }
+            
+            return Array(store.staticsData.week[a..<b])
+        case .year:
+            return store.staticsData.month
         default:
             return []
         }
@@ -153,10 +150,10 @@ struct Graph: View{
 struct selectView: View{
     
     var str: String
-    var id: Int = 1
-    @Binding var selected: Int
+    var id: Total = .week
+    @Binding var selected: Total
     
-    init(name: String, id: Int, select: Binding<Int>){
+    init(name: String, id: Total, select: Binding<Total>){
         self.str = name
         self.id = id
         self._selected = select
@@ -175,6 +172,10 @@ struct selectView: View{
 
 struct Graph_Previews: PreviewProvider {
     static var previews: some View {
-        Graph(ratio: 1).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        Graph(store: Store(
+            initialState: StaticsFeature.State(),
+            reducer: { StaticsFeature() }
+        ), ratio: 1)
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

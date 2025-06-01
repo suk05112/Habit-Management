@@ -17,7 +17,7 @@ struct MonthView: View {
     var body: some View {
         WithPerceptionTracking {
             HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-                ForEach(store.monthArray, id: \.self) { item in
+                ForEach(Array(store.monthArray.enumerated()), id: \.offset) { index, item in
                     Text(item)
                         .scaledText(size: 10, weight: .bold)
                         .foregroundColor(Color.white)

@@ -21,7 +21,7 @@ struct YearView: View {
         WithPerceptionTracking {
             ForEach(store.dayArray[0..<52], id:\.self){i in
                 VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-                    ForEach(i, id:\.self){j in
+                    ForEach(Array(i.enumerated()), id:\.offset){index, j in
                         Text("\(j)")
                             .scaledFrame(width: frame_size, height: frame_size)
                             .overlay(

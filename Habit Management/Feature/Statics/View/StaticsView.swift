@@ -44,7 +44,7 @@ struct StaticsView: View {
                         .scaledPadding(top: 10, leading: 0, bottom: 0, trailing: 0)
                         
                         Spacer()
-                        Graph(ratio: 1)
+                        Graph(store: store, ratio: 1)
                         Spacer()
                         HStack{
                             TotalView(staticCase: .week, store: store)

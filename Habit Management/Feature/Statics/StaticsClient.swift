@@ -34,7 +34,7 @@ struct StaticsClient {
         return weekNo
     }
     
-    static func get7days() -> ([Int],[String]) { //최근 7일
+    static func get7days() -> ([Int],[String]) { // 최근 7일
         let realm: Realm? = try? Realm()
         var object = Array(realm!.objects(CompletedList.self))
 
@@ -269,14 +269,14 @@ extension StaticsClient : DependencyKey {
             let yearTotal = getYearTotal()
 
             let object = realm.objects(Statics.self).where{$0.classification == "Done"}.first!
-            try? realm.write{
-
+            
+            try? realm.write {
                 object.dayArray = day
                 object.weekArray = week
                 object.monthArray = month
                 object.total = yearTotal
-
             }
+            
             let total = getTotal()
             let thisWeek = getThisWeekDayArray()
             
