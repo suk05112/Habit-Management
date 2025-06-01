@@ -17,9 +17,6 @@ struct StaticsClient {
     var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
     var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
     var getnumOfToDo: () -> Statics
-    var getnumOfToDoPerDay: () -> [Int]
-    var getnumOfToDoPerWeek: () -> [Int]
-    var getnumOfToDoPerMonth: () -> [Int]
     
     static func getWeekOfNO(date: Date) -> Int {
         let calendar = Calendar(identifier: .gregorian)
@@ -358,20 +355,6 @@ extension StaticsClient : DependencyKey {
             var realm: Realm? = try? Realm()
             return realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!
         },
-        getnumOfToDoPerDay: {
-            var realm: Realm? = try? Realm()
-            return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.days)
-        },
-        getnumOfToDoPerWeek: {
-            var realm: Realm? = try? Realm()
-
-            return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.week)
-        },
-        getnumOfToDoPerMonth: {
-            var realm: Realm? = try? Realm()
-
-            return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.month)
-        }
     )
 }
 

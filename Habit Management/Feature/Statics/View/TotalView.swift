@@ -14,22 +14,23 @@ struct TotalView: View{
     let store: StoreOf<StaticsFeature>
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            let count = viewStore.totalCounts[staticCase] ?? 0
-            let staticStr = String(staticCase.rawValue)
-            ZStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .scaledFrame(width: 85, height: 57)
-                    .shadow(radius: 1)
-                VStack{
-                    Text("\(count)")
-                        .scaledText(size: 23, weight: .thin)
-                    Text("\(staticStr)")
-                        .scaledText(size: 12, weight: .regular)
-                    
+        WithPerceptionTracking {
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                let count = viewStore.totalCounts[staticCase] ?? 0
+                let staticStr = String(staticCase.rawValue)
+                ZStack{
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.white)
+                        .scaledFrame(width: 85, height: 57)
+                        .shadow(radius: 1)
+                    VStack{
+                        Text("\(count)")
+                            .scaledText(size: 23, weight: .thin)
+                        Text("\(staticStr)")
+                            .scaledText(size: 12, weight: .regular)
+                        
+                    }
                 }
-                
             }
         }
     }

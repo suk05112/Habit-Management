@@ -18,12 +18,14 @@ struct ContentView: View {
 
     }
     var body: some View {
+        WithPerceptionTracking {
             MainView(store: Store(
                 initialState: StaticsFeature.State(),
                 reducer: { StaticsFeature() }
             )
-        )
-        .environmentObject(setting)
+            )
+            .environmentObject(setting)
+        }
            
         /*
         switch setting.wasLaunchedBefore {
