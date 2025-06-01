@@ -61,6 +61,7 @@ public struct AddView: View{
                                             store.send(.setnumOfToDoPerDay)
                                             store.send(.setnumOfToDoPerWeek(add: true, numOfIter: iter.count))
                                             store.send(.setnumOfToDoPerMonth(add: true, numOfIter: iter.count))
+                                            store.send(.getnumOfToDo)
 
                                             compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .add, isToday: isTodayHabit() ? true : false)
                                             

@@ -8,14 +8,25 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import ComposableArchitecture
 
-class ReportData{
+class ReportData {
+    let store: StoreOf<StaticsFeature>
+
+//    static let shared = ReportData()
+    private static var _shared: ReportData?
+    private(set) static var shared: ReportData = {
+        guard let instance = _shared else {
+            fatalError("ReportData.shared must be configured before use.")
+        }
+        return instance
+   }()
     
-    static let shared = ReportData()
     @StateObject var completedVM = compltedLIstVM.shared
 
     let today_total = HabitVM.shared.getNumOfTodayHabit()
-    let today_done = StaticVM.shared.day.last!
+    let today_done: Int
+//    let today_done = StaticVM.shared.day.last!
 
     var strList:[String] = []
     var percentList: [String] = []
@@ -23,8 +34,15 @@ class ReportData{
     var TextList : [(String, String, String)] = []
     var realm: Realm? = try? Realm()
 
-    init(){
+    init(store: StoreOf<StaticsFeature>){
+        self.store = store
+        self.today_done = store.staticsData.day.last ?? 0
+
         setReportText()
+    }
+    
+    static func configure(store: StoreOf<StaticsFeature>) {
+        _shared = ReportData(store: store)
     }
     
     func setReportText(){
@@ -38,7 +56,7 @@ class ReportData{
         }
         if realm!.objects(Habit.self).first == nil || realm!.objects(CompletedList.self).last!.completed.isEmpty{
             TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
-        }else{
+        } else {
             TextList = list
         }
     }
@@ -54,7 +72,7 @@ class ReportData{
     }
     
     func getTodayText() -> (String, String, String){
-        let today_done = StaticVM.shared.day.last!
+        let today_done = store.staticsData.day.last ?? 0
         let today_total = HabitVM.shared.getNumOfTodayHabit()
 
         let percentHead = ""
@@ -70,19 +88,21 @@ class ReportData{
             }
         }
         return str=="" ? ("", "", percentHead) : ("\(str)만 완료하면 오늘 예정된 모든 습관을 완료할 수 있어요!", "", percentHead)
-
     }
+    
     func getYesterDayText() -> (String, String, String){
-        let today_done = StaticVM.shared.day.last!
+        let today_done = store.staticsData.day.last ?? 0
 
         var text: String
         var percent: String
         let percentHead = "어제 대비"
 
-        let yesterday_done = StaticVM.shared.day[5]
+        let yesterday_done = store.staticsData.day[5]
         
-        let todoCount = StaticVM.shared.getnumOfToDoPerDay()
+//        let todoCount = StaticVM.shared.getnumOfToDoPerDay()
+        let todoCount = store.todoPerDay
         let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        
         let todayTodo = todoCount[(todayWeek-1+7)%7]
         let yesterdayTodo = todoCount[(todayWeek-2+7)%7]
 
@@ -100,19 +120,28 @@ class ReportData{
 
         let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
 
+        /*
         let thisWeekDone  = StaticVM.shared.week[(weekNO-1+7)%7]
         let lastWeekDone = StaticVM.shared.week[(weekNO-2+7)%7]
         
         let todoCount = StaticVM.shared.getnumOfToDoPerWeek()
         let thisWeekTodo  = todoCount[(weekNO-1+7)%7]
         let lastWeekTodo = todoCount[(weekNO-2+7)%7]
+        */
+           
+        let thisWeekDone  = store.staticsData.week[weekNO-1]
+        let lastWeekDone = store.staticsData.week[weekNO-2]
+        
+        let todoCount = store.todoPerWeek
+
+        let thisWeekTodo  = todoCount[weekNO-1]
+        let lastWeekTodo = todoCount[weekNO-2]
         
         text = getText(thisDone: thisWeekDone, lastDone: lastWeekDone, "지난 주")
 
         percent = getPercent(thisDone: thisWeekDone, lastDone: lastWeekDone, thisTodo: thisWeekTodo, lastTodo: lastWeekTodo)
         
         return (text, percentHead, percent)
-
     }
     
     func getMonthText() -> (String, String, String){
@@ -122,10 +151,14 @@ class ReportData{
 
         let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
 
-        let thisMonthDone  = StaticVM.shared.month[(todayMonth-1+7)%7]
-        let lastMonthDone = StaticVM.shared.month[(todayMonth-2+7)%7]
+//        let thisMonthDone  = StaticVM.shared.month[(todayMonth-1+7)%7]
+//        let lastMonthDone = StaticVM.shared.month[(todayMonth-2+7)%7]
         
-        let todoCount = StaticVM.shared.getnumOfToDoPerMonth()
+        
+        let thisMonthDone  = store.staticsData.month[(todayMonth-1+7)%7]
+        let lastMonthDone = store.staticsData.month[(todayMonth-2+7)%7]
+        
+        let todoCount = store.todoPerMonth
         let thisMonthTodo  = todoCount[(todayMonth-1+7)%7]
         let lastMonthTodo = todoCount[(todayMonth-2+7)%7]
         
@@ -200,8 +233,7 @@ class ReportData{
 
 }
 
-extension ReportData{
-    
+extension ReportData {
     func getMainReport() -> String{
         var list : [(String, String)] = []
         

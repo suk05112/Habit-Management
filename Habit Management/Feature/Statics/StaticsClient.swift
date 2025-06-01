@@ -16,6 +16,7 @@ struct StaticsClient {
     var setnumOfToDoPerDay: () -> ()
     var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
     var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
+    var getnumOfToDo: () -> Statics
     var getnumOfToDoPerDay: () -> [Int]
     var getnumOfToDoPerWeek: () -> [Int]
     var getnumOfToDoPerMonth: () -> [Int]
@@ -352,6 +353,10 @@ extension StaticsClient : DependencyKey {
             try? realm!.write{
                 realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
             }
+        },
+        getnumOfToDo: {
+            var realm: Realm? = try? Realm()
+            return realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!
         },
         getnumOfToDoPerDay: {
             var realm: Realm? = try? Realm()

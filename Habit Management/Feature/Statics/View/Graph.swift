@@ -17,7 +17,7 @@ struct Graph: View{
     @State private var selectedData: [Int] = []
 
     @State var width:CGFloat = 13
-    @StateObject var staticVM = StaticVM.shared
+//    @StateObject var staticVM = StaticVM.shared
     
     init(store: StoreOf<StaticsFeature>, ratio: Double){
         self.store = store
@@ -34,19 +34,19 @@ struct Graph: View{
                             .scaledFrame(width: .none, height: 30)
                         
                         HStack{
-                            selectView(name: "최근 7일", id: .week, select: $selected)
+                            SelectedView(name: "최근 7일", id: .week, select: $selected)
                                 .onTapGesture {
                                     selected = .week
                                     width = 20
                                 }
                             Spacer()
-                            selectView(name: "최근 5주", id: .month, select: $selected)
+                            SelectedView(name: "최근 5주", id: .month, select: $selected)
                                 .onTapGesture {
                                     selected = .month
                                     width = 30
                                 }
                             Spacer()
-                            selectView(name: "월", id: .year, select: $selected)
+                            SelectedView(name: "월", id: .year, select: $selected)
                                 .onTapGesture {
                                     selected = .year
                                     width = 10
@@ -147,8 +147,7 @@ struct Graph: View{
         
 }
 
-struct selectView: View{
-    
+struct SelectedView: View{
     var str: String
     var id: Total = .week
     @Binding var selected: Total

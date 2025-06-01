@@ -17,6 +17,11 @@ struct StaticsFeature {
         var thisWeek: [String] = []
         var staticsData: StaticsData = StaticsData()
         var totalCounts: [Total: Int] = [:] // TotalView에 보여줄 count들을 저장
+        
+        // ReportData에 쓰일 변수들
+        var todoPerDay: [Int] = []
+        var todoPerWeek: [Int] = []
+        var todoPerMonth: [Int] = []
     }
   
     enum Action: Equatable {
@@ -29,6 +34,7 @@ struct StaticsFeature {
         case setnumOfToDoPerDay
         case setnumOfToDoPerWeek(add: Bool, numOfIter: Int)
         case setnumOfToDoPerMonth(add: Bool, numOfIter: Int)
+        case getnumOfToDo
     }
     
     @Dependency(\.staticsClient) var staticsClient
@@ -45,6 +51,7 @@ struct StaticsFeature {
                         thisWeek: data.thisWeek
                     )),
                     .send(.initiallizeStaticsData),
+                    .send(.getnumOfToDo),
                     .send(.computeTotalCounts),
                     .send(.checkOnApper)
                     )
@@ -105,6 +112,13 @@ struct StaticsFeature {
                     counts[.all] = data.total
 
                     state.totalCounts = counts
+                    return .none
+                case .getnumOfToDo:
+                    let statics = staticsClient.getnumOfToDo()
+                    state.todoPerDay = Array(statics.days)
+                    state.todoPerWeek = Array(statics.week)
+                    state.todoPerMonth = Array(statics.month)
+                    
                     return .none
                 
                 case .setnumOfToDoPerDay:

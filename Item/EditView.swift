@@ -54,6 +54,8 @@ struct EditView: View{
                         store.send(.setnumOfToDoPerWeek(add: false, numOfIter: weekIter))
                         store.send(.setnumOfToDoPerMonth(add: false, numOfIter: weekIter))
                         
+                        store.send(.getnumOfToDo)
+                        
                         compltedLIstVM.shared.setIsToday(isToday: self.isTodayHabit)
                         compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: self.isTodayHabit)
                         //print("delete finished")
