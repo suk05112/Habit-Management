@@ -47,3 +47,13 @@ class Habit: Object, Identifiable, ObjectKeyIdentifiable {
         return true
     }
 }
+
+extension Habit {
+    func weekString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        return self.weekIter
+            .map { formatter.shortWeekdaySymbols[($0 - 1) % 7] }
+            .joined(separator: ", ")
+    }
+}
