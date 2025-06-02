@@ -21,6 +21,8 @@ struct HabitFeature {
         var isEditingHabit: Bool = false
         var userName: String = "사용자"
         var mainReportText: String = ""
+        var name = TextLimiter()
+        var iter: [Int] = []
         @BindingState var isToastVisible: Bool = false
         
         static func == (lhs: State, rhs: State) -> Bool {

@@ -12,9 +12,9 @@ import RealmSwift
 import ComposableArchitecture
 
 public struct AddView: View{
-    @ObservedObject var name = TextLimiter()
+   //@ObservedObject var name = TextLimiter()
     let store: StoreOf<HabitFeature>
-    @State var iter: [Int]
+    //@State var iter: [Int]
     /*
     @Binding var name: String
     @Binding var show: Bool
