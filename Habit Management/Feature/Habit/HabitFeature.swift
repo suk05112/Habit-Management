@@ -12,7 +12,7 @@ import RealmSwift
 @Reducer
 struct HabitFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
         var isShowingAllHabits: Bool = false
@@ -21,6 +21,17 @@ struct HabitFeature {
         var userName: String = "사용자"
         var mainReportText: String = ""
         @BindingState var isToastVisible: Bool = false
+        
+        static func == (lhs: State, rhs: State) -> Bool {
+            return lhs.habitList == rhs.habitList &&
+            lhs.isShowingAllHabits == rhs.isShowingAllHabits &&
+            lhs.isHidingCompletedHabits == rhs.isHidingCompletedHabits &&
+            lhs.isEditingHabit == rhs.isEditingHabit &&
+            lhs.userName == rhs.userName &&
+            lhs.mainReportText == rhs.mainReportText &&
+            lhs.isToastVisible == rhs.isToastVisible &&
+            lhs.selectedHabit?.id == rhs.selectedHabit?.id
+        }
     }
     
     enum Action: BindableAction {
