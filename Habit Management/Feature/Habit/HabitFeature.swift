@@ -16,6 +16,7 @@ struct HabitFeature {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
         var isShowingAllHabits: Bool = false
+        var isShowingAdd: Bool = false
         var isHidingCompletedHabits: Bool = false
         var isEditingHabit: Bool = false
         var userName: String = "사용자"
@@ -56,6 +57,7 @@ struct HabitFeature {
         case fetchedMonthSummary(Int, Int)
         case updateContinuity
         case resetContinuity
+        case setAddMode(Bool)
     }
     
     @Dependency(\..habitClient) var habitClient
@@ -124,6 +126,10 @@ struct HabitFeature {
                 
             case let .setEditMode(flag):
                 state.isEditingHabit = flag
+                return .none
+                
+            case let .setAddMode(flag):
+                state.isShowingAdd = flag
                 return .none
                 
             case let .addHabit(name, iter):
