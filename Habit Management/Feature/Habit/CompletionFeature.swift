@@ -8,7 +8,10 @@
 import Foundation
 import ComposableArchitecture
 
-struct CompletionFeature: Reducer {
+
+@Reducer
+struct CompletionFeature {
+    @ObservableState
     struct State: Equatable {
         var doneTodayMap: [String: Bool] = [:]
         var todayCount: Int = 0
@@ -16,7 +19,7 @@ struct CompletionFeature: Reducer {
         var staticsCount: Int = 0
     }
 
-    enum Action: Equatable {
+    enum Action: BindableAction {
         case toggle(String)
         case toggleResponse(Bool)
         case loadDoneToday(String)
@@ -27,65 +30,73 @@ struct CompletionFeature: Reducer {
         case yesterdayCountResponse(Int)
         case loadStatics(Total)
         case staticsResponse(Int)
+        case binding(BindingAction<State>)
     }
 
     @Dependency(\.completionClient) var completionClient
 
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-
-        case let .toggle(id):
-            return .run { send in
-                do {
-                    try await completionClient.toggle(id)
-                    await send(.toggleResponse(true))
-                } catch {
-                    await send(.toggleResponse(false))
+    var body: some ReducerOf<Self> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+                
+            case let .toggle(id):
+                return .run { send in
+                    do {
+                        try await completionClient.toggle(id)
+                        await send(.toggleResponse(true))
+                    } catch {
+                        await send(.toggleResponse(false))
+                    }
                 }
+                
+            case .toggleResponse:
+                return .none
+                
+            case let .loadDoneToday(id):
+                return .run { send in
+                    let result = try await completionClient.isDoneToday(id)
+                    await send(.doneTodayResponse(id, result))
+                }
+                
+            case let .doneTodayResponse(id, result):
+                state.doneTodayMap[id] = result
+                return .none
+                
+            case .loadTodayCount:
+                return .run { send in
+                    let count = try await completionClient.todayHabitCompleteCount()
+                    await send(.todayCountResponse(count))
+                }
+                
+            case .loadYesterdayCount:
+                return .run { send in
+                    let count = try await completionClient.yesterdayHabitCompleteCount()
+                    await send(.yesterdayCountResponse(count))
+                }
+                
+            case let .todayCountResponse(count):
+                state.todayCount = count
+                return .none
+                
+            case let .yesterdayCountResponse(count):
+                state.yesterdayCount = count
+                return .none
+                
+            case let .loadStatics(total):
+                return .run { send in
+                    let count = try await completionClient.statics(total)
+                    await send(.staticsResponse(count))
+                }
+                
+            case let .staticsResponse(count):
+                state.staticsCount = count
+                return .none
+                
+            case .binding(_):
+                return .none
             }
-
-        case .toggleResponse:
-            return .none
-
-        case let .loadDoneToday(id):
-            return .run { send in
-                let result = try await completionClient.isDoneToday(id)
-                await send(.doneTodayResponse(id, result))
-            }
-
-        case let .doneTodayResponse(id, result):
-            state.doneTodayMap[id] = result
-            return .none
-
-        case .loadTodayCount:
-            return .run { send in
-                let count = try await completionClient.todayHabitCompleteCount()
-                await send(.todayCountResponse(count))
-            }
-
-        case .loadYesterdayCount:
-            return .run { send in
-                let count = try await completionClient.yesterdayHabitCompleteCount()
-                await send(.yesterdayCountResponse(count))
-            }
-
-        case let .todayCountResponse(count):
-            state.todayCount = count
-            return .none
-
-        case let .yesterdayCountResponse(count):
-            state.yesterdayCount = count
-            return .none
-
-        case let .loadStatics(total):
-            return .run { send in
-                let count = try await completionClient.statics(total)
-                await send(.staticsResponse(count))
-            }
-
-        case let .staticsResponse(count):
-            state.staticsCount = count
-            return .none
         }
     }
 }
