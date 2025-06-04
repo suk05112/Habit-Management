@@ -12,34 +12,35 @@ import Firebase
 import ComposableArchitecture
 
 struct HabitView: View {
-    @Perception.Bindable var store: StoreOf<HabitFeature>
+    @Perception.Bindable var habitStore: StoreOf<HabitFeature>
+    @Perception.Bindable var statisticsStore: StoreOf<StaticsFeature>
 
     var body: some View {
         WithPerceptionTracking {
             ZStack {
                 VStack(spacing: 0) {
-                    MainHeaderView(userName: $store.userName,
-                                   mainReport: $store.mainReportText)
-                    
+                    MainHeaderView(userName: $habitStore.userName,
+                                   mainReport: $habitStore.mainReportText)
+                    HabitGridView(store: statisticsStore) // 나중에 따로 추출해도 OK
                     MainToggleBar(
-                        showAll: $store.isShowingAllHabits,
-                        hideCompleted: $store.isHidingCompletedHabits,
+                        showAll: $habitStore.isShowingAllHabits,
+                        hideCompleted: $habitStore.isHidingCompletedHabits,
                         toggleShowAll: {
-                            store.send(.toggleShowAll)
+                            habitStore.send(.toggleShowAll)
                         },
                         toggleHideCompleted: {
-                            store.send(.toggleHideCompleted)
+                            habitStore.send(.toggleHideCompleted)
                         }
                     )
                     
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(store.habitList) { habit in
+                        ForEach(habitStore.habitList) { habit in
                             ZStack {
                                 //Edit View
 
                                 //Item View
                                 ItemView(
-                                    store: store,
+                                    store: habitStore,
                                     habit: habit
                                 )
                             }
@@ -47,19 +48,19 @@ struct HabitView: View {
                     }
                     
                     MainAddButton {
-                        store.send(.selectItem(nil))
-                        store.send(.setEditMode(false))
-                        store.send(.setAddMode(true))
+                        habitStore.send(.selectItem(nil))
+                        habitStore.send(.setEditMode(false))
+                        habitStore.send(.setAddMode(true))
                     }
                     
                     Spacer()
                 }
                 .onAppear {
-                    store.send(.onAppear)
+                    habitStore.send(.onAppear)
                 }
                 .toast(
                     message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                    isShowing: $store.isToastVisible,
+                    isShowing: $habitStore.isToastVisible,
                     duration: Toast.long
                 )
                 .tabItem {
@@ -88,8 +89,6 @@ struct MainHeaderView: View {
                     .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
                     .lineLimit(nil)
                     .fixedSize(horizontal: true, vertical: true)
-
-                scrollView() // 나중에 따로 추출해도 OK
             }
         }
     }

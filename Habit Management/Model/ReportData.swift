@@ -36,8 +36,10 @@ class ReportData {
 
     init(store: StoreOf<StaticsFeature>){
         self.store = store
+        
+        store.send(.onAppear)
+        
         self.today_done = store.staticsData.day.last ?? 0
-
         setReportText()
     }
     

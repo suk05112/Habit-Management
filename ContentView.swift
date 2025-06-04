@@ -12,6 +12,10 @@ import ComposableArchitecture
 
 struct ContentView: View {
     let setting = Setting()
+    let store = Store(
+        initialState: AppFeature.State(),
+        reducer: { AppFeature() }
+    )
 
 
     init(){
@@ -20,12 +24,19 @@ struct ContentView: View {
     var body: some View {
 
         MainView(
-            store: Store(
-                initialState: AppFeature.State(),
-                reducer: { AppFeature() }
-            )
+            store: store
         )
         .environmentObject(setting)
+        .onAppear {
+            print("ContentView onappear")
+            let statisticsStore = store.scope(
+                state: \.statistics,
+                action: AppFeature.Action.statistics
+            )
+            
+            ReportData.configure(store: statisticsStore)
+            statisticsStore.send(.onAppear)
+        }
         
         /*
         switch setting.wasLaunchedBefore {

@@ -17,7 +17,15 @@ struct StaticsView: View {
     @State private var showingDetail = false
 
     @State var index: Int = 0
-    @State var randomText = ReportData.shared.getRandomText()
+    @State var randomText: (String, String, String) = ("", "", "")
+    
+    init(store: StoreOf<StaticsFeature>) {
+        print("StaticsView init")
+        self.store = store
+        ReportData.configure(store: store)
+        
+        randomText = ReportData.shared.getRandomText()
+    }
     
     var body: some View {
         WithPerceptionTracking {
@@ -55,6 +63,8 @@ struct StaticsView: View {
                         .scaledPadding(top: 0, leading: 0, bottom: 30, trailing: 0)
                     }
                 }.onAppear {
+                    print("StaticsView onappear")
+
                     viewStore.send(.onAppear)
                     ReportData.shared.setReportText()
                     randomText = ReportData.shared.getRandomText()

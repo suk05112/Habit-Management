@@ -77,6 +77,7 @@ struct HabitFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                print("habitfeature onappear")
                 
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits

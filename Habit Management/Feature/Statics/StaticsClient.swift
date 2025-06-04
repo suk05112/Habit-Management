@@ -354,7 +354,7 @@ extension StaticsClient : DependencyKey {
         getnumOfToDo: {
             var realm: Realm? = try? Realm()
             return realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!
-        },
+        }
     )
 }
 

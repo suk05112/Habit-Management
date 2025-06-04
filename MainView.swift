@@ -20,9 +20,13 @@ struct MainView: View {
             ZStack {
                 TabView {
                     HabitView (
-                        store: store.scope(
+                        habitStore: store.scope(
                             state: \.habit,
                             action: AppFeature.Action.habit
+                        ),
+                        statisticsStore: store.scope(
+                            state: \.statistics,
+                            action: AppFeature.Action.statistics
                         )
                     )
                     .tabItem {
@@ -34,24 +38,34 @@ struct MainView: View {
                         state: \.statistics,
                         action: AppFeature.Action.statistics
                     ))
-                        .tabItem {
-                            Image(systemName: "chart.bar.fill")
-                            Text("통계")
-                        }
+                    .tabItem {
+                        Image(systemName: "chart.bar.fill")
+                        Text("통계")
+                    }
                 }
                 if store.habit.isShowingAdd {
                     AddView(
                         habitStore: store.scope(
-                        state: \.habit,
-                        action: AppFeature.Action.habit
+                            state: \.habit,
+                            action: AppFeature.Action.habit
                         )
                     )
-                        .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                 }
                 
                 if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
                     OnboardingView(userName: $store.habit.userName)
                 }
+            }
+            .onAppear {
+                print("MainView onappear")
+                let statisticsStore = store.scope(
+                    state: \.statistics,
+                    action: AppFeature.Action.statistics
+                )
+                
+                ReportData.configure(store: statisticsStore)
+                statisticsStore.send(.onAppear)
             }
         }
     }
