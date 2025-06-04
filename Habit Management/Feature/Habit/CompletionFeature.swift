@@ -17,6 +17,7 @@ struct CompletionFeature {
         var todayCount: Int = 0
         var yesterdayCount: Int = 0
         var staticsCount: Int = 0
+        var continuityCount: Int = 0
     }
 
     enum Action: BindableAction {
@@ -30,6 +31,8 @@ struct CompletionFeature {
         case yesterdayCountResponse(Int)
         case loadStatics(Total)
         case staticsResponse(Int)
+        case updateAllDoneContinuity(CompleteStatus, Bool)
+        case continuityUpdated(Int)
         case binding(BindingAction<State>)
     }
 
@@ -92,6 +95,16 @@ struct CompletionFeature {
                 
             case let .staticsResponse(count):
                 state.staticsCount = count
+                return .none
+                
+            case let .updateAllDoneContinuity(status, isToday):
+                return .run { send in
+                    let newCount = try await completionClient.updateAllDoneContinuity(status, isToday)
+                    await send(.continuityUpdated(newCount))
+                }
+
+            case let .continuityUpdated(newCount):
+                state.continuityCount = newCount
                 return .none
                 
             case .binding(_):
