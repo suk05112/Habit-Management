@@ -274,7 +274,6 @@
 			children = (
 				037FFAF4284606C200BD3C0E /* Item */,
 				0391650E283B5DE800CA0028 /* Add */,
-				03DBC27E2827CF02000848BF /* Static */,
 				03DBC27D2827CEEE000848BF /* Main */,
 				037FFAF6284614F400BD3C0E /* TestView.swift */,
 				03A06E612858ED0B0069C3CB /* ContentView.swift */,
@@ -290,13 +289,6 @@
 				03A06E632858F7870069C3CB /* FirstLaunchView.swift */,
 			);
 			name = Main;
-			sourceTree = "<group>";
-		};
-		03DBC27E2827CF02000848BF /* Static */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Static;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -650,6 +642,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
@@ -674,6 +667,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -685,6 +679,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
@@ -709,6 +704,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "sujin.Habit-Management";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

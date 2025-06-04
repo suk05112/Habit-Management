@@ -13,7 +13,62 @@ import Firebase
 import ComposableArchitecture
 
 struct MainView: View {
-    let store: StoreOf<StaticsFeature>
+    @Perception.Bindable var store: StoreOf<AppFeature>
+    
+    var body: some View {
+        WithPerceptionTracking {
+            ZStack {
+                TabView {
+                    HabitView (
+                        store: store.scope(
+                            state: \.habit,
+                            action: AppFeature.Action.habit
+                        )
+                    )
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("홈")
+                    }
+                    
+                    StaticsView(store: store.scope(
+                        state: \.statistics,
+                        action: AppFeature.Action.statistics
+                    ))
+                        .tabItem {
+                            Image(systemName: "chart.bar.fill")
+                            Text("통계")
+                        }
+                }
+                if store.habit.isShowingAdd {
+                    AddView(
+                        habitStore: store.scope(
+                        state: \.habit,
+                        action: AppFeature.Action.habit
+                        )
+                    )
+                        .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                }
+                
+                if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
+                    OnboardingView(userName: $store.habit.userName)
+                }
+            }
+        }
+    }
+}
+
+struct OnboardingView: View {
+    @Binding var userName: String
+    
+    var body: some View {
+        FirstLaunchView(userName: $userName)
+            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+    }
+}
+
+/*
+struct MainView: View {
+>>>>>>> 7c406aa2c1e7e2e5b9cb2beb27c222461db88a09
     @State private var showToast = false
 
     @Environment(\.managedObjectContext) private var viewContext
@@ -226,115 +281,21 @@ struct MainView: View {
         return 0
     }
 
-}
+}*/
 
 
-struct FrameModifier: ViewModifier {
-    @EnvironmentObject var setting: Setting
-
-    var isScroll:Bool?
-    var width: CGFloat?
-    var height: CGFloat?
-    
-    var size: CGFloat?
-    var weight: Font.Weight?
-    
-    var top: CGFloat?
-    var leading: CGFloat?
-    var bottom: CGFloat?
-    var trailing: CGFloat?
-    
-    func body(content: Content) -> some View {
-        if height != nil || width != nil{
-            if isScroll!{
-                content
-                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.WidthRatio)
-            }
-            else{
-                content
-                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.HeightRatio)
-            }
-            
-        }
-        if size != nil{
-            if let weight = weight {
-                content
-                    .font(.system(size: size! * setting.WidthRatio, weight: weight))
-            }
-            else{
-                content.font(.system(size: size! * setting.WidthRatio))
-            }
-        }
-        
-        if top != nil{
-            content
-                .padding(EdgeInsets(top: top! * setting.WidthRatio,
-                                    leading: leading! *
-                                    setting.WidthRatio,
-                                    bottom: bottom! * setting.WidthRatio,
-                                    trailing: trailing! * setting.WidthRatio))
-        }
-
-    }
-    
-    
-}
-
-extension View {
-
-    func scaledFrame(width: CGFloat?, height: CGFloat?, isScroll: Bool = false) -> some View {
-        modifier(FrameModifier(isScroll: isScroll, width: width, height: height))
-
-    }
-    
-    func scaledText(size: CGFloat, weight: Font.Weight?) -> some View{
-        modifier(FrameModifier(size: size, weight: weight))
-    }
-    
-    func scaledPadding(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> some View{
-        modifier(FrameModifier(top: top, leading: leading, bottom: bottom, trailing: trailing))
-    }
-    
-    
-    func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
-      background(
-        GeometryReader { geometryProxy in
-          Color.clear
-            .preference(key: SizePreferenceKey.self, value: geometryProxy.size)
-        }
-      )
-      .onPreferenceChange(SizePreferenceKey.self, perform: onChange)
+/*
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainView(
+            store: Store(
+                initialState: MainFeature.State(),
+                reducer: { MainFeature() }
+            )
+        )
+        .environment(\.managedObjectContext,
+                      PersistenceController.preview.container.viewContext
+        )
     }
 }
-
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MainView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//    }
-//}
-
-extension Color{
-    init(hex: String){
-        let scanner = Scanner(string: hex) //문자 파서역할을 하는 클래스
-        _ = scanner.scanString("#")  //scanString은 iOS13 부터 지원 #문자 제거
-        
-        var rgb: UInt64 = 0
-        //문자열을 Int64 타입으로 변환해 rgb 변수에 저장. 변환 할 수 없다면 0 반환
-        scanner.scanHexInt64(&rgb)
-        
-        let r = Double((rgb >> 16) & 0xFF) / 255.0 //좌측 문자열 2개 추출
-        let g = Double((rgb >> 8) & 0xFF) / 255.0 // 중간 문자열 2개 추출
-        let b = Double((rgb >> 0) & 0xFF) / 255.0 //우측 문자열 2개 추출
-        self.init(red: r, green: g, blue: b)
-    }
-    
-}
+*/
