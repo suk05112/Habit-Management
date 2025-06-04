@@ -12,27 +12,27 @@ import Firebase
 import ComposableArchitecture
 
 struct HabitView: View {
-    let store: StoreOf<HabitFeature>
+    @Perception.Bindable var store: StoreOf<HabitFeature>
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithPerceptionTracking {
             VStack(spacing: 0) {
-                MainHeaderView(userName: viewStore.userName,
-                               mainReport: viewStore.mainReportText)
+                MainHeaderView(userName: store.userName,
+                               mainReport: store.mainReportText)
 
                 MainToggleBar(
-                    showAll: viewStore.isShowingAllHabits,
-                    hideCompleted: viewStore.isHidingCompletedHabits,
+                    showAll: store.isShowingAllHabits,
+                    hideCompleted: store.isHidingCompletedHabits,
                     toggleShowAll: {
-                        viewStore.send(.toggleShowAll)
+                        store.send(.toggleShowAll)
                     },
                     toggleHideCompleted: {
-                        viewStore.send(.toggleHideCompleted)
+                        store.send(.toggleHideCompleted)
                     }
                 )
 
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(viewStore.habitList) { habit in
+                    ForEach(store.habitList) { habit in
                         ZStack {
                             //Edit View
                             
@@ -42,18 +42,18 @@ struct HabitView: View {
                 }
 
                 MainAddButton {
-                    viewStore.send(.selectItem(nil))
-                    viewStore.send(.setEditMode(false))
+                    store.send(.selectItem(nil))
+                    store.send(.setEditMode(false))
                 }
 
                 Spacer()
             }
             .onAppear {
-                viewStore.send(.onAppear)
+                store.send(.onAppear)
             }
             .toast(
                 message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                isShowing: viewStore.$isToastVisible,
+                isShowing: $store.isToastVisible,
                 duration: Toast.long
             )
             .tabItem {

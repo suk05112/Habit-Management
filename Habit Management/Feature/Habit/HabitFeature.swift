@@ -21,9 +21,15 @@ struct HabitFeature {
         var isEditingHabit: Bool = false
         var userName: String = "사용자"
         var mainReportText: String = ""
-        var name = TextLimiter()
         var iter: [Int] = []
-        @BindingState var isToastVisible: Bool = false
+        var habitTitle: String = "" {
+            didSet {
+                if habitTitle.count > 9 {
+                    habitTitle = String(habitTitle.prefix(8))
+                }
+            }
+        }
+        var isToastVisible: Bool = false
         
         static func == (lhs: State, rhs: State) -> Bool {
             return lhs.habitList == rhs.habitList &&
@@ -60,10 +66,10 @@ struct HabitFeature {
         case updateContinuity
         case resetContinuity
         case setAddMode(Bool)
+        case setHabitTitle(String)
     }
     
-    @Dependency(\..habitClient) var habitClient
-    @Dependency(\..completionClient) var completionClient
+    @Dependency(\.habitClient) var habitClient
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -132,6 +138,10 @@ struct HabitFeature {
                 
             case let .setAddMode(flag):
                 state.isShowingAdd = flag
+                return .none
+                
+            case let .setHabitTitle(title):
+                state.habitTitle = title
                 return .none
                 
             case let .addHabit(name, iter):
