@@ -8,7 +8,9 @@
 import Foundation
 import ComposableArchitecture
 
-struct AppFeature: Reducer {
+@Reducer
+struct AppFeature {
+    @ObservableState
     struct State: Equatable {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
@@ -16,11 +18,12 @@ struct AppFeature: Reducer {
         var habit: HabitFeature.State = .init()
     }
     
-    enum Action: Equatable {
+    enum Action: BindableAction {
         case setUserName(String)
         case setHasLaunched(Bool)
         
         case habit(HabitFeature.Action)
+        case binding(BindingAction<State>)
     }
     
     var body: some Reducer<State, Action> {
@@ -42,7 +45,11 @@ struct AppFeature: Reducer {
                 
             case .habit:
                 return .none
+                
+            case .binding(_):
+                return .none
             }
+            
         }
     }
 }
