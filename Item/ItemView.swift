@@ -13,7 +13,7 @@ struct ItemView: View{
     @EnvironmentObject var setting: Setting
     
     let store: StoreOf<HabitFeature>
-    let completionStore: StoreOf<CompletionFeature>
+    let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
     let habit: Habit
     
     @State private var offset: CGFloat = 0

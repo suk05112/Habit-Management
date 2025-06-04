@@ -19,8 +19,8 @@ struct HabitFeature {
         var isShowingAdd: Bool = false
         var isHidingCompletedHabits: Bool = false
         var isEditingHabit: Bool = false
-        var userName: String = "사용자"
-        var mainReportText: String = ""
+        var userName: String = ""
+        var mainReportText: String = "아직 완료된 습관이 없습니다."
         var iter: [Int] = []
         var habitTitle: String = "" {
             didSet {
@@ -80,6 +80,8 @@ struct HabitFeature {
                 
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits
+                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)

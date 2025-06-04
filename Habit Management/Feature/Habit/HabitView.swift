@@ -16,57 +16,64 @@ struct HabitView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
-                MainHeaderView(userName: store.userName,
-                               mainReport: store.mainReportText)
+            ZStack {
+                VStack(spacing: 0) {
+                    MainHeaderView(userName: $store.userName,
+                                   mainReport: $store.mainReportText)
+                    
+                    MainToggleBar(
+                        showAll: $store.isShowingAllHabits,
+                        hideCompleted: $store.isHidingCompletedHabits,
+                        toggleShowAll: {
+                            store.send(.toggleShowAll)
+                        },
+                        toggleHideCompleted: {
+                            store.send(.toggleHideCompleted)
+                        }
+                    )
+                    
+                    ScrollView(.vertical, showsIndicators: false) {
+                        ForEach(store.habitList) { habit in
+                            ZStack {
+                                //Edit View
 
-                MainToggleBar(
-                    showAll: store.isShowingAllHabits,
-                    hideCompleted: store.isHidingCompletedHabits,
-                    toggleShowAll: {
-                        store.send(.toggleShowAll)
-                    },
-                    toggleHideCompleted: {
-                        store.send(.toggleHideCompleted)
-                    }
-                )
-
-                ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(store.habitList) { habit in
-                        ZStack {
-                            //Edit View
-                            
-                            //ItemView
+                                //Item View
+                                ItemView(
+                                    store: store,
+                                    habit: habit
+                                )
+                            }
                         }
                     }
+                    
+                    MainAddButton {
+                        store.send(.selectItem(nil))
+                        store.send(.setEditMode(false))
+                        store.send(.setAddMode(true))
+                    }
+                    
+                    Spacer()
                 }
-
-                MainAddButton {
-                    store.send(.selectItem(nil))
-                    store.send(.setEditMode(false))
+                .onAppear {
+                    store.send(.onAppear)
                 }
-
-                Spacer()
-            }
-            .onAppear {
-                store.send(.onAppear)
-            }
-            .toast(
-                message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                isShowing: $store.isToastVisible,
-                duration: Toast.long
-            )
-            .tabItem {
-                Image(systemName: "house")
-                Text("홈")
+                .toast(
+                    message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
+                    isShowing: $store.isToastVisible,
+                    duration: Toast.long
+                )
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("홈")
+                }
             }
         }
     }
 }
 
 struct MainHeaderView: View {
-    let userName: String
-    let mainReport: String
+    @Binding var userName: String
+    @Binding var mainReport: String
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -89,10 +96,10 @@ struct MainHeaderView: View {
 }
 
 struct MainToggleBar: View {
-    let showAll: Bool
-    let hideCompleted: Bool
-    let toggleShowAll: () -> Void
-    let toggleHideCompleted: () -> Void
+    @Binding var showAll: Bool
+    @Binding var hideCompleted: Bool
+    var toggleShowAll: () -> Void
+    var toggleHideCompleted: () -> Void
 
     var body: some View {
         HStack {

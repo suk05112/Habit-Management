@@ -13,10 +13,10 @@ import Firebase
 import ComposableArchitecture
 
 struct MainView: View {
-    let store: StoreOf<AppFeature>
+    @Perception.Bindable var store: StoreOf<AppFeature>
     
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
+        WithPerceptionTracking {
             ZStack {
                 TabView {
                     HabitView (
@@ -36,9 +36,18 @@ struct MainView: View {
                             Text("통계")
                         }
                 }
+                if store.habit.isShowingAdd {
+                    AddView(
+                        store: store.scope(
+                        state: \.habit,
+                        action: AppFeature.Action.habit
+                        )
+                    )
+                        .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                }
                 
                 if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
-                    OnboardingView(userName: viewStore.binding(get: \.userName, send: AppFeature.Action.setUserName))
+                    OnboardingView(userName: $store.habit.userName)
                 }
             }
         }

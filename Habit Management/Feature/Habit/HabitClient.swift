@@ -24,7 +24,6 @@ struct HabitClient {
 
 extension HabitClient: DependencyKey {
     static let liveValue = HabitClient(
-
         fetchAll: {
             let realm = try Realm()
             return Array(realm.objects(Habit.self))
@@ -49,7 +48,7 @@ extension HabitClient: DependencyKey {
                 let completedIDs = Set(completedList)
                 list = list.filter { !completedIDs.contains($0.id!) }
             }
-            return list
+            return list.map { $0.detached() }
         },
 
         save: { habit in

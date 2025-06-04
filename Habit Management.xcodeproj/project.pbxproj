@@ -63,7 +63,6 @@
 		2F6EDA892DDDF50F00FFD336 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA882DDDF50F00FFD336 /* View.swift */; };
 		2F6EDA8B2DDDF5B800FFD336 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA8A2DDDF5B800FFD336 /* DateFormatter.swift */; };
 		2F6EDA8E2DDDF6BC00FFD336 /* FrameModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA8D2DDDF6BC00FFD336 /* FrameModifier.swift */; };
-		2F6EDA922DDDF80B00FFD336 /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDA912DDDF80B00FFD336 /* MainFeature.swift */; };
 		2F6EDB0F2DE32A4300FFD336 /* HabitFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB092DE32A4300FFD336 /* HabitFeature.swift */; };
 		2F6EDB102DE32A4300FFD336 /* HabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB0A2DE32A4300FFD336 /* HabitView.swift */; };
 		2F6EDB112DE32A4300FFD336 /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB0C2DE32A4300FFD336 /* MainFeature.swift */; };
@@ -76,6 +75,8 @@
 		2F6EDB292DE3336500FFD336 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB282DE3336500FFD336 /* AppFeature.swift */; };
 		2F6EDB2B2DE3385200FFD336 /* DependencyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB2A2DE3385200FFD336 /* DependencyValues.swift */; };
 		2F6EDB2D2DE33D3C00FFD336 /* CompletionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB2C2DE33D3C00FFD336 /* CompletionClient.swift */; };
+		2F6EDB302DE7380A00FFD336 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB2F2DE7380A00FFD336 /* RoundedCorner.swift */; };
+		2F6EDB322DE738D400FFD336 /* CompletionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6EDB312DE738D400FFD336 /* CompletionFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,8 @@
 		2F6EDB282DE3336500FFD336 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		2F6EDB2A2DE3385200FFD336 /* DependencyValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyValues.swift; sourceTree = "<group>"; };
 		2F6EDB2C2DE33D3C00FFD336 /* CompletionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionClient.swift; sourceTree = "<group>"; };
+		2F6EDB2F2DE7380A00FFD336 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		2F6EDB312DE738D400FFD336 /* CompletionFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionFeature.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +370,7 @@
 		2F6EDA842DDDF21300FFD336 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2F6EDB2E2DE737E600FFD336 /* Component */,
 				2F6EDA8C2DDDF6A600FFD336 /* ViewModifier */,
 				2F6EDA852DDDF22100FFD336 /* Extension */,
 			);
@@ -407,6 +411,7 @@
 				2F6EDB0A2DE32A4300FFD336 /* HabitView.swift */,
 				2F6EDB232DE32FA600FFD336 /* HabitClient.swift */,
 				2F6EDB2C2DE33D3C00FFD336 /* CompletionClient.swift */,
+				2F6EDB312DE738D400FFD336 /* CompletionFeature.swift */,
 			);
 			path = Habit;
 			sourceTree = "<group>";
@@ -446,6 +451,14 @@
 				2F6EDB282DE3336500FFD336 /* AppFeature.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		2F6EDB2E2DE737E600FFD336 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				2F6EDB2F2DE7380A00FFD336 /* RoundedCorner.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		BB4933070CD0FEA51B66A680 /* Frameworks */ = {
@@ -622,9 +635,9 @@
 				2F6EDB242DE32FA600FFD336 /* HabitClient.swift in Sources */,
 				032EED5A285E252800994E5B /* TextLimiter.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
-				2F6EDA922DDDF80B00FFD336 /* MainFeature.swift in Sources */,
 				2F6EDA872DDDF23500FFD336 /* Color.swift in Sources */,
 				032EED5E285E25B400994E5B /* TotalView.swift in Sources */,
+				2F6EDB322DE738D400FFD336 /* CompletionFeature.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				0392B413280695AD006C1E04 /* ReportView.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
@@ -638,6 +651,7 @@
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				037FFAFB2847C43D00BD3C0E /* AnimationView.swift in Sources */,
 				2F6EDA8E2DDDF6BC00FFD336 /* FrameModifier.swift in Sources */,
+				2F6EDB302DE7380A00FFD336 /* RoundedCorner.swift in Sources */,
 				03DBC27A282111DD000848BF /* StaticsView.swift in Sources */,
 				2F6EDA8B2DDDF5B800FFD336 /* DateFormatter.swift in Sources */,
 				039164DD2830F08D00CA0028 /* ScrollVM.swift in Sources */,
