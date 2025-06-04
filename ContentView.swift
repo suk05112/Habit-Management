@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UserNotifications
+import ComposableArchitecture
 
 struct ContentView: View {
     let setting = Setting()
@@ -17,9 +18,14 @@ struct ContentView: View {
 
     }
     var body: some View {
-        MainView()
-            .environmentObject(setting)
-           
+        MainView(
+            store: Store(
+                initialState: AppFeature.State(),
+                reducer: { AppFeature() }
+            )
+        )
+        .environmentObject(setting)
+        
         /*
         switch setting.wasLaunchedBefore {
         case false: FirstLaunchView()

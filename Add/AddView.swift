@@ -9,20 +9,14 @@ import Foundation
 import SwiftUI
 import UIKit
 import RealmSwift
+import ComposableArchitecture
 
 public struct AddView: View{
-    @ObservedObject var textfield = TextLimiter()
-
-    @Binding var name: String
-    @Binding var show: Bool
-    @Binding var isEdit: Bool
-    @Binding var selectedItem: Habit
-    @State var iter: [Int]
-    @StateObject var ViewModel = HabitVM.shared
+    @Perception.Bindable var store: StoreOf<HabitFeature>
+    let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
     
-
     public var body: some View {
-        if show{
+        WithPerceptionTracking {
             ZStack{
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.vertical)
@@ -34,88 +28,74 @@ public struct AddView: View{
                             .scaledFrame(width: .none, height: 250)
                             .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 5)
                             .foregroundColor(Color.white)
-                            
+                        
                         VStack(alignment: .center){
                             HStack{
                                 Text("취소")
-                                .onTapGesture {
-                                    self.name = ""
-                                    show = false
-                                }
+                                    .onTapGesture {
+                                        store.send(.setHabitTitle(""))
+                                        store.send(.setEditMode(false))
+                                        store.send(.setAddMode(false))
+                                    }
                                 Spacer()
-
+                                
                                 Text("저장")
                                     .onTapGesture {
-                                        show = false
-                                        if !isEdit{
-                                            ViewModel.addItem(name: name, iter: iter)
+                                        store.send(.setAddMode(false))
+                                        if !store.isEditingHabit {
+                                            store.send(.addHabit(name: store.habitTitle, iter: store.iter))
                                         }
                                         else{
-                                            ViewModel.updateItem(name: name, iter: iter, at: selectedItem)
-                                            self.isEdit = false
+                                            store.send(.updateHabit(name: store.habitTitle, iter: store.iter, habit: store.selectedHabit ?? Habit()))
+                                            store.send(.setEditMode(false))
                                         }
-                                        self.name = ""
+                                        store.send(.setHabitTitle(""))
                                         StaticVM.shared.setnumOfToDoPerDay()
-                                        StaticVM.shared.setnumOfToDoPerWeek2(add: true, numOfIter: iter.count)
-                                        StaticVM.shared.setnumOfToDoPerMonth(add: true, numOfIter: iter.count)
-                                        compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .add, isToday: isTodayHabit() ? true : false)
-                                        
+                                        StaticVM.shared.setnumOfToDoPerWeek2(add: true, numOfIter: store.iter.count)
+                                        StaticVM.shared.setnumOfToDoPerMonth(add: true, numOfIter: store.iter.count)
+                                        completionStore.send(.updateAllDoneContinuity(.add, isTodayHabit() ? true : false))
                                     }
                             }
                             .scaledPadding(top: 15, leading: 25, bottom: 10, trailing: 25)
-
-                            TextField("제목을 입력하세요", text: $name)
+                            
+                            TextField("제목을 입력하세요", text: $store.habitTitle)
                                 .textFieldStyle(.roundedBorder)
                                 .scaledText(size: 25, weight: .none)
                                 .foregroundColor(Color.black)
                                 .scaledPadding(top: 0, leading: 25, bottom: 0, trailing: 25)
-                                
+                            
                             HStack{
                                 ForEach(1..<8){
-                                    WeekButton(weekOfDay: $0, iter: $iter, OnOff: Array(self.selectedItem.weekIter).contains($0) ? true : false)
+                                    WeekButton(weekOfDay: $0, iter: $store.iter, OnOff: store.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
                                 }
                             }
                             .scaledPadding(top: 10, leading: 25, bottom: 10, trailing: 25)
                             Spacer()
-
+                            
                         }
                         .scaledFrame(width: .none, height: 250)
-
+                        
                     }
-
+                    
                 }
-
+                
             }
             .contentShape(Rectangle())
-
-          
+            
         }
-
+        
     }
     
     func isTodayHabit() -> Bool{
         let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
         
-        if iter.contains(todayWeek){
+        if store.iter.contains(todayWeek){
             return true
         }
         else{
             return false
         }
     }
-
-}
-
-
-
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
     
 }
-#endif
-
-
 

@@ -7,81 +7,76 @@
 
 import Foundation
 import SwiftUI
+import ComposableArchitecture
 
 struct ItemView: View{
     @EnvironmentObject var setting: Setting
-
-    @Binding var myItem: Habit
-    @Binding var showingModal: Bool
-    @Binding var offset: CGFloat
-    @Binding var name: String
     
-    @State var slideRight = false
-    @State var slideLeft = false
+    let store: StoreOf<HabitFeature>
+    let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
+    let habit: Habit
     
-    @StateObject var completedVM = compltedLIstVM.shared
-    
+    @State private var offset: CGFloat = 0
+    @State private var slideRight = false
+    @State private var slideLeft = false
     var body: some View {
-        
-        if !myItem.isInvalidated{
-            ZStack{
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color.white)
-                    .shadow(radius: 5)
-                    .scaledFrame(width: .none, height: 80)
-                    .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
-
-                HStack{
-                    VStack(alignment: .leading){
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
+                if !habit.isInvalidated{
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(Color.white)
+                            .shadow(radius: 5)
+                            .scaledFrame(width: .none, height: 80)
+                            .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
                         
-                        Text("\(HabitVM.shared.getWeekStr(habit: myItem)) 반복")
-                            .scaledText(size: 12, weight: .semibold)
-                            .foregroundColor(Color(hex: "#38AC3C"))
-                            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
-                        Text(myItem.name)
-                            .scaledText(size: 23, weight: .medium)
-
+                        HStack{
+                            VStack(alignment: .leading){
+                                
+                                Text("\(habit.weekString()) 반복")
+                                    .scaledText(size: 12, weight: .semibold)
+                                    .foregroundColor(Color(hex: "#38AC3C"))
+                                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                                Text(habit.name)
+                                    .scaledText(size: 23, weight: .medium)
+                                
+                            }
+                            
+                            Spacer()
+                            HStack(){
+                                Text("\(habit.continuity)일")
+                                    .scaledText(size: 20, weight: .semibold)
+                                    .foregroundColor(Color(hex: "#38AC3C"))
+                                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                                
+                                Text("연속 실천 중🔥")
+                                    .scaledText(size: 20, weight: .none)
+                                    .scaledPadding(top: 0, leading: -8, bottom: 0, trailing: 0)
+                                
+                            }
+                        }
+                        
+                        .padding(23*setting.HeightRatio)
+                        .opacity(completionViewStore.doneTodayMap[habit.id!] == true ? 0.5 : 1)
+                        
                     }
-
-                    Spacer()
-                    HStack(){
-                        Text("\(myItem.continuity)일")
-                            .scaledText(size: 20, weight: .semibold)
-                            .foregroundColor(Color(hex: "#38AC3C"))
-                            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
-
-                        Text("연속 실천 중🔥")
-                            .scaledText(size: 20, weight: .none)
-                            .scaledPadding(top: 0, leading: -8, bottom: 0, trailing: 0)
-
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        slideLeft = false
+                        slideRight = false
+                        offset = 0
+                        
                     }
+                    .offset(x: offset)
+                    .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                 }
-
-                .padding(23*setting.HeightRatio)
-                .opacity(completedVM.todayDoneList.completed.contains(myItem.id!) ? 0.5 : 1)
-                
             }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                //print("item touch")
-//                showingModal = true
-                slideLeft = false
-                slideRight = false
-                offset = 0
-                
-            }
-            .offset(x: offset)
-            .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
         }
     }
-    
- 
-    
-
 }
 
 
-extension ItemView{
+extension ItemView {
     
     func onChanged(value: DragGesture.Value){
         //print("offset", value.translation.width)
@@ -139,23 +134,5 @@ extension ItemView{
 
         }
         
-    }
-}
-
-
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
-    }
-}
-
-struct RoundedCorner: Shape {
-    
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
     }
 }
