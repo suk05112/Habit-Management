@@ -15,9 +15,8 @@ struct AppFeature {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         
-        var habit: HabitFeature.State = .init()
-        
-        var statistics: StaticsFeature.State = .init()
+        var habit = HabitFeature.State()
+        var statistics = StaticsFeature.State()
     }
     
     enum Action: BindableAction {
@@ -30,11 +29,11 @@ struct AppFeature {
     }
     
     var body: some Reducer<State, Action> {
-        Scope(state: \.habit, action: /Action.habit) {
+        Scope(state: \.habit, action: \.habit) {
             HabitFeature()
         }
         
-        Scope(state: \.statistics, action: /Action.statistics) {
+        Scope(state: \.statistics, action: \.statistics) {
             StaticsFeature()
         }
         
@@ -59,7 +58,6 @@ struct AppFeature {
             case .binding(_):
                 return .none
             }
-            
         }
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by 한수진 on 2022/03/24.
 //
-//complete branch
 
 import SwiftUI
 import CoreData
@@ -22,11 +21,11 @@ struct MainView: View {
                     HabitView (
                         habitStore: store.scope(
                             state: \.habit,
-                            action: AppFeature.Action.habit
+                            action: \.habit
                         ),
                         statisticsStore: store.scope(
                             state: \.statistics,
-                            action: AppFeature.Action.statistics
+                            action: \.statistics
                         )
                     )
                     .tabItem {
@@ -36,7 +35,7 @@ struct MainView: View {
                     
                     StaticsView(store: store.scope(
                         state: \.statistics,
-                        action: AppFeature.Action.statistics
+                        action: \.statistics
                     ))
                     .tabItem {
                         Image(systemName: "chart.bar.fill")
@@ -47,7 +46,7 @@ struct MainView: View {
                     AddView(
                         habitStore: store.scope(
                             state: \.habit,
-                            action: AppFeature.Action.habit
+                            action: \.habit
                         )
                     )
                     .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
@@ -61,7 +60,7 @@ struct MainView: View {
                 print("MainView onappear")
                 let statisticsStore = store.scope(
                     state: \.statistics,
-                    action: AppFeature.Action.statistics
+                    action: \.statistics
                 )
                 
                 ReportData.configure(store: statisticsStore)
