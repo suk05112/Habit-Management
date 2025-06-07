@@ -17,10 +17,6 @@ struct ContentView: View {
         reducer: { AppFeature() }
     )
 
-
-    init(){
-
-    }
     var body: some View {
 
         MainView(
@@ -29,6 +25,12 @@ struct ContentView: View {
         .environmentObject(setting)
         .onAppear {
             print("ContentView onappear")
+            let habitStore = store.scope(
+                state: \.habit,
+                action: AppFeature.Action.habit
+            )
+            habitStore.send(.onAppear)
+            
             let statisticsStore = store.scope(
                 state: \.statistics,
                 action: AppFeature.Action.statistics

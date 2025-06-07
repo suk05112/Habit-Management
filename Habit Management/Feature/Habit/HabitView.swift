@@ -14,13 +14,28 @@ import ComposableArchitecture
 struct HabitView: View {
     @Perception.Bindable var habitStore: StoreOf<HabitFeature>
     @Perception.Bindable var statisticsStore: StoreOf<StaticsFeature>
+    
+    init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StaticsFeature>) {
+        self.habitStore = habitStore
+        self.statisticsStore = statisticsStore
+
+        ReportData.configure(store: statisticsStore)
+        habitStore.send(.onAppear)
+    }
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
+            ZStack(alignment: .topLeading) {
+                Rectangle()
+                    .fill(Color(hex: "#B8D9B9"))
+                    .edgesIgnoringSafeArea(.all)
+                    .scaledFrame(width: nil, height: 242)
+                
                 VStack(spacing: 0) {
                     MainHeaderView(userName: $habitStore.userName,
                                    mainReport: $habitStore.mainReportText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
                     HabitGridView(store: statisticsStore) // 나중에 따로 추출해도 OK
                     MainToggleBar(
                         showAll: $habitStore.isShowingAllHabits,
@@ -55,9 +70,6 @@ struct HabitView: View {
                     
                     Spacer()
                 }
-                .onAppear {
-                    habitStore.send(.onAppear)
-                }
                 .toast(
                     message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
                     isShowing: $habitStore.isToastVisible,
@@ -77,19 +89,12 @@ struct MainHeaderView: View {
     @Binding var mainReport: String
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(Color(hex: "#B8D9B9"))
-                .edgesIgnoringSafeArea(.all)
-                .scaledFrame(width: nil, height: 242)
-
-            VStack(alignment: .leading) {
-                Text("\(userName)님!\n\(mainReport)")
-                    .scaledText(size: 25, weight: .semibold)
-                    .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: true, vertical: true)
-            }
+        VStack(alignment: .leading) {
+            Text("\(userName)님!\n\(mainReport)")
+                .scaledText(size: 25, weight: .semibold)
+                .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
+                .lineLimit(nil)
+                .fixedSize(horizontal: true, vertical: true)
         }
     }
 }
