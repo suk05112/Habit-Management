@@ -10,35 +10,28 @@ import UserNotifications
 import ComposableArchitecture
 
 struct ContentView: View {
-    let setting = Setting()
-    let store = Store(
-        initialState: AppFeature.State(),
-        reducer: { AppFeature() }
-    )
+    @State private var store: StoreOf<AppFeature>
+    @StateObject private var setting = Setting()
+    
+    private let habitStore: StoreOf<HabitFeature>
+    private let statisticsStore: StoreOf<StaticsFeature>
+    
+    init() {
+        let initalStore = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
+        _store = State(initialValue: initalStore)
+        
+        self.habitStore = initalStore.scope(state: \.habit, action: \.habit)
+        self.statisticsStore = initalStore.scope(state: \.statistics, action: \.statistics)
+    }
     
     var body: some View {
         MainView(store: store)
             .environmentObject(setting)
-            .onAppear {
+            .task {
                 print("ContentView onappear")
-                let habitStore = store.scope(
-                    state: \.habit,
-                    action: \.habit
-                )
                 habitStore.send(.onAppear)
-                
-                let statisticsStore = store.scope(
-                    state: \.statistics,
-                    action: \.statistics
-                )
-                
                 ReportData.configure(store: statisticsStore)
                 statisticsStore.send(.onAppear)
             }
-    }
-    
-    
-    func didDismissPostCommentNotification() {
-        print("함수 안!!")
     }
 }
