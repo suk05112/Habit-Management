@@ -168,13 +168,3 @@ struct SelectedView: View{
             }
     }
 }
-
-struct Graph_Previews: PreviewProvider {
-    static var previews: some View {
-        Graph(store: Store(
-            initialState: StaticsFeature.State(),
-            reducer: { StaticsFeature() }
-        ), ratio: 1)
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}

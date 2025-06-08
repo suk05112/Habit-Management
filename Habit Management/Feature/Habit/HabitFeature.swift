@@ -11,7 +11,6 @@ import RealmSwift
 
 @Reducer
 struct HabitFeature {
-    @ObservableState
     struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil

@@ -12,8 +12,8 @@ import Firebase
 import ComposableArchitecture
 
 struct HabitView: View {
-    @Perception.Bindable var habitStore: StoreOf<HabitFeature>
-    @Perception.Bindable var statisticsStore: StoreOf<StaticsFeature>
+    let habitStore: StoreOf<HabitFeature>
+    let statisticsStore: StoreOf<StaticsFeature>
     
     init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StaticsFeature>) {
         self.habitStore = habitStore
@@ -21,22 +21,36 @@ struct HabitView: View {
     }
 
     var body: some View {
-        WithPerceptionTracking {
+        WithViewStore(habitStore, observe: { $0 }) { viewStore in
             ZStack(alignment: .topLeading) {
                 Rectangle()
                     .fill(Color(hex: "#B8D9B9"))
                     .edgesIgnoringSafeArea(.all)
                     .scaledFrame(width: nil, height: 242)
                 
-                VStack(spacing: 0) {
-                    MainHeaderView(userName: $habitStore.userName,
-                                   mainReport: $habitStore.mainReportText)
+                VStack(spacing: 0) { 
+                    MainHeaderView(
+                        userName: viewStore.binding(
+                            get: \.userName,
+                            send: { .setUserName($0) }
+                        ),
+                        mainReport: viewStore.binding(
+                            get: \.mainReportText,
+                            send: { .setMainReport($0) }
+                        )
+                    )
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     HabitGridView(store: statisticsStore) // 나중에 따로 추출해도 OK
                     MainToggleBar(
-                        showAll: $habitStore.isShowingAllHabits,
-                        hideCompleted: $habitStore.isHidingCompletedHabits,
+                        showAll: viewStore.binding(
+                            get: \.isShowingAllHabits,
+                            send: .toggleShowAll
+                        ),
+                        hideCompleted: viewStore.binding(
+                            get: \.isHidingCompletedHabits,
+                            send: .toggleHideCompleted
+                        ),
                         toggleShowAll: {
                             habitStore.send(.toggleShowAll)
                         },
@@ -46,11 +60,8 @@ struct HabitView: View {
                     )
                     
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(habitStore.habitList) { habit in
+                        ForEach(viewStore.state.habitList) { habit in
                             ZStack {
-                                //Edit View
-
-                                //Item View
                                 ItemView(
                                     store: habitStore,
                                     habit: habit
@@ -60,16 +71,19 @@ struct HabitView: View {
                     }
                     
                     MainAddButton {
-//                        habitStore.send(.selectItem(nil))
-//                        habitStore.send(.setEditMode(false))
-//                        habitStore.send(.setAddMode(true))
+                        habitStore.send(.selectItem(nil))
+                        habitStore.send(.setEditMode(false))
+                        habitStore.send(.setAddMode(true))
                     }
                     
                     Spacer()
                 }
                 .toast(
                     message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                    isShowing: $habitStore.isToastVisible,
+                    isShowing: viewStore.binding(
+                        get: \.isToastVisible,
+                        send: { .setToast($0) }
+                    ),
                     duration: Toast.long
                 )
                 .tabItem {

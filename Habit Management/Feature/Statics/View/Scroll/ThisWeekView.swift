@@ -18,20 +18,18 @@ struct ThisWeekView: View {
     var getColor: (String) -> Color
     
     var body: some View {
-        WithPerceptionTracking {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-                    ForEach(Array(store.staticsData.thisWeek.enumerated()), id:\.offset){ index, date in
-                        Text("\(date)")
-                            .scaledFrame(width: frame_size, height: frame_size)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
-                                    .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
-                                    .scaledFrame(width: frame_size, height: frame_size)
-                            )
-                    }
-                    
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+                ForEach(Array(store.staticsData.thisWeek.enumerated()), id:\.offset){ index, date in
+                    Text("\(date)")
+                        .scaledFrame(width: frame_size, height: frame_size)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
+                                .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
+                                .scaledFrame(width: frame_size, height: frame_size)
+                        )
                 }
+                
             }
         }
     }
