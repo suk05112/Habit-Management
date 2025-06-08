@@ -55,6 +55,7 @@ struct MainView: View {
             }
             .onAppear {
                 print("MainView onappear")
+                ReportData.configure(store: statisticsStore)
             }
         }
     }

@@ -9,13 +9,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct StaticsView: View {
-    var store: StoreOf<StaticsFeature>
+    let store: StoreOf<StaticsFeature>
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
     
     @State private var showingDetail = false
-
+    
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
@@ -23,26 +23,24 @@ struct StaticsView: View {
         print("StaticsView init")
         self.store = store
         ReportData.configure(store: store)
-        
         randomText = ReportData.shared.getRandomText()
     }
     
     var body: some View {
-        WithPerceptionTracking {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                ZStack{
-                    VStack{
-                        HStack{
-                            Text("Statics")
-                                .scaledText(size: 30, weight: .semibold)
-                            Spacer()
-                            
-                        }
-                        .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            ZStack{
+                VStack{
+                    HStack{
+                        Text("Statics")
+                            .scaledText(size: 30, weight: .semibold)
+                        Spacer()
                         
-                        HabitGridView(store: store)
-                        
-                        ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
+                    }
+                    .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
+                    
+                    HabitGridView(store: store)
+                    
+                    ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){
                             ReportListView()
                         }
@@ -50,25 +48,23 @@ struct StaticsView: View {
                             showingDetail = true
                         }
                         .scaledPadding(top: 10, leading: 0, bottom: 0, trailing: 0)
-                        
-                        Spacer()
-                        Graph(store: store, ratio: 1)
-                        Spacer()
-                        HStack{
-                            TotalView(staticCase: .week, store: store)
-                            TotalView(staticCase: .month, store: store)
-                            TotalView(staticCase: .year, store: store)
-                            TotalView(staticCase: .all, store: store)
-                        }
-                        .scaledPadding(top: 0, leading: 0, bottom: 30, trailing: 0)
+                    
+                    Spacer()
+                    Graph(store: store, ratio: 1)
+                    Spacer()
+                    HStack{
+                        TotalView(staticCase: .week, store: store)
+                        TotalView(staticCase: .month, store: store)
+                        TotalView(staticCase: .year, store: store)
+                        TotalView(staticCase: .all, store: store)
                     }
-                }.onAppear {
-                    print("StaticsView onappear")
-
-                    viewStore.send(.onAppear)
-                    ReportData.shared.setReportText()
-                    randomText = ReportData.shared.getRandomText()
+                    .scaledPadding(top: 0, leading: 0, bottom: 30, trailing: 0)
                 }
+            }.onAppear {
+                print("StaticsView onappear")
+                viewStore.send(.onAppear)
+                ReportData.shared.setReportText()
+                randomText = ReportData.shared.getRandomText()
             }
         }
     }

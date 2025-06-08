@@ -5,7 +5,6 @@
 //  Created by 한수진 on 2022/04/26.
 //
 
-import Foundation
 import SwiftUI
 import ComposableArchitecture
 
@@ -19,9 +18,9 @@ struct HabitGridView: View {
     @Namespace var endPoint
     
     var body: some View {
-        WithPerceptionTracking {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack{
-                RoundedRectangle(cornerRadius: 15*setting.WidthRatio, style: .continuous)
+                RoundedRectangle(cornerRadius: 15 * setting.WidthRatio, style: .continuous)
                     .fill(Color(hex: "#639F70"))
                     .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
                     .scaledFrame(width: .none, height: 230)

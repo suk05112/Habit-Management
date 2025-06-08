@@ -5,13 +5,13 @@
 //  Created by 한수진 on 2022/06/14.
 //
 
-import Foundation
 import SwiftUI
 import RealmSwift
 import ComposableArchitecture
 
 class ReportData {
     let store: StoreOf<StaticsFeature>
+    let viewStore: ViewStore<StaticsFeature.State, StaticsFeature.Action>
 
 //    static let shared = ReportData()
     private static var _shared: ReportData?
@@ -35,11 +35,12 @@ class ReportData {
     var TextList : [(String, String, String)] = []
     var realm: Realm? = try? Realm()
 
-    init(store: StoreOf<StaticsFeature>){
+    init(store: StoreOf<StaticsFeature>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: { $0 })
         
-        self.today_done = store.staticsData.day.last ?? 0
-        self.yesterday_done = store.staticsData.day.count > 5 ? store.staticsData.day[5] : 0
+        self.today_done = viewStore.staticsData.day.last ?? 0
+        self.yesterday_done = viewStore.staticsData.day.count > 5 ? viewStore.staticsData.day[5] : 0
         setReportText()
     }
     
@@ -79,8 +80,8 @@ class ReportData {
         return TextList[randomInt]
     }
     
-    func getTodayText() -> (String, String, String){
-        let today_done = store.staticsData.day.last ?? 0
+    func getTodayText() -> (String, String, String) {
+        let today_done = viewStore.staticsData.day.last ?? 0
         let today_total = HabitVM.shared.getNumOfTodayHabit()
 
         let percentHead = ""
@@ -100,18 +101,18 @@ class ReportData {
     
     func getYesterDayText() -> (String, String, String) {
         guard today_total != 0 else { return ("", "", "") }
-        let today_done = store.staticsData.day.last ?? 0
+        let today_done = viewStore.staticsData.day.last ?? 0
 
         var text: String
         var percent: String
         let percentHead = "어제 대비"
 
-        guard store.staticsData.day.count > 5 else {
+        guard viewStore.staticsData.day.count > 5 else {
             return ("", "", "")
         }
-        let yesterday_done = store.staticsData.day[5]
+        let yesterday_done = viewStore.staticsData.day[5]
         
-        guard !store.todoPerDay.isEmpty else {
+        guard !viewStore.todoPerDay.isEmpty else {
             return ("", "", "")
         }
         
@@ -120,13 +121,13 @@ class ReportData {
         let todayIndex = (todayWeek-1+7)%7
         let yesterdayIndex = (todayWeek-2+7)%7
         
-        guard todayIndex < store.todoPerDay.count,
-              yesterdayIndex < store.todoPerDay.count else {
+        guard todayIndex < viewStore.todoPerDay.count,
+              yesterdayIndex < viewStore.todoPerDay.count else {
             return ("", "", "")
         }
         
-        let todayTodo = store.todoPerDay[todayIndex]
-        let yesterdayTodo = store.todoPerDay[yesterdayIndex]
+        let todayTodo = viewStore.todoPerDay[todayIndex]
+        let yesterdayTodo = viewStore.todoPerDay[yesterdayIndex]
 
         text = getText(thisDone: today_done, lastDone: yesterday_done, "어제")
         percent = getPercent(thisDone: today_done, lastDone: yesterday_done, thisTodo: todayTodo, lastTodo: yesterdayTodo)
@@ -142,17 +143,17 @@ class ReportData {
             return ("", "", "")
         }
         
-        guard weekNO - 1 < store.staticsData.week.count,
+        guard weekNO - 1 < viewStore.staticsData.week.count,
               weekNO - 2 >= 0,
-              weekNO - 1 < store.todoPerWeek.count,
-              weekNO - 2 < store.todoPerWeek.count else {
+              weekNO - 1 < viewStore.todoPerWeek.count,
+              weekNO - 2 < viewStore.todoPerWeek.count else {
             return ("", "", "")
         }
         
-        let thisWeekDone = store.staticsData.week[weekNO - 1]
-        let lastWeekDone = store.staticsData.week[weekNO - 2]
-        let thisWeekTodo = store.todoPerWeek[weekNO - 1]
-        let lastWeekTodo = store.todoPerWeek[weekNO - 2]
+        let thisWeekDone = viewStore.staticsData.week[weekNO - 1]
+        let lastWeekDone = viewStore.staticsData.week[weekNO - 2]
+        let thisWeekTodo = viewStore.todoPerWeek[weekNO - 1]
+        let lastWeekTodo = viewStore.todoPerWeek[weekNO - 2]
         
         let text = getText(thisDone: thisWeekDone, lastDone: lastWeekDone, "지난 주")
         let percent = getPercent(thisDone: thisWeekDone, lastDone: lastWeekDone, thisTodo: thisWeekTodo, lastTodo: lastWeekTodo)
@@ -171,17 +172,17 @@ class ReportData {
         let thisMonthIndex = (todayMonth - 1 + 7) % 7
         let lastMonthIndex = (todayMonth - 2 + 7) % 7
         
-        guard thisMonthIndex < store.staticsData.month.count,
-              lastMonthIndex < store.staticsData.month.count,
-              thisMonthIndex < store.todoPerMonth.count,
-              lastMonthIndex < store.todoPerMonth.count else {
+        guard thisMonthIndex < viewStore.staticsData.month.count,
+              lastMonthIndex < viewStore.staticsData.month.count,
+              thisMonthIndex < viewStore.todoPerMonth.count,
+              lastMonthIndex < viewStore.todoPerMonth.count else {
             return ("", "", "")
         }
         
-        let thisMonthDone = store.staticsData.month[thisMonthIndex]
-        let lastMonthDone = store.staticsData.month[lastMonthIndex]
-        let thisMonthTodo = store.todoPerMonth[thisMonthIndex]
-        let lastMonthTodo = store.todoPerMonth[lastMonthIndex]
+        let thisMonthDone = viewStore.staticsData.month[thisMonthIndex]
+        let lastMonthDone = viewStore.staticsData.month[lastMonthIndex]
+        let thisMonthTodo = viewStore.todoPerMonth[thisMonthIndex]
+        let lastMonthTodo = viewStore.todoPerMonth[lastMonthIndex]
         
         let text = getText(thisDone: thisMonthDone, lastDone: lastMonthDone, "지난 달")
         let percent = getPercent(thisDone: thisMonthDone, lastDone: lastMonthDone, thisTodo: thisMonthTodo, lastTodo: lastMonthTodo)
