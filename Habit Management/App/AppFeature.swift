@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 @Reducer
 struct AppFeature {
-    @ObservableState
     struct State: Equatable {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
@@ -20,15 +19,16 @@ struct AppFeature {
     }
     
     enum Action: BindableAction {
+        case task
         case setUserName(String)
         case setHasLaunched(Bool)
-        
         case habit(HabitFeature.Action)
         case statistics(StaticsFeature.Action)
         case binding(BindingAction<State>)
     }
     
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Scope(state: \.habit, action: \.habit) {
             HabitFeature()
         }
@@ -39,6 +39,11 @@ struct AppFeature {
         
         Reduce { state, action in
             switch action {
+            case .task:
+                return .merge(
+                    .send(.habit(.onAppear)),
+                    .send(.statistics(.onAppear))
+                )
             case let .setUserName(name):
                 state.userName = name
                 UserDefaults.standard.set(name, forKey: "userName")

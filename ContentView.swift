@@ -25,18 +25,7 @@ struct ContentView: View {
         MainView(store: store)
             .environmentObject(setting)
             .task {
-                let habitStore = store.scope(
-                    state: \.habit,
-                    action: \.habit
-                )
-                habitStore.send(.onAppear)
-                
-                let statisticsStore = store.scope(
-                    state: \.statistics,
-                    action: \.statistics
-                )
-                ReportData.configure(store: statisticsStore)
-                statisticsStore.send(.onAppear)
+                await store.send(.task).finish()
             }
     }
 }

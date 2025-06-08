@@ -51,7 +51,7 @@ class Setting: ObservableObject {
         }
     }
     
-    func firstLaunch() -> Bool{
+    func firstLaunch() -> Bool {
         if UserDefaults.standard.object(forKey: "wasLaunchedBefore") == nil{
             UserDefaults.standard.set(false, forKey: "wasLaunchedBefore")
         }

@@ -18,9 +18,6 @@ struct HabitView: View {
     init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StaticsFeature>) {
         self.habitStore = habitStore
         self.statisticsStore = statisticsStore
-
-        ReportData.configure(store: statisticsStore)
-        habitStore.send(.onAppear)
     }
 
     var body: some View {
@@ -63,9 +60,9 @@ struct HabitView: View {
                     }
                     
                     MainAddButton {
-                        habitStore.send(.selectItem(nil))
-                        habitStore.send(.setEditMode(false))
-                        habitStore.send(.setAddMode(true))
+//                        habitStore.send(.selectItem(nil))
+//                        habitStore.send(.setEditMode(false))
+//                        habitStore.send(.setAddMode(true))
                     }
                     
                     Spacer()

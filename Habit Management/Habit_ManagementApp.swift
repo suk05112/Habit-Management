@@ -59,7 +59,7 @@ struct Habit_ManagementApp: SwiftUI.App {
     
     let notification = NotificationCenterManager()
     
-    init(){
+    init() {
         let config = RealmSwift.Realm.Configuration(
             schemaVersion: 5, // 새로운 스키마 버전 설정
             migrationBlock: { migration, oldSchemaVersion in
@@ -81,6 +81,7 @@ struct Habit_ManagementApp: SwiftUI.App {
         // 2. Realm이 새로운 Object를 쓸 수 있도록 설정
         Realm.Configuration.defaultConfiguration = config
     }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
