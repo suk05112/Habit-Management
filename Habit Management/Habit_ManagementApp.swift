@@ -11,6 +11,7 @@ import RealmSwift
 import PartialSheet
 import UserNotifications
 import FirebaseCore
+import ComposableArchitecture
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     let gcmMessageIDKey = "gcm.message_id"
@@ -72,7 +73,6 @@ struct Habit_ManagementApp: SwiftUI.App {
                         newObject!["month"] = []
                         newObject!["total"] = 0
                         newObject!["classification"] = "Done"
-                        
                     }
                 }
             }
@@ -82,9 +82,15 @@ struct Habit_ManagementApp: SwiftUI.App {
         Realm.Configuration.defaultConfiguration = config
     }
     
+//    let habitHeaderFeature = Store(initialState: HabitHeaderFeature.State(), reducer: { HabitHeaderFeature() })
+    
+    let store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            HabitHeaderView(store: habitHeaderFeature)
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ContentView(store: store)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: scenePhase) { newScenePhase in

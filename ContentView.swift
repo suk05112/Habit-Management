@@ -13,19 +13,13 @@ struct ContentView: View {
     let setting: Setting
     let store: StoreOf<AppFeature>
     
-    init() {
+    init(store: StoreOf<AppFeature>) {
         self.setting = Setting()
-        self.store = Store(
-            initialState: AppFeature.State(),
-            reducer: { AppFeature() }
-        )
+        self.store = store
     }
     
     var body: some View {
         MainView(store: store)
             .environmentObject(setting)
-            .task {
-                await store.send(.task).finish()
-            }
     }
 }

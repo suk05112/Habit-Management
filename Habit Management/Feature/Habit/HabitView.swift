@@ -22,26 +22,13 @@ struct HabitView: View {
 
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
-            ZStack(alignment: .topLeading) {
-                Rectangle()
-                    .fill(Color(hex: "#B8D9B9"))
-                    .edgesIgnoringSafeArea(.all)
-                    .scaledFrame(width: nil, height: 242)
-                
-                VStack(spacing: 0) { 
-                    MainHeaderView(
-                        userName: viewStore.binding(
-                            get: \.userName,
-                            send: { .setUserName($0) }
-                        ),
-                        mainReport: viewStore.binding(
-                            get: \.mainReportText,
-                            send: { .setMainReport($0) }
-                        )
-                    )
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            HabitBackgroundView {
+                VStack(spacing: 16) {
+                    HabitHeaderView(store: habitStore.scope(state: \.header, action: \.header))
                     
-                    HabitGridView(store: statisticsStore) // 나중에 따로 추출해도 OK
+                    
+                    
+                    HabitGridView(store: statisticsStore)
                     MainToggleBar(
                         showAll: viewStore.binding(
                             get: \.isShowingAllHabits,
@@ -91,21 +78,6 @@ struct HabitView: View {
                     Text("홈")
                 }
             }
-        }
-    }
-}
-
-struct MainHeaderView: View {
-    @Binding var userName: String
-    @Binding var mainReport: String
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(userName)님!\n\(mainReport)")
-                .scaledText(size: 25, weight: .semibold)
-                .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
-                .lineLimit(nil)
-                .fixedSize(horizontal: true, vertical: true)
         }
     }
 }
