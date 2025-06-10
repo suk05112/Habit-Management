@@ -20,6 +20,9 @@ struct MainView: View {
         self.store = store
         self.habitStore = store.scope(state: \.habit, action: \.habit)
         self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
+        
+        ReportData.configure(store: statisticsStore)
+        self.store.send(.task)
     }
     
     var body: some View {
@@ -54,7 +57,6 @@ struct MainView: View {
             }
             .onAppear {
                 print("MainView onappear")
-                ReportData.configure(store: statisticsStore)
                 print("🐨\(viewStore.userName)")
             }
         }

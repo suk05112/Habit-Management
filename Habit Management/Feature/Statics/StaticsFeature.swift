@@ -51,7 +51,7 @@ struct StaticsFeature {
                     )),
                     .send(.initiallizeStaticsData),
                     .send(.getnumOfToDo),
-                    .send(.computeTotalCounts),
+                    .send(.computeTotalCounts)
                 )
             case .checkOnApper:
                 print("run checkOnApper")

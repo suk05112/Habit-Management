@@ -33,7 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
             application.registerUserNotificationSettings(settings)
         }
         
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         application.registerForRemoteNotifications()
         return true
     }
