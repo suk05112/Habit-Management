@@ -57,6 +57,7 @@ struct HabitFeature {
         case resetContinuity
         case setAddMode(Bool)
         case setHabitTitle(String)
+        case setIter([Int])
         
         case header(HabitHeaderFeature.Action)
     }
@@ -143,6 +144,10 @@ struct HabitFeature {
                 
             case let .setHabitTitle(title):
                 state.habitTitle = title
+                return .none
+                
+            case let .setIter(iter):
+                state.iter = iter
                 return .none
                 
             case let .addHabit(name, iter):

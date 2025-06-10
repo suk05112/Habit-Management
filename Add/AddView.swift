@@ -72,7 +72,10 @@ struct AddView: View {
                             
                             HStack{
                                 ForEach(1..<8){
-                                    WeekButton(weekOfDay: $0, iter: viewStore.iter, OnOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
+                                    WeekButton(weekOfDay: $0, iter: viewStore.binding(
+                                        get: \.iter,
+                                        send: HabitFeature.Action.setIter
+                                    ), OnOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
                                 }
                             }
                             .scaledPadding(top: 10, leading: 25, bottom: 10, trailing: 25)

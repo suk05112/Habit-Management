@@ -10,7 +10,7 @@ import SwiftUI
 
 struct WeekButton: View {
     @State var weekOfDay: Int
-    @State var iter: [Int]
+    @Binding var iter: [Int]
     @State var OnOff: Bool
     
     var body: some View {
