@@ -14,7 +14,7 @@ import ComposableArchitecture
 struct MainView: View {
     let store: StoreOf<AppFeature>
     private let habitStore: StoreOf<HabitFeature>
-    private let statisticsStore: StoreOf<StaticsFeature>
+    private let statisticsStore: StoreOf<StatisticsFeature>
     
     init(store: StoreOf<AppFeature>) {
         self.store = store

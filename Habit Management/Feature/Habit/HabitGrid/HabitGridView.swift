@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HabitGridView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @StateObject var completedVM = compltedLIstVM.shared
     @State var frame_size: CGFloat = CGFloat(20)

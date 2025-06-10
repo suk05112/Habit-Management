@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EditView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @State private var showingAlert = false
     @State var isTodayHabit = false

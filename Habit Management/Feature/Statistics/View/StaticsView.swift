@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct StaticsView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
@@ -19,7 +19,7 @@ struct StaticsView: View {
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
-    init(store: StoreOf<StaticsFeature>) {
+    init(store: StoreOf<StatisticsFeature>) {
         print("StaticsView init")
         self.store = store
         ReportData.configure(store: store)

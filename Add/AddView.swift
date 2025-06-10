@@ -13,7 +13,7 @@ import ComposableArchitecture
 struct AddView: View {
     let habitStore: StoreOf<HabitFeature>
     
-    let statisticsStore: StoreOf<StaticsFeature> = Store(initialState: StaticsFeature.State(), reducer: { StaticsFeature() })
+    let statisticsStore: StoreOf<StatisticsFeature> = Store(initialState: StatisticsFeature.State(), reducer: { StatisticsFeature() })
     let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
     
     @ObservedObject var textfield = TextLimiter()

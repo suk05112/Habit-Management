@@ -15,11 +15,11 @@ struct AppFeature {
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         
         var habit: HabitFeature.State
-        var statistics: StaticsFeature.State
+        var statistics: StatisticsFeature.State
         
         init() {
             self.habit = HabitFeature.State()
-            self.statistics = StaticsFeature.State()
+            self.statistics = StatisticsFeature.State()
         }
     }
     
@@ -28,7 +28,7 @@ struct AppFeature {
         case setUserName(String)
         case setHasLaunched(Bool)
         case habit(HabitFeature.Action)
-        case statistics(StaticsFeature.Action)
+        case statistics(StatisticsFeature.Action)
         case binding(BindingAction<State>)
     }
     
@@ -40,7 +40,7 @@ struct AppFeature {
         }
         
         Scope(state: \.statistics, action: \.statistics) {
-            StaticsFeature()
+            StatisticsFeature()
         }
         
         Reduce { state, action in

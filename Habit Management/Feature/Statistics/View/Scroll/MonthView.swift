@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MonthView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @EnvironmentObject var setting: Setting
     @Binding var frame_size: CGFloat

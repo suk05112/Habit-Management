@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct Graph: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     var ratio: Double
     @State var selected: Total = .week
     @State private var selectedData: [Int] = []
     @State var width:CGFloat = 13
     
-    init(store: StoreOf<StaticsFeature>, ratio: Double) {
+    init(store: StoreOf<StatisticsFeature>, ratio: Double) {
         self.store = store
         self.ratio = ratio
     }
@@ -118,7 +118,7 @@ struct Graph: View {
         .padding(30)
     }
     
-    func getData(viewStore: ViewStore<StaticsFeature.State, StaticsFeature.Action>, selected: Total)-> [Int] {
+    func getData(viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>, selected: Total)-> [Int] {
         switch selected {
         case .week:
             return viewStore.staticsData.day

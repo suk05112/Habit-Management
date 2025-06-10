@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct TotalView: View {
     let staticCase: Total
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in

@@ -80,8 +80,8 @@
 		4E48FABC2DF45DFA00BA7EA6 /* StaticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA12DF45DFA00BA7EA6 /* StaticsView.swift */; };
 		4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA22DF45DFA00BA7EA6 /* StaticsView 2.swift */; };
 		4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA32DF45DFA00BA7EA6 /* TotalView.swift */; };
-		4E48FABF2DF45DFA00BA7EA6 /* StaticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA52DF45DFA00BA7EA6 /* StaticsClient.swift */; };
-		4E48FAC02DF45DFA00BA7EA6 /* StaticsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA62DF45DFA00BA7EA6 /* StaticsFeature.swift */; };
+		4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA52DF45DFA00BA7EA6 /* StatisticsClient.swift */; };
+		4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA62DF45DFA00BA7EA6 /* StatisticsFeature.swift */; };
 		4E48FAC72DF45DFD00BA7EA6 /* CompletedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC12DF45DFD00BA7EA6 /* CompletedList.swift */; };
 		4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */; };
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
@@ -170,8 +170,8 @@
 		4E48FAA12DF45DFA00BA7EA6 /* StaticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsView.swift; sourceTree = "<group>"; };
 		4E48FAA22DF45DFA00BA7EA6 /* StaticsView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StaticsView 2.swift"; sourceTree = "<group>"; };
 		4E48FAA32DF45DFA00BA7EA6 /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
-		4E48FAA52DF45DFA00BA7EA6 /* StaticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsClient.swift; sourceTree = "<group>"; };
-		4E48FAA62DF45DFA00BA7EA6 /* StaticsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticsFeature.swift; sourceTree = "<group>"; };
+		4E48FAA52DF45DFA00BA7EA6 /* StatisticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsClient.swift; sourceTree = "<group>"; };
+		4E48FAA62DF45DFA00BA7EA6 /* StatisticsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeature.swift; sourceTree = "<group>"; };
 		4E48FAC12DF45DFD00BA7EA6 /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
@@ -481,35 +481,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		4E48FAA72DF45DFA00BA7EA6 /* Statics */ = {
+		4E48FAA72DF45DFA00BA7EA6 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
 				4E48FAA42DF45DFA00BA7EA6 /* View */,
-				4E48FAA52DF45DFA00BA7EA6 /* StaticsClient.swift */,
-				4E48FAA62DF45DFA00BA7EA6 /* StaticsFeature.swift */,
-			);
-			path = Statics;
-			sourceTree = "<group>";
-		};
-		4E48FAA82DF45DFA00BA7EA6 /* Scroll */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scroll;
-			sourceTree = "<group>";
-		};
-		4E48FAA92DF45DFA00BA7EA6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				4E48FAA82DF45DFA00BA7EA6 /* Scroll */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		4E48FAAA2DF45DFA00BA7EA6 /* Statistics */ = {
-			isa = PBXGroup;
-			children = (
-				4E48FAA92DF45DFA00BA7EA6 /* View */,
+				4E48FAA52DF45DFA00BA7EA6 /* StatisticsClient.swift */,
+				4E48FAA62DF45DFA00BA7EA6 /* StatisticsFeature.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -519,8 +496,7 @@
 			children = (
 				4E48FA932DF45DFA00BA7EA6 /* Habit */,
 				4E48FA952DF45DFA00BA7EA6 /* Main */,
-				4E48FAA72DF45DFA00BA7EA6 /* Statics */,
-				4E48FAAA2DF45DFA00BA7EA6 /* Statistics */,
+				4E48FAA72DF45DFA00BA7EA6 /* Statistics */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -728,8 +704,8 @@
 				4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */,
 				4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */,
 				4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */,
-				4E48FABF2DF45DFA00BA7EA6 /* StaticsClient.swift in Sources */,
-				4E48FAC02DF45DFA00BA7EA6 /* StaticsFeature.swift in Sources */,
+				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,
+				4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,

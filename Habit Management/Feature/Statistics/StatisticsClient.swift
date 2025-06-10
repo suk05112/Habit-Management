@@ -9,7 +9,7 @@ import RealmSwift
 import ComposableArchitecture
 import Foundation
 
-struct StaticsClient {
+struct StatisticsClient {
     var getInitialStaticsData: () -> StaticsData
     var addOrUpdate: () -> StaticsData
     var getStr: (_ selected: Int)-> [String]
@@ -217,8 +217,8 @@ struct StaticsClient {
     }
 }
 
-extension StaticsClient : DependencyKey {
-    static let liveValue = StaticsClient(
+extension StatisticsClient : DependencyKey {
+    static let liveValue = StatisticsClient(
         getInitialStaticsData : {
             print("Static init")
             let dateFormatter = DateFormatter()
@@ -368,8 +368,8 @@ struct StaticsData: Equatable {
 }
 
 extension DependencyValues {
-    var staticsClient: StaticsClient {
-        get { self[StaticsClient.self] }
-        set { self[StaticsClient.self] = newValue }
+    var staticsClient: StatisticsClient {
+        get { self[StatisticsClient.self] }
+        set { self[StatisticsClient.self] = newValue }
     }
 }

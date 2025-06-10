@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct StaticsFeature {
+struct StatisticsFeature {
     struct State: Equatable {
         var dayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)
         var monthArray: [String] = []

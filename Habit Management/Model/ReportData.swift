@@ -10,8 +10,8 @@ import RealmSwift
 import ComposableArchitecture
 
 class ReportData {
-    let store: StoreOf<StaticsFeature>
-    let viewStore: ViewStore<StaticsFeature.State, StaticsFeature.Action>
+    let store: StoreOf<StatisticsFeature>
+    let viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>
 
 //    static let shared = ReportData()
     private static var _shared: ReportData?
@@ -35,7 +35,7 @@ class ReportData {
     var TextList : [(String, String, String)] = []
     var realm: Realm? = try? Realm()
 
-    init(store: StoreOf<StaticsFeature>) {
+    init(store: StoreOf<StatisticsFeature>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
         
@@ -44,7 +44,7 @@ class ReportData {
         setReportText()
     }
     
-    static func configure(store: StoreOf<StaticsFeature>) {
+    static func configure(store: StoreOf<StatisticsFeature>) {
         _shared = ReportData(store: store)
     }
     
