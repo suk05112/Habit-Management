@@ -35,7 +35,7 @@ struct MainView: View {
                             Text("홈")
                         }
                     
-                    StaticsView(store: statisticsStore)
+                    StatisticsView(store: statisticsStore)
                         .tabItem {
                             Image(systemName: "chart.bar.fill")
                             Text("통계")

@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct StaticsView: View {
+struct StatisticsView: View {
     let store: StoreOf<StatisticsFeature>
     
     @State var ratio: Double = Double(5/6)
