@@ -53,6 +53,7 @@
 		4E3381832DF69033002849DB /* HabitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381822DF69033002849DB /* HabitHeaderView.swift */; };
 		4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381842DF694CF002849DB /* HabitBackgroundView.swift */; };
 		4E3381882DF70ECA002849DB /* HabitHeaderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381872DF70ECA002849DB /* HabitHeaderFeature.swift */; };
+		4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA872DF45DF200BA7EA6 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */; };
@@ -142,6 +143,7 @@
 		4E3381822DF69033002849DB /* HabitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderView.swift; sourceTree = "<group>"; };
 		4E3381842DF694CF002849DB /* HabitBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitBackgroundView.swift; sourceTree = "<group>"; };
 		4E3381872DF70ECA002849DB /* HabitHeaderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderFeature.swift; sourceTree = "<group>"; };
+		4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillColorModifier.swift; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -367,6 +369,22 @@
 			path = HabitHeader;
 			sourceTree = "<group>";
 		};
+		4E3381AC2DF7E561002849DB /* HabitBackground */ = {
+			isa = PBXGroup;
+			children = (
+				4E3381842DF694CF002849DB /* HabitBackgroundView.swift */,
+			);
+			path = HabitBackground;
+			sourceTree = "<group>";
+		};
+		4E3381AD2DF7E5CD002849DB /* HabitGrid */ = {
+			isa = PBXGroup;
+			children = (
+				4E48FA962DF45DFA00BA7EA6 /* HabitGridView.swift */,
+			);
+			path = HabitGrid;
+			sourceTree = "<group>";
+		};
 		4E48FA7C2DF45DF200BA7EA6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				4E48FA822DF45DF200BA7EA6 /* FrameModifier.swift */,
+				4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -418,8 +437,9 @@
 				4E48FA922DF45DFA00BA7EA6 /* HabitView.swift */,
 				4E48FA902DF45DFA00BA7EA6 /* HabitClient.swift */,
 				4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */,
+				4E3381AC2DF7E561002849DB /* HabitBackground */,
 				4E3381862DF70EB4002849DB /* HabitHeader */,
-				4E3381842DF694CF002849DB /* HabitBackgroundView.swift */,
+				4E3381AD2DF7E5CD002849DB /* HabitGrid */,
 				4E48FA8E2DF45DFA00BA7EA6 /* CompletionClient.swift */,
 				4E48FA8F2DF45DFA00BA7EA6 /* CompletionFeature.swift */,
 			);
@@ -437,7 +457,6 @@
 		4E48FA9C2DF45DFA00BA7EA6 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
-				4E48FA962DF45DFA00BA7EA6 /* HabitGridView.swift */,
 				4E48FA972DF45DFA00BA7EA6 /* LessMore.swift */,
 				4E48FA982DF45DFA00BA7EA6 /* MonthView.swift */,
 				4E48FA992DF45DFA00BA7EA6 /* ThisWeekView.swift */,
@@ -703,6 +722,7 @@
 				4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */,
 				4E48FAB92DF45DFA00BA7EA6 /* Graph.swift in Sources */,
 				4E48FABA2DF45DFA00BA7EA6 /* ReportListView.swift in Sources */,
+				4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */,
 				4E48FABB2DF45DFA00BA7EA6 /* ReportView.swift in Sources */,
 				4E48FABC2DF45DFA00BA7EA6 /* StaticsView.swift in Sources */,
 				4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */,

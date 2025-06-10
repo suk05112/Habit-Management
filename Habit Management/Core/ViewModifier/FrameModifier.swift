@@ -5,12 +5,11 @@
 //  Created by 남경민 on 5/21/25.
 //
 
-import Foundation
 import SwiftUI
 
 struct FrameModifier: ViewModifier {
     @EnvironmentObject var setting: Setting
-
+    
     var isScroll:Bool?
     var width: CGFloat?
     var height: CGFloat?

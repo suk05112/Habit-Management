@@ -26,8 +26,6 @@ struct HabitView: View {
                 VStack(spacing: 16) {
                     HabitHeaderView(store: habitStore.scope(state: \.header, action: \.header))
                     
-                    
-                    
                     HabitGridView(store: statisticsStore)
                     MainToggleBar(
                         showAll: viewStore.binding(

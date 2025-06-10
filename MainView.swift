@@ -13,34 +13,33 @@ import ComposableArchitecture
 
 struct MainView: View {
     let store: StoreOf<AppFeature>
-    
-//    private let habitStore: StoreOf<HabitFeature>
-//    private let statisticsStore: StoreOf<StaticsFeature>
+    private let habitStore: StoreOf<HabitFeature>
+    private let statisticsStore: StoreOf<StaticsFeature>
     
     init(store: StoreOf<AppFeature>) {
         self.store = store
-//        self.habitStore = store.scope(state: \.habit, action: \.habit)
-//        self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
+        self.habitStore = store.scope(state: \.habit, action: \.habit)
+        self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
     }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
                 TabView {
-                    HabitView(habitStore: store.scope(state: \.habit, action: \.habit), statisticsStore: store.scope(state: \.statistics, action: \.statistics))
+                    HabitView(habitStore: habitStore, statisticsStore: statisticsStore)
                         .tabItem {
                             Image(systemName: "house")
                             Text("홈")
                         }
                     
-                    StaticsView(store: store.scope(state: \.statistics, action: \.statistics))
+                    StaticsView(store: statisticsStore)
                         .tabItem {
                             Image(systemName: "chart.bar.fill")
                             Text("통계")
                         }
                 }
                 if viewStore.habit.isShowingAdd {
-                    AddView(habitStore: store.scope(state: \.habit, action: \.habit))
+                    AddView(habitStore: habitStore)
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                 }
                 
@@ -55,9 +54,8 @@ struct MainView: View {
             }
             .onAppear {
                 print("MainView onappear")
-                ReportData.configure(store: store.scope(state: \.statistics, action: \.statistics))
+                ReportData.configure(store: statisticsStore)
                 print("🐨\(viewStore.userName)")
-//                habitStore.send(.onAppear)
             }
         }
     }

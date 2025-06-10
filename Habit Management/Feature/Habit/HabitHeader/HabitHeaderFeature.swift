@@ -12,11 +12,7 @@ import ComposableArchitecture
 struct HabitHeaderFeature {
     struct State: Equatable {
         var userName: String = ""
-        
-        // Equatable 명시적 구현
-        static func == (lhs: State, rhs: State) -> Bool {
-            return lhs.userName == rhs.userName
-        }
+        var mainReportText: String = "아직 완료된 습관이 없습니다."
     }
     
     enum Action: Equatable {
@@ -27,9 +23,7 @@ struct HabitHeaderFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                print("이전 userName: \(state.userName)")  // 디버깅용
-                state.userName = "테스트유저이름"
-                print("변경된 userName: \(state.userName)")  // 디버깅용
+                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
                 return .none
             }
         }

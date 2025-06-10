@@ -9,30 +9,28 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HabitHeaderView: View {
-    let setting: Setting
     let store: StoreOf<HabitHeaderFeature>
     
     init(store: StoreOf<HabitHeaderFeature>) {
-        self.setting = Setting()
         self.store = store
     }
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in  // 다시 전체 State를 observe
+        WithViewStore(store, observe: { $0 }) { viewStore in
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("\(viewStore.userName)님!")  // userName 프로퍼티 직접 접근
+                    Text("\(viewStore.userName)님!")
+                        .habitHeaderStyle()
+                    Text("\(viewStore.mainReportText)")
                         .habitHeaderStyle()
                 }
                 Spacer()
             }
-            .padding(.horizontal, 16)
-            .task {
-                print("task 시작")
-                await viewStore.send(.onAppear).finish()
-                print("task 완료")
+            .padding(.horizontal, 20)
+            .padding(.top, 12)
+            .onAppear {
+                viewStore.send(.onAppear)
             }
-            .environmentObject(setting)
         }
     }
 }
