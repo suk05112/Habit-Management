@@ -22,7 +22,7 @@ struct EditView: View {
     @Binding var selectedItem: Habit
     @Binding var offset: CGFloat
     @Binding var name: String
-    @Binding var showToast: Bool
+//    @Binding var showToast: Bool
     
     
     @State var weekIter: Int = 0
@@ -49,10 +49,7 @@ struct EditView: View {
                         //                    isTodayHabitFunc()
                         
                         deleteItem()
-                        viewStore.send(.setnumOfToDoPerDay)
-                        viewStore.send(.setnumOfToDoPerWeek(add: false, numOfIter: weekIter))
-                        viewStore.send(.setnumOfToDoPerMonth(add: false, numOfIter: weekIter))
-                        
+                        viewStore.send(.setnumOfToDo(add: false, numOfIter: weekIter))
                         viewStore.send(.getnumOfToDo)
                         
                         compltedLIstVM.shared.setIsToday(isToday: self.isTodayHabit)

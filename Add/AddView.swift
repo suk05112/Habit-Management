@@ -53,9 +53,7 @@ struct AddView: View {
                                         }
                                         viewStore.send(.setHabitTitle(""))
                                         
-                                        statisticsStore.send(.setnumOfToDoPerDay)
-                                        statisticsStore.send(.setnumOfToDoPerWeek(add: true, numOfIter: viewStore.iter.count))
-                                        statisticsStore.send(.setnumOfToDoPerMonth(add: true, numOfIter: viewStore.iter.count))
+                                        statisticsStore.send(.setnumOfToDo(add: true, numOfIter: viewStore.iter.count))
                                         statisticsStore.send(.getnumOfToDo)
                                         
                                         completionStore.send(.updateAllDoneContinuity(.add, isTodayHabit(viewStore.iter) ? true : false))

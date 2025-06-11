@@ -30,9 +30,7 @@ struct StatisticsFeature {
         case computeTotalCounts
         case checkOnApper
         case addOrUpdate
-        case setnumOfToDoPerDay
-        case setnumOfToDoPerWeek(add: Bool, numOfIter: Int)
-        case setnumOfToDoPerMonth(add: Bool, numOfIter: Int)
+        case setnumOfToDo(add: Bool, numOfIter: Int)
         case getnumOfToDo
     }
     
@@ -119,15 +117,9 @@ struct StatisticsFeature {
                 
                 return .none
                 
-            case .setnumOfToDoPerDay:
+            case let .setnumOfToDo(add, numOfIter):
                 staticsClient.setnumOfToDoPerDay()
-                return .none
-                
-            case let .setnumOfToDoPerWeek(add, numOfIter):
                 staticsClient.setnumOfToDoPerWeek(add, numOfIter)
-                return .none
-                
-            case let .setnumOfToDoPerMonth(add, numOfIter):
                 staticsClient.setnumOfToDoPerMonth(add, numOfIter)
                 return .none
             }
