@@ -87,6 +87,7 @@
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
 		4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */; };
 		4E48FACB2DF45DFD00BA7EA6 /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */; };
+		B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56F33722DF9D30900416589 /* PaddingModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,7 @@
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
 		4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
+		B56F33722DF9D30900416589 /* PaddingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +409,7 @@
 		4E48FA832DF45DF200BA7EA6 /* ViewModifier */ = {
 			isa = PBXGroup;
 			children = (
+				B56F33722DF9D30900416589 /* PaddingModifier.swift */,
 				4E48FA822DF45DF200BA7EA6 /* FrameModifier.swift */,
 				4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */,
 			);
@@ -691,6 +694,7 @@
 				4E48FAB12DF45DFA00BA7EA6 /* MainFeature.swift in Sources */,
 				4E48FAB22DF45DFA00BA7EA6 /* HabitGridView.swift in Sources */,
 				4E48FAB32DF45DFA00BA7EA6 /* LessMore.swift in Sources */,
+				B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */,
 				4E48FAB42DF45DFA00BA7EA6 /* MonthView.swift in Sources */,
 				4E48FAB52DF45DFA00BA7EA6 /* ThisWeekView.swift in Sources */,
 				4E48FAB62DF45DFA00BA7EA6 /* WeekView.swift in Sources */,
