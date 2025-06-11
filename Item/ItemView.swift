@@ -10,8 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ItemView: View{
-    @EnvironmentObject var setting: Setting
-    
     let store: StoreOf<HabitFeature>
     let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
     let habit: Habit
@@ -55,8 +53,12 @@ struct ItemView: View{
                                 
                             }
                         }
-                        
-                        .padding(23*setting.HeightRatio)
+                        .scaledPadding(
+                            top: 23,
+                            leading: 23,
+                            bottom: 23,
+                            trailing: 23
+                        )
                         .opacity(completionViewStore.doneTodayMap[habit.id!] == true ? 0.5 : 1)
                         
                     }

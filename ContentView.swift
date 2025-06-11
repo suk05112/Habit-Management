@@ -10,11 +10,10 @@ import UserNotifications
 import ComposableArchitecture
 
 struct ContentView: View {
-    let setting: Setting
+    private let setting: Setting = Setting()
     let store: StoreOf<AppFeature>
     
     init(store: StoreOf<AppFeature>) {
-        self.setting = Setting()
         self.store = store
     }
     

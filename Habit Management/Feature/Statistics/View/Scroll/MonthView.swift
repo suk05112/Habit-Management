@@ -9,14 +9,20 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MonthView: View {
-    let store: StoreOf<StatisticsFeature>
+    private let store: StoreOf<StatisticsFeature>
     
-    @EnvironmentObject var setting: Setting
-    @Binding var frame_size: CGFloat
+    private var ratioSpacing: CGFloat
+    private var frame_size: CGFloat
+    
+    init(store: StoreOf<StatisticsFeature>, ratioSpacing: CGFloat, frame_size: CGFloat) {
+        self.store = store
+        self.ratioSpacing = ratioSpacing
+        self.frame_size = frame_size
+    }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            HStack(alignment: .center, spacing: 3 * setting.WidthRatio) {
+            HStack(alignment: .center, spacing: ratioSpacing) {
                 ForEach(Array(viewStore.monthArray.enumerated()), id: \.offset) { index, item in
                     Text(item)
                         .scaledText(size: 10, weight: .bold)
