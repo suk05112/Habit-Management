@@ -54,6 +54,8 @@
 		4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381842DF694CF002849DB /* HabitBackgroundView.swift */; };
 		4E3381882DF70ECA002849DB /* HabitHeaderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381872DF70ECA002849DB /* HabitHeaderFeature.swift */; };
 		4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */; };
+		4E3382932DFB0A5B002849DB /* GridFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3382922DFB0A5B002849DB /* GridFeature.swift */; };
+		4E3382962DFB0AF2002849DB /* GridBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3382952DFB0AF2002849DB /* GridBackgroundView.swift */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA872DF45DF200BA7EA6 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */; };
@@ -67,11 +69,11 @@
 		4E48FAAF2DF45DFA00BA7EA6 /* HabitFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */; };
 		4E48FAB02DF45DFA00BA7EA6 /* HabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA922DF45DFA00BA7EA6 /* HabitView.swift */; };
 		4E48FAB12DF45DFA00BA7EA6 /* MainFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA942DF45DFA00BA7EA6 /* MainFeature.swift */; };
-		4E48FAB22DF45DFA00BA7EA6 /* HabitGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA962DF45DFA00BA7EA6 /* HabitGridView.swift */; };
-		4E48FAB32DF45DFA00BA7EA6 /* LessMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA972DF45DFA00BA7EA6 /* LessMore.swift */; };
-		4E48FAB42DF45DFA00BA7EA6 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA982DF45DFA00BA7EA6 /* MonthView.swift */; };
+		4E48FAB22DF45DFA00BA7EA6 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA962DF45DFA00BA7EA6 /* GridView.swift */; };
+		4E48FAB32DF45DFA00BA7EA6 /* GridLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA972DF45DFA00BA7EA6 /* GridLevelView.swift */; };
+		4E48FAB42DF45DFA00BA7EA6 /* GridMonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA982DF45DFA00BA7EA6 /* GridMonthHeaderView.swift */; };
 		4E48FAB52DF45DFA00BA7EA6 /* ThisWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA992DF45DFA00BA7EA6 /* ThisWeekView.swift */; };
-		4E48FAB62DF45DFA00BA7EA6 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9A2DF45DFA00BA7EA6 /* WeekView.swift */; };
+		4E48FAB62DF45DFA00BA7EA6 /* GridWeekDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9A2DF45DFA00BA7EA6 /* GridWeekDayView.swift */; };
 		4E48FAB72DF45DFA00BA7EA6 /* YearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9B2DF45DFA00BA7EA6 /* YearView.swift */; };
 		4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9D2DF45DFA00BA7EA6 /* AnimationView.swift */; };
 		4E48FAB92DF45DFA00BA7EA6 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9E2DF45DFA00BA7EA6 /* Graph.swift */; };
@@ -145,6 +147,8 @@
 		4E3381842DF694CF002849DB /* HabitBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitBackgroundView.swift; sourceTree = "<group>"; };
 		4E3381872DF70ECA002849DB /* HabitHeaderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderFeature.swift; sourceTree = "<group>"; };
 		4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillColorModifier.swift; sourceTree = "<group>"; };
+		4E3382922DFB0A5B002849DB /* GridFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFeature.swift; sourceTree = "<group>"; };
+		4E3382952DFB0AF2002849DB /* GridBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridBackgroundView.swift; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -158,11 +162,11 @@
 		4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFeature.swift; sourceTree = "<group>"; };
 		4E48FA922DF45DFA00BA7EA6 /* HabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitView.swift; sourceTree = "<group>"; };
 		4E48FA942DF45DFA00BA7EA6 /* MainFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFeature.swift; sourceTree = "<group>"; };
-		4E48FA962DF45DFA00BA7EA6 /* HabitGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitGridView.swift; sourceTree = "<group>"; };
-		4E48FA972DF45DFA00BA7EA6 /* LessMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessMore.swift; sourceTree = "<group>"; };
-		4E48FA982DF45DFA00BA7EA6 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
+		4E48FA962DF45DFA00BA7EA6 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		4E48FA972DF45DFA00BA7EA6 /* GridLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLevelView.swift; sourceTree = "<group>"; };
+		4E48FA982DF45DFA00BA7EA6 /* GridMonthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMonthHeaderView.swift; sourceTree = "<group>"; };
 		4E48FA992DF45DFA00BA7EA6 /* ThisWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThisWeekView.swift; sourceTree = "<group>"; };
-		4E48FA9A2DF45DFA00BA7EA6 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		4E48FA9A2DF45DFA00BA7EA6 /* GridWeekDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridWeekDayView.swift; sourceTree = "<group>"; };
 		4E48FA9B2DF45DFA00BA7EA6 /* YearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearView.swift; sourceTree = "<group>"; };
 		4E48FA9D2DF45DFA00BA7EA6 /* AnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationView.swift; sourceTree = "<group>"; };
 		4E48FA9E2DF45DFA00BA7EA6 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
@@ -379,12 +383,49 @@
 			path = HabitBackground;
 			sourceTree = "<group>";
 		};
-		4E3381AD2DF7E5CD002849DB /* HabitGrid */ = {
+		4E3382912DFB09A6002849DB /* Grid */ = {
 			isa = PBXGroup;
 			children = (
-				4E48FA962DF45DFA00BA7EA6 /* HabitGridView.swift */,
+				4E48FA962DF45DFA00BA7EA6 /* GridView.swift */,
+				4E3382922DFB0A5B002849DB /* GridFeature.swift */,
+				4E3382942DFB0ADA002849DB /* GridBackground */,
+				4E3382972DFB0BD7002849DB /* GridWeekDay */,
+				4E3383772DFB1A2D002849DB /* GridMonthHeader */,
+				4E3383762DFB16C9002849DB /* GridLevel */,
 			);
-			path = HabitGrid;
+			path = Grid;
+			sourceTree = "<group>";
+		};
+		4E3382942DFB0ADA002849DB /* GridBackground */ = {
+			isa = PBXGroup;
+			children = (
+				4E3382952DFB0AF2002849DB /* GridBackgroundView.swift */,
+			);
+			path = GridBackground;
+			sourceTree = "<group>";
+		};
+		4E3382972DFB0BD7002849DB /* GridWeekDay */ = {
+			isa = PBXGroup;
+			children = (
+				4E48FA9A2DF45DFA00BA7EA6 /* GridWeekDayView.swift */,
+			);
+			path = GridWeekDay;
+			sourceTree = "<group>";
+		};
+		4E3383762DFB16C9002849DB /* GridLevel */ = {
+			isa = PBXGroup;
+			children = (
+				4E48FA972DF45DFA00BA7EA6 /* GridLevelView.swift */,
+			);
+			path = GridLevel;
+			sourceTree = "<group>";
+		};
+		4E3383772DFB1A2D002849DB /* GridMonthHeader */ = {
+			isa = PBXGroup;
+			children = (
+				4E48FA982DF45DFA00BA7EA6 /* GridMonthHeaderView.swift */,
+			);
+			path = GridMonthHeader;
 			sourceTree = "<group>";
 		};
 		4E48FA7C2DF45DF200BA7EA6 /* Component */ = {
@@ -442,7 +483,6 @@
 				4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */,
 				4E3381AC2DF7E561002849DB /* HabitBackground */,
 				4E3381862DF70EB4002849DB /* HabitHeader */,
-				4E3381AD2DF7E5CD002849DB /* HabitGrid */,
 				4E48FA8E2DF45DFA00BA7EA6 /* CompletionClient.swift */,
 				4E48FA8F2DF45DFA00BA7EA6 /* CompletionFeature.swift */,
 			);
@@ -460,10 +500,7 @@
 		4E48FA9C2DF45DFA00BA7EA6 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
-				4E48FA972DF45DFA00BA7EA6 /* LessMore.swift */,
-				4E48FA982DF45DFA00BA7EA6 /* MonthView.swift */,
 				4E48FA992DF45DFA00BA7EA6 /* ThisWeekView.swift */,
-				4E48FA9A2DF45DFA00BA7EA6 /* WeekView.swift */,
 				4E48FA9B2DF45DFA00BA7EA6 /* YearView.swift */,
 			);
 			path = Scroll;
@@ -497,6 +534,7 @@
 		4E48FAAB2DF45DFA00BA7EA6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				4E3382912DFB09A6002849DB /* Grid */,
 				4E48FA932DF45DFA00BA7EA6 /* Habit */,
 				4E48FA952DF45DFA00BA7EA6 /* Main */,
 				4E48FAA72DF45DFA00BA7EA6 /* Statistics */,
@@ -682,22 +720,24 @@
 				03A06E642858F7870069C3CB /* FirstLaunchView.swift in Sources */,
 				039164FA283752B900CA0028 /* EditView.swift in Sources */,
 				0392B4172806C444006C1E04 /* Week.swift in Sources */,
+				4E3382932DFB0A5B002849DB /* GridFeature.swift in Sources */,
 				03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */,
 				032EED5A285E252800994E5B /* TextLimiter.swift in Sources */,
 				4E48FAAC2DF45DFA00BA7EA6 /* CompletionClient.swift in Sources */,
 				4E3381882DF70ECA002849DB /* HabitHeaderFeature.swift in Sources */,
 				4E48FAAD2DF45DFA00BA7EA6 /* CompletionFeature.swift in Sources */,
 				4E48FAAE2DF45DFA00BA7EA6 /* HabitClient.swift in Sources */,
+				4E3382962DFB0AF2002849DB /* GridBackgroundView.swift in Sources */,
 				4E3381832DF69033002849DB /* HabitHeaderView.swift in Sources */,
 				4E48FAAF2DF45DFA00BA7EA6 /* HabitFeature.swift in Sources */,
 				4E48FAB02DF45DFA00BA7EA6 /* HabitView.swift in Sources */,
 				4E48FAB12DF45DFA00BA7EA6 /* MainFeature.swift in Sources */,
-				4E48FAB22DF45DFA00BA7EA6 /* HabitGridView.swift in Sources */,
-				4E48FAB32DF45DFA00BA7EA6 /* LessMore.swift in Sources */,
+				4E48FAB22DF45DFA00BA7EA6 /* GridView.swift in Sources */,
+				4E48FAB32DF45DFA00BA7EA6 /* GridLevelView.swift in Sources */,
 				B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */,
-				4E48FAB42DF45DFA00BA7EA6 /* MonthView.swift in Sources */,
+				4E48FAB42DF45DFA00BA7EA6 /* GridMonthHeaderView.swift in Sources */,
 				4E48FAB52DF45DFA00BA7EA6 /* ThisWeekView.swift in Sources */,
-				4E48FAB62DF45DFA00BA7EA6 /* WeekView.swift in Sources */,
+				4E48FAB62DF45DFA00BA7EA6 /* GridWeekDayView.swift in Sources */,
 				4E48FAB72DF45DFA00BA7EA6 /* YearView.swift in Sources */,
 				4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */,
 				4E48FAB92DF45DFA00BA7EA6 /* Graph.swift in Sources */,

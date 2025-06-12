@@ -1,5 +1,5 @@
 //
-//  MonthView.swift
+//  GridMonthHeaderView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 5/25/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MonthView: View {
+struct GridMonthHeaderView: View {
     private let store: StoreOf<StatisticsFeature>
     
     private var ratioSpacing: CGFloat

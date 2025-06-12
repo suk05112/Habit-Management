@@ -38,7 +38,7 @@ struct StatisticsView: View {
                     }
                     .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
                     
-                    HabitGridView(store: store)
+                    GridView(store: store)
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){
