@@ -10,36 +10,46 @@ import ComposableArchitecture
 
 @Reducer
 struct AppFeature {
-    @ObservableState
     struct State: Equatable {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         
-        var habit: HabitFeature.State = .init()
+        var habit: HabitFeature.State
+        var statistics: StatisticsFeature.State
         
-        var statistics: StaticsFeature.State = .init()
+        init() {
+            self.habit = HabitFeature.State()
+            self.statistics = StatisticsFeature.State()
+        }
     }
     
     enum Action: BindableAction {
+        case task
         case setUserName(String)
         case setHasLaunched(Bool)
-        
         case habit(HabitFeature.Action)
-        case statistics(StaticsFeature.Action)
+        case statistics(StatisticsFeature.Action)
         case binding(BindingAction<State>)
     }
     
     var body: some Reducer<State, Action> {
-        Scope(state: \.habit, action: /Action.habit) {
+        BindingReducer()
+        
+        Scope(state: \.habit, action: \.habit) {
             HabitFeature()
         }
         
-        Scope(state: \.statistics, action: /Action.statistics) {
-            StaticsFeature()
+        Scope(state: \.statistics, action: \.statistics) {
+            StatisticsFeature()
         }
         
         Reduce { state, action in
             switch action {
+            case .task:
+                return .merge(
+                    .send(.habit(.onAppear)),
+                    .send(.statistics(.onAppear))
+                )
             case let .setUserName(name):
                 state.userName = name
                 UserDefaults.standard.set(name, forKey: "userName")
@@ -59,7 +69,6 @@ struct AppFeature {
             case .binding(_):
                 return .none
             }
-            
         }
     }
 }

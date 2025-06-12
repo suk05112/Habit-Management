@@ -11,7 +11,6 @@ import RealmSwift
 
 @Reducer
 struct HabitFeature {
-    @ObservableState
     struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
@@ -19,7 +18,7 @@ struct HabitFeature {
         var isShowingAdd: Bool = false
         var isHidingCompletedHabits: Bool = false
         var isEditingHabit: Bool = false
-        var userName: String = ""
+        var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var mainReportText: String = "아직 완료된 습관이 없습니다."
         var iter: [Int] = []
         var habitTitle: String = "" {
@@ -31,16 +30,7 @@ struct HabitFeature {
         }
         var isToastVisible: Bool = false
         
-        static func == (lhs: State, rhs: State) -> Bool {
-            return lhs.habitList == rhs.habitList &&
-            lhs.isShowingAllHabits == rhs.isShowingAllHabits &&
-            lhs.isHidingCompletedHabits == rhs.isHidingCompletedHabits &&
-            lhs.isEditingHabit == rhs.isEditingHabit &&
-            lhs.userName == rhs.userName &&
-            lhs.mainReportText == rhs.mainReportText &&
-            lhs.isToastVisible == rhs.isToastVisible &&
-            lhs.selectedHabit?.id == rhs.selectedHabit?.id
-        }
+        var header: HabitHeaderFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -67,12 +57,19 @@ struct HabitFeature {
         case resetContinuity
         case setAddMode(Bool)
         case setHabitTitle(String)
+        case setIter([Int])
+        
+        case header(HabitHeaderFeature.Action)
     }
     
     @Dependency(\.habitClient) var habitClient
     
     var body: some ReducerOf<Self> {
         BindingReducer()
+        
+        Scope(state: \.header, action: \.header) {
+            HabitHeaderFeature()
+        }
         
         Reduce { state, action in
             switch action {
@@ -81,7 +78,10 @@ struct HabitFeature {
                 
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits
-                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
+                let name = UserDefaults.standard.string(forKey: "userName") ?? ""
+                print("✅ onAppear userName = \(name)")  // ← 여기에 값이 없으면 문제 확정
+                state.userName = "새로운 이름"
+//                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
                 state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
@@ -117,7 +117,6 @@ struct HabitFeature {
                     await send(.loadHabits(habits))
                 }
                 
-                
             case let .setUserName(name):
                 state.userName = name
                 UserDefaults.standard.set(name, forKey: "userName")
@@ -145,6 +144,10 @@ struct HabitFeature {
                 
             case let .setHabitTitle(title):
                 state.habitTitle = title
+                return .none
+                
+            case let .setIter(iter):
+                state.iter = iter
                 return .none
                 
             case let .addHabit(name, iter):
@@ -215,7 +218,8 @@ struct HabitFeature {
             case .resetContinuity:
                 return .run { _ in try await habitClient.resetContinuityIfNotDone() }
                 
-                
+            case .header:
+                return .none
             }
         }
     }

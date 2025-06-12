@@ -9,15 +9,15 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MonthView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @EnvironmentObject var setting: Setting
     @Binding var frame_size: CGFloat
-
+    
     var body: some View {
-        WithPerceptionTracking {
-            HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
-                ForEach(Array(store.monthArray.enumerated()), id: \.offset) { index, item in
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            HStack(alignment: .center, spacing: 3 * setting.WidthRatio) {
+                ForEach(Array(viewStore.monthArray.enumerated()), id: \.offset) { index, item in
                     Text(item)
                         .scaledText(size: 10, weight: .bold)
                         .foregroundColor(Color.white)

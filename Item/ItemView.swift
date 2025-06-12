@@ -68,7 +68,7 @@ struct ItemView: View{
                         
                     }
                     .offset(x: offset)
-                    .gesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+                    .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                 }
             }
         }

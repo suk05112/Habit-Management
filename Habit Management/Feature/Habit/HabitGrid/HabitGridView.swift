@@ -5,30 +5,28 @@
 //  Created by 한수진 on 2022/04/26.
 //
 
-import Foundation
 import SwiftUI
 import ComposableArchitecture
 
 struct HabitGridView: View {
-    let store: StoreOf<StaticsFeature>
+    let store: StoreOf<StatisticsFeature>
     
     @StateObject var completedVM = compltedLIstVM.shared
-    @EnvironmentObject var setting: Setting
     @State var frame_size: CGFloat = CGFloat(20)
 
     @Namespace var endPoint
     
     var body: some View {
-        WithPerceptionTracking {
+        WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack{
-                RoundedRectangle(cornerRadius: 15*setting.WidthRatio, style: .continuous)
-                    .fill(Color(hex: "#639F70"))
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fillColor(Color.HabitColor.primary)
                     .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
                     .scaledFrame(width: .none, height: 230)
                 
-                VStack{
-                    HStack(alignment: .bottom){
-                        VStack(alignment: .center ,spacing:3*setting.WidthRatio){
+                VStack {
+                    HStack(alignment: .bottom) {
+                        VStack(alignment: .center ,spacing: 4) {
                             ForEach(1...7, id: \.self){ i in
                                 WeekView(week: i)
                             }
@@ -37,24 +35,24 @@ struct HabitGridView: View {
                         
                         ScrollViewReader { proxy in
                             ScrollView(.horizontal) {
-                                VStack(alignment: .center, spacing: 3*setting.WidthRatio){
+                                VStack(alignment: .center, spacing: 4) {
                                     MonthView(store: store, frame_size: $frame_size)
                                     
-                                    HStack(alignment: .center, spacing: 3*setting.WidthRatio) {
+                                    HStack(alignment: .center, spacing: 4) {
                                         YearView(store: store, frame_size: $frame_size, getColor: getColor(date:))
                                         ThisWeekView(store: store, frame_size: $frame_size, getColor: getColor(date:))
                                         HStack{}.id(endPoint)
                                     }
                                 }
                             }
-                            .onAppear(){
+                            .onAppear() {
                                 proxy.scrollTo(endPoint)
                             }
                         }
                     }
                     .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 25)
                     
-                    HStack{
+                    HStack {
                         HStack{}
                         Spacer()
                         LessMore()
@@ -70,7 +68,7 @@ struct HabitGridView: View {
         }
     }
     
-    func getColor(date: String) -> Color{
+    func getColor(date: String) -> Color {
         let count = completedVM.getCount(d: date)
         let dateFormatter = DateFormatter()
         

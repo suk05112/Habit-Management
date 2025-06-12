@@ -5,16 +5,15 @@
 //  Created by 한수진 on 2022/05/20.
 //
 
-import Foundation
 import SwiftUI
 import ComposableArchitecture
 
-struct EditView: View{
-    let store: StoreOf<StaticsFeature>
-
+struct EditView: View {
+    let store: StoreOf<StatisticsFeature>
+    
     @State private var showingAlert = false
     @State var isTodayHabit = false
-
+    
     var delete: (Habit) -> ()
     var check: (String) -> ()
     @Binding var myItem: Habit
@@ -23,97 +22,90 @@ struct EditView: View{
     @Binding var selectedItem: Habit
     @Binding var offset: CGFloat
     @Binding var name: String
-    @Binding var showToast: Bool
-
+//    @Binding var showToast: Bool
+    
     
     @State var weekIter: Int = 0
-
+    
     var body: some View {
-        WithPerceptionTracking {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                HStack{
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            HStack{
+                Button(action: {
+                    self.showingAlert.toggle()
+                    withAnimation(.easeOut){
+                        offset = 0
+                    }
+                }){
+                    Image(systemName: "trash")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .scaledFrame(width: 50, height: 80)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                }
+                .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
+                    Button("확인", role: .destructive, action: {
+                        weekIter = myItem.weekIter.count
+                        //                    isTodayHabitFunc()
+                        
+                        deleteItem()
+                        viewStore.send(.setnumOfToDo(add: false, numOfIter: weekIter))
+                        viewStore.send(.getnumOfToDo)
+                        
+                        compltedLIstVM.shared.setIsToday(isToday: self.isTodayHabit)
+                        compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: self.isTodayHabit)
+                    })
+                    
+                    Button("취소", role: .cancel){}
+                } message: {
+                    Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
+                }
+                .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: -5)
+                
+                if !myItem.isInvalidated{
                     Button(action: {
-                        self.showingAlert.toggle()
+                        self.isAddView = true
+                        self.isEdit = true
+                        self.selectedItem = myItem
+                        self.name = myItem.name
                         withAnimation(.easeOut){
                             offset = 0
                         }
                     }){
-                        Image(systemName: "trash")
+                        Image(systemName: "pencil")
                             .font(.title)
                             .foregroundColor(.white)
                             .scaledFrame(width: 50, height: 80)
-                            .background(Color.red)
+                            .background(Color(hex: "#92BCA3"))
                             .cornerRadius(10)
-                    }
-                    .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
-                        Button("확인", role: .destructive, action: {
-                            weekIter = myItem.weekIter.count
-                            //                    isTodayHabitFunc()
-                            
-                            deleteItem()
-                            store.send(.setnumOfToDoPerDay)
-                            store.send(.setnumOfToDoPerWeek(add: false, numOfIter: weekIter))
-                            store.send(.setnumOfToDoPerMonth(add: false, numOfIter: weekIter))
-                            
-                            store.send(.getnumOfToDo)
-                            
-                            compltedLIstVM.shared.setIsToday(isToday: self.isTodayHabit)
-                            compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: self.isTodayHabit)
-                            //print("delete finished")
-                        })
                         
-                        Button("취소", role: .cancel){}
-                    } message: {
-                        Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
                     }
-                    .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: -5)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     
-                    if !myItem.isInvalidated{
-                        Button(action: {
-                            self.isAddView = true
-                            self.isEdit = true
-                            self.selectedItem = myItem
-                            self.name = myItem.name
-                            withAnimation(.easeOut){
-                                offset = 0
-                            }
-                        }){
-                            Image(systemName: "pencil")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .scaledFrame(width: 50, height: 80)
-                                .background(Color(hex: "#92BCA3"))
-                                .cornerRadius(10)
-                            
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    Spacer()
+                    Button(action: {
                         
-                        Spacer()
-                        Button(action: {
-                            
-                            compltedLIstVM.shared.setIsToday(isToday: isTodayHabit)
-                            self.check(myItem.id!)
-                            
-                            store.send(.addOrUpdate)
-                            //                        staticVM.addOrUpdate()
-                            HabitVM.shared.setContiuity(at: myItem)
-                            HabitVM.shared.fetchItem()
-                            
-                            withAnimation(.easeOut){
-                                offset = 0
-                            }
-                            
-                        }){
-                            Image(systemName: "checkmark")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .scaledFrame(width: 50, height: 80)
-                                .background(isTodayHabit ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
-                                .cornerRadius(10)
-                            
+                        compltedLIstVM.shared.setIsToday(isToday: isTodayHabit)
+                        self.check(myItem.id!)
+                        
+                        viewStore.send(.addOrUpdate)
+                        HabitVM.shared.setContiuity(at: myItem)
+                        HabitVM.shared.fetchItem()
+                        
+                        withAnimation(.easeOut){
+                            offset = 0
                         }
+                        
+                    }){
+                        Image(systemName: "checkmark")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .scaledFrame(width: 50, height: 80)
+                            .background(isTodayHabit ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
+                            .cornerRadius(10)
                         
                     }
+                    
                 }
             }
         }
@@ -139,6 +131,6 @@ struct EditView: View{
             self.isTodayHabit = false
         }
     }
-
+    
 }
 

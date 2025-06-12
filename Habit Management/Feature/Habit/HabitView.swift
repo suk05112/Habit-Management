@@ -12,19 +12,30 @@ import Firebase
 import ComposableArchitecture
 
 struct HabitView: View {
-    @Perception.Bindable var habitStore: StoreOf<HabitFeature>
-    @Perception.Bindable var statisticsStore: StoreOf<StaticsFeature>
+    let habitStore: StoreOf<HabitFeature>
+    let statisticsStore: StoreOf<StatisticsFeature>
+    
+    init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+        self.habitStore = habitStore
+        self.statisticsStore = statisticsStore
+    }
 
     var body: some View {
-        WithPerceptionTracking {
-            ZStack {
-                VStack(spacing: 0) {
-                    MainHeaderView(userName: $habitStore.userName,
-                                   mainReport: $habitStore.mainReportText)
-                    HabitGridView(store: statisticsStore) // 나중에 따로 추출해도 OK
+        WithViewStore(habitStore, observe: { $0 }) { viewStore in
+            HabitBackgroundView {
+                VStack(spacing: 16) {
+                    HabitHeaderView(store: habitStore.scope(state: \.header, action: \.header))
+                    
+                    HabitGridView(store: statisticsStore)
                     MainToggleBar(
-                        showAll: $habitStore.isShowingAllHabits,
-                        hideCompleted: $habitStore.isHidingCompletedHabits,
+                        showAll: viewStore.binding(
+                            get: \.isShowingAllHabits,
+                            send: .toggleShowAll
+                        ),
+                        hideCompleted: viewStore.binding(
+                            get: \.isHidingCompletedHabits,
+                            send: .toggleHideCompleted
+                        ),
                         toggleShowAll: {
                             habitStore.send(.toggleShowAll)
                         },
@@ -34,11 +45,8 @@ struct HabitView: View {
                     )
                     
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(habitStore.habitList) { habit in
+                        ForEach(viewStore.state.habitList) { habit in
                             ZStack {
-                                //Edit View
-
-                                //Item View
                                 ItemView(
                                     store: habitStore,
                                     habit: habit
@@ -55,40 +63,18 @@ struct HabitView: View {
                     
                     Spacer()
                 }
-                .onAppear {
-                    habitStore.send(.onAppear)
-                }
                 .toast(
                     message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
-                    isShowing: $habitStore.isToastVisible,
+                    isShowing: viewStore.binding(
+                        get: \.isToastVisible,
+                        send: { .setToast($0) }
+                    ),
                     duration: Toast.long
                 )
                 .tabItem {
                     Image(systemName: "house")
                     Text("홈")
                 }
-            }
-        }
-    }
-}
-
-struct MainHeaderView: View {
-    @Binding var userName: String
-    @Binding var mainReport: String
-
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(Color(hex: "#B8D9B9"))
-                .edgesIgnoringSafeArea(.all)
-                .scaledFrame(width: nil, height: 242)
-
-            VStack(alignment: .leading) {
-                Text("\(userName)님!\n\(mainReport)")
-                    .scaledText(size: 25, weight: .semibold)
-                    .scaledPadding(top: 10, leading: 15, bottom: 0, trailing: 0)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: true, vertical: true)
             }
         }
     }

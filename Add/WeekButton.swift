@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct WeekButton: View{
+struct WeekButton: View {
     @State var weekOfDay: Int
     @Binding var iter: [Int]
     @State var OnOff: Bool
@@ -30,15 +30,11 @@ struct WeekButton: View{
                     .scaledFrame(width: 41, height: 41)
                 Text(getWeekOfDay(num:weekOfDay).description).foregroundColor(Color.black)
                     .scaledText(size: 14, weight: .none)
-
             }
         }
-
     }
 
-    
     func getWeekOfDay(num: Int) -> Week{
         return Week(rawValue: num)!
     }
-
 }
