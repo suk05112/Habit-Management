@@ -23,8 +23,8 @@ extension View {
         modifier(FrameModifier(size: size, weight: weight))
     }
     
-    func scaledPadding(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> some View{
-        modifier(FrameModifier(top: top, leading: leading, bottom: bottom, trailing: trailing))
+    func scaledPadding(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> some View {
+        modifier(PaddingModifier(top: top, leading: leading, bottom: bottom, trailing: trailing))
     }
     
     

@@ -9,20 +9,27 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ThisWeekView: View {
-    let store: StoreOf<StatisticsFeature>
+    private let store: StoreOf<StatisticsFeature>
     
-    @EnvironmentObject var setting: Setting
-    @Binding var frame_size: CGFloat
-    var getColor: (String) -> Color
+    private var ratioSpacing: CGFloat
+    private var frame_size: CGFloat
+    private var getColor: (String) -> Color
+    
+    init(store: StoreOf<StatisticsFeature>, ratioSpacing: CGFloat, frame_size: CGFloat, getColor: @escaping (String) -> Color) {
+        self.store = store
+        self.ratioSpacing = ratioSpacing
+        self.frame_size = frame_size
+        self.getColor = getColor
+    }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            VStack(alignment: .center, spacing: 3 * setting.WidthRatio) {
+            VStack(alignment: .center, spacing: ratioSpacing) {
                 ForEach(Array(viewStore.staticsData.thisWeek.enumerated()), id:\.offset) { index, date in
                     Text("\(date)")
                         .scaledFrame(width: frame_size, height: frame_size)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 3*setting.WidthRatio, style: .continuous)
+                            RoundedRectangle(cornerRadius: ratioSpacing, style: .continuous)
                                 .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
                                 .scaledFrame(width: frame_size, height: frame_size)
                         )

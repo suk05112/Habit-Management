@@ -8,12 +8,12 @@ import Foundation
 import SwiftUI
 
 struct WeekView: View {
-    @EnvironmentObject var setting: Setting
-
-    let weekStr: String
+    private let weekStr: String
+    
     init(week: Int){
         weekStr = Week(rawValue: week)!.description
     }
+    
     var body: some View {
         Text("\(weekStr)")
             .scaledText(size: 10, weight: .bold)

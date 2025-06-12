@@ -17,11 +17,6 @@ struct FrameModifier: ViewModifier {
     var size: CGFloat?
     var weight: Font.Weight?
     
-    var top: CGFloat?
-    var leading: CGFloat?
-    var bottom: CGFloat?
-    var trailing: CGFloat?
-    
     func body(content: Content) -> some View {
         if height != nil || width != nil{
             if isScroll!{
@@ -42,15 +37,6 @@ struct FrameModifier: ViewModifier {
             else{
                 content.font(.system(size: size! * setting.WidthRatio))
             }
-        }
-        
-        if top != nil{
-            content
-                .padding(EdgeInsets(top: top! * setting.WidthRatio,
-                                    leading: leading! *
-                                    setting.WidthRatio,
-                                    bottom: bottom! * setting.WidthRatio,
-                                    trailing: trailing! * setting.WidthRatio))
         }
     }
 }

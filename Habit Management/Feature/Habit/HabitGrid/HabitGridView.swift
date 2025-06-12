@@ -9,12 +9,19 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HabitGridView: View {
-    let store: StoreOf<StatisticsFeature>
+    private let store: StoreOf<StatisticsFeature>
     
+    @EnvironmentObject var setting: Setting
     @StateObject var completedVM = compltedLIstVM.shared
-    @State var frame_size: CGFloat = CGFloat(20)
+    
+    private var ratioSpacing: CGFloat { 3 * setting.WidthRatio }
+    private var frame_size: CGFloat = CGFloat(20)
 
     @Namespace var endPoint
+    
+    init(store: StoreOf<StatisticsFeature>) {
+        self.store = store
+    }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
@@ -36,11 +43,25 @@ struct HabitGridView: View {
                         ScrollViewReader { proxy in
                             ScrollView(.horizontal) {
                                 VStack(alignment: .center, spacing: 4) {
-                                    MonthView(store: store, frame_size: $frame_size)
+                                    MonthView(
+                                        store: store,
+                                        ratioSpacing: ratioSpacing,
+                                        frame_size: frame_size
+                                    )
                                     
                                     HStack(alignment: .center, spacing: 4) {
-                                        YearView(store: store, frame_size: $frame_size, getColor: getColor(date:))
-                                        ThisWeekView(store: store, frame_size: $frame_size, getColor: getColor(date:))
+                                        YearView(
+                                            store: store,
+                                            ratioSpacing: ratioSpacing,
+                                            frame_size: frame_size,
+                                            getColor: getColor(date:)
+                                        )
+                                        ThisWeekView(
+                                            store: store,
+                                            ratioSpacing: ratioSpacing,
+                                            frame_size: frame_size,
+                                            getColor: getColor(date:)
+                                        )
                                         HStack{}.id(endPoint)
                                     }
                                 }
