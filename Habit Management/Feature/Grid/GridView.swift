@@ -19,6 +19,8 @@ struct GridView: View {
     
     @Namespace var endPoint
     
+    let gridMonthHeaderStore = Store(initialState: GridMonthHeaderFeature.State(), reducer: { GridMonthHeaderFeature() })
+    
     init(store: StoreOf<StatisticsFeature>) {
         self.store = store
     }
@@ -30,14 +32,14 @@ struct GridView: View {
                     GridWeekDayView()
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal) {
-                            VStack(alignment: .center, spacing: 4) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 GridMonthHeaderView(
-                                    store: store,
+                                    store: gridMonthHeaderStore,
                                     ratioSpacing: ratioSpacing,
                                     frame_size: frame_size
                                 )
                                 
-                                HStack(alignment: .center, spacing: 4) {
+                                HStack(alignment: .center, spacing: ratioSpacing) {
                                     YearView(
                                         store: store,
                                         ratioSpacing: ratioSpacing,

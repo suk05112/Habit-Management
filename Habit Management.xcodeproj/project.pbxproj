@@ -56,6 +56,7 @@
 		4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */; };
 		4E3382932DFB0A5B002849DB /* GridFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3382922DFB0A5B002849DB /* GridFeature.swift */; };
 		4E3382962DFB0AF2002849DB /* GridBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3382952DFB0AF2002849DB /* GridBackgroundView.swift */; };
+		4E3383792DFBD3E4002849DB /* GridMonthHeaderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3383782DFBD3E4002849DB /* GridMonthHeaderFeature.swift */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA872DF45DF200BA7EA6 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */; };
@@ -149,6 +150,7 @@
 		4E3381AE2DF7E6AA002849DB /* FillColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillColorModifier.swift; sourceTree = "<group>"; };
 		4E3382922DFB0A5B002849DB /* GridFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFeature.swift; sourceTree = "<group>"; };
 		4E3382952DFB0AF2002849DB /* GridBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridBackgroundView.swift; sourceTree = "<group>"; };
+		4E3383782DFBD3E4002849DB /* GridMonthHeaderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMonthHeaderFeature.swift; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				4E48FA982DF45DFA00BA7EA6 /* GridMonthHeaderView.swift */,
+				4E3383782DFBD3E4002849DB /* GridMonthHeaderFeature.swift */,
 			);
 			path = GridMonthHeader;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				4E48FAB62DF45DFA00BA7EA6 /* GridWeekDayView.swift in Sources */,
 				4E48FAB72DF45DFA00BA7EA6 /* YearView.swift in Sources */,
 				4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */,
+				4E3383792DFBD3E4002849DB /* GridMonthHeaderFeature.swift in Sources */,
 				4E48FAB92DF45DFA00BA7EA6 /* Graph.swift in Sources */,
 				4E48FABA2DF45DFA00BA7EA6 /* ReportListView.swift in Sources */,
 				4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */,
