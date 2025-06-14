@@ -1,5 +1,5 @@
 //
-//  GridLevelView.swift
+//  CalendarLevelView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/05/08.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridLevelView: View {
+struct CalendarLevelView: View {
     private let levelHex = ["#E6E6E6", "#D5EBD3", "#9ECAA4", "#36793F"]
     
     var body: some View {
@@ -21,7 +21,7 @@ struct GridLevelView: View {
     }
 }
 
-extension GridLevelView {
+extension CalendarLevelView {
     private func levelLabel(_ text: String) -> some View {
         Text(text)
             .foregroundColor(Color.white)

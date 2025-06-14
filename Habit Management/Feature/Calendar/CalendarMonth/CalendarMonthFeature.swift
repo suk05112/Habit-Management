@@ -1,5 +1,5 @@
 //
-//  GridMonthFeature.swift
+//  CalendarMonthFeature.swift
 //  Habit Management
 //
 //  Created by 서충원 on 6/13/25.
@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct GridMonthFeature {
+struct CalendarMonthFeature {
     struct State: Equatable {
         var today = Date().formatted(date: .numeric, time: .omitted)
         var monthArray: [String] = []
@@ -31,7 +31,7 @@ struct GridMonthFeature {
 }
 
 // MARK: - Actions
-extension GridMonthFeature {
+extension CalendarMonthFeature {
     private func generateMonthArray() -> [String] {
         let calendar = Calendar.current
         let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date())! // 1년 전 오늘

@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct StatisticsView: View {
-    let gridStore: StoreOf<GridFeature>
+    let calendarStore: StoreOf<CalendarFeature>
     let store: StoreOf<StatisticsFeature>
     
     @State var ratio: Double = Double(5/6)
@@ -20,9 +20,9 @@ struct StatisticsView: View {
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
-    init(store: StoreOf<StatisticsFeature>, gridStore: StoreOf<GridFeature>) {
+    init(store: StoreOf<StatisticsFeature>, calendarStore: StoreOf<CalendarFeature>) {
         print("StaticsView init")
-        self.gridStore = gridStore
+        self.calendarStore = calendarStore
         self.store = store
         ReportData.configure(store: store)
         randomText = ReportData.shared.getRandomText()
@@ -40,7 +40,7 @@ struct StatisticsView: View {
                     }
                     .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
                     
-//                    GridView(store: store, gridStore: Grid)
+                    CalendarView(calendarStore: calendarStore, statisticsStore: store)
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){

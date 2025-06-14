@@ -1,5 +1,5 @@
 //
-//  GridBackgroundView.swift
+//  CalendarBackgroundView.swift
 //  Habit Management
 //
 //  Created by 서충원 on 6/12/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridBackgroundView<Content: View>: View {
+struct CalendarBackgroundView<Content: View>: View {
     private let content: Content
     
     init(@ViewBuilder content: () -> Content) {

@@ -1,5 +1,5 @@
 //
-//  GridFeature.swift
+//  CalendarFeature.swift
 //  Habit Management
 //
 //  Created by 서충원 on 6/12/25.
@@ -9,18 +9,18 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct GridFeature {
+struct CalendarFeature {
     struct State: Equatable {
-        var month: GridMonthFeature.State = .init()
+        var month: CalendarMonthFeature.State = .init()
     }
     
     enum Action: Equatable {
-        case month(GridMonthFeature.Action)
+        case month(CalendarMonthFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
         Scope(state: \.month, action: \.month) {
-            GridMonthFeature()
+            CalendarMonthFeature()
         }
         
         Reduce { state, action in

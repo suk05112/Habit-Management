@@ -1,5 +1,5 @@
 //
-//  GridWeekDayView.swift
+//  CalendarWeekDayView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 5/25/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridWeekDayView: View {
+struct CalendarWeekDayView: View {
     private let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     
     var body: some View {
@@ -16,7 +16,7 @@ struct GridWeekDayView: View {
     }
 }
 
-extension GridWeekDayView {
+extension CalendarWeekDayView {
     private func week(for days: [String]) -> some View {
         VStack(spacing: 3) {
             ForEach(days, id: \.self) { day in

@@ -1,5 +1,5 @@
 //
-//  GridView.swift
+//  CalendarView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/04/26.
@@ -8,8 +8,9 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct GridView: View {
-    let gridStore: StoreOf<GridFeature>
+struct CalendarView: View {
+    private let calendarStore: StoreOf<CalendarFeature>
+    private let calendarMonthStore: StoreOf<CalendarMonthFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     
     @EnvironmentObject var setting: Setting
@@ -20,24 +21,21 @@ struct GridView: View {
     
     @Namespace var endPoint
     
-    init(gridStore: StoreOf<GridFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
-        self.gridStore = gridStore
+    init(calendarStore: StoreOf<CalendarFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+        self.calendarStore = calendarStore
+        self.calendarMonthStore = calendarStore.scope(state: \.month, action: \.month)
         self.statisticsStore = statisticsStore
     }
     
     var body: some View {
-        WithViewStore(gridStore, observe: { $0 }) { viewStore in
-            GridBackgroundView {
+        WithViewStore(calendarStore, observe: { $0 }) { viewStore in
+            CalendarBackgroundView {
                 HStack(alignment: .bottom) {
-                    GridWeekDayView()
+                    CalendarWeekDayView()
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal) {
                             VStack(alignment: .leading, spacing: 4) {
-                                GridMonthView(
-                                    store: gridStore.scope(state: \.month, action: \.month),
-                                    ratioSpacing: ratioSpacing,
-                                    frame_size: frame_size
-                                )
+                                CalendarMonthView(store: calendarMonthStore, ratioSpacing: ratioSpacing, frame_size: frame_size)
                                 
                                 WithViewStore(statisticsStore, observe: { $0 }) { viewStore in
                                     HStack(alignment: .center, spacing: ratioSpacing) {
@@ -65,11 +63,8 @@ struct GridView: View {
                 }
                 .scaledPadding(top: 12, leading: 0, bottom: 0, trailing: 25)
                 
-                GridLevelView()
+                CalendarLevelView()
             }
-        }
-        .onAppear() {
-            print("HabitGridView appear")
         }
     }
     
