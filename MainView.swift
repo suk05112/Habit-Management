@@ -13,11 +13,13 @@ import ComposableArchitecture
 
 struct MainView: View {
     let store: StoreOf<AppFeature>
+    private let gridStore: StoreOf<GridFeature>
     private let habitStore: StoreOf<HabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     
     init(store: StoreOf<AppFeature>) {
         self.store = store
+        self.gridStore = store.scope(state: \.grid, action: \.grid)
         self.habitStore = store.scope(state: \.habit, action: \.habit)
         self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
         
@@ -29,17 +31,17 @@ struct MainView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
                 TabView {
-                    HabitView(habitStore: habitStore, statisticsStore: statisticsStore)
+                    HabitView(gridStore: gridStore, habitStore: habitStore, statisticsStore: statisticsStore)
                         .tabItem {
                             Image(systemName: "house")
                             Text("홈")
                         }
                     
-                    StatisticsView(store: statisticsStore)
-                        .tabItem {
-                            Image(systemName: "chart.bar.fill")
-                            Text("통계")
-                        }
+//                    StatisticsView(store: statisticsStore)
+//                        .tabItem {
+//                            Image(systemName: "chart.bar.fill")
+//                            Text("통계")
+//                        }
                 }
                 if viewStore.habit.isShowingAdd {
                     AddView(habitStore: habitStore)

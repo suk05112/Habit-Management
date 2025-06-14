@@ -14,10 +14,12 @@ struct AppFeature {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         
+        var grid: GridFeature.State
         var habit: HabitFeature.State
         var statistics: StatisticsFeature.State
         
         init() {
+            self.grid = GridFeature.State()
             self.habit = HabitFeature.State()
             self.statistics = StatisticsFeature.State()
         }
@@ -27,6 +29,7 @@ struct AppFeature {
         case task
         case setUserName(String)
         case setHasLaunched(Bool)
+        case grid(GridFeature.Action)
         case habit(HabitFeature.Action)
         case statistics(StatisticsFeature.Action)
         case binding(BindingAction<State>)
@@ -34,6 +37,10 @@ struct AppFeature {
     
     var body: some Reducer<State, Action> {
         BindingReducer()
+        
+        Scope(state: \.grid, action: \.grid) {
+            GridFeature()
+        }
         
         Scope(state: \.habit, action: \.habit) {
             HabitFeature()
@@ -58,6 +65,9 @@ struct AppFeature {
             case let .setHasLaunched(flag):
                 state.hasLaunched = flag
                 UserDefaults.standard.set(flag, forKey: "hasLaunchedBefore")
+                return .none
+                
+            case .grid:
                 return .none
                 
             case .habit:

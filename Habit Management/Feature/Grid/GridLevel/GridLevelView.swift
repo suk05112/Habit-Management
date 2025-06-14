@@ -17,7 +17,7 @@ struct GridLevelView: View {
             level(for: levelHex)
             levelLabel("More")
         }
-        .scaledPadding(top: 4, leading: 0, bottom: 16, trailing: 16)
+        .scaledPadding(top: 4, leading: 0, bottom: 12, trailing: 16)
     }
 }
 

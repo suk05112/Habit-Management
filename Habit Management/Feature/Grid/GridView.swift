@@ -9,7 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GridView: View {
-    private let store: StoreOf<StatisticsFeature>
+    let gridStore: StoreOf<GridFeature>
+    private let statisticsStore: StoreOf<StatisticsFeature>
     
     @EnvironmentObject var setting: Setting
     @StateObject var completedVM = compltedLIstVM.shared
@@ -19,40 +20,41 @@ struct GridView: View {
     
     @Namespace var endPoint
     
-    let gridMonthHeaderStore = Store(initialState: GridMonthHeaderFeature.State(), reducer: { GridMonthHeaderFeature() })
-    
-    init(store: StoreOf<StatisticsFeature>) {
-        self.store = store
+    init(gridStore: StoreOf<GridFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+        self.gridStore = gridStore
+        self.statisticsStore = statisticsStore
     }
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(gridStore, observe: { $0 }) { viewStore in
             GridBackgroundView {
                 HStack(alignment: .bottom) {
                     GridWeekDayView()
                     ScrollViewReader { proxy in
                         ScrollView(.horizontal) {
                             VStack(alignment: .leading, spacing: 4) {
-                                GridMonthHeaderView(
-                                    store: gridMonthHeaderStore,
+                                GridMonthView(
+                                    store: gridStore.scope(state: \.month, action: \.month),
                                     ratioSpacing: ratioSpacing,
                                     frame_size: frame_size
                                 )
                                 
-                                HStack(alignment: .center, spacing: ratioSpacing) {
-                                    YearView(
-                                        store: store,
-                                        ratioSpacing: ratioSpacing,
-                                        frame_size: frame_size,
-                                        getColor: getColor(date:)
-                                    )
-                                    ThisWeekView(
-                                        store: store,
-                                        ratioSpacing: ratioSpacing,
-                                        frame_size: frame_size,
-                                        getColor: getColor(date:)
-                                    )
-                                    HStack{}.id(endPoint)
+                                WithViewStore(statisticsStore, observe: { $0 }) { viewStore in
+                                    HStack(alignment: .center, spacing: ratioSpacing) {
+                                        YearView(
+                                            store: statisticsStore,
+                                            ratioSpacing: ratioSpacing,
+                                            frame_size: frame_size,
+                                            getColor: getColor(date:)
+                                        )
+                                        ThisWeekView(
+                                            store: statisticsStore,
+                                            ratioSpacing: ratioSpacing,
+                                            frame_size: frame_size,
+                                            getColor: getColor(date:)
+                                        )
+                                        HStack{}.id(endPoint)
+                                    }
                                 }
                             }
                         }
