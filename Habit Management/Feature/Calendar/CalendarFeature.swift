@@ -12,10 +12,12 @@ import ComposableArchitecture
 struct CalendarFeature {
     struct State: Equatable {
         var month: CalendarMonthFeature.State = .init()
+        var grid: CalendarGridFeature.State = .init()
     }
     
     enum Action: Equatable {
         case month(CalendarMonthFeature.Action)
+        case grid(CalendarGridFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -23,11 +25,12 @@ struct CalendarFeature {
             CalendarMonthFeature()
         }
         
+        Scope(state: \.grid, action: \.grid) {
+            CalendarGridFeature()
+        }
+        
         Reduce { state, action in
-            switch action {
-            case .month:
-                return .none
-            }
+            return .none
         }
     }
 }

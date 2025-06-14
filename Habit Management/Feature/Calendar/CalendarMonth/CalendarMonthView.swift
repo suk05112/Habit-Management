@@ -34,6 +34,7 @@ struct CalendarMonthView: View {
     }
 }
 
+// MARK: - UI Components
 extension CalendarMonthView {
     private func monthLabel(_ month: String) -> some View {
         Text(month)

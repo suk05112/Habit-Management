@@ -37,11 +37,11 @@ struct MainView: View {
                             Text("홈")
                         }
                     
-//                    StatisticsView(store: statisticsStore)
-//                        .tabItem {
-//                            Image(systemName: "chart.bar.fill")
-//                            Text("통계")
-//                        }
+                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
+                        .tabItem {
+                            Image(systemName: "chart.bar.fill")
+                            Text("통계")
+                        }
                 }
                 if viewStore.habit.isShowingAdd {
                     AddView(habitStore: habitStore)

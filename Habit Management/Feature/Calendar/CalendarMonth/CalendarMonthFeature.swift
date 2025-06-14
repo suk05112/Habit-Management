@@ -11,7 +11,6 @@ import ComposableArchitecture
 @Reducer
 struct CalendarMonthFeature {
     struct State: Equatable {
-        var today = Date().formatted(date: .numeric, time: .omitted)
         var monthArray: [String] = []
     }
     

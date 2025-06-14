@@ -13,26 +13,28 @@ struct CalendarLevelView: View {
     var body: some View {
         HStack(spacing: 4) {
             Spacer()
-            levelLabel("Less")
+            levelLabel("LEVEL")
             level(for: levelHex)
-            levelLabel("More")
         }
-        .scaledPadding(top: 4, leading: 0, bottom: 12, trailing: 16)
+        .scaledPadding(top: 2, leading: 0, bottom: 12, trailing: 20)
     }
 }
 
+// MARK: - UI Components
 extension CalendarLevelView {
     private func levelLabel(_ text: String) -> some View {
         Text(text)
             .foregroundColor(Color.white)
-            .scaledText(size: 12, weight: .semibold)
+            .scaledText(size: 12, weight: .bold)
     }
     
     private func level(for colors: [String]) -> some View {
-        ForEach(colors, id: \.self) { color in
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .foregroundColor(Color(hex: color))
-                .scaledFrame(width: 16, height: 16, isScroll: true)
+        HStack(spacing: 3) {
+            ForEach(colors, id: \.self) { color in
+                RoundedRectangle(cornerRadius: 2, style: .continuous)
+                    .foregroundColor(Color(hex: color))
+                    .scaledFrame(width: 12, height: 12, isScroll: true)
+            }
         }
     }
 }
