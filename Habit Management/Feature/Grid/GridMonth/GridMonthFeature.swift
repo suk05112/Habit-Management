@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct GridMonthFeature {
     struct State: Equatable {
         var today = Date().formatted(date: .numeric, time: .omitted)
-        var monthArray: [String] = Array(repeating: "a", count: 30)
+        var monthArray: [String] = []
     }
     
     enum Action: Equatable {
@@ -23,8 +23,7 @@ struct GridMonthFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.monthArray = Array(repeating: "b", count: 30)
-                print(state.today)
+                state.monthArray = generateMonthArray()
                 return .none
             }
         }
@@ -33,9 +32,22 @@ struct GridMonthFeature {
 
 // MARK: - Actions
 extension GridMonthFeature {
-    private func onAppearAction(state: inout State) -> Effect<Action> {
-        state.monthArray = Array(repeating: "b", count: 30)
-        print(state.today)
-        return .none
+    private func generateMonthArray() -> [String] {
+        let calendar = Calendar.current
+        let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date())! // 1년 전 오늘
+        var currentDate = calendar.dateInterval(of: .weekOfYear, for: oneYearAgo)!.start // 1년 전 오늘이 포함된 주의 일요일
+        
+        var monthArray = [String]()
+        var lastMonth = -1
+        
+        for _ in 0..<52 {
+            let month = calendar.component(.month, from: currentDate)
+            monthArray.append(month != lastMonth ? String(format: "%02d", month) : " ")
+            lastMonth = month
+            currentDate = calendar.date(byAdding: .day, value: 7, to: currentDate)!
+        }
+        
+        return monthArray
     }
 }
+

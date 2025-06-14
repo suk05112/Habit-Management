@@ -157,7 +157,6 @@ struct StatisticsFeature {
                 }
             }
             monthArray.append(month)
-            print(monthArray)
         }
         
         return (dayArray, monthArray, dayArray[52])

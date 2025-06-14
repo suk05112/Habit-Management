@@ -59,7 +59,6 @@ struct MainView: View {
             }
             .onAppear {
                 print("MainView onappear")
-                print("🐨\(viewStore.userName)")
             }
         }
     }

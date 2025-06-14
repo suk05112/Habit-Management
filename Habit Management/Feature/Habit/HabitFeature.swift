@@ -79,7 +79,6 @@ struct HabitFeature {
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits
                 let name = UserDefaults.standard.string(forKey: "userName") ?? ""
-                print("✅ onAppear userName = \(name)")  // ← 여기에 값이 없으면 문제 확정
                 state.userName = "새로운 이름"
 //                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
                 state.mainReportText = ReportData.shared.getMainReport()
