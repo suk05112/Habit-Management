@@ -32,16 +32,10 @@ struct MainView: View {
             ZStack {
                 TabView {
                     HabitView(calendarStore: calendarStore, habitStore: habitStore, statisticsStore: statisticsStore)
-                        .tabItem {
-                            Image(systemName: "house")
-                            Text("홈")
-                        }
+                        .tabItem { tabIconView("house", "홈") }
                     
-//                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
-//                        .tabItem {
-//                            Image(systemName: "chart.bar.fill")
-//                            Text("통계")
-//                        }
+                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
+                        .tabItem { tabIconView("chart.bar.fill", "통계") }
                 }
                 if viewStore.habit.isShowingAdd {
                     AddView(habitStore: habitStore)
@@ -61,6 +55,14 @@ struct MainView: View {
                 print("MainView onappear")
             }
         }
+    }
+}
+
+extension MainView {
+    @ViewBuilder
+    func tabIconView(_ imageName: String, _ tabName: String) -> some View {
+        Image(systemName: imageName)
+        Text(tabName)
     }
 }
 

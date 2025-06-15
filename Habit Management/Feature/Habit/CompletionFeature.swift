@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 @Reducer
 struct CompletionFeature {
-    @ObservableState
     struct State: Equatable {
         var doneTodayMap: [String: Bool] = [:]
         var todayCount: Int = 0
