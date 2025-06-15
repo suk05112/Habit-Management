@@ -15,7 +15,7 @@ struct CalendarBackgroundView<Content: View>: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             content
         }
         .background(Color(hex: Color.HabitColor.primary.rawValue))

@@ -28,6 +28,7 @@ struct CalendarGridView: View {
                         gridItem(dayItem.date)
                     }
                 }
+                .scaledPadding(top: 0, leading: 0, bottom: 12, trailing: 0)
             }
             .onAppear {
                 viewStore.send(.onAppear)

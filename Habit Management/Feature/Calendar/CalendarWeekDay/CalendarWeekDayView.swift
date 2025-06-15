@@ -17,7 +17,7 @@ struct CalendarWeekDayView: View {
     
     var body: some View {
         week(for: days)
-            .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 0)
+            .scaledPadding(top: 0, leading: 16, bottom: 12, trailing: 0)
     }
 }
 

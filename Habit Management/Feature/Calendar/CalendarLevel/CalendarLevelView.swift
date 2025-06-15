@@ -16,7 +16,7 @@ struct CalendarLevelView: View {
             levelLabel("LEVEL")
             level(for: levelHex)
         }
-        .scaledPadding(top: 2, leading: 0, bottom: 12, trailing: 20)
+        .scaledPadding(top: 0, leading: 0, bottom: 12, trailing: 20)
     }
 }
 
