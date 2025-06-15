@@ -10,8 +10,14 @@ import ComposableArchitecture
 
 @Reducer
 struct CalendarGridFeature {
+    
+    struct DayItem: Identifiable, Equatable {
+        let id = UUID()
+        let date: String
+    }
+    
     struct State: Equatable {
-        var dayArray: [[String]] = [[]]
+        var dayItemArray: [[DayItem]] = [[]]
     }
     
     enum Action: Equatable {
@@ -22,7 +28,7 @@ struct CalendarGridFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.dayArray = generateDayArray()
+                state.dayItemArray = generateDayItemArray()
                 return .none
             }
         }
@@ -31,24 +37,25 @@ struct CalendarGridFeature {
 
 // MARK: - Actions
 extension CalendarGridFeature {
-    private func generateDayArray() -> [[String]] {
+    private func generateDayItemArray() -> [[DayItem]] {
         let calendar = Calendar.current
         let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date())! // 1년 전 오늘
         var currentDate = calendar.dateInterval(of: .weekOfYear, for: oneYearAgo)!.start // 1년 전 오늘이 포함된 주의 일요일
         
-        var dayArray = [[String]]()
+        var dayItemArray = [[DayItem]]()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        for _ in 0..<53 {
-            var weekArray = [String]()
+        for _ in 0..<54 {
+            var weekArray = [DayItem]()
             for _ in 0..<7 {
-                weekArray.append((currentDate > Date()) ? "" : dateFormatter.string(from: currentDate))
+                let date = currentDate > Date() ? "" : dateFormatter.string(from: currentDate)
+                weekArray.append(DayItem(date: date))
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
-            dayArray.append(weekArray)
+            dayItemArray.append(weekArray)
         }
         
-        return dayArray
+        return dayItemArray
     }
 }

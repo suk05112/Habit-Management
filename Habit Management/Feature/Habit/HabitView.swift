@@ -45,16 +45,16 @@ struct HabitView: View {
                         }
                     )
                     
-                    ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(viewStore.state.habitList) { habit in
-                            ZStack {
-                                ItemView(
-                                    store: habitStore,
-                                    habit: habit
-                                )
-                            }
-                        }
-                    }
+//                    ScrollView(.vertical, showsIndicators: false) {
+//                        ForEach(viewStore.state.habitList) { habit in
+//                            ZStack {
+//                                ItemView(
+//                                    store: habitStore,
+//                                    habit: habit
+//                                )
+//                            }
+//                        }
+//                    }
                     
                     MainAddButton {
                         habitStore.send(.selectItem(nil))

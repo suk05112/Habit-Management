@@ -10,26 +10,22 @@ import ComposableArchitecture
 
 struct CalendarGridView: View {
     private let store: StoreOf<CalendarGridFeature>
+
+    @EnvironmentObject var setting: Setting
     
-    private var ratioSpacing: CGFloat
-    private var frame_size: CGFloat
-    private var getColor: (String) -> Color
+    @StateObject var completedVM = compltedLIstVM.shared
     
-    init(store: StoreOf<CalendarGridFeature>, ratioSpacing: CGFloat, frame_size: CGFloat, getColor: @escaping (String) -> Color) {
+    init(store: StoreOf<CalendarGridFeature>) {
         self.store = store
-        self.ratioSpacing = ratioSpacing
-        self.frame_size = frame_size
-        self.getColor = getColor
     }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            ForEach(viewStore.dayArray.indices, id:\.self) { i in
-                VStack(alignment: .center, spacing: ratioSpacing) {
-                    ForEach(Array(viewStore.dayArray[i].enumerated()), id:\.offset) {index, j in
-                        RoundedRectangle(cornerRadius: ratioSpacing, style: .continuous)
-                            .fill(j == "" ? Color(hex: "#639F70"): getColor(j))
-                            .scaledFrame(width: frame_size, height: frame_size)
+            let dayItemArray = viewStore.dayItemArray
+            ForEach(0..<dayItemArray.count, id: \.self) { i in
+                VStack(spacing: setting.ratioSpacing) {
+                    ForEach(dayItemArray[i], id: \.id) { dayItem in
+                        gridItem(dayItem.date)
                     }
                 }
             }
@@ -37,5 +33,37 @@ struct CalendarGridView: View {
                 viewStore.send(.onAppear)
             }
         }
+    }
+    
+    func getColor(date: String) -> Color {
+        let count = completedVM.getCount(d: date)
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(identifier: "ko_KR")
+        
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: dateFormatter.date(from: date)!).weekday!
+        let total = Week(rawValue: todayWeek)!.total
+        
+        let percent = (Double(count)/Double(total))*Double(100)
+        
+        if count == 0 {
+            return Color(hex: "#E6E6E6")
+        } else if percent < 33 {
+            return Color(hex: "#D5EBD3")
+        } else if percent > 33 && percent < 66 {
+            return Color(hex: "#9ECAA4")
+        } else {
+            return Color(hex: "#36793F")
+        }
+    }
+}
+
+// MARK: - UI Components
+extension CalendarGridView {
+    func gridItem(_ date: String) -> some View {
+        RoundedRectangle(cornerRadius: setting.ratioSpacing)
+            .fill(date == "" ? Color(hex: "#639F70"): getColor(date: date))
+            .scaledFrame(width: setting.frameSize, height: setting.frameSize)
     }
 }

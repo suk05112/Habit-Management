@@ -10,8 +10,14 @@ import ComposableArchitecture
 
 @Reducer
 struct CalendarMonthFeature {
+    
+    struct MonthItem: Identifiable, Equatable {
+        let id = UUID()
+        let month: String
+    }
+    
     struct State: Equatable {
-        var monthArray: [String] = []
+        var monthItemArray: [MonthItem] = []
     }
     
     enum Action: Equatable {
@@ -22,7 +28,7 @@ struct CalendarMonthFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.monthArray = generateMonthArray()
+                state.monthItemArray = generateMonthItemArray()
                 return .none
             }
         }
@@ -31,17 +37,17 @@ struct CalendarMonthFeature {
 
 // MARK: - Actions
 extension CalendarMonthFeature {
-    private func generateMonthArray() -> [String] {
+    private func generateMonthItemArray() -> [MonthItem] {
         let calendar = Calendar.current
         let oneYearAgo = calendar.date(byAdding: .year, value: -1, to: Date())! // 1년 전 오늘
         var currentDate = calendar.dateInterval(of: .weekOfYear, for: oneYearAgo)!.start // 1년 전 오늘이 포함된 주의 일요일
         
-        var monthArray = [String]()
+        var monthArray = [MonthItem]()
         var lastMonth = -1
         
         for _ in 0..<52 {
             let month = calendar.component(.month, from: currentDate)
-            monthArray.append(month != lastMonth ? String(format: "%02d", month) : " ")
+            monthArray.append(month != lastMonth ? MonthItem(month: String(format: "%02d", month)) : MonthItem(month: " "))
             lastMonth = month
             currentDate = calendar.date(byAdding: .day, value: 7, to: currentDate)!
         }

@@ -12,7 +12,7 @@ struct CalendarWeekDayView: View {
     
     @EnvironmentObject var setting: Setting
     
-    private var ratioSpacing: CGFloat { 3 * setting.WidthRatio }
+    private var ratioSpacing: CGFloat { 3 * setting.widthRatio }
     private var frame_size: CGFloat = CGFloat(20)
     
     var body: some View {

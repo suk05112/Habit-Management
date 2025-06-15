@@ -19,10 +19,10 @@ struct PaddingModifier: ViewModifier {
         content
             .padding(
                 EdgeInsets(
-                    top: top * setting.WidthRatio,
-                    leading: leading * setting.WidthRatio,
-                    bottom: bottom * setting.WidthRatio,
-                    trailing: trailing * setting.WidthRatio
+                    top: top * setting.widthRatio,
+                    leading: leading * setting.widthRatio,
+                    bottom: bottom * setting.widthRatio,
+                    trailing: trailing * setting.widthRatio
                 )
             )
     }

@@ -11,20 +11,17 @@ import ComposableArchitecture
 struct CalendarMonthView: View {
     private let store: StoreOf<CalendarMonthFeature>
     
-    private var ratioSpacing: CGFloat
-    private var frame_size: CGFloat
+    @EnvironmentObject var setting: Setting
     
-    init(store: StoreOf<CalendarMonthFeature>, ratioSpacing: CGFloat, frame_size: CGFloat) {
+    init(store: StoreOf<CalendarMonthFeature>) {
         self.store = store
-        self.ratioSpacing = ratioSpacing
-        self.frame_size = frame_size
     }
     
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
-            HStack(alignment: .center, spacing: ratioSpacing) {
-                ForEach(viewStore.monthArray, id: \.self) { month in
-                    monthLabel(month)
+            HStack(alignment: .center, spacing: setting.ratioSpacing) {
+                ForEach(viewStore.monthItemArray, id: \.id) { item in
+                    monthLabel(item.month)
                 }
             }
             .onAppear {
@@ -40,6 +37,6 @@ extension CalendarMonthView {
         Text(month)
             .foregroundColor(Color.white)
             .scaledText(size: 10, weight: .bold)
-            .scaledFrame(width: frame_size, height: frame_size)
+            .scaledFrame(width: setting.frameSize, height: setting.frameSize)
     }
 }
