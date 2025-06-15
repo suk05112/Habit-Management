@@ -15,6 +15,8 @@ struct CalendarScrollView: View {
     
     @EnvironmentObject var setting: Setting
     
+    @Namespace private var scrollID
+    
     init(calendarStore: StoreOf<CalendarFeature>) {
         self.calendarStore = calendarStore
         self.calendarMonthStore = calendarStore.scope(state: \.month, action: \.month)
@@ -30,10 +32,10 @@ struct CalendarScrollView: View {
                         CalendarGridView(store: calendarGridStore)
                     }
                 }
-                .id("scrollContent")
+                .id(scrollID)
             }
             .onAppear() {
-                proxy.scrollTo("scrollContent", anchor: .trailing)
+                proxy.scrollTo(scrollID, anchor: .trailing)
             }
         }
     }
