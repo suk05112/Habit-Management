@@ -37,6 +37,7 @@ struct MainView: View {
                     StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
                 }
+                .tint(HabitColor.defaultGreen.color)
                 if viewStore.habit.isShowingAdd {
                     AddView(habitStore: habitStore)
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)

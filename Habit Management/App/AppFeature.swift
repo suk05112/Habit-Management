@@ -54,7 +54,6 @@ struct AppFeature {
             switch action {
             case .task:
                 return .merge(
-                    .send(.habit(.onAppear)),
                     .send(.statistics(.onAppear))
                 )
             case let .setUserName(name):

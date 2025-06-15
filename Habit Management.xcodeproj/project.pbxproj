@@ -59,6 +59,8 @@
 		4E3383792DFBD3E4002849DB /* CalendarMonthFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3383782DFBD3E4002849DB /* CalendarMonthFeature.swift */; };
 		4E33837C2DFD632B002849DB /* CalendarGridFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33837B2DFD632B002849DB /* CalendarGridFeature.swift */; };
 		4E3384122DFEAFFE002849DB /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384112DFEAFFE002849DB /* CalendarScrollView.swift */; };
+		4E3384152DFED181002849DB /* HabitToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384142DFED181002849DB /* HabitToggleView.swift */; };
+		4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384162DFED3BD002849DB /* HabitToggleFeature.swift */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA872DF45DF200BA7EA6 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */; };
@@ -155,6 +157,8 @@
 		4E3383782DFBD3E4002849DB /* CalendarMonthFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthFeature.swift; sourceTree = "<group>"; };
 		4E33837B2DFD632B002849DB /* CalendarGridFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridFeature.swift; sourceTree = "<group>"; };
 		4E3384112DFEAFFE002849DB /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
+		4E3384142DFED181002849DB /* HabitToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitToggleView.swift; sourceTree = "<group>"; };
+		4E3384162DFED3BD002849DB /* HabitToggleFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitToggleFeature.swift; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -446,6 +450,15 @@
 			path = CalendarGrid;
 			sourceTree = "<group>";
 		};
+		4E3384132DFED159002849DB /* HabitToggleView */ = {
+			isa = PBXGroup;
+			children = (
+				4E3384142DFED181002849DB /* HabitToggleView.swift */,
+				4E3384162DFED3BD002849DB /* HabitToggleFeature.swift */,
+			);
+			path = HabitToggleView;
+			sourceTree = "<group>";
+		};
 		4E48FA7C2DF45DF200BA7EA6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +514,7 @@
 				4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */,
 				4E3381AC2DF7E561002849DB /* HabitBackground */,
 				4E3381862DF70EB4002849DB /* HabitHeader */,
+				4E3384132DFED159002849DB /* HabitToggleView */,
 				4E48FA8E2DF45DFA00BA7EA6 /* CompletionClient.swift */,
 				4E48FA8F2DF45DFA00BA7EA6 /* CompletionFeature.swift */,
 			);
@@ -770,11 +784,13 @@
 				4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */,
 				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,
 				4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */,
+				4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
+				4E3384152DFED181002849DB /* HabitToggleView.swift in Sources */,
 				4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */,
 				4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */,
 				4E48FA872DF45DF200BA7EA6 /* DateFormatter.swift in Sources */,

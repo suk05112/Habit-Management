@@ -31,6 +31,7 @@ struct HabitFeature {
         var isToastVisible: Bool = false
         
         var header: HabitHeaderFeature.State = .init()
+        var toggle: HabitToggleFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -60,6 +61,7 @@ struct HabitFeature {
         case setIter([Int])
         
         case header(HabitHeaderFeature.Action)
+        case toggle(HabitToggleFeature.Action)
     }
     
     @Dependency(\.habitClient) var habitClient
@@ -71,10 +73,13 @@ struct HabitFeature {
             HabitHeaderFeature()
         }
         
+        Scope(state: \.toggle, action: \.toggle) {
+            HabitToggleFeature()
+        }
+        
         Reduce { state, action in
             switch action {
             case .onAppear:
-                print("habitfeature onappear")
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits
                 state.mainReportText = ReportData.shared.getMainReport()
@@ -214,6 +219,14 @@ struct HabitFeature {
                 
             case .header:
                 return .none
+                
+            case .toggle:
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
+                return .run { send in
+                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await send(.loadHabits(habits))
+                }
             }
         }
     }
