@@ -89,7 +89,7 @@ struct Graph: View {
                                                 .scaledText(size: 15, weight: .none)
                                         }
                                     
-                                    if getData(viewStore: viewStore, selected: .week).filter({ $0 != 0}).count != 0 {
+                                    if viewStore.staticsData.total != 0 {
                                         HStack(alignment: .bottom) {
                                             ForEach(Array(selectedData.enumerated()), id: \.offset) { index, month in
                                                 let max = selectedData.max() ?? 1
