@@ -18,7 +18,7 @@ struct CalendarBackgroundView<Content: View>: View {
         VStack(spacing: 0) {
             content
         }
-        .background(Color(hex: Color.HabitColor.primary.rawValue))
+        .background(HabitColor.defaultGreen.color)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
     }

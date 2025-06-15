@@ -49,13 +49,13 @@ struct CalendarGridView: View {
         let percent = (Double(count)/Double(total))*Double(100)
         
         if count == 0 {
-            return Color(hex: "#E6E6E6")
+            return HabitColor.defaultGray.color
         } else if percent < 33 {
-            return Color(hex: "#D5EBD3")
+            return HabitColor.lightGreen.color
         } else if percent > 33 && percent < 66 {
-            return Color(hex: "#9ECAA4")
+            return HabitColor.mediumGreen.color
         } else {
-            return Color(hex: "#36793F")
+            return HabitColor.darkGreen.color
         }
     }
 }
@@ -64,7 +64,7 @@ struct CalendarGridView: View {
 extension CalendarGridView {
     func gridItem(_ date: String) -> some View {
         RoundedRectangle(cornerRadius: setting.ratioSpacing)
-            .fill(date == "" ? Color(hex: "#639F70"): getColor(date: date))
+            .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date: date))
             .scaledFrame(width: setting.frameSize, height: setting.frameSize)
     }
 }

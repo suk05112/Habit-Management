@@ -26,7 +26,7 @@ struct HabitView: View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             HabitBackgroundView {
                 VStack(spacing: 16) {
-                    HabitHeaderView(store: habitStore.scope(state: \.header, action: \.header))
+                    HabitHeaderView(habitStore: habitStore)
                     CalendarView(calendarStore: calendarStore)
                     MainToggleBar(
                         showAll: viewStore.binding(
