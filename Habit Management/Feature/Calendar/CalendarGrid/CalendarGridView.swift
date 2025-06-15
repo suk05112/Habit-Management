@@ -14,7 +14,6 @@ struct CalendarGridView: View {
     private var ratioSpacing: CGFloat
     private var frame_size: CGFloat
     private var getColor: (String) -> Color
-    private var aa: String = ""
     
     init(store: StoreOf<CalendarGridFeature>, ratioSpacing: CGFloat, frame_size: CGFloat, getColor: @escaping (String) -> Color) {
         self.store = store
