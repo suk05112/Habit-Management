@@ -16,6 +16,8 @@
 		0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03463349289FA7F9000D1E61 /* FirebaseDatabase */; };
 		0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */; };
 		0368CBE62DF8BF090086E95B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */; };
+		0368CBEA2E0074010086E95B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBE92E0073FB0086E95B /* String.swift */; };
+		0368CBEC2E0074390086E95B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBEB2E0074360086E95B /* Date.swift */; };
 		036D03B12813241000EE607B /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B02813241000EE607B /* ItemView.swift */; };
 		036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* compltedLIstVM.swift */; };
 		037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAEB28421AE800BD3C0E /* Setting.swift */; };
@@ -113,6 +115,8 @@
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
 		0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0368CBE92E0073FB0086E95B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		0368CBEB2E0074360086E95B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
 		037FFAEB28421AE800BD3C0E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -396,6 +400,8 @@
 		4E48FA812DF45DF200BA7EA6 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				0368CBEB2E0074360086E95B /* Date.swift */,
+				0368CBE92E0073FB0086E95B /* String.swift */,
 				4E48FA7D2DF45DF200BA7EA6 /* Color.swift */,
 				4E48FA7E2DF45DF200BA7EA6 /* DateFormatter.swift */,
 				4E48FA7F2DF45DF200BA7EA6 /* DependencyValues.swift */,
@@ -698,9 +704,11 @@
 				4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */,
 				4E48FAB92DF45DFA00BA7EA6 /* Graph.swift in Sources */,
 				4E48FABA2DF45DFA00BA7EA6 /* ReportListView.swift in Sources */,
+				0368CBEA2E0074010086E95B /* String.swift in Sources */,
 				4E3381AF2DF7E6AA002849DB /* FillColorModifier.swift in Sources */,
 				4E48FABB2DF45DFA00BA7EA6 /* ReportView.swift in Sources */,
 				4E48FABC2DF45DFA00BA7EA6 /* StatisticsView.swift in Sources */,
+				0368CBEC2E0074390086E95B /* Date.swift in Sources */,
 				4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */,
 				4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */,
 				4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */,

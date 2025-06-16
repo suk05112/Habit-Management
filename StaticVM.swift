@@ -329,10 +329,9 @@ extension StaticVM{
             weekArray[weekNO-1] = weekArray[weekNO-2]
         }
         
-        if add{
+        if add {
             weekArray[weekNO-1] += numOfIter
-        }
-        else{
+        } else {
             weekArray[weekNO-1] -= numOfIter
         }
         
@@ -343,89 +342,36 @@ extension StaticVM{
     }
     
 
-    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int){
+    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int) {
         var monthArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray)
         let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
         
         
-        if monthArray[todayMonth-1] == 0{
+        if monthArray[todayMonth-1] == 0 {
             monthArray[todayMonth-1] = monthArray[todayMonth-2]
         }
 
-        if add{
+        if add {
             monthArray[todayMonth-1] += numOfIter
-        }
-        else{
+        } else {
             monthArray[todayMonth-1] -= numOfIter
         }
             
-        try? realm!.write{
+        try? realm!.write {
             realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
         }
-
     }
     
-    func getnumOfToDoPerDay() -> [Int]{
+    func getnumOfToDoPerDay() -> [Int] {
         return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.days)
     }
-    func getnumOfToDoPerWeek() -> [Int]{
+    
+    func getnumOfToDoPerWeek() -> [Int] {
         return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.week)
     }
     
-    func getnumOfToDoPerMonth() -> [Int]{
+    func getnumOfToDoPerMonth() -> [Int] {
         return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.month)
     }
 
-}
-
-extension String {
-    func toDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
-    }
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        return dateFormatter.string(from: self.toDate()!)
-    }
-    
-    func convert() -> String{
-        let monthFormatter = DateFormatter()
-        let dayFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: "ko_KR")
-        dayFormatter.locale = Locale(identifier: "ko_KR")
-
-        monthFormatter.timeZone = TimeZone(abbreviation: "KST")
-        dayFormatter.timeZone = TimeZone(abbreviation: "KST")
-
-        monthFormatter.dateFormat = "MM"
-        dayFormatter.dateFormat = "dd"
-        
-        let month = Int(monthFormatter.string(from: self.toDate()!))!
-        let day = dayFormatter.string(from: self.toDate()!)
-
-//        return "\(Month(rawValue: month)!.description)\n\(day)"
-        return "\(day)일"
-
-    }
-}
-
-extension Date {
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        return dateFormatter.string(from: self)
-    }
 }
