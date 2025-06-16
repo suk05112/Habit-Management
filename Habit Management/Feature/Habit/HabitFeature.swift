@@ -14,9 +14,7 @@ struct HabitFeature {
     struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
-        var isShowingAllHabits: Bool = false
         var isShowingAdd: Bool = false
-        var isHidingCompletedHabits: Bool = false
         var isEditingHabit: Bool = false
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var mainReportText: String = "아직 완료된 습관이 없습니다."
@@ -37,8 +35,6 @@ struct HabitFeature {
     enum Action: BindableAction {
         case onAppear
         case loadHabits([Habit])
-        case toggleShowAll
-        case toggleHideCompleted
         case setUserName(String)
         case setMainReport(String)
         case setToast(Bool)
@@ -80,8 +76,8 @@ struct HabitFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
                 state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
@@ -92,30 +88,6 @@ struct HabitFeature {
             case let .loadHabits(habits):
                 state.habitList = habits
                 return .none
-                
-            case .toggleShowAll:
-                state.isShowingAllHabits.toggle()
-                UserDefaults.standard.set(state.isShowingAllHabits, forKey: "isShowingAllHabits")
-                
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
-                
-                return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
-                    await send(.loadHabits(habits))
-                }
-                
-            case .toggleHideCompleted:
-                state.isHidingCompletedHabits.toggle()
-                UserDefaults.standard.set(state.isHidingCompletedHabits, forKey: "isHidingCompletedHabits")
-                
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
-                
-                return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
-                    await send(.loadHabits(habits))
-                }
                 
             case let .setUserName(name):
                 state.userName = name
@@ -151,8 +123,8 @@ struct HabitFeature {
                 
             case let .addHabit(name, iter):
                 let habit = Habit(name: name, iter: iter)
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
                 
                 return .run { send in
                     try await habitClient.save(habit)
@@ -161,8 +133,8 @@ struct HabitFeature {
                 }
                 
             case let .updateHabit(name, iter, habit):
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
                 
                 return .run { send in
                     try await habitClient.update(habit, name, iter)
@@ -171,8 +143,8 @@ struct HabitFeature {
                 }
                 
             case let .deleteHabit(habit):
-                let showAll = state.isShowingAllHabits
-                let hideCompleted = state.isHidingCompletedHabits
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
                 
                 return .run { send in
                     try await habitClient.delete(habit)

@@ -10,11 +10,10 @@ import ComposableArchitecture
 
 // MARK: - TODO: isShowAll, isHideCompleted 내부저장소로 관리
 // MARK: - TODO: UserDefaults 다 묶어서 UserDefaultsClient로 만들기
-// MARK: - TODO: Client는 언제 어느 데이터가 필요할 때 사용하는걸까
+// MARK: - TODO: Client는 언제 어느 데이터가 필요할 때 사용하는걸까 - 보통 로컬DB 접근, API 호출 등 시스템 상호작용 로직
 
 @Reducer
 struct HabitToggleFeature {
-    
     struct LabelTitle: Identifiable, Equatable {
         let id = UUID()
         var showAll: String = "오늘의 습관"

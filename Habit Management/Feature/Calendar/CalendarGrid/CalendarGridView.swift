@@ -38,15 +38,12 @@ struct CalendarGridView: View {
     
     func getColor(date: String) -> Color {
         let count = completedVM.getCount(d: date)
-        let dateFormatter = DateFormatter()
+        let today = DateFormatters.standard.date(from: date)!
+        let todayWeekDay = Calendar.current.component(.weekday, from: today)
         
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "ko_KR")
+        let total = Week(rawValue: todayWeekDay)!.total
         
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: dateFormatter.date(from: date)!).weekday!
-        let total = Week(rawValue: todayWeek)!.total
-        
-        let percent = (Double(count)/Double(total))*Double(100)
+        let percent = (Double(count) / Double(total)) * Double(100)
         
         if count == 0 {
             return HabitColor.defaultGray.color
