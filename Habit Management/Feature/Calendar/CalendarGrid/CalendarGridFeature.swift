@@ -54,6 +54,10 @@ extension CalendarGridFeature {
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
             dayItemArray.append(weekArray)
+            
+            if let last = dayItemArray.last, last.allSatisfy({ $0.date.isEmpty }) {
+                dayItemArray.removeLast()
+            }
         }
         
         return dayItemArray
