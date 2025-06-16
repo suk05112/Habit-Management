@@ -30,7 +30,7 @@ struct ThisWeekView: View {
                         .scaledFrame(width: frame_size, height: frame_size)
                         .overlay(
                             RoundedRectangle(cornerRadius: ratioSpacing, style: .continuous)
-                                .fill(date == "" ? Color(hex: "#639F70"): getColor(date))
+                                .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date))
                                 .scaledFrame(width: frame_size, height: frame_size)
                         )
                 }

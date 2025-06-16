@@ -75,13 +75,8 @@ struct HabitFeature {
             switch action {
             case .onAppear:
                 print("habitfeature onappear")
-                
                 let showAll = state.isShowingAllHabits
                 let hideCompleted = state.isHidingCompletedHabits
-                let name = UserDefaults.standard.string(forKey: "userName") ?? ""
-                print("✅ onAppear userName = \(name)")  // ← 여기에 값이 없으면 문제 확정
-                state.userName = "새로운 이름"
-//                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
                 state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
@@ -119,7 +114,6 @@ struct HabitFeature {
                 
             case let .setUserName(name):
                 state.userName = name
-                UserDefaults.standard.set(name, forKey: "userName")
                 return .none
                 
             case let .setMainReport(report):

@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HabitHeaderView: View {
-    let store: StoreOf<HabitHeaderFeature>
+    private let habitHeaderStore: StoreOf<HabitHeaderFeature>
     
-    init(store: StoreOf<HabitHeaderFeature>) {
-        self.store = store
+    init(habitStore: StoreOf<HabitFeature>) {
+        self.habitHeaderStore = habitStore.scope(state: \.header, action: \.header)
     }
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(habitHeaderStore, observe: { $0 }) { viewStore in
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("\(viewStore.userName)님!")

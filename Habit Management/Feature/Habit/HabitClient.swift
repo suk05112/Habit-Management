@@ -48,7 +48,6 @@ extension HabitClient: DependencyKey {
                 let completedIDs = Set(completedList)
                 list = list.filter { !completedIDs.contains($0.id!) }
             }
-            print("fetchFiltered", list)
             return list.map { $0.detached() }
         },
 

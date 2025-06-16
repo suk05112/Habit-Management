@@ -10,49 +10,29 @@ import SwiftUI
 class Setting: ObservableObject {
     @Published var isShowAll: Bool
     @Published var isHideCompleted: Bool
+    @State var wasLaunchedBefore = false
     
     let standardWidth: Double = 414
     let standardHeight: Double = 896
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
-    var WidthRatio: Double
-    var HeightRatio: Double = 1
-    @State var wasLaunchedBefore = false
+    var widthRatio: Double
+    var heightRatio: Double
+    var ratioSpacing: CGFloat
+    let frameSize: CGFloat = 20
     
     init() {
-        print("11size", screenWidth, screenHeight)
-        WidthRatio = screenWidth/standardWidth
-        HeightRatio = screenHeight/standardHeight
-        print(WidthRatio, HeightRatio)
+        widthRatio = screenWidth / standardWidth
+        heightRatio = screenHeight / standardHeight
+        ratioSpacing = 3 * widthRatio
+        
         self.isShowAll = UserDefaults.standard.bool(forKey: "showAll")
         self.isHideCompleted = UserDefaults.standard.bool(forKey: "isHideCompleted")
-        
         wasLaunchedBefore = firstLaunch()
     }
     
-    func setratio() {
-        if screenHeight == 896 {
-            print("iPhone 11, 11proMax, iPhone XR")
-        }
-        else if screenHeight == 926 {
-            print("iPhone 12proMax")
-        }
-        else if screenHeight == 844 {
-            print("iPhone 12, 12pro")
-        }
-        else if screenHeight == 736 {
-            print("iPhone 8plus")
-        }
-        else if screenHeight == 667 {
-            print("iPhone 8")
-        }
-        else {
-            print("iPhone 12 mini, iPhone XS")
-        }
-    }
-    
     func firstLaunch() -> Bool {
-        if UserDefaults.standard.object(forKey: "wasLaunchedBefore") == nil{
+        if UserDefaults.standard.object(forKey: "wasLaunchedBefore") == nil {
             UserDefaults.standard.set(false, forKey: "wasLaunchedBefore")
         }
         

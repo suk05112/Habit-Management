@@ -165,8 +165,6 @@ extension StaticVM{
 
         let dayOffset = DateComponents(day: -7)
         let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
-        
-        print("week ago =" , weekAgo)
 
         for i in 0..<7{
             let myday = dateFormatter.string(for: calendar.date(byAdding: DateComponents(day: -i), to: date_today))!

@@ -23,14 +23,13 @@ struct StaticsView2: View {
         ZStack{
             VStack{
                 HStack{
-                    Text("Statics")
+                    Text("Statistics")
                         .scaledText(size: 30, weight: .semibold)
                     Spacer()
                     
                 }
                 .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
  
-//                HabitGridView()
                 ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                 .sheet(isPresented: $showingDetail){
                     ReportListView()

@@ -13,11 +13,13 @@ import ComposableArchitecture
 
 struct MainView: View {
     let store: StoreOf<AppFeature>
+    private let calendarStore: StoreOf<CalendarFeature>
     private let habitStore: StoreOf<HabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     
     init(store: StoreOf<AppFeature>) {
         self.store = store
+        self.calendarStore = store.scope(state: \.calendar, action: \.calendar)
         self.habitStore = store.scope(state: \.habit, action: \.habit)
         self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
         
@@ -29,17 +31,11 @@ struct MainView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
                 TabView {
-                    HabitView(habitStore: habitStore, statisticsStore: statisticsStore)
-                        .tabItem {
-                            Image(systemName: "house")
-                            Text("홈")
-                        }
+                    HabitView(calendarStore: calendarStore, habitStore: habitStore, statisticsStore: statisticsStore)
+                        .tabItem { tabIconView("house", "홈") }
                     
-                    StatisticsView(store: statisticsStore)
-                        .tabItem {
-                            Image(systemName: "chart.bar.fill")
-                            Text("통계")
-                        }
+                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
+                        .tabItem { tabIconView("chart.bar.fill", "통계") }
                 }
                 if viewStore.habit.isShowingAdd {
                     AddView(habitStore: habitStore)
@@ -57,9 +53,16 @@ struct MainView: View {
             }
             .onAppear {
                 print("MainView onappear")
-                print("🐨\(viewStore.userName)")
             }
         }
+    }
+}
+
+extension MainView {
+    @ViewBuilder
+    func tabIconView(_ imageName: String, _ tabName: String) -> some View {
+        Image(systemName: imageName)
+        Text(tabName)
     }
 }
 
