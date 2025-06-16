@@ -29,22 +29,6 @@ struct HabitView: View {
                     HabitHeaderView(habitStore: habitStore)
                     CalendarView(calendarStore: calendarStore)
                     HabitToggleView(habitStore: habitStore)
-//                    HabitToggleView(
-//                        showAll: viewStore.binding(
-//                            get: \.isShowingAllHabits,
-//                            send: .toggleShowAll
-//                        ),
-//                        hideCompleted: viewStore.binding(
-//                            get: \.isHidingCompletedHabits,
-//                            send: .toggleHideCompleted
-//                        ),
-//                        toggleShowAll: {
-//                            habitStore.send(.toggleShowAll)
-//                        },
-//                        toggleHideCompleted: {
-//                            habitStore.send(.toggleHideCompleted)
-//                        }
-//                    )
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         ForEach(viewStore.state.habitList) { habit in

@@ -18,19 +18,19 @@ struct HabitToggleView: View {
     var body: some View {
         WithViewStore(habitToggleStore, observe: { $0 }) { viewStore in
             HStack {
-                Button {
-                    viewStore.send(.showAllButtonPressed)
-                } label: {
-                    showAllLabel(title: viewStore.labelTitle.showAll)
-                }
+                HabitToggleButton(
+                    title: viewStore.labelTitle.showAll,
+                    style: .filled,
+                    action: { viewStore.send(.showAllButtonPressed) }
+                )
                 
                 Spacer()
                 
-                Button {
-                    viewStore.send(.hideCompletedButtonPressed)
-                } label: {
-                    hideCompletedLabel(title: viewStore.labelTitle.hideCompleted)
-                }
+                HabitToggleButton(
+                    title: viewStore.labelTitle.hideCompleted,
+                    style: .plain,
+                    action: { viewStore.send(.hideCompletedButtonPressed) }
+                )
             }
             .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
         }
@@ -38,20 +38,39 @@ struct HabitToggleView: View {
 }
 
 // MARK: - UI Components
-extension HabitToggleView {
-    private func showAllLabel(title: String) -> some View {
-        Text(title)
-            .scaledText(size: 16, weight: .bold)
-            .foregroundColor(Color.white)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(HabitColor.mediumGreen.color)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+enum HabitToggleButtonStyle {
+    case filled
+    case plain
+}
+
+struct HabitToggleButton: View {
+    let title: String
+    let style: HabitToggleButtonStyle
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .scaledText(size: 16, weight: .bold)
+                .foregroundColor(foregroundColor)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(background)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
     }
     
-    private func hideCompletedLabel(title: String) -> some View {
-        Text(title)
-            .scaledText(size: 16, weight: .bold)
-            .foregroundColor(Color.gray.opacity(0.6))
+    private var foregroundColor: Color {
+        switch style {
+        case .filled: return .white
+        case .plain: return .gray.opacity(0.6)
+        }
+    }
+    
+    private var background: some View {
+        switch style {
+        case .filled: return HabitColor.mediumGreen.color
+        case .plain: return Color.clear
+        }
     }
 }
