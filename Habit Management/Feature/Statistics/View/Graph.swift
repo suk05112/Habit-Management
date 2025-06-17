@@ -89,7 +89,7 @@ struct Graph: View {
                                                 .scaledText(size: 15, weight: .none)
                                         }
                                     
-                                    if viewStore.staticsData.total != 0 {
+                                    if viewStore.statisticsData.total != 0 {
                                         HStack(alignment: .bottom) {
                                             ForEach(Array(selectedData.enumerated()), id: \.offset) { index, month in
                                                 let max = selectedData.max() ?? 1
@@ -121,7 +121,7 @@ struct Graph: View {
     func getData(viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>, selected: Total)-> [Int] {
         switch selected {
         case .week:
-            return viewStore.staticsData.day
+            return viewStore.statisticsData.day
         case .month:
             let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
             var a = b-5
@@ -130,9 +130,9 @@ struct Graph: View {
                 a = 12 - a
             }
             
-            return Array(viewStore.staticsData.week[a..<b])
+            return Array(viewStore.statisticsData.week[a..<b])
         case .year:
-            return viewStore.staticsData.month
+            return viewStore.statisticsData.month
         default:
             return []
         }

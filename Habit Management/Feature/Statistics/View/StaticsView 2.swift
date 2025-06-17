@@ -23,7 +23,7 @@ struct StaticsView2: View {
         ZStack{
             VStack{
                 HStack{
-                    Text("Statics")
+                    Text("Statistics")
                         .scaledText(size: 30, weight: .semibold)
                     Spacer()
                     

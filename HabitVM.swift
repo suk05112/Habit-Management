@@ -272,7 +272,7 @@ extension HabitVM{
         }
         
         try? realm!.write{
-            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first?.dayArray = weekTotal
+            realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first?.dayArray = weekTotal
         }
         return weekTotal
     }

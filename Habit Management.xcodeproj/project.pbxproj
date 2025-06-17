@@ -88,7 +88,7 @@
 		4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */; };
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
 		4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */; };
-		4E48FACB2DF45DFD00BA7EA6 /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */; };
+		4E48FACB2DF45DFD00BA7EA6 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,7 +180,7 @@
 		4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
 		4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
-		4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
+		4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,7 +514,7 @@
 				4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */,
 				4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */,
 				4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */,
-				4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */,
+				4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -736,7 +736,7 @@
 				4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */,
 				4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */,
 				4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */,
-				4E48FACB2DF45DFD00BA7EA6 /* Statics.swift in Sources */,
+				4E48FACB2DF45DFD00BA7EA6 /* Statistics.swift in Sources */,
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
 				039164E22831213000CA0028 /* Month.swift in Sources */,
 				037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */,
