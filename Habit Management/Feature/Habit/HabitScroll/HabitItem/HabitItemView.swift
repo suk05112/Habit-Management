@@ -21,6 +21,20 @@ struct HabitItemView: View {
     init(habitStore: StoreOf<HabitFeature>, habit: Habit) {
         self.habitStore = habitStore
         self.habit = habit
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        let a = [1,2,3,4]
+            .map { formatter.shortWeekdaySymbols[($0 - 1) % 7] }
+            .joined(separator: ", ")
+        print(a)
+        
+        let b = [1,2,3,4]
+            .map { DateFormatters.standard.shortWeekdaySymbols[($0 - 1) % 7] }
+            .joined(separator: ", ")
+        print(b)
+        
+        
     }
     
     var body: some View {

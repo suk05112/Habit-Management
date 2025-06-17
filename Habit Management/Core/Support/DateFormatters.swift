@@ -15,4 +15,12 @@ enum DateFormatters {
         formatter.timeZone = TimeZone.current
         return formatter
     }()
+    
+    static let fullName: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone.current
+        return formatter
+    }()
 }
