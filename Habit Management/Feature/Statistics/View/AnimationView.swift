@@ -51,7 +51,7 @@ struct AnimationView: View{
                                  Text("20% up")
                                      .font(.system(size: 12))
                                      .bold()
-                                     .foregroundColor(Color(hex: "#38AC3C"))
+                                     .foregroundColor(HabitColor.darkGreen.color)
                                      .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
                              }
 

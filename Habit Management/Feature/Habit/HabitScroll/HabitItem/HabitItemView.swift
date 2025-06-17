@@ -23,16 +23,14 @@ struct HabitItemView: View {
         self.habit = habit
     }
     
-    
-    
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
-                if !habit.isInvalidated{
+                if !habit.isInvalidated {
                     ZStack{
                         RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.white)
-                            .shadow(radius: 5)
+                            .shadow(radius: 3)
                             .scaledFrame(width: .none, height: 80)
                             .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
                         
@@ -40,8 +38,8 @@ struct HabitItemView: View {
                             VStack(alignment: .leading){
                                 
                                 Text("\(habit.weekString()) 반복")
-                                    .scaledText(size: 12, weight: .semibold)
-                                    .foregroundColor(Color(hex: "#38AC3C"))
+                                    .scaledText(size: 12, weight: .bold)
+                                    .foregroundColor(HabitColor.darkGreen.color)
                                     .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                                 Text(habit.name)
                                     .scaledText(size: 23, weight: .medium)
@@ -52,7 +50,7 @@ struct HabitItemView: View {
                             HStack(){
                                 Text("\(habit.continuity)일")
                                     .scaledText(size: 20, weight: .semibold)
-                                    .foregroundColor(Color(hex: "#38AC3C"))
+                                    .foregroundColor(HabitColor.darkGreen.color)
                                     .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                                 
                                 Text("연속 실천 중🔥")

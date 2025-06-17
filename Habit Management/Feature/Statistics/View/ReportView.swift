@@ -40,7 +40,7 @@ struct ReportView: View{
                         Text("\(percent)")
                             .scaledText(size: 12, weight: .semibold)
                             .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
-                            .foregroundColor(Color(hex: "#38AC3C"))
+                            .foregroundColor(HabitColor.darkGreen.color)
 
                         Spacer()
                         HStack{}
