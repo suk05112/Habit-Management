@@ -1,24 +1,32 @@
 //
-//  ItemView.swift
+//  HabitItemView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/04/23.
 //
 
-import Foundation
 import SwiftUI
 import ComposableArchitecture
 
-struct ItemView: View{
-    let store: StoreOf<HabitFeature>
+struct HabitItemView: View {
+    private let habitStore: StoreOf<HabitFeature>
+    private let habit: Habit
+    
     let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
-    let habit: Habit
     
     @State private var offset: CGFloat = 0
     @State private var slideRight = false
     @State private var slideLeft = false
+    
+    init(habitStore: StoreOf<HabitFeature>, habit: Habit) {
+        self.habitStore = habitStore
+        self.habit = habit
+    }
+    
+    
+    
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(habitStore, observe: { $0 }) { viewStore in
             WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
                 if !habit.isInvalidated{
                     ZStack{
@@ -77,12 +85,10 @@ struct ItemView: View{
     }
 }
 
-
-extension ItemView {
-    
-    func onChanged(value: DragGesture.Value){
+extension HabitItemView {
+    func onChanged(value: DragGesture.Value) {
         //print("offset", value.translation.width)
-       
+        
         if value.translation.width < 0 {
             
             if (-value.translation.width < -UIScreen.main.bounds.width/2){
@@ -94,7 +100,7 @@ extension ItemView {
             
         }
         else{
-
+            
             if (value.translation.width < UIScreen.main.bounds.width/2){
                 offset = slideRight ? value.translation.width + 110 : value.translation.width
             }
@@ -103,24 +109,24 @@ extension ItemView {
             }
             
         }
-
+        
     }
     
     func onEnd(value: DragGesture.Value){
         
         withAnimation(.easeOut){
-
+            
             if value.translation.width < 0{
                 if slideRight{
                     slideRight = false
                     offset = 0
                 }
-
+                
                 else{
                     slideLeft = true
                     offset = -60
                 }
-
+                
             }
             else{
                 if slideLeft{
@@ -130,10 +136,10 @@ extension ItemView {
                 else{
                     slideRight = true
                     offset = 110
-
+                    
                 }
             }
-
+            
         }
         
     }

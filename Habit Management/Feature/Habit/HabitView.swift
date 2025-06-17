@@ -29,17 +29,7 @@ struct HabitView: View {
                     HabitHeaderView(habitStore: habitStore)
                     CalendarView(calendarStore: calendarStore)
                     HabitToggleView(habitStore: habitStore)
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(viewStore.state.habitList) { habit in
-                            ZStack {
-                                ItemView(
-                                    store: habitStore,
-                                    habit: habit
-                                )
-                            }
-                        }
-                    }
+                    HabitScrollView(habitStore: habitStore)
                     
                     MainAddButton {
                         habitStore.send(.selectItem(nil))
