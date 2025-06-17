@@ -27,11 +27,13 @@ struct StatisticsFeature {
         case onAppear
         case scrollDataLoaded(dayArray: [[String]], monthArray: [String], thisWeek: [String])
         case initiallizeStaticsData
+        case initialStaticsDataLoaded(StaticsData)
         case computeTotalCounts
-        case checkOnApper
         case addOrUpdate
+        case staticsUpdated(StaticsData)
         case setnumOfToDo(add: Bool, numOfIter: Int)
         case getnumOfToDo
+        case numOfToDoLoaded(Statics)
     }
     
     @Dependency(\.staticsClient) var staticsClient
@@ -51,19 +53,15 @@ struct StatisticsFeature {
                     .send(.getnumOfToDo),
                     .send(.computeTotalCounts)
                 )
-            case .checkOnApper:
-                print("run checkOnApper")
-                return .none
-                
+
             case .addOrUpdate:
-                let staticsData = staticsClient.addOrUpdate()
-                
-                state.staticsData.day = staticsData.day
-                state.staticsData.month = staticsData.month
-                state.staticsData.week = staticsData.week
-                state.staticsData.thisWeek = staticsData.thisWeek
-                state.staticsData.total = staticsData.total
-                state.staticsData.yearTotal = staticsData.yearTotal
+                return .run { send in
+                    let data = await staticsClient.addOrUpdate()
+                    await send(.staticsUpdated(data))
+                }
+
+            case let .staticsUpdated(data):
+                state.staticsData = data
                 return .none
                 
             case let .scrollDataLoaded(dayArray, monthArray, thisWeek):
@@ -73,15 +71,13 @@ struct StatisticsFeature {
                 return .none
                 
             case .initiallizeStaticsData:
-                let staticsData = staticsClient.getInitialStaticsData()
-                
-                state.staticsData.day = staticsData.day
-                state.staticsData.month = staticsData.month
-                state.staticsData.week = staticsData.week
-                state.staticsData.thisWeek = staticsData.thisWeek
-                state.staticsData.total = staticsData.total
-                state.staticsData.yearTotal = staticsData.yearTotal
-                
+                return .run { send in
+                    let staticsData = await staticsClient.getInitialStaticsData()
+                    await send(.initialStaticsDataLoaded(staticsData))
+                }
+
+            case let .initialStaticsDataLoaded(data):
+                state.staticsData = data
                 return .none
                 
             case .computeTotalCounts:
@@ -109,12 +105,17 @@ struct StatisticsFeature {
                 
                 state.totalCounts = counts
                 return .none
+                
             case .getnumOfToDo:
-                let statics = staticsClient.getnumOfToDo()
+                return .run { send in
+                    let statics = await staticsClient.getnumOfToDo()
+                    await send(.numOfToDoLoaded(statics))
+                }
+                
+            case let .numOfToDoLoaded(statics):
                 state.todoPerDay = Array(statics.days)
                 state.todoPerWeek = Array(statics.week)
                 state.todoPerMonth = Array(statics.month)
-                
                 return .none
                 
             case let .setnumOfToDo(add, numOfIter):

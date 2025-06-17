@@ -10,13 +10,13 @@ import ComposableArchitecture
 import Foundation
 
 struct StatisticsClient {
-    var getInitialStaticsData: () -> StaticsData
-    var addOrUpdate: () -> StaticsData
+    var getInitialStaticsData: () async -> StaticsData
+    var addOrUpdate: () async -> StaticsData
     var getStr: (_ selected: Int)-> [String]
     var setnumOfToDoPerDay: () -> ()
     var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
     var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
-    var getnumOfToDo: () -> Statics
+    var getnumOfToDo: () async -> Statics
     
     static func getWeekOfNO(date: Date) -> Int {
         let calendar = Calendar(identifier: .gregorian)
@@ -352,8 +352,19 @@ extension StatisticsClient : DependencyKey {
             }
         },
         getnumOfToDo: {
-            var realm: Realm? = try? Realm()
-            return realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!
+            var realm: Realm! = try? Realm()
+            
+            guard let statics = realm.objects(Statics.self).where({ $0.classification == "Todo" }).first else {
+                    return Statics() // 또는 예외 처리
+                }
+            return Statics(
+                classification: statics.classification,
+                year: statics.year,
+                dayArray: Array(statics.dayArray),
+                weekArray: Array(statics.weekArray),
+                monthArray: Array(statics.monthArray),
+                total: statics.total
+            )
         }
     )
 }
