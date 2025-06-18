@@ -20,21 +20,7 @@ struct HabitItemView: View {
     
     init(habitStore: StoreOf<HabitFeature>, habit: Habit) {
         self.habitStore = habitStore
-        self.habit = habit
-        
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        let a = [1,2,3,4]
-            .map { formatter.shortWeekdaySymbols[($0 - 1) % 7] }
-            .joined(separator: ", ")
-        print(a)
-        
-        let b = [1,2,3,4]
-            .map { DateFormatters.standard.shortWeekdaySymbols[($0 - 1) % 7] }
-            .joined(separator: ", ")
-        print(b)
-        
-        
+        self.habit = habit     
     }
     
     var body: some View {
@@ -42,7 +28,7 @@ struct HabitItemView: View {
             WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
                 if !habit.isInvalidated {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        RoundedRectangle(cornerRadius: 10)
                             .fill(Color.white)
                             .shadow(radius: 3)
                             .scaledFrame(width: .none, height: 80)
@@ -153,6 +139,5 @@ extension HabitItemView {
             }
             
         }
-        
     }
 }
