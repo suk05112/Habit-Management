@@ -18,10 +18,11 @@ struct HabitScrollView: View {
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             ScrollView(.vertical, showsIndicators: false) {
-                Spacer().frame(height: 8)
+                Spacer().frame(height: 4)
                 ForEach(viewStore.habitList) { habit in
                     HabitItemView(habitStore: habitStore, habit: habit)
                 }
+                Spacer().frame(height: 8)
             }
         }
     }
