@@ -12,10 +12,12 @@ import Firebase
 import ComposableArchitecture
 
 struct HabitView: View {
+    let calendarStore: StoreOf<CalendarFeature>
     let habitStore: StoreOf<HabitFeature>
     let statisticsStore: StoreOf<StatisticsFeature>
     
-    init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+    init(calendarStore: StoreOf<CalendarFeature>, habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+        self.calendarStore = calendarStore
         self.habitStore = habitStore
         self.statisticsStore = statisticsStore
     }
@@ -24,9 +26,8 @@ struct HabitView: View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             HabitBackgroundView {
                 VStack(spacing: 16) {
-                    HabitHeaderView(store: habitStore.scope(state: \.header, action: \.header))
-                    
-                    HabitGridView(store: statisticsStore)
+                    HabitHeaderView(habitStore: habitStore)
+                    CalendarView(calendarStore: calendarStore)
                     MainToggleBar(
                         showAll: viewStore.binding(
                             get: \.isShowingAllHabits,
@@ -71,10 +72,6 @@ struct HabitView: View {
                     ),
                     duration: Toast.long
                 )
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("홈")
-                }
             }
         }
     }

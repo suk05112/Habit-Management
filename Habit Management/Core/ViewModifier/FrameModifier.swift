@@ -17,40 +17,26 @@ struct FrameModifier: ViewModifier {
     var size: CGFloat?
     var weight: Font.Weight?
     
-    var top: CGFloat?
-    var leading: CGFloat?
-    var bottom: CGFloat?
-    var trailing: CGFloat?
-    
     func body(content: Content) -> some View {
         if height != nil || width != nil{
             if isScroll!{
                 content
-                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.WidthRatio)
+                    .frame(width: width == .none ? .none : width! * setting.widthRatio, height: height == .none ? .none : height! * setting.widthRatio)
             }
             else{
                 content
-                    .frame(width: width == .none ? .none : width! * setting.WidthRatio, height: height == .none ? .none : height! * setting.HeightRatio)
+                    .frame(width: width == .none ? .none : width! * setting.widthRatio, height: height == .none ? .none : height! * setting.heightRatio)
             }
             
         }
         if size != nil{
             if let weight = weight {
                 content
-                    .font(.system(size: size! * setting.WidthRatio, weight: weight))
+                    .font(.system(size: size! * setting.widthRatio, weight: weight))
             }
             else{
-                content.font(.system(size: size! * setting.WidthRatio))
+                content.font(.system(size: size! * setting.widthRatio))
             }
-        }
-        
-        if top != nil{
-            content
-                .padding(EdgeInsets(top: top! * setting.WidthRatio,
-                                    leading: leading! *
-                                    setting.WidthRatio,
-                                    bottom: bottom! * setting.WidthRatio,
-                                    trailing: trailing! * setting.WidthRatio))
         }
     }
 }

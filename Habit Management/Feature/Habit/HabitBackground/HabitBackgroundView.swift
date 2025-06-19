@@ -17,7 +17,7 @@ struct HabitBackgroundView<Content: View>: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(Color(hex: "#B8D9B9"))
+                .fill(HabitColor.mediumGreen.color)
                 .edgesIgnoringSafeArea(.all)
                 .scaledFrame(width: nil, height: 242)
             

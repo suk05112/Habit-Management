@@ -9,7 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct StatisticsView: View {
-    let store: StoreOf<StatisticsFeature>
+    let calendarStore: StoreOf<CalendarFeature>
+    let statisticsStore: StoreOf<StatisticsFeature>
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedVM = compltedLIstVM.shared
@@ -19,15 +20,16 @@ struct StatisticsView: View {
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
-    init(store: StoreOf<StatisticsFeature>) {
-        print("StatisticsView init")
-        self.store = store
-        ReportData.configure(store: store)
+    init(calendarStore: StoreOf<CalendarFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+        print("StaticsView init")
+        self.calendarStore = calendarStore
+        self.statisticsStore = statisticsStore
+        ReportData.configure(store: statisticsStore)
         randomText = ReportData.shared.getRandomText()
     }
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(statisticsStore, observe: { $0 }) { viewStore in
             ZStack{
                 VStack{
                     HStack{
@@ -38,7 +40,7 @@ struct StatisticsView: View {
                     }
                     .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
                     
-                    HabitGridView(store: store)
+                    CalendarView(calendarStore: calendarStore)
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){
@@ -50,13 +52,13 @@ struct StatisticsView: View {
                         .scaledPadding(top: 10, leading: 0, bottom: 0, trailing: 0)
                     
                     Spacer()
-                    Graph(store: store, ratio: 1)
+                    Graph(store: statisticsStore, ratio: 1)
                     Spacer()
                     HStack{
-                        TotalView(staticCase: .week, store: store)
-                        TotalView(staticCase: .month, store: store)
-                        TotalView(staticCase: .year, store: store)
-                        TotalView(staticCase: .all, store: store)
+                        TotalView(staticCase: .week, store: statisticsStore)
+                        TotalView(staticCase: .month, store: statisticsStore)
+                        TotalView(staticCase: .year, store: statisticsStore)
+                        TotalView(staticCase: .all, store: statisticsStore)
                     }
                     .scaledPadding(top: 0, leading: 0, bottom: 30, trailing: 0)
                 }

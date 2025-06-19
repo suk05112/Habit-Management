@@ -17,7 +17,7 @@ struct FillColorModifier<S: Shape>: ViewModifier {
 }
 
 extension Shape {
-    func fillColor(_ color: Color.HabitColor) -> some View {
-        modifier(FillColorModifier(shape: self, hexColor: color.rawValue))
+    func fillColor(_ color: String) -> some View {
+        modifier(FillColorModifier(shape: self, hexColor: color))
     }
 }
