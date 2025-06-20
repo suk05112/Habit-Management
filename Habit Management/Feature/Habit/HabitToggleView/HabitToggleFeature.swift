@@ -10,32 +10,29 @@ import ComposableArchitecture
 
 // MARK: - TODO: isShowAll, isHideCompleted 내부저장소로 관리
 // MARK: - TODO: UserDefaults 다 묶어서 UserDefaultsClient로 만들기
-// MARK: - TODO: Client는 언제 어느 데이터가 필요할 때 사용하는걸까 - 보통 로컬DB 접근, API 호출 등 시스템 상호작용 로직
 
 @Reducer
 struct HabitToggleFeature {
-    struct LabelTitle: Identifiable, Equatable {
-        let id = UUID()
-        var showAll: String = "오늘의 습관"
-        var hideCompleted: String = "완료 보이기"
-    }
-    
     struct State: Equatable {
         var isShowAll: Bool = false
         var isHideCompleted: Bool = false
         var labelTitle: LabelTitle = LabelTitle()
+        var selectedHabit: Habit?
     }
     
     enum Action: Equatable {
         case onAppear
         case showAllButtonPressed
         case hideCompletedButtonPressed
+        case addHabitButtonPressed
+        //        case selectItem(Habit?)
     }
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                state.labelTitle = LabelTitle()
                 return .none
                 
             case .showAllButtonPressed:
@@ -47,8 +44,20 @@ struct HabitToggleFeature {
                 state.isHideCompleted.toggle()
                 state.labelTitle.hideCompleted = state.isHideCompleted ? "완료 숨기기" : "완료 보이기"
                 return .none
+                
+            case .addHabitButtonPressed:
+                print("🧊")
+                return .none
             }
         }
     }
 }
 
+// MARK: - Structure Model
+extension HabitToggleFeature {
+    struct LabelTitle: Identifiable, Equatable {
+        let id = UUID()
+        var showAll: String = "오늘의 습관"
+        var hideCompleted: String = "완료 보이기"
+    }
+}

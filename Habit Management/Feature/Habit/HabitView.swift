@@ -14,33 +14,24 @@ import ComposableArchitecture
 struct HabitView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let habitStore: StoreOf<HabitFeature>
-    let statisticsStore: StoreOf<StatisticsFeature>
     
-    init(calendarStore: StoreOf<CalendarFeature>, habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+    init(calendarStore: StoreOf<CalendarFeature>, habitStore: StoreOf<HabitFeature>) {
         self.calendarStore = calendarStore
         self.habitStore = habitStore
-        self.statisticsStore = statisticsStore
     }
 
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             HabitBackgroundView {
-                VStack(spacing: 12) {
+                VStack(spacing: 0) {
                     HabitHeaderView(habitStore: habitStore)
                     CalendarView(calendarStore: calendarStore)
                     HabitToggleView(habitStore: habitStore)
                     HabitScrollView(habitStore: habitStore)
-                    
-                    MainAddButton {
-                        habitStore.send(.selectItem(nil))
-                        habitStore.send(.setEditMode(false))
-                        habitStore.send(.setAddMode(true))
-                    }
-                    
-                    Spacer()
+                    divider
                 }
                 .toast(
-                    message: "Current time:\n\(Date().formatted(date: .complete, time: .complete))",
+                    message: "Current time: \(DateFormatters.fullName.string(from: Date()))",
                     isShowing: viewStore.binding(
                         get: \.isToastVisible,
                         send: { .setToast($0) }
@@ -55,16 +46,12 @@ struct HabitView: View {
     }
 }
 
-struct MainAddButton: View {
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: {
-            onTap()
-        }) {
-            Image(systemName: "plus")
-                .foregroundColor(.black)
-        }
-        .scaledPadding(top: 5, leading: 0, bottom: 5, trailing: 0)
+// MARK: - UI Components
+extension HabitView {
+    private var divider: some View {
+        Rectangle()
+            .scaledFrame(width: nil, height: 1)
+            .foregroundStyle(Color.gray.opacity(0.2))
+            .scaledPadding(top: 0, leading: 0, bottom: 8, trailing: 0)
     }
 }

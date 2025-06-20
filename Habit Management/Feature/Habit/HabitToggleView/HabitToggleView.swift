@@ -18,59 +18,59 @@ struct HabitToggleView: View {
     var body: some View {
         WithViewStore(habitToggleStore, observe: { $0 }) { viewStore in
             HStack {
-                HabitToggleButton(
-                    title: viewStore.labelTitle.showAll,
-                    style: .filled,
-                    action: { viewStore.send(.showAllButtonPressed) }
-                )
+                showAllButton(title: viewStore.labelTitle.showAll) {
+                    viewStore.send(.showAllButtonPressed)
+                }
+                
+                hideCompletedButton(title: viewStore.labelTitle.hideCompleted) {
+                    viewStore.send(.hideCompletedButtonPressed)
+                }
                 
                 Spacer()
                 
-                HabitToggleButton(
-                    title: viewStore.labelTitle.hideCompleted,
-                    style: .plain,
-                    action: { viewStore.send(.hideCompletedButtonPressed) }
-                )
+                addHabitButton {
+                    viewStore.send(.addHabitButtonPressed)
+//                    viewStore.send(.selectItem(nil))
+//                    viewStore.send(.setEditMode(false))
+//                    viewStore.send(.setAddMode(true))
+                }
             }
-            .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
+            .scaledPadding(top: 12, leading: 16, bottom: 8, trailing: 16)
         }
     }
 }
 
 // MARK: - UI Components
-enum HabitToggleButtonStyle {
-    case filled
-    case plain
-}
-
-struct HabitToggleButton: View {
-    let title: String
-    let style: HabitToggleButtonStyle
-    let action: () -> Void
-    
-    var body: some View {
+extension HabitToggleView {
+    private func showAllButton(title: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .scaledText(size: 16, weight: .bold)
-                .foregroundColor(foregroundColor)
-                .padding(.vertical, 8)
-                .padding(.horizontal, 12)
-                .background(background)
+                .scaledFrame(width: 112, height: 36)
+                .foregroundColor(.white)
+                .background(HabitColor.mediumGreen.color)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
     
-    private var foregroundColor: Color {
-        switch style {
-        case .filled: return .white
-        case .plain: return .gray.opacity(0.6)
+    private func hideCompletedButton(title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .scaledText(size: 16, weight: .bold)
+                .scaledFrame(width: 100, height: 36)
+                .foregroundColor(.white)
+                .background(HabitColor.mediumGreen.color)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
         }
     }
     
-    private var background: some View {
-        switch style {
-        case .filled: return HabitColor.mediumGreen.color
-        case .plain: return Color.clear
+    private func addHabitButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: "plus")
+                .foregroundColor(Color.white)
+                .padding(4)
+                .background(Circle().fill(HabitColor.defaultGreen.color).frame(width: 32, height: 32))
+                .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 4)
         }
     }
 }

@@ -36,28 +36,24 @@ struct AddView: View {
                                 Text("취소")
                                     .onTapGesture {
                                         viewStore.send(.setHabitTitle(""))
-                                        viewStore.send(.setEditMode(false))
-                                        viewStore.send(.setAddMode(false))
+                                        viewStore.send(.setViewMode)
                                     }
                                 Spacer()
                                 
                                 Text("저장")
                                     .onTapGesture {
-                                        viewStore.send(.setAddMode(false))
-                                        if !viewStore.isEditingHabit {
+                                        if viewStore.mode == .editing {
+                                            viewStore.send(.updateHabit(name: viewStore.habitTitle, iter: viewStore.iter, habit: viewStore.selectedHabit ?? Habit()))
+                                        } else {
                                             viewStore.send(.addHabit(name: viewStore.habitTitle, iter: viewStore.iter))
                                         }
-                                        else{
-                                            viewStore.send(.updateHabit(name: viewStore.habitTitle, iter: viewStore.iter, habit: viewStore.selectedHabit ?? Habit()))
-                                            viewStore.send(.setEditMode(false))
-                                        }
+                                        viewStore.send(.setViewMode)
                                         viewStore.send(.setHabitTitle(""))
                                         
                                         statisticsStore.send(.setnumOfToDo(add: true, numOfIter: viewStore.iter.count))
                                         statisticsStore.send(.getnumOfToDo)
                                         
                                         completionStore.send(.updateAllDoneContinuity(.add, isTodayHabit(viewStore.iter) ? true : false))
-                                        
                                     }
                             }
                             .scaledPadding(top: 15, leading: 25, bottom: 10, trailing: 25)

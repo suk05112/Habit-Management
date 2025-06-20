@@ -14,8 +14,7 @@ struct HabitFeature {
     struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
-        var isShowingAdd: Bool = false
-        var isEditingHabit: Bool = false
+        var mode: Mode = .viewing
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var mainReportText: String = "아직 완료된 습관이 없습니다."
         var iter: [Int] = []
@@ -39,7 +38,9 @@ struct HabitFeature {
         case setMainReport(String)
         case setToast(Bool)
         case selectItem(Habit?)
-        case setEditMode(Bool)
+        case setViewMode
+        case setEditMode
+        case setAddMode
         case addHabit(name: String, iter: [Int])
         case updateHabit(name: String, iter: [Int], habit: Habit)
         case deleteHabit(Habit)
@@ -52,7 +53,6 @@ struct HabitFeature {
         case fetchedMonthSummary(Int, Int)
         case updateContinuity
         case resetContinuity
-        case setAddMode(Bool)
         case setHabitTitle(String)
         case setIter([Int])
         
@@ -105,12 +105,16 @@ struct HabitFeature {
                 state.selectedHabit = habit
                 return .none
                 
-            case let .setEditMode(flag):
-                state.isEditingHabit = flag
+            case .setViewMode:
+                state.mode = .viewing
                 return .none
                 
-            case let .setAddMode(flag):
-                state.isShowingAdd = flag
+            case .setEditMode:
+                state.mode = .editing
+                return .none
+                
+            case .setAddMode:
+                state.mode = .adding
                 return .none
                 
             case let .setHabitTitle(title):
@@ -192,6 +196,11 @@ struct HabitFeature {
             case .header:
                 return .none
                 
+            case .toggle(.addHabitButtonPressed):
+                state.selectedHabit = nil
+                state.mode = .adding
+                return .none
+                
             case .toggle:
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
@@ -203,4 +212,3 @@ struct HabitFeature {
         }
     }
 }
-    

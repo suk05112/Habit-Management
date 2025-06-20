@@ -96,6 +96,7 @@
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
 		4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */; };
 		4E48FACB2DF45DFD00BA7EA6 /* Statics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */; };
+		4EB11C4B2E054245004B3BA1 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB11C4A2E054245004B3BA1 /* Mode.swift */; };
 		B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56F33722DF9D30900416589 /* PaddingModifier.swift */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +197,7 @@
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
 		4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statics.swift; sourceTree = "<group>"; };
+		4EB11C4A2E054245004B3BA1 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		B56F33722DF9D30900416589 /* PaddingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -519,6 +521,7 @@
 		4E48FA842DF45DF200BA7EA6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4EB11C492E05423A004B3BA1 /* Model */,
 				4E3384182E0050BF002849DB /* Support */,
 				4E48FA7C2DF45DF200BA7EA6 /* Component */,
 				4E48FA812DF45DF200BA7EA6 /* Extension */,
@@ -611,6 +614,14 @@
 				4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */,
 				4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */,
 				4E48FAC52DF45DFD00BA7EA6 /* Statics.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4EB11C492E05423A004B3BA1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4EB11C4A2E054245004B3BA1 /* Mode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -801,6 +812,7 @@
 				4E48FAB42DF45DFA00BA7EA6 /* CalendarMonthView.swift in Sources */,
 				4E48FAB52DF45DFA00BA7EA6 /* ThisWeekView.swift in Sources */,
 				4E48FAB62DF45DFA00BA7EA6 /* CalendarWeekDayView.swift in Sources */,
+				4EB11C4B2E054245004B3BA1 /* Mode.swift in Sources */,
 				4E48FAB72DF45DFA00BA7EA6 /* CalendarGridView.swift in Sources */,
 				4E48FAB82DF45DFA00BA7EA6 /* AnimationView.swift in Sources */,
 				4E3383792DFBD3E4002849DB /* CalendarMonthFeature.swift in Sources */,
