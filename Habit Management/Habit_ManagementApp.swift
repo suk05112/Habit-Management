@@ -82,14 +82,10 @@ struct Habit_ManagementApp: SwiftUI.App {
         Realm.Configuration.defaultConfiguration = config
     }
     
-//    let habitHeaderFeature = Store(initialState: HabitHeaderFeature.State(), reducer: { HabitHeaderFeature() })
-    
     let store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
     
     var body: some Scene {
         WindowGroup {
-//            HabitHeaderView(store: habitHeaderFeature)
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             ContentView(store: store)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

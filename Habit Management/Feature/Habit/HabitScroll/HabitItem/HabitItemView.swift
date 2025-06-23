@@ -64,7 +64,7 @@ extension HabitItemView {
             
             Text(name)
                 .scaledText(size: 20, weight: .semibold)
-                .foregroundColor(Color(hex: "2E4A2B"))
+                .foregroundStyle(HabitColor.blackGreen.color)
             
             Spacer()
             

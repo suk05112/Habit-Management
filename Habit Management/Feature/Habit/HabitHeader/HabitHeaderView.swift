@@ -20,10 +20,10 @@ struct HabitHeaderView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("\(viewStore.userName)님!")
-                        .foregroundStyle(Color(hex: "2E4A2B"))
+                        .foregroundStyle(HabitColor.blackGreen.color)
                         .scaledText(size: 24, weight: .bold)
                     Text("\(viewStore.mainReportText)")
-                        .foregroundStyle(Color(hex: "2E4A2B"))
+                        .foregroundStyle(HabitColor.blackGreen.color)
                         .scaledText(size: 24, weight: .regular)
                 }
                 Spacer()

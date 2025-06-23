@@ -28,6 +28,7 @@ enum HabitColor {
     case lightGreen
     case mediumGreen
     case darkGreen
+    case blackGreen
 }
 
 extension HabitColor {
@@ -43,6 +44,8 @@ extension HabitColor {
             return Color(hex: "9ECAA4")
         case .darkGreen:
             return Color(hex: "36793F")
+        case .blackGreen:
+            return Color(hex: "2E4A2B")
         }
     }
 }

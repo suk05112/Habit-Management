@@ -15,7 +15,6 @@ extension View {
     
     func scaledFrame(width: CGFloat?, height: CGFloat?, isScroll: Bool = false) -> some View {
         modifier(FrameModifier(isScroll: isScroll, width: width, height: height))
-        
     }
     
     func scaledText(size: CGFloat, weight: Font.Weight?) -> some View {
@@ -25,7 +24,6 @@ extension View {
     func scaledPadding(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> some View {
         modifier(PaddingModifier(top: top, leading: leading, bottom: bottom, trailing: trailing))
     }
-    
     
     func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
         background(
@@ -38,6 +36,6 @@ extension View {
     }
     
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
+        clipShape(RoundedCorner(radius: radius, corners: corners))
     }
 }
