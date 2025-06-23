@@ -85,7 +85,7 @@ extension HabitClient: DependencyKey {
                     stats[weekday - 1] += 1
                 }
             }
-            if let stat = realm.objects(Statics.self).filter(
+            if let stat = realm.objects(Statistics.self).filter(
                 "classification == 'Todo'"
             ).first {
                 try realm.write { stat.dayArray = stats }

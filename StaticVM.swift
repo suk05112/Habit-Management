@@ -20,10 +20,10 @@ class StaticVM: ObservableObject {
     
     @Published var thisWeek: [String] = []
 
-    var selectedGroup: Statics? = nil
+    var selectedGroup: Statistics? = nil
 
     var realm: Realm? = try? Realm()
-    var Static: Results<Statics>?
+    var Static: Results<Statistics>?
     let calendar = Calendar(identifier: .gregorian)
     let dateFormatter = DateFormatter()
     
@@ -48,13 +48,13 @@ class StaticVM: ObservableObject {
 //        let myFilter = NSPredicate(format: "year == %@", current_year)
 
 //        if let group = realm?.objects(Statics.self) {
-        if realm!.objects(Statics.self).where({($0.classification == "Todo")}).first != nil{
-            self.Static = realm?.objects(Statics.self)
+        if realm!.objects(Statistics.self).where({($0.classification == "Todo")}).first != nil{
+            self.Static = realm?.objects(Statistics.self)
         }
         else{
             try? realm?.write({
-                realm?.add(Statics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
-                realm?.add(Statics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                realm?.add(Statistics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                realm?.add(Statistics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
             })
         }
         
@@ -69,7 +69,7 @@ class StaticVM: ObservableObject {
         month = NSArray(array: Array(getMonth().0)) as! [Int]
         yearTotal = getYearTotal()
 
-        let object = realm!.objects(Statics.self).where{$0.classification == "Done"}.first!
+        let object = realm!.objects(Statistics.self).where{$0.classification == "Done"}.first!
         try? realm!.write{
 
             object.dayArray = day
@@ -294,7 +294,7 @@ extension StaticVM{
     }
     
     func getTotal() -> Int{
-        let object = realm!.objects(Statics.self)
+        let object = realm!.objects(Statistics.self)
         return Array(object).reduce(0){ $0 + $1.total}
     }
 }
@@ -313,117 +313,63 @@ extension StaticVM{
         }
 
         try? realm!.write{
-            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
+            realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
         }
         
     }
     
     
     func setnumOfToDoPerWeek2(add: Bool, numOfIter: Int){
-        var weekArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray)
+        var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
         let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
         
         if weekArray[weekNO-1] == 0{
             weekArray[weekNO-1] = weekArray[weekNO-2]
         }
         
-        if add{
+        if add {
             weekArray[weekNO-1] += numOfIter
-        }
-        else{
+        } else {
             weekArray[weekNO-1] -= numOfIter
         }
         
         try? realm!.write{
-            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
+            realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
         }
         
     }
     
 
-    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int){
-        var monthArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray)
+    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int) {
+        var monthArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray)
         let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
         
         
-        if monthArray[todayMonth-1] == 0{
+        if monthArray[todayMonth-1] == 0 {
             monthArray[todayMonth-1] = monthArray[todayMonth-2]
         }
 
-        if add{
+        if add {
             monthArray[todayMonth-1] += numOfIter
-        }
-        else{
+        } else {
             monthArray[todayMonth-1] -= numOfIter
         }
             
-        try? realm!.write{
-            realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
-        }
-
-    }
-    
-    func getnumOfToDoPerDay() -> [Int]{
-        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.days)
-    }
-    func getnumOfToDoPerWeek() -> [Int]{
-        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.week)
-    }
-    
-    func getnumOfToDoPerMonth() -> [Int]{
-        return Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.month)
-    }
-
-}
-
-extension String {
-    func toDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        
-        if let date = dateFormatter.date(from: self) {
-            return date
-        } else {
-            return nil
+        try? realm!.write {
+            realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
         }
     }
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        return dateFormatter.string(from: self.toDate()!)
+    
+    func getnumOfToDoPerDay() -> [Int] {
+        return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.days)
     }
     
-    func convert() -> String{
-        let monthFormatter = DateFormatter()
-        let dayFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: "ko_KR")
-        dayFormatter.locale = Locale(identifier: "ko_KR")
-
-        monthFormatter.timeZone = TimeZone(abbreviation: "KST")
-        dayFormatter.timeZone = TimeZone(abbreviation: "KST")
-
-        monthFormatter.dateFormat = "MM"
-        dayFormatter.dateFormat = "dd"
-        
-        let month = Int(monthFormatter.string(from: self.toDate()!))!
-        let day = dayFormatter.string(from: self.toDate()!)
-
-//        return "\(Month(rawValue: month)!.description)\n\(day)"
-        return "\(day)일"
-
+    func getnumOfToDoPerWeek() -> [Int] {
+        return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.week)
     }
-}
-
-extension Date {
-    func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        return dateFormatter.string(from: self)
+    
+    func getnumOfToDoPerMonth() -> [Int] {
+        return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.month)
     }
+
 }

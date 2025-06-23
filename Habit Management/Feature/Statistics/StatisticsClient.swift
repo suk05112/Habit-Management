@@ -10,13 +10,13 @@ import ComposableArchitecture
 import Foundation
 
 struct StatisticsClient {
-    var getInitialStaticsData: () -> StaticsData
-    var addOrUpdate: () -> StaticsData
+    var getInitialStatisticsData: () async -> StatisticsData
+    var addOrUpdate: () async -> StatisticsData
     var getStr: (_ selected: Int)-> [String]
     var setnumOfToDoPerDay: () -> ()
     var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
     var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
-    var getnumOfToDo: () -> Statics
+    var getnumOfToDo: () async -> Statistics
     
     static func getWeekOfNO(date: Date) -> Int {
         let calendar = Calendar(identifier: .gregorian)
@@ -212,14 +212,14 @@ struct StatisticsClient {
     
     static func getTotal() -> Int {
         let realm: Realm? = try? Realm()
-        let object = realm!.objects(Statics.self)
+        let object = realm!.objects(Statistics.self)
         return Array(object).reduce(0){ $0 + $1.total}
     }
 }
 
 extension StatisticsClient : DependencyKey {
     static let liveValue = StatisticsClient(
-        getInitialStaticsData : {
+        getInitialStatisticsData : {
             print("Static init")
             let dateFormatter = DateFormatter()
             let formatter_year = DateFormatter()
@@ -230,7 +230,7 @@ extension StatisticsClient : DependencyKey {
             let current_year = Int(formatter_year.string(from: Date()))!
             
             var realm: Realm? = try? Realm()
-            var Static: Results<Statics>?
+            var Static: Results<Statistics>?
             let day = NSArray(array: Array(get7days().0)) as! [Int]
             let week = NSArray(array: Array(getWeeks().0)) as! [Int]
             let month = NSArray(array: Array(getMonth().0)) as! [Int]
@@ -239,19 +239,19 @@ extension StatisticsClient : DependencyKey {
     //        let myFilter = NSPredicate(format: "year == %@", current_year)
 
     //        if let group = realm?.objects(Statics.self) {
-            if realm!.objects(Statics.self).where({($0.classification == "Todo")}).first != nil{
-                Static = realm?.objects(Statics.self)
+            if realm!.objects(Statistics.self).where({($0.classification == "Todo")}).first != nil{
+                Static = realm?.objects(Statistics.self)
             }
             else{
                 try? realm?.write({
-                    realm?.add(Statics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
-                    realm?.add(Statics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                    realm?.add(Statistics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                    realm?.add(Statistics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
                 })
             }
             
             let total = getTotal()
             
-            return StaticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
         },
         
         addOrUpdate: {
@@ -266,7 +266,7 @@ extension StatisticsClient : DependencyKey {
             let month = NSArray(array: Array(getMonth().0)) as! [Int]
             let yearTotal = getYearTotal()
 
-            let object = realm.objects(Statics.self).where{$0.classification == "Done"}.first!
+            let object = realm.objects(Statistics.self).where{$0.classification == "Done"}.first!
             
             try? realm.write {
                 object.dayArray = day
@@ -278,7 +278,7 @@ extension StatisticsClient : DependencyKey {
             let total = getTotal()
             let thisWeek = getThisWeekDayArray()
             
-            return StaticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
         },
         
         getStr: {selected in 
@@ -306,12 +306,12 @@ extension StatisticsClient : DependencyKey {
             }
 
             try? realm!.write{
-                realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
+                realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
             }
         },
         setnumOfToDoPerWeek: { add, numOfIter in
             var realm: Realm? = try? Realm()
-            var weekArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray)
+            var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
             let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
             
             if weekArray[weekNO-1] == 0{
@@ -326,13 +326,13 @@ extension StatisticsClient : DependencyKey {
             }
             
             try? realm!.write{
-                realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
+                realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
             }
         },
         setnumOfToDoPerMonth: { add, numOfIter in
             var realm: Realm? = try? Realm()
 
-            var monthArray = Array(realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray)
+            var monthArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray)
             let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
             
             
@@ -348,17 +348,28 @@ extension StatisticsClient : DependencyKey {
             }
                 
             try? realm!.write{
-                realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
+                realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
             }
         },
         getnumOfToDo: {
-            var realm: Realm? = try? Realm()
-            return realm!.objects(Statics.self).where{($0.classification == "Todo")}.first!
+            var realm: Realm! = try? Realm()
+            
+            guard let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first else {
+                    return Statistics() // 또는 예외 처리
+                }
+            return Statistics(
+                classification: statistics.classification,
+                year: statistics.year,
+                dayArray: Array(statistics.dayArray),
+                weekArray: Array(statistics.weekArray),
+                monthArray: Array(statistics.monthArray),
+                total: statistics.total
+            )
         }
     )
 }
 
-struct StaticsData: Equatable {
+struct StatisticsData: Equatable {
     var day: [Int] = [] // 최근 7일에 대한 데이터
     var week: [Int] = [] // 52주에 대한 데이터
     var month: [Int] = [] // 달에 완료한 습관에 대한 데이터
@@ -368,7 +379,7 @@ struct StaticsData: Equatable {
 }
 
 extension DependencyValues {
-    var staticsClient: StatisticsClient {
+    var statisticsDataClient: StatisticsClient {
         get { self[StatisticsClient.self] }
         set { self[StatisticsClient.self] = newValue }
     }

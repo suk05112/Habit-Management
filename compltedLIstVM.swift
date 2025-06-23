@@ -175,8 +175,8 @@ class compltedLIstVM: ObservableObject {
         
     }
     
-    func getStatics(staticCase: Total) -> Int{
-        // print("get statics")
+    func getStatistics(staticCase: Total) -> Int{
+        // print("get statistics")
         
         let calendar = Calendar(identifier: .gregorian)
         let dateFormatter = DateFormatter()

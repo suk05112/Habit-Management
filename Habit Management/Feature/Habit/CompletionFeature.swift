@@ -14,7 +14,7 @@ struct CompletionFeature {
         var doneTodayMap: [String: Bool] = [:]
         var todayCount: Int = 0
         var yesterdayCount: Int = 0
-        var staticsCount: Int = 0
+        var statisticsCount: Int = 0
         var continuityCount: Int = 0
     }
 
@@ -27,8 +27,8 @@ struct CompletionFeature {
         case loadYesterdayCount
         case todayCountResponse(Int)
         case yesterdayCountResponse(Int)
-        case loadStatics(Total)
-        case staticsResponse(Int)
+        case loadStatistics(Total)
+        case statisticsResponse(Int)
         case updateAllDoneContinuity(CompleteStatus, Bool)
         case continuityUpdated(Int)
         case binding(BindingAction<State>)
@@ -85,14 +85,14 @@ struct CompletionFeature {
                 state.yesterdayCount = count
                 return .none
                 
-            case let .loadStatics(total):
+            case let .loadStatistics(total):
                 return .run { send in
-                    let count = try await completionClient.statics(total)
-                    await send(.staticsResponse(count))
+                    let count = try await completionClient.statistics(total)
+                    await send(.statisticsResponse(count))
                 }
                 
-            case let .staticsResponse(count):
-                state.staticsCount = count
+            case let .statisticsResponse(count):
+                state.statisticsCount = count
                 return .none
                 
             case let .updateAllDoneContinuity(status, isToday):
