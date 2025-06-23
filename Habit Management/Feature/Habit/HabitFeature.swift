@@ -29,6 +29,7 @@ struct HabitFeature {
         
         var header: HabitHeaderFeature.State = .init()
         var toggle: HabitToggleFeature.State = .init()
+        var edit: EditHabitFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -43,7 +44,6 @@ struct HabitFeature {
         case setAddMode
         case addHabit(name: String, iter: [Int])
         case updateHabit(name: String, iter: [Int], habit: Habit)
-        case deleteHabit(Habit)
         case binding(BindingAction<State>)
         case fetchTodayHabitCount
         case fetchedTodayHabitCount(Int)
@@ -58,6 +58,7 @@ struct HabitFeature {
         
         case header(HabitHeaderFeature.Action)
         case toggle(HabitToggleFeature.Action)
+        case edit(EditHabitFeature.Action)
     }
     
     @Dependency(\.habitClient) var habitClient
@@ -71,6 +72,10 @@ struct HabitFeature {
         
         Scope(state: \.toggle, action: \.toggle) {
             HabitToggleFeature()
+        }
+        
+        Scope(state: \.edit, action: \.edit) {
+            EditHabitFeature()
         }
         
         Reduce { state, action in
@@ -146,16 +151,6 @@ struct HabitFeature {
                     await send(.loadHabits(habits))
                 }
                 
-            case let .deleteHabit(habit):
-                let showAll = state.toggle.isShowAll
-                let hideCompleted = state.toggle.isHideCompleted
-                
-                return .run { send in
-                    try await habitClient.delete(habit)
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
-                    await send(.loadHabits(habits))
-                }
-                
             case .binding(_):
                 return .none
                 
@@ -204,6 +199,16 @@ struct HabitFeature {
             case .toggle:
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
+                return .run { send in
+                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await send(.loadHabits(habits))
+                }
+            
+            case .edit:
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
+                state.mode = state.edit.mode
+                state.selectedHabit = state.edit.selectedHabit
                 return .run { send in
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
                     await send(.loadHabits(habits))
