@@ -40,12 +40,9 @@ struct EditView: View {
                     }
                     .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
                         Button("확인", role: .destructive, action: {
-                            editStore.send(.deleteHabit(habit))
+                            editStore.send(.deleteButtonPressed(habit))
                             statisticsStore.send(.setnumOfToDo(add: false, numOfIter: habit.weekIter.count))
                             statisticsStore.send(.getnumOfToDo)
-                            
-                            //compltedLIstVM.shared.setIsToday(isToday: todayHabit())
-                            //compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: todayHabit())
                         })
                         
                         Button("취소", role: .cancel){}
@@ -73,14 +70,8 @@ struct EditView: View {
                         
                         Spacer()
                         Button(action: {
-                            
-                            //compltedLIstVM.shared.setIsToday(isToday: todayHabit())
-                            //self.check(myItem.id!)
-                            
                             statisticsStore.send(.addOrUpdate)
-                            //HabitVM.shared.setContiuity(at: habit)
-                            //HabitVM.shared.fetchItem()
-                            
+                            editStore.send(.completeButtonPressed)
                             withAnimation(.easeOut){
                                 habit.offset = 0
                             }
@@ -93,8 +84,7 @@ struct EditView: View {
                                 .background(todayHabit() ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
                                 .cornerRadius(10)
                             
-                        }
-                        
+                        }   
                     }
                 }
             }
