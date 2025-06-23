@@ -25,7 +25,7 @@ struct ThisWeekView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             VStack(alignment: .center, spacing: ratioSpacing) {
-                ForEach(Array(viewStore.staticsData.thisWeek.enumerated()), id:\.offset) { index, date in
+                ForEach(Array(viewStore.statisticsData.thisWeek.enumerated()), id:\.offset) { index, date in
                     Text("\(date)")
                         .scaledFrame(width: frame_size, height: frame_size)
                         .overlay(
