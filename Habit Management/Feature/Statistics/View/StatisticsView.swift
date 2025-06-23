@@ -1,5 +1,5 @@
 //
-//  StaticsView.swift
+//  StatisticsView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 5/23/25.
@@ -63,7 +63,7 @@ struct StatisticsView: View {
                     .scaledPadding(top: 0, leading: 0, bottom: 30, trailing: 0)
                 }
             }.onAppear {
-                print("StaticsView onappear")
+                print("StatisticsView onappear")
                 viewStore.send(.onAppear)
                 ReportData.shared.setReportText()
                 randomText = ReportData.shared.getRandomText()

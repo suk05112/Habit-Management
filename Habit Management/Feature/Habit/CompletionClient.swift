@@ -13,7 +13,7 @@ struct CompletionClient {
     var toggle: @Sendable (String) async throws -> Void
     var deleteListForDate: @Sendable (String) async throws -> Void
     var countForDate: @Sendable (String) async throws -> Int
-    var statics: @Sendable (Total) async throws -> Int
+    var statistics: @Sendable (Total) async throws -> Int
     var isDoneToday: @Sendable (String) async throws -> Bool
     var todayHabitCompleteCount: @Sendable () async throws -> Int
     var yesterdayHabitCompleteCount: @Sendable () async throws -> Int
@@ -63,7 +63,7 @@ extension CompletionClient: DependencyKey {
             return realm.object(ofType: CompletedList.self, forPrimaryKey: date)?.completed.count ?? 0
         },
         
-        statics: { staticCase in
+                statistics: { staticCase in
             let realm = try Realm()
             let comps = Calendar.current.dateComponents([.year, .month, .weekday], from: Date())
             let year = comps.year!, month = comps.month!, weekday = comps.weekday!
