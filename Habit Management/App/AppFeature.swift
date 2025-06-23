@@ -14,15 +14,9 @@ struct AppFeature {
         var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
         var hasLaunched: Bool = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
         
-        var calendar: CalendarFeature.State
-        var habit: HabitFeature.State
-        var statistics: StatisticsFeature.State
-        
-        init() {
-            self.calendar = CalendarFeature.State()
-            self.habit = HabitFeature.State()
-            self.statistics = StatisticsFeature.State()
-        }
+        var calendar: CalendarFeature.State = .init()
+        var habit: HabitFeature.State = .init()
+        var statistics: StatisticsFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -54,7 +48,6 @@ struct AppFeature {
             switch action {
             case .task:
                 return .merge(
-                    .send(.habit(.onAppear)),
                     .send(.statistics(.onAppear))
                 )
             case let .setUserName(name):

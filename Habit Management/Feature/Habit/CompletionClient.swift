@@ -24,10 +24,8 @@ extension CompletionClient: DependencyKey {
     static let liveValue = CompletionClient(
         toggle: { id in
             let realm = try Realm()
-            let fmt = DateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd"
-            let todayKey = fmt.string(from: Date())
-            
+            let todayKey = DateFormatters.standard.string(from: Date())
+
             try realm.write {
                 if let list = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey) {
                     if let idx = list.completed.firstIndex(of: id) {
@@ -43,9 +41,9 @@ extension CompletionClient: DependencyKey {
             
             let completedSet = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey)!.completed
             try realm.write {
-                let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-                let yKey = fmt.string(from: yesterday)
-                let yList = realm.object(ofType: CompletedList.self, forPrimaryKey: yKey)?.completed ?? List<String>()
+                let yesterday = Date().adding(-1)
+                let yesterdayKey = DateFormatters.standard.string(from: yesterday)
+                let yList = realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?.completed ?? List<String>()
                 for habit in realm.objects(Habit.self) {
                     if !yList.contains(habit.id!) { habit.continuity = 0 }
                     if completedSet.contains(habit.id!) { habit.continuity += 1 }
@@ -67,17 +65,14 @@ extension CompletionClient: DependencyKey {
         
                 statistics: { staticCase in
             let realm = try Realm()
-            let fmt = DateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd"
-            let now = Date()
-            let comps = Calendar.current.dateComponents([.year, .month, .weekday], from: now)
+            let comps = Calendar.current.dateComponents([.year, .month, .weekday], from: Date())
             let year = comps.year!, month = comps.month!, weekday = comps.weekday!
             var ans = 0
             let all = realm.objects(CompletedList.self)
             switch staticCase {
             case .week:
-                let ago = Calendar.current.date(byAdding: .day, value: -weekday, to: now)!
-                let key = fmt.string(from: ago)
+                let ago = Calendar.current.date(byAdding: .day, value: -weekday, to: Date())!
+                let key = DateFormatters.standard.string(from: ago)
                 for item in all.reversed() {
                     if item.date > key { ans += item.completed.count } else { break }
                 }
@@ -95,17 +90,15 @@ extension CompletionClient: DependencyKey {
         
         isDoneToday: { id in
             let realm = try Realm()
-            let fmt = DateFormatter(); fmt.dateFormat = "yyyy-MM-dd"
-            let key = fmt.string(from: Date())
+            let key = DateFormatters.standard.string(from: Date())
             return realm.object(ofType: CompletedList.self, forPrimaryKey: key)?.completed.contains(id) == true
         },
         
         todayHabitCompleteCount: {
             let realm = try Realm()
-            let todayWeek = Calendar.current.component(.weekday, from: Date())
+            let todayWeek = Date().weekday
             let todos = realm.objects(Habit.self).filter { $0.weekIter.contains(todayWeek) }
-            let fmt = DateFormatter(); fmt.dateFormat = "yyyy-MM-dd"
-            let key = fmt.string(from: Date())
+            let key = DateFormatters.standard.string(from: Date())
             let completed = realm.object(ofType: CompletedList.self, forPrimaryKey: key)?.completed ?? List<String>()
             let completedIDs = Set(completed)
             return todos.filter { completedIDs.contains($0.id!) }.count
@@ -114,8 +107,7 @@ extension CompletionClient: DependencyKey {
         yesterdayHabitCompleteCount: {
             let realm = try Realm()
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-            let fmt = DateFormatter(); fmt.dateFormat = "yyyy-MM-dd"
-            let key = fmt.string(from: yesterday)
+            let key = DateFormatters.standard.string(from: Date())
             return realm.object(ofType: CompletedList.self, forPrimaryKey: key)?.completed.count ?? 0
         },
         

@@ -5,7 +5,6 @@
 //  Created by 남경민 on 5/28/25.
 //
 
-import Foundation
 import SwiftUI
 
 struct RoundedCorner: Shape {
@@ -17,5 +16,4 @@ struct RoundedCorner: Shape {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
-    
 }

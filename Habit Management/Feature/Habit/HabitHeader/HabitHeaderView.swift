@@ -18,25 +18,22 @@ struct HabitHeaderView: View {
     var body: some View {
         WithViewStore(habitHeaderStore, observe: { $0 }) { viewStore in
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text("\(viewStore.userName)님!")
-                        .habitHeaderStyle()
+                        .foregroundStyle(Color(hex: "2E4A2B"))
+                        .scaledText(size: 24, weight: .bold)
                     Text("\(viewStore.mainReportText)")
-                        .habitHeaderStyle()
+                        .foregroundStyle(Color(hex: "2E4A2B"))
+                        .scaledText(size: 24, weight: .regular)
                 }
                 Spacer()
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 12)
+            .padding(.top, 8)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
             .onAppear {
                 viewStore.send(.onAppear)
             }
         }
-    }
-}
-
-extension Text {
-    func habitHeaderStyle() -> some View {
-        self.scaledText(size: 25, weight: .semibold)
     }
 }

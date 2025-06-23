@@ -43,17 +43,19 @@ extension CalendarGridFeature {
         var currentDate = calendar.dateInterval(of: .weekOfYear, for: oneYearAgo)!.start // 1년 전 오늘이 포함된 주의 일요일
         
         var dayItemArray = [[DayItem]]()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         for _ in 0..<54 {
             var weekArray = [DayItem]()
             for _ in 0..<7 {
-                let date = currentDate > Date() ? "" : dateFormatter.string(from: currentDate)
+                let date = currentDate > Date() ? "" : DateFormatters.standard.string(from: currentDate)
                 weekArray.append(DayItem(date: date))
                 currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
             }
             dayItemArray.append(weekArray)
+            
+            if let last = dayItemArray.last, last.allSatisfy({ $0.date.isEmpty }) {
+                dayItemArray.removeLast()
+            }
         }
         
         return dayItemArray

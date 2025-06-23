@@ -11,9 +11,6 @@ import ComposableArchitecture
 struct CalendarView: View {
     private let calendarStore: StoreOf<CalendarFeature>
     
-    @EnvironmentObject var setting: Setting
-    @StateObject var completedVM = compltedLIstVM.shared
-    
     init(calendarStore: StoreOf<CalendarFeature>) {
         self.calendarStore = calendarStore
     }

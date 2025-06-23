@@ -8,6 +8,14 @@
 import Foundation
 
 extension Date {
+    var weekday: Int {
+        Calendar.current.component(.weekday, from: self)
+    }
+    
+    func adding(_ days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
+    }
+  
     func toString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM월\ndd일"

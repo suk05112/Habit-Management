@@ -31,24 +31,23 @@ extension HabitClient: DependencyKey {
 
         fetchFiltered: { showAll, hideCompleted in
             let realm = try Realm()
-            var list = Array(realm.objects(Habit.self))
+            let today = DateFormatters.standard.string(from: Date())
+            let todayWeekDay = Date().weekday
+            
+            var query = realm.objects(Habit.self)
+            
             if !showAll {
-                let todayWeek = Calendar.current.component(
-                    .weekday, from: Date())
-                list = list.filter { $0.weekIter.contains(todayWeek) }
+                query = query.where { $0.weekIter.contains(todayWeekDay) }
             }
+            
             if hideCompleted {
-                let fmt = DateFormatter()
-                fmt.dateFormat = "yyyy-MM-dd"
-                let key = fmt.string(from: Date())
-                let completedList =
-                    realm.object(
-                        ofType: CompletedList.self, forPrimaryKey: key)?
-                    .completed ?? List<String>()
-                let completedIDs = Set(completedList)
-                list = list.filter { !completedIDs.contains($0.id!) }
+                if let completedList = realm.object(ofType: CompletedList.self, forPrimaryKey: today)?.completed {
+                    let completedIDs = Set(completedList)
+                    query = query.where { !$0.id.in(completedIDs) }
+                }
             }
-            return list.map { $0.detached() }
+
+            return Array(query).map { $0.detached() }
         },
 
         save: { habit in
@@ -72,9 +71,9 @@ extension HabitClient: DependencyKey {
 
         todayHabitCount: {
             let realm = try Realm()
-            let todayWeek = Calendar.current.component(.weekday, from: Date())
+            let todayWeekDay = Date().weekday
             return realm.objects(Habit.self).filter {
-                $0.weekIter.contains(todayWeek)
+                $0.weekIter.contains(todayWeekDay)
             }.count
         },
         weeklyHabitStats: {
@@ -106,18 +105,15 @@ extension HabitClient: DependencyKey {
         },
         updateContinuity: {
             let realm = try Realm()
-            let fmt = DateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd"
-            let todayKey = fmt.string(from: Date())
-            let yesterday = Calendar.current.date(
-                byAdding: .day, value: -1, to: Date())!
-            let yKey = fmt.string(from: yesterday)
+            let todayKey = DateFormatters.standard.string(from: Date())
+            let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
+            
             let completedToday =
                 realm.object(
                     ofType: CompletedList.self, forPrimaryKey: todayKey)?
                 .completed ?? List<String>()
             let completedYesterday =
-                realm.object(ofType: CompletedList.self, forPrimaryKey: yKey)?
+                realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
                 .completed ?? List<String>()
 
             try realm.write {
@@ -133,16 +129,13 @@ extension HabitClient: DependencyKey {
         },
         resetContinuityIfNotDone: {
             let realm = try Realm()
-            let fmt = DateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd"
-            let yesterday = Calendar.current.date(
-                byAdding: .day, value: -1, to: Date())!
-            let yKey = fmt.string(from: yesterday)
+            let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
+            
             try realm.write {
                 for habit in realm.objects(Habit.self) {
                     let completedYesterday =
                         realm.object(
-                            ofType: CompletedList.self, forPrimaryKey: yKey)?
+                            ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
                         .completed ?? List<String>()
                     if !completedYesterday.contains(habit.id ?? "") {
                         habit.continuity = 0
