@@ -17,7 +17,6 @@ struct HabitToggleFeature {
         var isShowAll: Bool = false
         var isHideCompleted: Bool = false
         var labelTitle: LabelTitle = LabelTitle()
-        var selectedHabit: Habit?
     }
     
     enum Action: Equatable {
@@ -25,7 +24,6 @@ struct HabitToggleFeature {
         case showAllButtonPressed
         case hideCompletedButtonPressed
         case addHabitButtonPressed
-        //        case selectItem(Habit?)
     }
     
     var body: some ReducerOf<Self> {
@@ -46,7 +44,6 @@ struct HabitToggleFeature {
                 return .none
                 
             case .addHabitButtonPressed:
-                print("🧊")
                 return .none
             }
         }

@@ -1,16 +1,15 @@
 //
-//  Add.swift
+//  AddHabitView.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/03/31.
 //
 
 import SwiftUI
-import UIKit
 import RealmSwift
 import ComposableArchitecture
 
-struct AddView: View {
+struct AddHabitView: View {
     let habitStore: StoreOf<HabitFeature>
     
     let statisticsStore: StoreOf<StatisticsFeature> = Store(initialState: StatisticsFeature.State(), reducer: { StatisticsFeature() })
@@ -18,11 +17,18 @@ struct AddView: View {
     
     @ObservedObject var textfield = TextLimiter()
     
+    @FocusState private var isFocused: Bool
+    
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             ZStack {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.vertical)
+                    .onTapGesture {
+                        isFocused = false
+                        viewStore.send(.setHabitTitle(""))
+                        viewStore.send(.setViewMode)
+                    }
                 VStack {
                     Spacer()
                     ZStack {
@@ -35,6 +41,7 @@ struct AddView: View {
                             HStack{
                                 Text("취소")
                                     .onTapGesture {
+                                        isFocused = false
                                         viewStore.send(.setHabitTitle(""))
                                         viewStore.send(.setViewMode)
                                     }
@@ -63,6 +70,7 @@ struct AddView: View {
                                 .scaledText(size: 25, weight: .none)
                                 .foregroundColor(Color.black)
                                 .scaledPadding(top: 0, leading: 25, bottom: 0, trailing: 25)
+                                .focused($isFocused)
                             
                             HStack{
                                 ForEach(1..<8){
@@ -81,6 +89,12 @@ struct AddView: View {
                 }
             }
             .contentShape(Rectangle())
+            .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    isFocused = true
+                }
+            }
         }
     }
     

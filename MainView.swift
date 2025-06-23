@@ -30,17 +30,10 @@ struct MainView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
-                TabView {
-                    HabitView(calendarStore: calendarStore, habitStore: habitStore)
-                        .tabItem { tabIconView("house", "홈") }
-                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
-                        .tabItem { tabIconView("chart.bar.fill", "통계") }
-                }
-                .tint(HabitColor.defaultGreen.color)
+                mainTabView()
                 
                 if viewStore.habit.mode == .adding {
-                    AddView(habitStore: habitStore)
-                        .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
+                    AddHabitView(habitStore: habitStore)
                 }
                 
                 if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
@@ -59,7 +52,18 @@ struct MainView: View {
     }
 }
 
+// MARK: - UI Components
 extension MainView {
+    func mainTabView() -> some View {
+        TabView {
+            HabitView(calendarStore: calendarStore, habitStore: habitStore)
+                .tabItem { tabIconView("house", "홈") }
+            StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
+                .tabItem { tabIconView("chart.bar.fill", "통계") }
+        }
+        .tint(HabitColor.defaultGreen.color)
+    }
+    
     @ViewBuilder
     func tabIconView(_ imageName: String, _ tabName: String) -> some View {
         Image(systemName: imageName)

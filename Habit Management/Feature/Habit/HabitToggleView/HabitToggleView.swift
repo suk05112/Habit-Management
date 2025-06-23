@@ -30,9 +30,6 @@ struct HabitToggleView: View {
                 
                 addHabitButton {
                     viewStore.send(.addHabitButtonPressed)
-//                    viewStore.send(.selectItem(nil))
-//                    viewStore.send(.setEditMode(false))
-//                    viewStore.send(.setAddMode(true))
                 }
             }
             .scaledPadding(top: 12, leading: 16, bottom: 8, trailing: 16)
