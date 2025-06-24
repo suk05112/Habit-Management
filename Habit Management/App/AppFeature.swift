@@ -17,6 +17,7 @@ struct AppFeature {
         var calendar: CalendarFeature.State = .init()
         var habit: HabitFeature.State = .init()
         var statistics: StatisticsFeature.State = .init()
+        var completion: CompletionFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -26,6 +27,7 @@ struct AppFeature {
         case calendar(CalendarFeature.Action)
         case habit(HabitFeature.Action)
         case statistics(StatisticsFeature.Action)
+        case completion(CompletionFeature.Action)
         case binding(BindingAction<State>)
     }
     
@@ -42,6 +44,10 @@ struct AppFeature {
         
         Scope(state: \.statistics, action: \.statistics) {
             StatisticsFeature()
+        }
+        
+        Scope(state: \.completion, action: \.completion) {
+            CompletionFeature()
         }
         
         Reduce { state, action in
@@ -67,6 +73,9 @@ struct AppFeature {
                 return .none
                 
             case .statistics:
+                return .none
+                
+            case .completion:
                 return .none
                 
             case .binding(_):
