@@ -10,9 +10,12 @@ import ComposableArchitecture
 
 struct HabitScrollView: View {
     private let habitStore: StoreOf<HabitFeature>
+    private let statisticsStore: StoreOf<StatisticsFeature>
     
-    init(habitStore: StoreOf<HabitFeature>) {
+    init(habitStore: StoreOf<HabitFeature>,
+         statisticsStore: StoreOf<StatisticsFeature>) {
         self.habitStore = habitStore
+        self.statisticsStore = statisticsStore
     }
     
     var body: some View {
@@ -20,6 +23,9 @@ struct HabitScrollView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer().frame(height: 8)
                 ForEach(viewStore.habitList) { habit in
+                    EditHabitView(habitStore: habitStore,
+                                  statisticsStore: statisticsStore,
+                                  habit: habit)
                     HabitItemView(habitStore: habitStore, habit: habit)
                 }
                 Spacer().frame(height: 8)

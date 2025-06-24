@@ -14,10 +14,14 @@ import ComposableArchitecture
 struct HabitView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let habitStore: StoreOf<HabitFeature>
+    let statisticsStore: StoreOf<StatisticsFeature>
     
-    init(calendarStore: StoreOf<CalendarFeature>, habitStore: StoreOf<HabitFeature>) {
+    init(calendarStore: StoreOf<CalendarFeature>,
+         habitStore: StoreOf<HabitFeature>,
+         statisticsStore: StoreOf<StatisticsFeature>) {
         self.calendarStore = calendarStore
         self.habitStore = habitStore
+        self.statisticsStore = statisticsStore
     }
 
     var body: some View {
@@ -27,7 +31,8 @@ struct HabitView: View {
                     HabitHeaderView(habitStore: habitStore)
                     CalendarView(calendarStore: calendarStore)
                     HabitToggleView(habitStore: habitStore)
-                    HabitScrollView(habitStore: habitStore)
+                    HabitScrollView(habitStore: habitStore,
+                                    statisticsStore: statisticsStore)
                     divider
                 }
                 .toast(

@@ -31,14 +31,16 @@ struct MainView: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
                 TabView {
-                    HabitView(calendarStore: calendarStore, habitStore: habitStore)
+                    HabitView(calendarStore: calendarStore,
+                              habitStore: habitStore,
+                              statisticsStore: statisticsStore)
                         .tabItem { tabIconView("house", "홈") }
                     StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
                 }
                 .tint(HabitColor.defaultGreen.color)
                 
-                if viewStore.habit.mode == .adding {
+                if viewStore.habit.mode == .adding || viewStore.habit.mode == .editing {
                     AddView(habitStore: habitStore)
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                 }

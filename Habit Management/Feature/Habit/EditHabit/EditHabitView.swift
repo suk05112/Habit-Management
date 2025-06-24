@@ -8,12 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct EditView: View {
+struct EditHabitView: View {
     private let editStore: StoreOf<EditHabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     private let habit: Habit
     
-    init(habitStore: StoreOf<HabitFeature>, statisticsStore: StoreOf<StatisticsFeature>, habit: Habit) {
+    init(habitStore: StoreOf<HabitFeature>,
+         statisticsStore: StoreOf<StatisticsFeature>,
+         habit: Habit) {
         self.editStore = habitStore.scope(state: \.edit, action: \.edit)
         self.statisticsStore = statisticsStore
         self.habit = habit

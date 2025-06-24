@@ -29,6 +29,7 @@ struct EditHabitFeature {
         Reduce { state, action in
             switch action {
             case let .deleteButtonPressed(habit):
+                state.mode = .viewing
                 return .run { send in
                     try await habitClient.delete(habit)
                     _ = try await completionClient.updateAllDoneContinuity(.delete, habit.today())
@@ -39,6 +40,7 @@ struct EditHabitFeature {
                 return .none
                 
             case let .completeButtonPressed(habit):
+                state.mode = .viewing
                 return .run { send in
                     try await completionClient.toggle(habit.id!)
                     _ = try await completionClient.updateAllDoneContinuity(.complete, habit.today())
