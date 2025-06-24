@@ -23,10 +23,12 @@ struct HabitScrollView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer().frame(height: 8)
                 ForEach(viewStore.habitList) { habit in
-                    EditHabitView(habitStore: habitStore,
-                                  statisticsStore: statisticsStore,
-                                  habit: habit)
-                    HabitItemView(habitStore: habitStore, habit: habit)
+                    ZStack {
+                        EditHabitView(habitStore: habitStore,
+                                      statisticsStore: statisticsStore,
+                                      habit: habit)
+                        HabitItemView(habitStore: habitStore, habit: habit)
+                    }
                 }
                 Spacer().frame(height: 8)
             }

@@ -38,7 +38,7 @@ struct EditHabitView: View {
                             .foregroundColor(.white)
                             .scaledFrame(width: 50, height: 80)
                             .background(Color.red)
-                            .cornerRadius(10)
+                            .cornerRadius(12)
                     }
                     .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
                         Button("확인", role: .destructive, action: {
@@ -65,7 +65,7 @@ struct EditHabitView: View {
                                 .foregroundColor(.white)
                                 .scaledFrame(width: 50, height: 80)
                                 .background(Color(hex: "#92BCA3"))
-                                .cornerRadius(10)
+                                .cornerRadius(12)
                             
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -84,14 +84,14 @@ struct EditHabitView: View {
                                 .foregroundColor(.white)
                                 .scaledFrame(width: 50, height: 80)
                                 .background(habit.today() ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
-                                .cornerRadius(10)
+                                .cornerRadius(12)
                             
                         }   
                     }
                 }
             }
         }
-        .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
+        .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
     }
 }
 

@@ -45,7 +45,7 @@ struct HabitItemView: View {
                         offset = 0
                     }
                     .offset(x: offset)
-                    //                    .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+                    .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                 }
             }
         }
@@ -80,61 +80,61 @@ extension HabitItemView {
     }
 }
 
-//extension HabitItemView {
-//    func onChanged(value: DragGesture.Value) {
-//        //print("offset", value.translation.width)
-//
-//        if value.translation.width < 0 {
-//
-//            if (-value.translation.width < -UIScreen.main.bounds.width/2){
-//                offset = slideLeft ? value.translation.width - 60 : value.translation.width
-//            }
-//            else{
-//                offset = value.translation.width - 60
-//            }
-//
-//        }
-//        else{
-//
-//            if (value.translation.width < UIScreen.main.bounds.width/2){
-//                offset = slideRight ? value.translation.width + 110 : value.translation.width
-//            }
-//            else{
-//                offset =  UIScreen.main.bounds.width/2
-//            }
-//
-//        }
-//
-//    }
-//
-//    func onEnd(value: DragGesture.Value){
-//
-//        withAnimation(.easeOut){
-//
-//            if value.translation.width < 0{
-//                if slideRight{
-//                    slideRight = false
-//                    offset = 0
-//                }
-//
-//                else{
-//                    slideLeft = true
-//                    offset = -60
-//                }
-//
-//            }
-//            else{
-//                if slideLeft{
-//                    slideLeft = false
-//                    offset = 0
-//                }
-//                else{
-//                    slideRight = true
-//                    offset = 110
-//
-//                }
-//            }
-//
-//        }
-//    }
-//}
+extension HabitItemView {
+    func onChanged(value: DragGesture.Value) {
+        //print("offset", value.translation.width)
+
+        if value.translation.width < 0 {
+
+            if (-value.translation.width < -UIScreen.main.bounds.width/2){
+                offset = slideLeft ? value.translation.width - 60 : value.translation.width
+            }
+            else{
+                offset = value.translation.width - 60
+            }
+
+        }
+        else{
+
+            if (value.translation.width < UIScreen.main.bounds.width/2){
+                offset = slideRight ? value.translation.width + 110 : value.translation.width
+            }
+            else{
+                offset =  UIScreen.main.bounds.width/2
+            }
+
+        }
+
+    }
+
+    func onEnd(value: DragGesture.Value){
+
+        withAnimation(.easeOut){
+
+            if value.translation.width < 0{
+                if slideRight{
+                    slideRight = false
+                    offset = 0
+                }
+
+                else{
+                    slideLeft = true
+                    offset = -60
+                }
+
+            }
+            else{
+                if slideLeft{
+                    slideLeft = false
+                    offset = 0
+                }
+                else{
+                    slideRight = true
+                    offset = 110
+
+                }
+            }
+
+        }
+    }
+}
