@@ -25,7 +25,7 @@ extension CompletionClient: DependencyKey {
         toggle: { id in
             let realm = try Realm()
             let todayKey = DateFormatters.standard.string(from: Date())
-
+            
             try realm.write {
                 if let list = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey) {
                     if let idx = list.completed.firstIndex(of: id) {
@@ -63,7 +63,7 @@ extension CompletionClient: DependencyKey {
             return realm.object(ofType: CompletedList.self, forPrimaryKey: date)?.completed.count ?? 0
         },
         
-                statistics: { staticCase in
+        statistics: { staticCase in
             let realm = try Realm()
             let comps = Calendar.current.dateComponents([.year, .month, .weekday], from: Date())
             let year = comps.year!, month = comps.month!, weekday = comps.weekday!
@@ -113,20 +113,20 @@ extension CompletionClient: DependencyKey {
         
         updateAllDoneContinuity: { status, isToday in
             guard isToday else { return UserDefaults.standard.integer(forKey: "allDoneContinuity") }
-
+            
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: Date())
             let key = "allDoneContinuity"
             var continuity = UserDefaults.standard.integer(forKey: key)
-
+            
             if continuity < 0 { continuity = 0 }
-
+            
             if status == .complete {
                 continuity += 1
             } else if status == .cancel || status == .add {
                 continuity = max(continuity - 1, 0)
             }
-
+            
             UserDefaults.standard.set(continuity, forKey: key)
             return continuity
         }
