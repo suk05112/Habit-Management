@@ -12,6 +12,7 @@ import ComposableArchitecture
 struct EditHabitFeature {
     
     @Dependency(\.habitClient) var habitClient
+    @Dependency(\.completionClient) var completionClient
     
     struct State: Equatable {
         var mode: Mode = .viewing
@@ -21,7 +22,7 @@ struct EditHabitFeature {
     enum Action: Equatable {
         case deleteButtonPressed(Habit)
         case editButtonPressed(Habit)
-        case completeButtonPressed
+        case completeButtonPressed(Habit)
     }
     
     var body: some ReducerOf<Self> {
@@ -30,23 +31,18 @@ struct EditHabitFeature {
             case let .deleteButtonPressed(habit):
                 return .run { send in
                     try await habitClient.delete(habit)
-                    /// 로직을 다시 구현해야 함
-                    //compltedLIstVM.shared.setIsToday(isToday: todayHabit())
-                    //compltedLIstVM.shared.setAllDoneContinuityUntilToday(status: .delete, isToday: todayHabit())
+                    _ = try await completionClient.updateAllDoneContinuity(.delete, habit.today())
                 }
             case let .editButtonPressed(habit):
                 state.mode = .editing
                 state.selectedHabit = habit
                 return .none
-            
-            case .completeButtonPressed:
-                /// 로직을 다시 구현해야 함
-                //compltedLIstVM.shared.setIsToday(isToday: todayHabit())
-                //self.check(myItem.id!)
-
-                //HabitVM.shared.setContiuity(at: habit)
-                //HabitVM.shared.fetchItem()
-                return .none
+                
+            case let .completeButtonPressed(habit):
+                return .run { send in
+                    try await completionClient.toggle(habit.id!)
+                    _ = try await completionClient.updateAllDoneContinuity(.complete, habit.today())
+                }
             }
         }
     }

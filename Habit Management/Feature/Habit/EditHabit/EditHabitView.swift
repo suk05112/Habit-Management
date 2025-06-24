@@ -71,7 +71,7 @@ struct EditView: View {
                         Spacer()
                         Button(action: {
                             statisticsStore.send(.addOrUpdate)
-                            editStore.send(.completeButtonPressed)
+                            editStore.send(.completeButtonPressed(habit))
                             withAnimation(.easeOut){
                                 habit.offset = 0
                             }
@@ -81,7 +81,7 @@ struct EditView: View {
                                 .font(.title)
                                 .foregroundColor(.white)
                                 .scaledFrame(width: 50, height: 80)
-                                .background(todayHabit() ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
+                                .background(habit.today() ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
                                 .cornerRadius(10)
                             
                         }   
@@ -91,17 +91,5 @@ struct EditView: View {
         }
         .scaledPadding(top: 0, leading: 15, bottom: 0, trailing: 15)
     }
-
-    func todayHabit() -> Bool {
-        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
-        
-        if habit.weekIter.contains(todayWeek){
-            return true
-        }
-        else{
-            return false
-        }
-    }
-    
 }
 
