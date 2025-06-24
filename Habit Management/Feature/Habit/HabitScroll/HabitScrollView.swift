@@ -22,7 +22,7 @@ struct HabitScrollView: View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer().frame(height: 8)
-                ForEach(viewStore.habitList) { habit in
+                ForEach(viewStore.habitList, id: \.id) { habit in
                     ZStack {
                         EditHabitView(habitStore: habitStore,
                                       statisticsStore: statisticsStore,
