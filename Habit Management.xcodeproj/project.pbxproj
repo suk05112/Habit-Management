@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		032EED58285E24D000994E5B /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED57285E24D000994E5B /* Toast.swift */; };
 		032EED5A285E252800994E5B /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED59285E252800994E5B /* TextLimiter.swift */; };
-		032EED5C285E255D00994E5B /* WeekDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* WeekDayButton.swift */; };
+		032EED5C285E255D00994E5B /* HabitAdd_WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* HabitAdd_WeekDay.swift */; };
 		0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346333528913B24000D1E61 /* NotificationCenterManager.swift */; };
 		03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 03463345289FA7F9000D1E61 /* FirebaseAnalytics */; };
 		03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */; };
@@ -124,7 +124,7 @@
 /* Begin PBXFileReference section */
 		032EED57285E24D000994E5B /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		032EED59285E252800994E5B /* TextLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
-		032EED5B285E255D00994E5B /* WeekDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayButton.swift; sourceTree = "<group>"; };
+		032EED5B285E255D00994E5B /* HabitAdd_WeekDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitAdd_WeekDay.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
 		0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -618,7 +618,7 @@
 				4E8BFF9E2E0ACEC60072962B /* HabitAddFeature.swift */,
 				4E8BFF982E0A541C0072962B /* Header */,
 				4E8BFF9B2E0A58970072962B /* TextField */,
-				4E8BFF942E098C980072962B /* SelectWeekDay */,
+				4E8BFF942E098C980072962B /* WeekDay */,
 			);
 			path = HabitAdd;
 			sourceTree = "<group>";
@@ -630,12 +630,12 @@
 			path = HabitEdit;
 			sourceTree = "<group>";
 		};
-		4E8BFF942E098C980072962B /* SelectWeekDay */ = {
+		4E8BFF942E098C980072962B /* WeekDay */ = {
 			isa = PBXGroup;
 			children = (
-				032EED5B285E255D00994E5B /* WeekDayButton.swift */,
+				032EED5B285E255D00994E5B /* HabitAdd_WeekDay.swift */,
 			);
-			path = SelectWeekDay;
+			path = WeekDay;
 			sourceTree = "<group>";
 		};
 		4E8BFF982E0A541C0072962B /* Header */ = {
@@ -869,7 +869,7 @@
 				4E8BFF9D2E0A58A70072962B /* HabitAdd_TextField.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
-				032EED5C285E255D00994E5B /* WeekDayButton.swift in Sources */,
+				032EED5C285E255D00994E5B /* HabitAdd_WeekDay.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
 				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
 				4E3384152DFED181002849DB /* HabitToggleView.swift in Sources */,

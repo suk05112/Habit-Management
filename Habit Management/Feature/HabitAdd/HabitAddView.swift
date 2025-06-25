@@ -66,18 +66,7 @@ struct HabitAddView: View {
                 //                    .scaledPadding(top: 0, leading: 20, bottom: 0, trailing: 20)
                 //                    .focused($isFocused)
                 
-                HStack() {
-                    ForEach(1...7, id: \.self) { index in
-                        WeekDayButton(weekOfDay: index, iter: viewStore.binding(
-                            get: \.iter,
-                            send: HabitFeature.Action.setIter
-                        ), isSelected: viewStore.selectedHabit?.weekIter.contains(index) ?? false ? true : false)
-                        if index != 7 {
-                            Spacer()
-                        }
-                    }
-                }
-                .scaledPadding(top: 8, leading: 20, bottom: 0, trailing: 20)
+                WeekDayView(habitStore: habitStore)
                 Spacer()
             }
             .ignoresSafeArea()
