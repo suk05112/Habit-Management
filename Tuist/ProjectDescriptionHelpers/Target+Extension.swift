@@ -14,9 +14,14 @@ public extension Target {
         destinations: Destinations = Environment.destinations,
         product: Product = .app,
         bundleId: String,
+        deploymentTargets: DeploymentTargets? = Environment.deploymentTarget,
+        infoPlist: InfoPlist? = .extendingDefault(with: [
+            "UILaunchStoryboardName": "LaunchScreen",
+        ]),
         sources: SourceFilesList? = ["Sources/**"],
         resources: ResourceFileElements? = ["Resources/**"],
-        dependencies: [Module]
+        
+        dependencies: [Module] = []
     ) -> Target {
         
         return .target(
@@ -24,9 +29,12 @@ public extension Target {
             destinations: destinations,
             product: product,
             bundleId: bundleId,
+            deploymentTargets: deploymentTargets,
+            infoPlist: infoPlist,
             sources: sources,
             resources: resources,
-            dependencies: dependencies.asTargetDependencies()
+            dependencies: dependencies.asTargetDependencies(),
+            coreDataModels: [CoreDataModel.coreDataModel(.relativeToRoot("Projects/App/CoreData/Habit_Management.xcdatamodeld"))]
         )
     }
 }
