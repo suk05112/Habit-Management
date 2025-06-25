@@ -1,5 +1,5 @@
 //
-//  AddHabit_TextField.swift
+//  HabitAdd_TextField.swift
 //  Habit Management
 //
 //  Created by 서충원 on 6/24/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension AddHabitView {
+extension HabitAddView {
     struct TextFieldView: View {
         @State var title: String = ""
         

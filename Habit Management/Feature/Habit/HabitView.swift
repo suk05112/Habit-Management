@@ -30,14 +30,13 @@ struct HabitView: View {
                     HabitScrollView(habitStore: habitStore)
                     divider
                 }
-                .toast(
-                    message: "Current time: \(DateFormatters.fullName.string(from: Date()))",
-                    isShowing: viewStore.binding(
-                        get: \.isToastVisible,
-                        send: { .setToast($0) }
-                    ),
-                    duration: Toast.long
-                )
+                .sheet(isPresented: viewStore.$showModal) {
+                    HabitAddView(habitStore: habitStore)
+                        .presentationDetents([.height(172)])
+                        .presentationCornerRadius(20)
+                        .interactiveDismissDisabled(false)
+                        .presentationDragIndicator(.hidden)
+                }
             }
             .onAppear {
                 viewStore.send(.onAppear)

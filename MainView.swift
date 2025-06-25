@@ -32,10 +32,6 @@ struct MainView: View {
             ZStack {
                 mainTabView()
                 
-                if viewStore.habit.mode == .adding {
-                    AddHabitView(habitStore: habitStore)
-                }
-                
                 if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
                     OnboardingView(
                         userName: viewStore.binding(

@@ -12,6 +12,7 @@ import RealmSwift
 @Reducer
 struct HabitFeature {
     struct State: Equatable {
+        @BindingState var showModal: Bool = false
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
         var mode: Mode = .viewing
@@ -29,6 +30,7 @@ struct HabitFeature {
         
         var header: HabitHeaderFeature.State = .init()
         var toggle: HabitToggleFeature.State = .init()
+        var add: HabitAddFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -58,6 +60,7 @@ struct HabitFeature {
         
         case header(HabitHeaderFeature.Action)
         case toggle(HabitToggleFeature.Action)
+        case add(HabitAddFeature.Action)
     }
     
     @Dependency(\.habitClient) var habitClient
@@ -71,6 +74,10 @@ struct HabitFeature {
         
         Scope(state: \.toggle, action: \.toggle) {
             HabitToggleFeature()
+        }
+        
+        Scope(state: \.add, action: \.add) {
+            HabitAddFeature()
         }
         
         Reduce { state, action in
@@ -159,7 +166,6 @@ struct HabitFeature {
             case .binding(_):
                 return .none
                 
-                
             case .fetchTodayHabitCount:
                 return .run { send in
                     let count = try await habitClient.todayHabitCount()
@@ -199,6 +205,7 @@ struct HabitFeature {
             case .toggle(.addHabitButtonPressed):
                 state.selectedHabit = nil
                 state.mode = .adding
+                state.showModal = true
                 return .none
                 
             case .toggle:
@@ -208,6 +215,9 @@ struct HabitFeature {
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
                     await send(.loadHabits(habits))
                 }
+                
+            case .add:
+                return .none
             }
         }
     }

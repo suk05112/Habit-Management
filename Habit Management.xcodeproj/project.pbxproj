@@ -50,7 +50,7 @@
 		03CFE07E27EC46D6004C54B6 /* Habit_ManagementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE07D27EC46D6004C54B6 /* Habit_ManagementTests.swift */; };
 		03CFE08827EC46D6004C54B6 /* Habit_ManagementUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */; };
 		03CFE08A27EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */; };
-		03CFE0DD27F58D3F004C54B6 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE0DC27F58D3F004C54B6 /* AddHabitView.swift */; };
+		03CFE0DD27F58D3F004C54B6 /* HabitAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE0DC27F58D3F004C54B6 /* HabitAddView.swift */; };
 		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
 		4E3381832DF69033002849DB /* HabitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381822DF69033002849DB /* HabitHeaderView.swift */; };
 		4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381842DF694CF002849DB /* HabitBackgroundView.swift */; };
@@ -97,6 +97,9 @@
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
 		4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */; };
 		4E48FACB2DF45DFD00BA7EA6 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */; };
+		4E8BFF9A2E0A54390072962B /* HabitAdd_Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BFF992E0A54390072962B /* HabitAdd_Header.swift */; };
+		4E8BFF9D2E0A58A70072962B /* HabitAdd_TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BFF9C2E0A58A70072962B /* HabitAdd_TextField.swift */; };
+		4E8BFF9F2E0ACEC60072962B /* HabitAddFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BFF9E2E0ACEC60072962B /* HabitAddFeature.swift */; };
 		4EB11C4B2E054245004B3BA1 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB11C4A2E054245004B3BA1 /* Mode.swift */; };
 		B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56F33722DF9D30900416589 /* PaddingModifier.swift */; };
 /* End PBXBuildFile section */
@@ -152,7 +155,7 @@
 		03CFE08327EC46D6004C54B6 /* Habit ManagementUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Habit ManagementUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITests.swift; sourceTree = "<group>"; };
 		03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		03CFE0DC27F58D3F004C54B6 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
+		03CFE0DC27F58D3F004C54B6 /* HabitAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitAddView.swift; sourceTree = "<group>"; };
 		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
 		4E3381822DF69033002849DB /* HabitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderView.swift; sourceTree = "<group>"; };
 		4E3381842DF694CF002849DB /* HabitBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitBackgroundView.swift; sourceTree = "<group>"; };
@@ -199,6 +202,9 @@
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
 		4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		4E8BFF992E0A54390072962B /* HabitAdd_Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitAdd_Header.swift; sourceTree = "<group>"; };
+		4E8BFF9C2E0A58A70072962B /* HabitAdd_TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitAdd_TextField.swift; sourceTree = "<group>"; };
+		4E8BFF9E2E0ACEC60072962B /* HabitAddFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitAddFeature.swift; sourceTree = "<group>"; };
 		4EB11C4A2E054245004B3BA1 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		B56F33722DF9D30900416589 /* PaddingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -382,12 +388,12 @@
 			path = HabitHeader;
 			sourceTree = "<group>";
 		};
-		4E3381AC2DF7E561002849DB /* HabitBackground */ = {
+		4E3381AC2DF7E561002849DB /* Background */ = {
 			isa = PBXGroup;
 			children = (
 				4E3381842DF694CF002849DB /* HabitBackgroundView.swift */,
 			);
-			path = HabitBackground;
+			path = Background;
 			sourceTree = "<group>";
 		};
 		4E3382912DFB09A6002849DB /* Calendar */ = {
@@ -538,7 +544,7 @@
 				4E48FA922DF45DFA00BA7EA6 /* HabitView.swift */,
 				4E48FA902DF45DFA00BA7EA6 /* HabitClient.swift */,
 				4E48FA912DF45DFA00BA7EA6 /* HabitFeature.swift */,
-				4E3381AC2DF7E561002849DB /* HabitBackground */,
+				4E3381AC2DF7E561002849DB /* Background */,
 				4E3381862DF70EB4002849DB /* HabitHeader */,
 				4E3384132DFED159002849DB /* HabitToggleView */,
 				4E3384212E011DD7002849DB /* HabitScroll */,
@@ -585,8 +591,8 @@
 			isa = PBXGroup;
 			children = (
 				4E48FA932DF45DFA00BA7EA6 /* Habit */,
-				4E8BFF8F2E090A760072962B /* AddHabit */,
-				4E8BFF902E090AA40072962B /* EditHabit */,
+				4E8BFF8F2E090A760072962B /* HabitAdd */,
+				4E8BFF902E090AA40072962B /* HabitEdit */,
 				4E3382912DFB09A6002849DB /* Calendar */,
 				4E48FAA72DF45DFA00BA7EA6 /* Statistics */,
 			);
@@ -605,20 +611,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		4E8BFF8F2E090A760072962B /* AddHabit */ = {
+		4E8BFF8F2E090A760072962B /* HabitAdd */ = {
 			isa = PBXGroup;
 			children = (
-				03CFE0DC27F58D3F004C54B6 /* AddHabitView.swift */,
+				03CFE0DC27F58D3F004C54B6 /* HabitAddView.swift */,
+				4E8BFF9E2E0ACEC60072962B /* HabitAddFeature.swift */,
+				4E8BFF982E0A541C0072962B /* Header */,
+				4E8BFF9B2E0A58970072962B /* TextField */,
 				4E8BFF942E098C980072962B /* SelectWeekDay */,
 			);
-			path = AddHabit;
+			path = HabitAdd;
 			sourceTree = "<group>";
 		};
-		4E8BFF902E090AA40072962B /* EditHabit */ = {
+		4E8BFF902E090AA40072962B /* HabitEdit */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = EditHabit;
+			path = HabitEdit;
 			sourceTree = "<group>";
 		};
 		4E8BFF942E098C980072962B /* SelectWeekDay */ = {
@@ -627,6 +636,22 @@
 				032EED5B285E255D00994E5B /* WeekDayButton.swift */,
 			);
 			path = SelectWeekDay;
+			sourceTree = "<group>";
+		};
+		4E8BFF982E0A541C0072962B /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				4E8BFF992E0A54390072962B /* HabitAdd_Header.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		4E8BFF9B2E0A58970072962B /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				4E8BFF9C2E0A58A70072962B /* HabitAdd_TextField.swift */,
+			);
+			path = TextField;
 			sourceTree = "<group>";
 		};
 		4EB11C492E05423A004B3BA1 /* Model */ = {
@@ -835,11 +860,13 @@
 				4E48FABC2DF45DFA00BA7EA6 /* StatisticsView.swift in Sources */,
 				0368CBEC2E0074390086E95B /* Date.swift in Sources */,
 				4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */,
+				4E8BFF9A2E0A54390072962B /* HabitAdd_Header.swift in Sources */,
 				4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */,
 				4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */,
 				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,
 				4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */,
 				4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */,
+				4E8BFF9D2E0A58A70072962B /* HabitAdd_TextField.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekDayButton.swift in Sources */,
@@ -861,11 +888,12 @@
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
 				4E33841A2E0050CE002849DB /* DateFormatters.swift in Sources */,
 				4E48FAC72DF45DFD00BA7EA6 /* CompletedList.swift in Sources */,
+				4E8BFF9F2E0ACEC60072962B /* HabitAddFeature.swift in Sources */,
 				4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */,
 				4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */,
 				4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */,
 				4E48FACB2DF45DFD00BA7EA6 /* Statistics.swift in Sources */,
-				03CFE0DD27F58D3F004C54B6 /* AddHabitView.swift in Sources */,
+				03CFE0DD27F58D3F004C54B6 /* HabitAddView.swift in Sources */,
 				039164E22831213000CA0028 /* Month.swift in Sources */,
 				037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */,
 				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
@@ -1052,6 +1080,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1092,6 +1121,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

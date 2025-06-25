@@ -28,8 +28,8 @@ struct WeekDayButton: View {
                     .fill(isSelected ? HabitColor.mediumGreen.color : .clear)
                     .scaledFrame(width: 44, height: 44)
                 Text(getWeekOfDay(num:weekOfDay).description)
-                    .foregroundColor(isSelected ? .white : .gray.opacity(0.5))
-                    .scaledText(size: 14, weight: .medium)
+                    .foregroundColor(isSelected ? .white : .gray.opacity(0.4))
+                    .font(.system(size: 14, weight: .bold, design: .monospaced))
             }
         }
     }
