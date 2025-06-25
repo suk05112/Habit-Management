@@ -35,8 +35,7 @@ struct AnimationView: View{
                  .scaledFrame(width: .none, height: 80)
                  
 
-             ZStack{
-                 ForEach(list.indices) { i in
+                 ForEach(list.indices, id: \.self) { i in
                      if index == i {
 
                          VStack(alignment: .leading){

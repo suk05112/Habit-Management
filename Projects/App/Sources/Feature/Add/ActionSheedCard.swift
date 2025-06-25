@@ -39,7 +39,7 @@ public struct ActionSheetCard: View {
     let addView: AddView
     @State var height: CGFloat
     
-    public init(
+    init(
         isShowing: Binding<Bool>,
         backgroundColor: Color = Color.white,
         outOfFocusOpacity: CGFloat = 0.7,
