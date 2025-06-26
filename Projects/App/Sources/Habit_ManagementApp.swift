@@ -55,12 +55,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 struct Habit_ManagementApp: SwiftUI.App {
     @Environment(\.scenePhase) var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    let persistenceController = PersistenceController.shared
-    private var isAddViewShow = false
+    private let persistenceController = PersistenceController.shared
+    private let notification = NotificationCenterManager()
     
-    let notification = NotificationCenterManager()
+    private let store: StoreOf<AppFeature>
+    private let setting: Setting = Setting()
     
     init() {
+        self.store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
         let config = RealmSwift.Realm.Configuration(
             schemaVersion: 5, // 새로운 스키마 버전 설정
             migrationBlock: { migration, oldSchemaVersion in
@@ -82,15 +84,10 @@ struct Habit_ManagementApp: SwiftUI.App {
         Realm.Configuration.defaultConfiguration = config
     }
     
-//    let habitHeaderFeature = Store(initialState: HabitHeaderFeature.State(), reducer: { HabitHeaderFeature() })
-    
-    let store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
-    
     var body: some Scene {
         WindowGroup {
-//            HabitHeaderView(store: habitHeaderFeature)
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            ContentView(store: store)
+            MainView(store: store)
+                .environmentObject(setting)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: scenePhase) { newScenePhase in
