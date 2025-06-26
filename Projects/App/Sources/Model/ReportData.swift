@@ -6,7 +6,6 @@
 //
 
 import ComposableArchitecture
-import RealmSwift
 import SwiftUI
 
 class ReportData {
@@ -33,7 +32,6 @@ class ReportData {
     var percentList: [String] = []
     var percentHeadList: [String] = ["", "어제 대비", "지난 주 대비", "지난 달 대비", "", ""]
     var TextList: [(String, String, String)] = []
-    var realm: Realm? = try? Realm()
 
     init(store: StoreOf<StatisticsFeature>) {
         self.store = store
@@ -49,6 +47,9 @@ class ReportData {
         _shared = ReportData(store: store)
     }
 
+    let realmManager: RealmManager<Habit> = .init(configuration: nil, fileUrl: nil)
+    let realmManager2: RealmManager<CompletedList> = .init(configuration: nil, fileUrl: nil)
+
     func setReportText() {
         var list: [(String, String, String)] = [
             getTodayText(), getYesterDayText(), getWeekText(), getMonthText(), getCotinuityText(),
@@ -56,19 +57,37 @@ class ReportData {
 
         list = list.filter { !($0.0.isEmpty && $0.2.isEmpty) }
 
-        guard let realm = realm,
-            let firstHabit = realm.objects(Habit.self).first,
-            let lastCompleted = realm.objects(CompletedList.self).last
-        else {
-            TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
-            return
+        var firstHabit: Habit?
+        var lastCompleted: CompletedList?
+        let group = DispatchGroup()
+
+        group.enter()
+        realmManager.fetchWith(condition: nil) { result in
+            firstHabit = result.first
+            group.leave()
         }
 
-        if firstHabit == nil || lastCompleted.completed.isEmpty {
-            TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
-        } else {
-            TextList = list
+        group.enter()
+        realmManager2.fetchWith(condition: nil) { result in
+            lastCompleted = result.last
+            group.leave()
         }
+
+        let item = DispatchWorkItem.init(flags: .assignCurrentContext) {
+            guard firstHabit != nil else {
+                self.TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
+                return
+            }
+
+            guard let lastCompleted, lastCompleted.completed.isEmpty else {
+                self.TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
+                return
+            }
+
+            self.TextList = list
+        }
+
+        group.notify(queue: .main, work: item)
     }
 
     func getReportText() -> [(String, String, String)] {
