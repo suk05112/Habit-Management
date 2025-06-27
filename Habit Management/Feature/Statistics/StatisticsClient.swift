@@ -251,7 +251,7 @@ extension StatisticsClient : DependencyKey {
             
             let total = getTotal()
             
-            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total)
         },
         
         addOrUpdate: {
@@ -278,7 +278,7 @@ extension StatisticsClient : DependencyKey {
             let total = getTotal()
             let thisWeek = getThisWeekDayArray()
             
-            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total)
         },
         
         getStr: {selected in 
@@ -369,18 +369,14 @@ extension StatisticsClient : DependencyKey {
     )
 }
 
+// StatisticsData: 완료한 습관의 수를 일, 주, 연 타입으로 같고 있는 구조체
+/// 데이터 형태: 각 배열에는 완료한 습관의 수가 들어간다.
+/// StatisticsData(day: [0, 0, 0, 0, 0, 0, 0], week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], month: [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0], yearTotal: 2, total: 4)
+
 struct StatisticsData: Equatable {
     var day: [Int] = [] // 최근 7일에 대한 데이터
     var week: [Int] = [] // 52주에 대한 데이터
     var month: [Int] = [] // 달에 완료한 습관에 대한 데이터
     var yearTotal: Int = 0 // 1년동안 완료한 습관의 갯수
     var total: Int = 0 // 완료한 모든 습관
-    var thisWeek: [String] = [] // 이번주에 대한 데이터
-}
-
-extension DependencyValues {
-    var statisticsDataClient: StatisticsClient {
-        get { self[StatisticsClient.self] }
-        set { self[StatisticsClient.self] = newValue }
-    }
 }
