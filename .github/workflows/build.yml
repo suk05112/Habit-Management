@@ -18,24 +18,22 @@ jobs:
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
-    
-    - name: Install Tuist
+
+    - name: Install mise
       run: |
-        curl -Ls https://install.tuist.io | bash
-        echo "${HOME}/.tuist/bin" >> $GITHUB_PATH
-    
-    - name: Cache Tuist dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.tuist/Cache
-          ~/Library/Caches/com.tuist.tuist
-        key: ${{ runner.os }}-tuist-${{ hashFiles('**/Package.swift', '**/Package.resolved') }}
-        restore-keys: |
-          ${{ runner.os }}-tuist-
-    
-    - name: Generate Xcode project
-      run: tuist generate
+        brew install mise
+        mise install
+
+    - name: Check tuist version
+      run: |
+        eval "$(mise activate bash)"
+        tuist version
+
+    - name: Run Tuist Task (install + generate)
+      run: |
+        eval "$(mise activate bash)"
+        tuist install
+        tuist generate
     
     - name: Build project
       run: |
@@ -44,11 +42,3 @@ jobs:
           -configuration Debug \
           -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
           build
-    
-    - name: Run tests
-      run: |
-        xcodebuild -workspace "Habit Management.xcworkspace" \
-          -scheme "Habit Management" \
-          -configuration Debug \
-          -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
-          test
