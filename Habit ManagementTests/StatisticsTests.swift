@@ -5,6 +5,7 @@
 //  Created by 한수진 on 6/27/25.
 //
 
+import XCTest
 import Testing
 import ComposableArchitecture
 import RealmSwift
@@ -12,7 +13,10 @@ import RealmSwift
 @testable import Habit_Management
 
 @MainActor
-class StatisticsTests {
+class StatisticsTests: XCTestCase {
+    var realmProvider: MockRealmProvider!
+    var testRealm: Realm!
+    
     let mockStatisticsData = StatisticsData(
                 day: [5, 10, 12, 0, 0, 3, 0],
                 week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 12, 0, 0, 3, 0],
@@ -28,26 +32,47 @@ class StatisticsTests {
                 yearTotal: 50,
                 total: 150
             )
-    @Test
+    
+    override func setUp() {
+        realmProvider = MockRealmProvider()
+        testRealm = try! realmProvider.makeRealm()
+    }
+    
+//    @Test
     func testAddOrUpdate() async {
+        var realm: Realm! = try? await Realm()
+//        let config = Realm.Configuration(inMemoryIdentifier: "TestRealm")
+//        let realm = try! await Realm(configuration: config)
+        
+        let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first
+        
         let mockStatistics = makeMockStatistics()
         
-        let store = TestStore(initialState: StatisticsFeature.State(), reducer: StatisticsFeature.init) {
-            $0.statisticsDataClient.addOrUpdate = {
-                return self.mockStatisticsData
-            }
-            
-            $0.statisticsDataClient.getInitialStatisticsData = { [self] in
-                return mockStatisticsData
-            }
-            
-            $0.statisticsDataClient.getnumOfToDo = {
-                return mockStatistics
-            }
-            
-//            $0.statisticsDataClient.setnumOfToDoPerDay = {}
-//            $0.statisticsDataClient.setnumOfToDoPerWeek = { _, _ in }
-//            $0.statisticsDataClient.setnumOfToDoPerMonth = { _, _ in }
+        let store = TestStore(initialState: StatisticsFeature.State()) {
+            StatisticsFeature()
+        } withDependencies: {
+            $0.statisticsDataClient = StatisticsClient(
+                getInitialStatisticsData: {
+                    return self.mockStatisticsData
+                },
+                    addOrUpdate: {
+                        return self.mockStatisticsData
+                    },
+                    getStr: { selected in [] },
+                    setnumOfToDoPerDay: {
+                        try! realm.write {
+                            let obj = realm.objects(Statistics.self).first!
+                            obj.days.removeAll()
+                            obj.days.append(objectsIn: [5, 10, 12, 0, 0, 3, 0])
+                        }
+                    },
+                    setnumOfToDoPerWeek: { _, _ in },
+                    setnumOfToDoPerMonth: { _, _ in },
+                    getnumOfToDo: {
+                        print("test getnumOfToDo")
+                        return mockStatistics
+                    }
+                )
         }
         
         await store.send(.addOrUpdate)
@@ -57,6 +82,14 @@ class StatisticsTests {
             // 실패 테스트
 //            $0.statisticsData = mockFailedStatisticsData
         }
+        
+        await store.send(.getnumOfToDo)
+        await store.receive(.numOfToDoLoaded(mockStatistics)) {
+            $0.todoPerDay = Array(mockStatistics.days)
+            $0.todoPerWeek = Array(mockStatistics.week)
+            $0.todoPerMonth = Array(mockStatistics.month)
+        }
+
     }
     
     func makeMockStatistics() -> Statistics {
@@ -82,4 +115,14 @@ class StatisticsTests {
         return mock
     }
     
+}
+
+protocol RealmProviderProtocol {
+    func makeRealm() throws -> Realm
+}
+
+class MockRealmProvider: RealmProviderProtocol {
+    func makeRealm() throws -> Realm {
+        return try Realm(configuration: Realm.Configuration(inMemoryIdentifier: "testRealm"))
+    }
 }
