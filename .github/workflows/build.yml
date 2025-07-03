@@ -1,0 +1,44 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Install mise
+      run: |
+        brew install mise
+        mise install
+
+    - name: Check tuist version
+      run: |
+        eval "$(mise activate bash)"
+        tuist version
+
+    - name: Run Tuist Task (install + generate)
+      run: |
+        eval "$(mise activate bash)"
+        tuist install
+        tuist generate
+    
+    - name: Build project
+      run: |
+        xcodebuild -workspace "Habit Management.xcworkspace" \
+          -scheme "Habit Management" \
+          -configuration Debug \
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2" \
+          build
