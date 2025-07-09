@@ -15,12 +15,20 @@ import RealmSwift
 @MainActor
 class StatisticsTests: XCTestCase {
     var realmProvider: MockRealmProvider!
-    var testRealm: Realm!
-    
+    let config = Realm.Configuration(inMemoryIdentifier: "TestRealm")
+
     let mockStatisticsData = StatisticsData(
                 day: [5, 10, 12, 0, 0, 3, 0],
                 week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 12, 0, 0, 3, 0],
                 month: [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+                yearTotal: 50,
+                total: 100
+            )
+    
+    let mockStatisticsDataForSetTest = StatisticsData(
+                day: [5, 10, 12, 0, 0, 3, 10],
+                week: [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 12, 0, 0, 3, 0],
+                month: [1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0],
                 yearTotal: 50,
                 total: 100
             )
@@ -34,45 +42,141 @@ class StatisticsTests: XCTestCase {
             )
     
     override func setUp() {
+        print("setup 호출")
         realmProvider = MockRealmProvider()
-        testRealm = try! realmProvider.makeRealm()
+//        testRealm = try! realmProvider.makeRealm()
+
     }
-    
+
 //    @Test
     func testAddOrUpdate() async {
-        var realm: Realm! = try? await Realm()
-//        let config = Realm.Configuration(inMemoryIdentifier: "TestRealm")
-//        let realm = try! await Realm(configuration: config)
+        await setInitailMockStatistics()
         
-        let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first
+        let realm = try! await Realm(configuration: config)
+        
+//        let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first
         
         let mockStatistics = makeMockStatistics()
         
-        let store = TestStore(initialState: StatisticsFeature.State()) {
+        var initialState = StatisticsFeature.State()
+        initialState.todoPerDay = [0, 0, 0, 0, 3, 3, 3]
+        initialState.todoPerWeek = [Int](repeating: 0, count: 52)
+        initialState.todoPerMonth = [0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0]
+
+        let store = TestStore(initialState: initialState) {
             StatisticsFeature()
         } withDependencies: {
             $0.statisticsDataClient = StatisticsClient(
                 getInitialStatisticsData: {
                     return self.mockStatisticsData
                 },
-                    addOrUpdate: {
-                        return self.mockStatisticsData
-                    },
-                    getStr: { selected in [] },
-                    setnumOfToDoPerDay: {
-                        try! realm.write {
-                            let obj = realm.objects(Statistics.self).first!
+                addOrUpdate: {
+                    return self.mockStatisticsData
+                },
+                getStr: { selected in [] },
+                setnumOfToDoPerDay: {
+                    let data = [5, 10, 12, 0, 0, 3, 10]
+                    try! realm.write {
+                        if let obj = realm.objects(Statistics.self).first {
                             obj.days.removeAll()
-                            obj.days.append(objectsIn: [5, 10, 12, 0, 0, 3, 0])
+                            obj.days.append(objectsIn: data)
+                        } else {
+                            let newObj = Statistics()
+                            newObj.days.append(objectsIn: data)
+                            realm.add(newObj)
                         }
-                    },
-                    setnumOfToDoPerWeek: { _, _ in },
-                    setnumOfToDoPerMonth: { _, _ in },
-                    getnumOfToDo: {
-                        print("test getnumOfToDo")
-                        return mockStatistics
                     }
-                )
+                },
+                setnumOfToDoPerWeek: { _, _ in
+                    let data = [
+                        1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 12, 0,
+                        0, 3, 0
+                    ]
+                    try? realm.write {
+                        if let obj = realm.objects(Statistics.self)
+                            .where({ $0.classification == "Todo" })
+                            .first {
+                            
+                            obj.week.removeAll()
+                            obj.week.append(objectsIn: data)
+                        } else {
+                            let newObj = Statistics()
+                            newObj.classification = "Todo"
+                            newObj.week.append(objectsIn: data)
+                            realm.add(newObj)
+                        }
+                    }
+                },
+                setnumOfToDoPerMonth: { _, _ in
+                    let data = [1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+                    try? realm.write {
+                        if let obj = realm.objects(Statistics.self)
+                            .where({ $0.classification == "Todo" })
+                            .first {
+                            
+                            obj.month.removeAll()
+                            obj.month.append(objectsIn: data)
+                        } else {
+                            let newObj = Statistics()
+                            newObj.classification = "Todo"
+                            newObj.month.append(objectsIn: data)
+                            realm.add(newObj)
+                        }
+                    }
+                },
+                getnumOfToDo: {
+                    print("test getnumOfToDo")
+//                    return mockStatistics // 성공
+                    
+                    // 실패
+                    if let obj = realm.objects(Statistics.self)
+                        .where({ $0.classification == "Todo" })
+                        .first {
+                        print("obj", obj)
+                        let stats = Statistics()
+                        stats.year = obj.year
+                        stats.classification = obj.classification
+                        stats.days.append(objectsIn: obj.days)
+                        stats.week.append(objectsIn: obj.week)
+                        stats.month.append(objectsIn: obj.month)
+                        stats.total = obj.total
+                        print("getnumOfToDo stats", stats)
+                        
+                        return stats
+                        
+                        /*
+                        let mock = Statistics()
+                        mock.year = 2025
+                        mock.classification = "Todo"
+                        
+                        // days
+                        let daysArray = [0, 0, 0, 0, 0, 0, 0]
+                        mock.days.append(objectsIn: daysArray)
+                        
+                        // week
+                        let weekArray = [Int](repeating: 0, count: 52)
+                        mock.week.append(objectsIn: weekArray)
+                        
+                        // month (5월에만 2)
+                        var monthArray = [Int](repeating: 0, count: 12)
+                        monthArray[4] = 2
+                        mock.month.append(objectsIn: monthArray)
+                        
+                        mock.total = 4
+                        
+                        return stats
+                        */
+                    } else {
+                        // Realm에 없으면 빈 객체 반환
+                        let emptyStats = Statistics()
+                        emptyStats.classification = "Todo"
+                        return emptyStats
+                    }
+                }
+            )
         }
         
         await store.send(.addOrUpdate)
@@ -83,13 +187,43 @@ class StatisticsTests: XCTestCase {
 //            $0.statisticsData = mockFailedStatisticsData
         }
         
+
+        // Test GetFunc
         await store.send(.getnumOfToDo)
         await store.receive(.numOfToDoLoaded(mockStatistics)) {
             $0.todoPerDay = Array(mockStatistics.days)
             $0.todoPerWeek = Array(mockStatistics.week)
             $0.todoPerMonth = Array(mockStatistics.month)
         }
+        
+        // Test SetFunc
+        let mockStatisticsForSetTest = makeMockStatisticsForSetTest()
 
+        await store.send(.setnumOfToDo(add: false, numOfIter: 0))
+        await store.send(.getnumOfToDo)
+
+        await store.receive(.numOfToDoLoaded(mockStatisticsForSetTest)) {
+            $0.todoPerDay = Array(mockStatisticsForSetTest.days)
+            $0.todoPerWeek = Array(mockStatisticsForSetTest.week)
+            $0.todoPerMonth = Array(mockStatisticsForSetTest.month)
+        }
+
+    }
+    
+    func setInitailMockStatistics() async {
+        let current_year = 2025
+        let day = [0, 0, 0, 0, 0, 0, 0]
+        let week = [Int](repeating: 0, count: 52)
+        var month = [Int](repeating: 0, count: 12)
+        month[4] = 2
+        let yearTotal = 4
+
+        let realm = try! await Realm(configuration: config)
+        
+        try? realm.write({
+            realm.add(Statistics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+            realm.add(Statistics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+        })
     }
     
     func makeMockStatistics() -> Statistics {
@@ -111,6 +245,28 @@ class StatisticsTests: XCTestCase {
         mock.month.append(objectsIn: monthArray)
         
         mock.total = 4
+        
+        return mock
+    }
+    
+    func makeMockStatisticsForSetTest() -> Statistics {
+        let mock = Statistics()
+        mock.year = 2025
+        mock.classification = "Todo"
+        
+        // days
+        let daysArray = [5, 10, 12, 0, 0, 3, 10]
+        mock.days.append(objectsIn: daysArray)
+        
+        // week
+        let weekArray = [1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 10, 12, 0, 0, 3, 0]
+        mock.week.append(objectsIn: weekArray)
+        
+        // month
+        var monthArray = [1, 1, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0]
+        mock.month.append(objectsIn: monthArray)
+        
+        mock.total = 100
         
         return mock
     }
