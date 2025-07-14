@@ -145,3 +145,20 @@ extension HabitClient: DependencyKey {
         }
     )
 }
+
+extension HabitClient {
+    static var testValue: HabitClient {
+        HabitClient(
+            fetchAll: { [] },
+            fetchFiltered: { _, _ in [] },
+            save: { _ in },
+            update: { _, _, _ in },
+            delete: { _ in },
+            todayHabitCount: { 0 },
+            weeklyHabitStats: { [] },
+            monthSummary: { (0, 0) },
+            updateContinuity: {},
+            resetContinuityIfNotDone: {}
+        )
+    }
+}

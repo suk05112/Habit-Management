@@ -57,6 +57,15 @@ class Statistics: Object {
         self.monthArray = monthArray
         self.total = total
     }
+    
+    static func == (lhs: Statistics, rhs: Statistics) -> Bool {
+        return lhs.year == rhs.year &&
+        lhs.classification == rhs.classification &&
+        Array(lhs.days) == Array(rhs.days) &&
+        Array(lhs.week) == Array(rhs.week) &&
+        Array(lhs.month) == Array(rhs.month) &&
+        lhs.total == rhs.total
+    }
 }
 
 /// Statistics
