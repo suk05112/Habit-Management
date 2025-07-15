@@ -18,4 +18,9 @@ extension DependencyValues {
         get { self[CompletionClient.self] }
         set { self[CompletionClient.self] = newValue }
     }
+    
+    var statisticsDataClient: StatisticsClient {
+        get { self[StatisticsClient.self] }
+        set { self[StatisticsClient.self] = newValue }
+    }
 }

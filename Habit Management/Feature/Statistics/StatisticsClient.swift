@@ -251,7 +251,7 @@ extension StatisticsClient : DependencyKey {
             
             let total = getTotal()
             
-            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total)
         },
         
         addOrUpdate: {
@@ -278,7 +278,7 @@ extension StatisticsClient : DependencyKey {
             let total = getTotal()
             let thisWeek = getThisWeekDayArray()
             
-            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
+            return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total)
         },
         
         getStr: {selected in 
@@ -305,7 +305,7 @@ extension StatisticsClient : DependencyKey {
                 }
             }
 
-            try? realm!.write{
+            try? realm!.write {
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
             }
         },
@@ -314,18 +314,17 @@ extension StatisticsClient : DependencyKey {
             var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
             let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
             
-            if weekArray[weekNO-1] == 0{
+            if weekArray[weekNO-1] == 0 {
                 weekArray[weekNO-1] = weekArray[weekNO-2]
             }
             
-            if add{
+            if add {
                 weekArray[weekNO-1] += numOfIter
-            }
-            else{
+            } else {
                 weekArray[weekNO-1] -= numOfIter
             }
             
-            try? realm!.write{
+            try? realm!.write {
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
             }
         },
@@ -336,18 +335,17 @@ extension StatisticsClient : DependencyKey {
             let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
             
             
-            if monthArray[todayMonth-1] == 0{
+            if monthArray[todayMonth-1] == 0 {
                 monthArray[todayMonth-1] = monthArray[todayMonth-2]
             }
 
-            if add{
+            if add {
                 monthArray[todayMonth-1] += numOfIter
-            }
-            else{
+            } else {
                 monthArray[todayMonth-1] -= numOfIter
             }
                 
-            try? realm!.write{
+            try? realm!.write {
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
             }
         },
@@ -369,18 +367,31 @@ extension StatisticsClient : DependencyKey {
     )
 }
 
+
+extension StatisticsClient {
+    static var testValue: StatisticsClient {
+        StatisticsClient(
+            getInitialStatisticsData: { .init() },
+            addOrUpdate: { .init() },
+            getStr: { _ in [] },
+            setnumOfToDoPerDay: { },
+            setnumOfToDoPerWeek: { _, _ in },
+            setnumOfToDoPerMonth: { _, _ in },
+            getnumOfToDo: {
+                return Statistics()
+            }
+        )
+    }
+}
+
+// StatisticsData: 완료한 습관의 수를 일, 주, 연 타입으로 같고 있는 구조체
+/// 데이터 형태: 각 배열에는 완료한 습관의 수가 들어간다.
+/// StatisticsData(day: [0, 0, 0, 0, 0, 0, 0], week: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], month: [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0], yearTotal: 2, total: 4)
+
 struct StatisticsData: Equatable {
     var day: [Int] = [] // 최근 7일에 대한 데이터
     var week: [Int] = [] // 52주에 대한 데이터
     var month: [Int] = [] // 달에 완료한 습관에 대한 데이터
     var yearTotal: Int = 0 // 1년동안 완료한 습관의 갯수
     var total: Int = 0 // 완료한 모든 습관
-    var thisWeek: [String] = [] // 이번주에 대한 데이터
-}
-
-extension DependencyValues {
-    var statisticsDataClient: StatisticsClient {
-        get { self[StatisticsClient.self] }
-        set { self[StatisticsClient.self] = newValue }
-    }
 }
