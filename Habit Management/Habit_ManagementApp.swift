@@ -8,7 +8,6 @@
 import SwiftUI
 import UIKit
 import RealmSwift
-import PartialSheet
 import UserNotifications
 import FirebaseCore
 import ComposableArchitecture

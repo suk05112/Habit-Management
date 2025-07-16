@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ComposableArchitecture
 import RealmSwift
+import ComposableArchitecture
 
 struct CompletionClient {
     var toggle: @Sendable (String) async throws -> Void
@@ -112,11 +112,11 @@ extension CompletionClient: DependencyKey {
         },
         
         updateAllDoneContinuity: { status, isToday in
-            guard isToday else { return UserDefaults.standard.integer(forKey: "allDoneContinuity") }
+            let key = "allDoneContinuity"
+            guard isToday else { return UserDefaults.standard.integer(forKey: key) }
             
             let calendar = Calendar.current
             let weekday = calendar.component(.weekday, from: Date())
-            let key = "allDoneContinuity"
             var continuity = UserDefaults.standard.integer(forKey: key)
             
             if continuity < 0 { continuity = 0 }

@@ -18,4 +18,10 @@ extension DependencyValues {
         get { self[CompletionClient.self] }
         set { self[CompletionClient.self] = newValue }
     }
+    
+    var realmClient: RealmService {
+        get { self[RealmClientKey.self] }
+        set { self[RealmClientKey.self] = newValue }
+    }
+    
 }

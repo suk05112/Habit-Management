@@ -10,9 +10,8 @@ import ComposableArchitecture
 
 @Reducer
 struct EditHabitFeature {
-    
-    @Dependency(\.habitClient) var habitClient
-    @Dependency(\.completionClient) var completionClient
+
+    @DBActor @Dependency(\.realmClient) var realmClient
     
     struct State: Equatable {
         var mode: Mode = .viewing
@@ -31,8 +30,8 @@ struct EditHabitFeature {
             case let .deleteButtonPressed(habit):
                 state.mode = .viewing
                 return .run { send in
-                    try await habitClient.delete(habit)
-                    _ = try await completionClient.updateAllDoneContinuity(.delete, habit.today())
+                    await realmClient.deleteHabit(habit)
+                    _ = await realmClient.getContinuity(status: .delete, isToday: habit.today())
                 }
             case let .editButtonPressed(habit):
                 state.mode = .editing
@@ -42,8 +41,8 @@ struct EditHabitFeature {
             case let .completeButtonPressed(habit):
                 state.mode = .viewing
                 return .run { send in
-                    try await completionClient.toggle(habit.id!)
-                    _ = try await completionClient.updateAllDoneContinuity(.complete, habit.today())
+                    await realmClient.toggleCompleted(id: habit.id!)
+                    _ = await realmClient.getContinuity(status: .complete, isToday: habit.today())
                 }
             }
         }

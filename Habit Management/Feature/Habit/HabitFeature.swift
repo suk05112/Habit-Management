@@ -11,6 +11,9 @@ import RealmSwift
 
 @Reducer
 struct HabitFeature {
+    
+    @DBActor @Dependency(\.realmClient) var realmClient
+    
     struct State: Equatable {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
@@ -61,8 +64,6 @@ struct HabitFeature {
         case edit(EditHabitFeature.Action)
     }
     
-    @Dependency(\.habitClient) var habitClient
-    
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -86,7 +87,8 @@ struct HabitFeature {
                 state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    try await realmClient.initRealm()
+                    let habits = await realmClient.fetchFilteredHabits(showAll: showAll, hideCompleted: hideCompleted)
                     await send(.loadHabits(habits))
                 }
                 
@@ -136,8 +138,8 @@ struct HabitFeature {
                 let hideCompleted = state.toggle.isHideCompleted
                 
                 return .run { send in
-                    try await habitClient.save(habit)
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await realmClient.addHabit(habit)
+                    let habits = await realmClient.fetchFilteredHabits(showAll: showAll, hideCompleted: hideCompleted)
                     await send(.loadHabits(habits))
                 }
                 
@@ -146,8 +148,8 @@ struct HabitFeature {
                 let hideCompleted = state.toggle.isHideCompleted
                 
                 return .run { send in
-                    try await habitClient.update(habit, name, iter)
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await realmClient.updateHabit(habit, name: name, iter: iter)
+                    let habits = await realmClient.fetchFilteredHabits(showAll: showAll, hideCompleted: hideCompleted)
                     await send(.loadHabits(habits))
                 }
                 
@@ -157,7 +159,7 @@ struct HabitFeature {
                 
             case .fetchTodayHabitCount:
                 return .run { send in
-                    let count = try await habitClient.todayHabitCount()
+                    let count = await realmClient.countTodayHabit()
                     await send(.fetchedTodayHabitCount(count))
                 }
                 
@@ -166,7 +168,7 @@ struct HabitFeature {
                 
             case .fetchWeeklyHabitStats:
                 return .run { send in
-                    let stats = try await habitClient.weeklyHabitStats()
+                    let stats = await realmClient.weeklySummary()
                     await send(.fetchedWeeklyHabitStats(stats))
                 }
                 
@@ -175,7 +177,7 @@ struct HabitFeature {
                 
             case .fetchMonthSummary:
                 return .run { send in
-                    let (thisMonth, lastMonth) = try await habitClient.monthSummary()
+                    let (thisMonth, lastMonth) = await realmClient.monthSummary()
                     await send(.fetchedMonthSummary(thisMonth, lastMonth))
                 }
                 
@@ -183,10 +185,10 @@ struct HabitFeature {
                 return .none
                 
             case .updateContinuity:
-                return .run { _ in try await habitClient.updateContinuity() }
+                return .run { _ in await realmClient.updateContinuity() }
                 
             case .resetContinuity:
-                return .run { _ in try await habitClient.resetContinuityIfNotDone() }
+                return .run { _ in await realmClient.resetContinuity() }
                 
             case .header:
                 return .none
@@ -200,7 +202,7 @@ struct HabitFeature {
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
                 return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    let habits = await realmClient.fetchFilteredHabits(showAll: showAll, hideCompleted: hideCompleted)
                     await send(.loadHabits(habits))
                 }
             
@@ -210,7 +212,7 @@ struct HabitFeature {
                 state.mode = state.edit.mode
                 state.selectedHabit = state.edit.selectedHabit
                 return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    let habits = await realmClient.fetchFilteredHabits(showAll: showAll, hideCompleted: hideCompleted)
                     await send(.loadHabits(habits))
                 }
             }
