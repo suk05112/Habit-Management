@@ -19,7 +19,7 @@ struct HabitClient {
     var weeklyHabitStats: @Sendable () async throws -> [Int]
     var monthSummary: @Sendable () async throws -> (Int, Int)
     var updateContinuity: @Sendable () async throws -> Void
-    var resetContinuityIfNotDone: @Sendable () async throws -> Void
+    var resetContinuity: @Sendable () async throws -> Void
 }
 
 extension HabitClient: DependencyKey {
@@ -28,7 +28,7 @@ extension HabitClient: DependencyKey {
             let realm = try Realm()
             return Array(realm.objects(Habit.self))
         },
-
+        
         fetchFiltered: { showAll, hideCompleted in
             let realm = try Realm()
             let today = DateFormatters.standard.string(from: Date())
@@ -46,15 +46,15 @@ extension HabitClient: DependencyKey {
                     query = query.where { !$0.id.in(completedIDs) }
                 }
             }
-
+            
             return Array(query).map { $0.detached() }
         },
-
+        
         save: { habit in
             let realm = try Realm()
             try realm.write { realm.add(habit, update: .modified) }
         },
-
+        
         update: { habit, name, iter in
             let realm = try Realm()
             try realm.write {
@@ -63,12 +63,12 @@ extension HabitClient: DependencyKey {
                 habit.weekIter.append(objectsIn: iter)
             }
         },
-
+        
         delete: { habit in
             let realm = try Realm()
             try realm.write { realm.delete(habit) }
         },
-
+        
         todayHabitCount: {
             let realm = try Realm()
             let todayWeekDay = Date().weekday
@@ -109,13 +109,13 @@ extension HabitClient: DependencyKey {
             let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
             
             let completedToday =
-                realm.object(
-                    ofType: CompletedList.self, forPrimaryKey: todayKey)?
+            realm.object(
+                ofType: CompletedList.self, forPrimaryKey: todayKey)?
                 .completed ?? List<String>()
             let completedYesterday =
-                realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
+            realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
                 .completed ?? List<String>()
-
+            
             try realm.write {
                 for habit in realm.objects(Habit.self) {
                     if !completedYesterday.contains(habit.id ?? "") {
@@ -127,15 +127,15 @@ extension HabitClient: DependencyKey {
                 }
             }
         },
-        resetContinuityIfNotDone: {
+        resetContinuity: {
             let realm = try Realm()
             let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
             
             try realm.write {
                 for habit in realm.objects(Habit.self) {
                     let completedYesterday =
-                        realm.object(
-                            ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
+                    realm.object(
+                        ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
                         .completed ?? List<String>()
                     if !completedYesterday.contains(habit.id ?? "") {
                         habit.continuity = 0
