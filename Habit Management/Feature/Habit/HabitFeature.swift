@@ -84,7 +84,7 @@ struct HabitFeature {
             case .onAppear:
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
-                state.mainReportText = ReportData.shared.getMainReport()
+//                state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)

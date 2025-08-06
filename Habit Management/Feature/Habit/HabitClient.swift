@@ -66,7 +66,17 @@ extension HabitClient: DependencyKey {
         
         delete: { habit in
             let realm = try Realm()
-            try realm.write { realm.delete(habit) }
+//            try realm.write { realm.delete(habit) }
+            
+            guard let id = habit.id else { return }
+
+            let predicate = NSPredicate(format: "id == %@", id)
+            
+            if let habitToDelete = realm.objects(Habit.self).filter(predicate).first {
+                try realm.write {
+                    realm.delete(habitToDelete)
+                }
+            }
         },
         
         todayHabitCount: {
