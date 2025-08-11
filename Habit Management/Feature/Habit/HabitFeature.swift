@@ -84,7 +84,7 @@ struct HabitFeature {
             case .onAppear:
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
-//                state.mainReportText = ReportData.shared.getMainReport()
+                //                state.mainReportText = ReportData.shared.getMainReport()
                 
                 return .run { send in
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
@@ -205,14 +205,24 @@ struct HabitFeature {
                     await send(.loadHabits(habits))
                 }
                 
-            case .edit:
-                let showAll = state.toggle.isShowAll
-                let hideCompleted = state.toggle.isHideCompleted
-                state.mode = state.edit.mode
-                state.selectedHabit = state.edit.selectedHabit
-                return .run { send in
-                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
-                    await send(.loadHabits(habits))
+            case .edit(let childAction):
+                switch childAction {
+                case .deleteButtonPressed:
+                    state.mode = .viewing
+                    state.selectedHabit = nil
+                    return .none
+                    
+                case .didDelete:
+                    let showAll = state.toggle.isShowAll
+                    let hideCompleted = state.toggle.isHideCompleted
+                    return .run { send in
+                        let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                        await send(.loadHabits(habits))
+                    }
+                case .editButtonPressed(_):
+                    return .none
+                case .completeButtonPressed(_):
+                    return .none
                 }
             }
         }
