@@ -1,0 +1,6 @@
+{
+    "sweetpad.build.xcodeWorkspacePath": "Habit Management.xcworkspace",
+    "sweetpad.system.autoRevealTerminal": true,
+    "sweetpad.system.showProgressStatusBar": true,
+    "sweetpad.build.args": ["-skipMacroValidation"]
+}

@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import UserNotifications
 import FirebaseCore
+import FirebaseCrashlytics
 import ComposableArchitecture
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -32,7 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
             application.registerUserNotificationSettings(settings)
         }
         
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
         application.registerForRemoteNotifications()
         return true
     }

@@ -24,30 +24,39 @@ struct HabitItemView: View {
     }
     
     var body: some View {
-        WithViewStore(habitStore, observe: { $0 }) { viewStore in
-            WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
-                if !habit.isInvalidated {
-                    HStack {
-                        habitContentView(weekDay: habit.weekString(), name: habit.name, continuity: habit.continuity)
+        ZStack(alignment: .trailing) {
+            EditHabitView(
+                habitStore: habitStore,
+                statisticsStore: Store(initialState: StatisticsFeature.State(), reducer: { StatisticsFeature() }),
+                habit: habit,
+                offset: $offset
+            )
+            WithViewStore(habitStore, observe: { $0 }) { viewStore in
+                WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
+                    if !habit.isInvalidated {
+                        HStack {
+                            habitContentView(weekDay: habit.weekString(), name: habit.name, continuity: habit.continuity)
+                        }
+                        .scaledFrame(width: .none, height: 80)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.white)
+                                .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+                        )
+                        .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
+                        .opacity(completionViewStore.doneTodayMap[habit.id!] == true ? 0.5 : 1)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            slideLeft = false
+                            slideRight = false
+                            offset = 0
+                        }
+                        .offset(x: offset)
+                        .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                     }
-                    .scaledFrame(width: .none, height: 80)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
-                            .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
-                    )
-                    .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
-                    .opacity(completionViewStore.doneTodayMap[habit.id!] == true ? 0.5 : 1)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        slideLeft = false
-                        slideRight = false
-                        offset = 0
-                    }
-                    .offset(x: offset)
-                    .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                 }
             }
+            
         }
     }
 }

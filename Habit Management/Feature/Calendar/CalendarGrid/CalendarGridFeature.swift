@@ -11,9 +11,15 @@ import ComposableArchitecture
 @Reducer
 struct CalendarGridFeature {
     
-    struct DayItem: Identifiable, Equatable {
+    struct DayItem: Identifiable, Equatable, Hashable {
         let id = UUID()
         let date: String
+        
+        var isToday: Bool {
+            guard !date.isEmpty,
+                  let targetDate = DateFormatters.standard.date(from: date) else { return false }
+            return Calendar.current.isDateInToday(targetDate)
+        }
     }
     
     struct State: Equatable {
@@ -58,6 +64,40 @@ extension CalendarGridFeature {
             }
         }
         
+//        dayItemArray.append(getThisWeekDayArray())
+//        
+        print("dayItemArray", dayItemArray)
+
+        
         return dayItemArray
+    }
+    
+    func getThisWeekDayArray() -> [DayItem]{
+        let calendar = Calendar(identifier: .gregorian)
+        let dateFormatter = DateFormatter()
+
+        var temp: [String] = []
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        var startDate = Date(timeIntervalSinceNow: TimeInterval(-3600*24*(todayWeek-1)))
+
+        //일-1, 토-7
+        for _ in stride(from: 0, to: todayWeek, by: 1){
+            let date = dateFormatter.string(from: startDate)
+            temp.append(date)
+            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
+
+        }
+        
+        for _ in 0..<(7-todayWeek){
+            temp.append("")
+        }
+        
+        var thisWeekDayItem: [DayItem] = []
+        
+        temp.forEach {
+            thisWeekDayItem.append(DayItem(date: $0))
+        }
+        
+        return thisWeekDayItem        
     }
 }

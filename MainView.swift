@@ -37,6 +37,14 @@ struct MainView: View {
                         .tabItem { tabIconView("house", "홈") }
                     StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
+                    if #available(iOS 16.0, *) {
+                        NavigationStack {
+                            FirebaseCrashTestView()
+                        }
+                        .tabItem { tabIconView("exclamationmark.triangle", "비정상종료테스트") }
+                    } else {
+                        // Fallback on earlier versions
+                    }
                 }
                 .tint(HabitColor.defaultGreen.color)
                 

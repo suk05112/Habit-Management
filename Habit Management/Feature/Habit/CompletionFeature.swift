@@ -69,6 +69,7 @@ struct CompletionFeature {
                 return .none
                 
             case .loadTodayCount:
+                print("loadTodayCount 호출")
                 return .run { send in
                     let count = try await completionClient.todayHabitCompleteCount()
                     await send(.todayCountResponse(count))
@@ -82,6 +83,7 @@ struct CompletionFeature {
                 
             case let .todayCountResponse(count):
                 state.todayCount = count
+                print("todayCountResponse todayCount", state.todayCount )
                 return .none
                 
             case let .yesterdayCountResponse(count):

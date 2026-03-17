@@ -65,7 +65,7 @@ extension HabitClient: DependencyKey {
         },
         
         delete: { habit in
-            let realm = try Realm()            
+            let realm = try Realm()
             guard let id = habit.id else { return }
 
             let predicate = NSPredicate(format: "id == %@", id)

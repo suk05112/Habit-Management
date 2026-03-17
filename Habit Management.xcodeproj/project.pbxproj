@@ -15,14 +15,16 @@
 		03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */; };
 		0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03463349289FA7F9000D1E61 /* FirebaseDatabase */; };
 		0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */; };
+		0346334E289FA7F9000D1E61 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334D289FA7F9000D1E61 /* FirebaseCrashlytics */; };
+		03463351289FA7F9000D1E61 /* FirebaseCrashTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */; };
 		0368CBE62DF8BF090086E95B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */; };
 		0368CBEA2E0074010086E95B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBE92E0073FB0086E95B /* String.swift */; };
 		0368CBEC2E0074390086E95B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBEB2E0074360086E95B /* Date.swift */; };
 		036D03B12813241000EE607B /* HabitItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B02813241000EE607B /* HabitItemView.swift */; };
-		036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* compltedLIstVM.swift */; };
+		036D03B528133CB300EE607B /* CompletedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036D03B428133CB300EE607B /* CompletedListViewModel.swift */; };
 		037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAEB28421AE800BD3C0E /* Setting.swift */; };
 		037FFAF7284614F400BD3C0E /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037FFAF6284614F400BD3C0E /* TestView.swift */; };
-		038FB458280D61F600740AA6 /* HabitVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitVM.swift */; };
+		038FB458280D61F600740AA6 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038FB457280D61F600740AA6 /* HabitViewModel.swift */; };
 		039164E0283120DA00CA0028 /* Total.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164DF283120DA00CA0028 /* Total.swift */; };
 		039164E22831213000CA0028 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164E12831213000CA0028 /* Month.swift */; };
 		039164FA283752B900CA0028 /* EditHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039164F9283752B900CA0028 /* EditHabitView.swift */; };
@@ -44,13 +46,15 @@
 		03CFE07127EC46D6004C54B6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE07027EC46D6004C54B6 /* Persistence.swift */; };
 		03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE07227EC46D6004C54B6 /* Habit_Management.xcdatamodeld */; };
 		03CFE07E27EC46D6004C54B6 /* Habit_ManagementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE07D27EC46D6004C54B6 /* Habit_ManagementTests.swift */; };
+		03CFE0A127EC46D6004C54B6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CFE0A027EC46D6004C54B6 /* XCTest.framework */; };
 		03CFE08827EC46D6004C54B6 /* Habit_ManagementUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */; };
 		03CFE08A27EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */; };
 		03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFE0DC27F58D3F004C54B6 /* AddView.swift */; };
-		03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StaticVM.swift */; };
+		03DBC289282BAB3E000848BF /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DBC288282BAB3E000848BF /* StatisticsViewModel.swift */; };
+		03E090792E44A20200278740 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 03E090782E44A20200278740 /* Realm */; };
+		03E0907B2E44A20200278740 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03E0907A2E44A20200278740 /* RealmSwift */; };
 		2F0182892E09059A004F7A90 /* EditHabitFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0182882E09059A004F7A90 /* EditHabitFeature.swift */; };
 		2F02F7A82E38E531005273A5 /* PartialSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 039165022837650100CA0028 /* PartialSheet */; };
-		2FA5A5102E27A198004028F7 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2FA5A50F2E27A198004028F7 /* RealmSwift */; };
 		4E3381832DF69033002849DB /* HabitHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381822DF69033002849DB /* HabitHeaderView.swift */; };
 		4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381842DF694CF002849DB /* HabitBackgroundView.swift */; };
 		4E3381882DF70ECA002849DB /* HabitHeaderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3381872DF70ECA002849DB /* HabitHeaderFeature.swift */; };
@@ -136,14 +140,15 @@
 		032EED5B285E255D00994E5B /* WeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekButton.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
+		03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCrashTestView.swift; sourceTree = "<group>"; };
 		0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0368CBE92E0073FB0086E95B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0368CBEB2E0074360086E95B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		036D03B02813241000EE607B /* HabitItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitItemView.swift; sourceTree = "<group>"; };
-		036D03B428133CB300EE607B /* compltedLIstVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = compltedLIstVM.swift; sourceTree = "<group>"; };
+		036D03B428133CB300EE607B /* CompletedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedListViewModel.swift; sourceTree = "<group>"; };
 		037FFAEB28421AE800BD3C0E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		037FFAF6284614F400BD3C0E /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		038FB457280D61F600740AA6 /* HabitVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitVM.swift; sourceTree = "<group>"; };
+		038FB457280D61F600740AA6 /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
 		039164DF283120DA00CA0028 /* Total.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Total.swift; sourceTree = "<group>"; };
 		039164E12831213000CA0028 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		039164F9283752B900CA0028 /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
@@ -165,7 +170,7 @@
 		03CFE08727EC46D6004C54B6 /* Habit_ManagementUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITests.swift; sourceTree = "<group>"; };
 		03CFE08927EC46D6004C54B6 /* Habit_ManagementUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		03CFE0DC27F58D3F004C54B6 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		03DBC288282BAB3E000848BF /* StaticVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVM.swift; sourceTree = "<group>"; };
+		03DBC288282BAB3E000848BF /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		2F0182882E09059A004F7A90 /* EditHabitFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitFeature.swift; sourceTree = "<group>"; };
 		4E3381822DF69033002849DB /* HabitHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitHeaderView.swift; sourceTree = "<group>"; };
 		4E3381842DF694CF002849DB /* HabitBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitBackgroundView.swift; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 		4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		4EB11C4A2E054245004B3BA1 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		B56F33722DF9D30900416589 /* PaddingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingModifier.swift; sourceTree = "<group>"; };
+		03CFE0A027EC46D6004C54B6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,15 +231,17 @@
 				2F02F7A82E38E531005273A5 /* PartialSheet in Frameworks */,
 				039E8CB92DD3917C005BC622 /* protoc-gen-swift in Frameworks */,
 				039E8CB72DD3917C005BC622 /* SwiftProtobufPluginLibrary in Frameworks */,
+				03E0907B2E44A20200278740 /* RealmSwift in Frameworks */,
 				039E8CD42DDCC1F7005BC622 /* ComposableArchitecture in Frameworks */,
-				2FA5A5102E27A198004028F7 /* RealmSwift in Frameworks */,
 				039E8CBF2DD392C8005BC622 /* ActionSheetCard in Frameworks */,
 				0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */,
+				03E090792E44A20200278740 /* Realm in Frameworks */,
 				0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */,
 				039E8CB52DD3917C005BC622 /* SwiftProtobuf in Frameworks */,
 				03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */,
 				039165082837744900CA0028 /* ActionSheetCard in Frameworks */,
 				03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */,
+				0346334E289FA7F9000D1E61 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03CFE0A127EC46D6004C54B6 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,9 +372,9 @@
 		03CFE0DA27F4949C004C54B6 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
-				03DBC288282BAB3E000848BF /* StaticVM.swift */,
-				038FB457280D61F600740AA6 /* HabitVM.swift */,
-				036D03B428133CB300EE607B /* compltedLIstVM.swift */,
+				03DBC288282BAB3E000848BF /* StatisticsViewModel.swift */,
+				038FB457280D61F600740AA6 /* HabitViewModel.swift */,
+				036D03B428133CB300EE607B /* CompletedListViewModel.swift */,
 				037FFAEB28421AE800BD3C0E /* Setting.swift */,
 			);
 			name = "View Model";
@@ -378,6 +387,7 @@
 				037FFAF4284606C200BD3C0E /* Item */,
 				0391650E283B5DE800CA0028 /* Add */,
 				03DBC27D2827CEEE000848BF /* Main */,
+				03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */,
 				037FFAF6284614F400BD3C0E /* TestView.swift */,
 				03A06E612858ED0B0069C3CB /* ContentView.swift */,
 			);
@@ -669,6 +679,7 @@
 				03CFE06127EC46D1004C54B6 /* Frameworks */,
 				03CFE06227EC46D1004C54B6 /* Resources */,
 				2FC533DD2E279DCF00B72C8E /* Embed Frameworks */,
+				03F4FF142F65F9BD00BC9DFA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -682,13 +693,14 @@
 				03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */,
 				03463349289FA7F9000D1E61 /* FirebaseDatabase */,
 				0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */,
+				0346334D289FA7F9000D1E61 /* FirebaseCrashlytics */,
 				039E8CB42DD3917C005BC622 /* SwiftProtobuf */,
 				039E8CB62DD3917C005BC622 /* SwiftProtobufPluginLibrary */,
 				039E8CB82DD3917C005BC622 /* protoc-gen-swift */,
 				039E8CBE2DD392C8005BC622 /* ActionSheetCard */,
 				039E8CD32DDCC1F7005BC622 /* ComposableArchitecture */,
-				2FA5A50C2E27A198004028F7 /* Realm */,
-				2FA5A50F2E27A198004028F7 /* RealmSwift */,
+				03E090782E44A20200278740 /* Realm */,
+				03E0907A2E44A20200278740 /* RealmSwift */,
 			);
 			productName = "Habit Management";
 			productReference = 03CFE06427EC46D1004C54B6 /* Habit Management.app */;
@@ -767,8 +779,8 @@
 				039E8CB32DD3917C005BC622 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				039E8CBD2DD392C8005BC622 /* XCRemoteSwiftPackageReference "SwiftUI-Action-Sheet-Card" */,
 				039E8CD22DDCC1F7005BC622 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				2FA5A50B2E27A150004028F7 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				2F02F7AA2E3A14D4005273A5 /* XCRemoteSwiftPackageReference "PartialSheet" */,
+				03E090772E44A20200278740 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 03CFE06527EC46D1004C54B6 /* Products */;
 			projectDirPath = "";
@@ -807,6 +819,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03F4FF142F65F9BD00BC9DFA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/Info.plist",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Firebase Crashlytics dSYM upload (SPM)\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		03CFE06027EC46D1004C54B6 /* Sources */ = {
@@ -856,11 +894,12 @@
 				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,
 				4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */,
 				4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */,
+				03463351289FA7F9000D1E61 /* FirebaseCrashTestView.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
 				03CFE07427EC46D6004C54B6 /* Habit_Management.xcdatamodeld in Sources */,
-				038FB458280D61F600740AA6 /* HabitVM.swift in Sources */,
+				038FB458280D61F600740AA6 /* HabitViewModel.swift in Sources */,
 				4E3384152DFED181002849DB /* HabitToggleView.swift in Sources */,
 				4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */,
 				4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */,
@@ -870,7 +909,7 @@
 				036D03B12813241000EE607B /* HabitItemView.swift in Sources */,
 				032EED58285E24D000994E5B /* Toast.swift in Sources */,
 				4E48FA8D2DF45DF700BA7EA6 /* AppFeature.swift in Sources */,
-				03DBC289282BAB3E000848BF /* StaticVM.swift in Sources */,
+				03DBC289282BAB3E000848BF /* StatisticsViewModel.swift in Sources */,
 				03A06E622858ED0B0069C3CB /* ContentView.swift in Sources */,
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
@@ -883,7 +922,7 @@
 				03CFE0DD27F58D3F004C54B6 /* AddView.swift in Sources */,
 				039164E22831213000CA0028 /* Month.swift in Sources */,
 				037FFAEC28421AE800BD3C0E /* Setting.swift in Sources */,
-				036D03B528133CB300EE607B /* compltedLIstVM.swift in Sources */,
+				036D03B528133CB300EE607B /* CompletedListViewModel.swift in Sources */,
 				03CFE06827EC46D1004C54B6 /* Habit_ManagementApp.swift in Sources */,
 				0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */,
 			);
@@ -956,7 +995,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1053,7 +1092,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = 6B2F2JB38S;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1090,7 +1129,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = 6B2F2JB38S;
+				DEVELOPMENT_TEAM = F2YB4PBTB4;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1264,20 +1303,20 @@
 				version = 1.6.0;
 			};
 		};
+		03E090772E44A20200278740 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 10.33.0;
+			};
+		};
 		2F02F7AA2E3A14D4005273A5 /* XCRemoteSwiftPackageReference "PartialSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AndreaMiotto/PartialSheet.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.1.1;
-			};
-		};
-		2FA5A50B2E27A150004028F7 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 10.54.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1302,6 +1341,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabaseSwift;
+		};
+		0346334D289FA7F9000D1E61 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03463344289FA7F9000D1E61 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		039165022837650100CA0028 /* PartialSheet */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1336,14 +1380,14 @@
 			package = 039E8CD22DDCC1F7005BC622 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		2FA5A50C2E27A198004028F7 /* Realm */ = {
+		03E090782E44A20200278740 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FA5A50B2E27A150004028F7 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 03E090772E44A20200278740 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
-		2FA5A50F2E27A198004028F7 /* RealmSwift */ = {
+		03E0907A2E44A20200278740 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FA5A50B2E27A150004028F7 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 03E090772E44A20200278740 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -12,13 +12,16 @@ struct EditHabitView: View {
     private let editStore: StoreOf<EditHabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     private let habit: Habit
+    @Binding var offset: CGFloat
     
     init(habitStore: StoreOf<HabitFeature>,
          statisticsStore: StoreOf<StatisticsFeature>,
-         habit: Habit) {
+         habit: Habit,
+         offset: Binding<CGFloat>) {
         self.editStore = habitStore.scope(state: \.edit, action: \.edit)
         self.statisticsStore = statisticsStore
         self.habit = habit
+        self._offset = offset
     }
     
     @State private var showingAlert = false
@@ -43,8 +46,8 @@ struct EditHabitView: View {
                     .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
                         Button("확인", role: .destructive, action: {
                             editStore.send(.deleteButtonPressed(habit))
-                            statisticsStore.send(.setnumOfToDo(add: false, numOfIter: habit.weekIter.count))
-                            statisticsStore.send(.getnumOfToDo)
+                            statisticsStore.send(.updateTodoCount(add: false, numberOfIter: habit.weekIter.count))
+                            statisticsStore.send(.loadTodoStatistics)
                         })
                         
                         Button("취소", role: .cancel){}
@@ -76,6 +79,7 @@ struct EditHabitView: View {
                             editStore.send(.completeButtonPressed(habit))
                             withAnimation(.easeOut){
                                 habit.offset = 0
+                                offset = 0
                             }
                             
                         }){

@@ -11,13 +11,13 @@ import SwiftUI
 struct StaticsView2: View {
 
     @State var ratio: Double = Double(5/6)
-    @StateObject var completedVM = compltedLIstVM.shared
-    @StateObject var staticVM = StaticVM.shared
-    
+    @StateObject var completedListViewModel = CompletedListViewModel.shared
+    @StateObject var statisticsViewModel = StatisticsViewModel.shared
+
     @State private var showingDetail = false
 
     @State var index: Int = 0
-    @State var randomText = ReportData.shared.getRandomText()
+    @State var randomText = ReportData.shared.getRandomReportText()
     
     var body: some View {
         ZStack{
@@ -54,9 +54,8 @@ struct StaticsView2: View {
 
         }
         .onAppear {
-            //print("static appear")
-            ReportData.shared.setReportText()
-            randomText = ReportData.shared.getRandomText()
+            ReportData.shared.updateReportText()
+            randomText = ReportData.shared.getRandomReportText()
         }
 
     }

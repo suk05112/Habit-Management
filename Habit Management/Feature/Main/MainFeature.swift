@@ -41,7 +41,7 @@ struct MainFeature: Reducer {
                 return .merge(
                     .send(.loadHabits),
                     .send(.setUserName(UserDefaults.standard.string(forKey: "userName") ?? "사용자")),
-                    .send(.setMainReport(ReportData.shared.getMainReport()))
+                    .send(.setMainReport(ReportData.shared.getMainReportText()))
                 )
 
             case .loadHabits:

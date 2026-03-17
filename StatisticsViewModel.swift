@@ -1,5 +1,5 @@
 //
-//  StaticVM.swift
+//  StatisticsViewModel.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/05/11.
@@ -9,21 +9,21 @@ import Foundation
 import RealmSwift
 import SwiftUI
 
-class StaticVM: ObservableObject {
-    static let shared = StaticVM()
+class StatisticsViewModel: ObservableObject {
+    static let shared = StatisticsViewModel()
 
-    @Published var day:[Int] = []
-    @Published var week:[Int] = []
-    @Published var month:[Int] = []
-    @Published var yearTotal:Int = 0
-    @Published var total:Int = 0
-    
+    @Published var day: [Int] = []
+    @Published var week: [Int] = []
+    @Published var month: [Int] = []
+    @Published var yearTotal: Int = 0
+    @Published var total: Int = 0
+
     @Published var thisWeek: [String] = []
 
     var selectedGroup: Statistics? = nil
 
     var realm: Realm? = try? Realm()
-    var Static: Results<Statistics>?
+    var statisticsResults: Results<Statistics>?
     let calendar = Calendar(identifier: .gregorian)
     let dateFormatter = DateFormatter()
     
@@ -47,9 +47,8 @@ class StaticVM: ObservableObject {
         getThisWeekDayArray()
 //        let myFilter = NSPredicate(format: "year == %@", current_year)
 
-//        if let group = realm?.objects(Statics.self) {
-        if realm!.objects(Statistics.self).where({($0.classification == "Todo")}).first != nil{
-            self.Static = realm?.objects(Statistics.self)
+        if realm!.objects(Statistics.self).where({($0.classification == "Todo")}).first != nil {
+            self.statisticsResults = realm?.objects(Statistics.self)
         }
         else{
             try? realm?.write({
@@ -148,7 +147,7 @@ class StaticVM: ObservableObject {
     
 }
 
-extension StaticVM{
+extension StatisticsViewModel {
     func get7days() -> ([Int],[String]){ //최근 7일
         var object = Array(realm!.objects(CompletedList.self))
 
@@ -299,9 +298,9 @@ extension StaticVM{
     }
 }
 
-extension StaticVM{
+extension StatisticsViewModel {
     
-    func setnumOfToDoPerDay(){
+    func updateTodoPerDay() {
         
         let object = Array(realm!.objects(Habit.self))
         var dayArray = Array(repeating: 0, count: 7)
@@ -319,7 +318,7 @@ extension StaticVM{
     }
     
     
-    func setnumOfToDoPerWeek2(add: Bool, numOfIter: Int){
+    func updateTodoPerWeek2(add: Bool, numOfIter: Int) {
         var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
         let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
         
@@ -340,7 +339,7 @@ extension StaticVM{
     }
     
 
-    func setnumOfToDoPerMonth(add: Bool, numOfIter: Int) {
+    func updateTodoPerMonth(add: Bool, numOfIter: Int) {
         var monthArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray)
         let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
         
@@ -360,15 +359,15 @@ extension StaticVM{
         }
     }
     
-    func getnumOfToDoPerDay() -> [Int] {
+    func getNumberOfTodoPerDay() -> [Int] {
         return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.days)
     }
     
-    func getnumOfToDoPerWeek() -> [Int] {
+    func getNumberOfTodoPerWeek() -> [Int] {
         return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.week)
     }
     
-    func getnumOfToDoPerMonth() -> [Int] {
+    func getNumberOfTodoPerMonth() -> [Int] {
         return Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.month)
     }
 

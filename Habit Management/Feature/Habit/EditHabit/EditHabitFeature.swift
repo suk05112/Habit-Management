@@ -24,6 +24,7 @@ struct EditHabitFeature {
         case editButtonPressed(Habit)
         case completeButtonPressed(Habit)
         case didDelete
+        case didComplete
     }
     
     var body: some ReducerOf<Self> {
@@ -46,8 +47,12 @@ struct EditHabitFeature {
                 return .run { send in
                     try await completionClient.toggle(habit.id!)
                     try await completionClient.updateAllDoneContinuity(.delete, habit.today())
+                    await send(.didComplete)
+
                 }
             case .didDelete:
+                return .none
+            case .didComplete:
                 return .none
             }
         }

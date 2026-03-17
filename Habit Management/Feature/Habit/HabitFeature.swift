@@ -33,6 +33,7 @@ struct HabitFeature {
         var header: HabitHeaderFeature.State = .init()
         var toggle: HabitToggleFeature.State = .init()
         var edit: EditHabitFeature.State = .init()
+        var completion: CompletionFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -62,6 +63,7 @@ struct HabitFeature {
         case header(HabitHeaderFeature.Action)
         case toggle(HabitToggleFeature.Action)
         case edit(EditHabitFeature.Action)
+        case completion(CompletionFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -77,6 +79,10 @@ struct HabitFeature {
         
         Scope(state: \.edit, action: \.edit) {
             EditHabitFeature()
+        }
+        
+        Scope(state: \.completion, action: \.completion) {
+            CompletionFeature()
         }
         
         Reduce { state, action in
@@ -222,8 +228,25 @@ struct HabitFeature {
                 case .editButtonPressed(_):
                     return .none
                 case .completeButtonPressed(_):
-                    return .none
+                    print("habit feature:: completeButtonPressed 호출")
+                    return .run { send in
+                        await send(.onAppear)
+                    }
+                
+                case .didComplete:
+                    print("didComplete")
+                    let showAll = state.toggle.isShowAll
+                            let hideCompleted = state.toggle.isHideCompleted
+
+                            return .run { send in
+                                await send(.completion(.loadTodayCount))
+                                let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                                await send(.loadHabits(habits))
+                            }
                 }
+            case .completion(_):
+                print("didComplete 호출")
+                return .none
             }
         }
     }

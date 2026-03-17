@@ -26,14 +26,14 @@ struct StatisticsFeature {
     enum Action: Equatable {
         case onAppear
         case scrollDataLoaded(dayArray: [[String]], monthArray: [String], thisWeek: [String])
-        case initiallizeStatisticsData
+        case initializeStatisticsData
         case initialStatisticsDataLoaded(StatisticsData)
         case computeTotalCounts
         case addOrUpdate
         case statisticsUpdated(StatisticsData)
-        case setnumOfToDo(add: Bool, numOfIter: Int)
-        case getnumOfToDo
-        case numOfToDoLoaded(Statistics)
+        case updateTodoCount(add: Bool, numberOfIter: Int)
+        case loadTodoStatistics
+        case todoStatisticsLoaded(Statistics)
     }
     
     @Dependency(\.statisticsDataClient) var statisticsDataClient
@@ -49,8 +49,8 @@ struct StatisticsFeature {
                         monthArray: data.monthArray,
                         thisWeek: data.thisWeek
                     )),
-                    .send(.initiallizeStatisticsData),
-                    .send(.getnumOfToDo),
+                    .send(.initializeStatisticsData),
+                    .send(.loadTodoStatistics),
                     .send(.computeTotalCounts)
                 )
 
@@ -70,7 +70,7 @@ struct StatisticsFeature {
                 state.thisWeek = thisWeek
                 return .none
                 
-            case .initiallizeStatisticsData:
+            case .initializeStatisticsData:
                 return .run { send in
                     let statisticsData = await statisticsDataClient.getInitialStatisticsData()
                     await send(.initialStatisticsDataLoaded(statisticsData))
@@ -106,22 +106,22 @@ struct StatisticsFeature {
                 state.totalCounts = counts
                 return .none
                 
-            case .getnumOfToDo:
+            case .loadTodoStatistics:
                 return .run { send in
-                    let statistics = await statisticsDataClient.getnumOfToDo()
-                    await send(.numOfToDoLoaded(statistics))
+                    let statistics = await statisticsDataClient.getTodoStatistics()
+                    await send(.todoStatisticsLoaded(statistics))
                 }
-                
-            case let .numOfToDoLoaded(statistics):
+
+            case let .todoStatisticsLoaded(statistics):
                 state.todoPerDay = Array(statistics.days)
                 state.todoPerWeek = Array(statistics.week)
                 state.todoPerMonth = Array(statistics.month)
                 return .none
-                
-            case let .setnumOfToDo(add, numOfIter):
-                statisticsDataClient.setnumOfToDoPerDay()
-                statisticsDataClient.setnumOfToDoPerWeek(add, numOfIter)
-                statisticsDataClient.setnumOfToDoPerMonth(add, numOfIter)
+
+            case let .updateTodoCount(add, numberOfIter):
+                statisticsDataClient.updateTodoPerDay()
+                statisticsDataClient.updateTodoPerWeek(add, numberOfIter)
+                statisticsDataClient.updateTodoPerMonth(add, numberOfIter)
                 return .none
             }
             

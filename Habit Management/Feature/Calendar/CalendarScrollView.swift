@@ -29,7 +29,7 @@ struct CalendarScrollView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     CalendarMonthView(store: calendarMonthStore)
                     HStack(alignment: .center, spacing: setting.ratioSpacing) {
-                        CalendarGridView(store: calendarGridStore)
+                        CalendarGridView(store: calendarGridStore, completionStore: Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() }))
                     }
                 }
                 .id(scrollID)

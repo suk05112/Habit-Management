@@ -13,7 +13,7 @@ struct StatisticsView: View {
     let statisticsStore: StoreOf<StatisticsFeature>
     
     @State var ratio: Double = Double(5/6)
-    @StateObject var completedVM = compltedLIstVM.shared
+    @StateObject var completedListViewModel = CompletedListViewModel.shared
     
     @State private var showingDetail = false
     
@@ -21,11 +21,11 @@ struct StatisticsView: View {
     @State var randomText: (String, String, String) = ("", "", "")
     
     init(calendarStore: StoreOf<CalendarFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
-        print("StaticsView init")
+        print("StatisticsView init")
         self.calendarStore = calendarStore
         self.statisticsStore = statisticsStore
         ReportData.configure(store: statisticsStore)
-        randomText = ReportData.shared.getRandomText()
+        randomText = ReportData.shared.getRandomReportText()
     }
     
     var body: some View {
@@ -65,8 +65,8 @@ struct StatisticsView: View {
             }.onAppear {
                 print("StatisticsView onappear")
                 viewStore.send(.onAppear)
-                ReportData.shared.setReportText()
-                randomText = ReportData.shared.getRandomText()
+                ReportData.shared.updateReportText()
+                randomText = ReportData.shared.getRandomReportText()
             }
         }
     }

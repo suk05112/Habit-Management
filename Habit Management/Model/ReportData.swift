@@ -22,9 +22,9 @@ class ReportData {
         return instance
    }()
     
-    @StateObject var completedVM = compltedLIstVM.shared
+    @StateObject var completedListViewModel = CompletedListViewModel.shared
 
-    let today_total = HabitVM.shared.getNumOfTodayHabit()
+    let today_total = HabitViewModel.shared.getNumberOfTodayHabits()
     let today_done: Int
     let yesterday_done: Int
 //    let today_done = StaticVM.shared.day.last!
@@ -41,15 +41,15 @@ class ReportData {
         
         self.today_done = viewStore.statisticsData.day.last ?? 0
         self.yesterday_done = viewStore.statisticsData.day.count > 5 ? viewStore.statisticsData.day[5] : 0
-        setReportText()
+        updateReportText()
     }
-    
+
     static func configure(store: StoreOf<StatisticsFeature>) {
         _shared = ReportData(store: store)
     }
-    
-    func setReportText(){
-        var list: [(String, String, String)] = [getTodayText(), getYesterDayText(), getWeekText(), getMonthText(), getCotinuityText()]
+
+    func updateReportText() {
+        var list: [(String, String, String)] = [getTodayReportText(), getYesterdayReportText(), getWeekReportText(), getMonthReportText(), getContinuityReportText()]
         
         list = list.filter { !($0.0.isEmpty && $0.2.isEmpty) }
         
@@ -67,11 +67,11 @@ class ReportData {
         }
     }
     
-    func getReportText() -> [(String, String, String)]{
+    func getReportTextEntries() -> [(String, String, String)] {
         return TextList
     }
-    
-    func getRandomText() -> (String, String, String){
+
+    func getRandomReportText() -> (String, String, String) {
         guard !TextList.isEmpty else {
             return ("데이터가 없습니다", "", "")
         }
@@ -80,16 +80,16 @@ class ReportData {
         return TextList[randomInt]
     }
     
-    func getTodayText() -> (String, String, String) {
+    func getTodayReportText() -> (String, String, String) {
         let today_done = viewStore.statisticsData.day.last ?? 0
-        let today_total = HabitVM.shared.getNumOfTodayHabit()
+        let today_total = HabitViewModel.shared.getNumberOfTodayHabits()
 
         let percentHead = ""
         var str: String = ""
-               
-        if today_total == today_done+1{
-            let today_doneList = compltedLIstVM.shared.todayDoneList
-            for item in HabitVM.shared.getTodayHabit(){
+
+        if today_total == today_done + 1 {
+            let today_doneList = CompletedListViewModel.shared.todayDoneList
+            for item in HabitViewModel.shared.getTodayHabits() {
                 if !today_doneList.completed.contains(item.id!){
                     str = item.name
                     break
@@ -99,7 +99,7 @@ class ReportData {
         return str=="" ? ("", "", percentHead) : ("\(str)만 완료하면 오늘 예정된 모든 습관을 완료할 수 있어요!", "", percentHead)
     }
     
-    func getYesterDayText() -> (String, String, String) {
+    func getYesterdayReportText() -> (String, String, String) {
         guard today_total != 0 else { return ("", "", "") }
         let today_done = viewStore.statisticsData.day.last ?? 0
 
@@ -135,7 +135,7 @@ class ReportData {
         return (text, percentHead, percent)
     }
     
-    func getWeekText() -> (String, String, String) {
+    func getWeekReportText() -> (String, String, String) {
         let percentHead = "지난 주 대비"
         
         guard let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear,
@@ -161,7 +161,7 @@ class ReportData {
         return (text, percentHead, percent)
     }
     
-    func getMonthText() -> (String, String, String) {
+    func getMonthReportText() -> (String, String, String) {
         let percentHead = "지난 달 대비"
         
         guard let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month,
@@ -190,7 +190,7 @@ class ReportData {
         return (text, percentHead, percent)
     }
     
-    func getCotinuityText() -> (String, String, String){
+    func getContinuityReportText() -> (String, String, String) {
         var text: String = ""
         let percentHead = ""
 
@@ -255,10 +255,10 @@ class ReportData {
 }
 
 extension ReportData {
-    func getMainReport() -> String {
+    func getMainReportText() -> String {
         var list: [(String, String)] = []
-        
-        let habits = HabitVM.shared.result
+
+        let habits = HabitViewModel.shared.result
         guard !habits.isEmpty else {
             return "아직 완료된 습관이 없습니다."
         }

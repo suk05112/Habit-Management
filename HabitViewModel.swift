@@ -1,5 +1,5 @@
 //
-//  viewModel.swift
+//  HabitViewModel.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/04/18.
@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 import SwiftUI
 
-class HabitVM: ObservableObject {
-    static let shared = HabitVM()
+class HabitViewModel: ObservableObject {
+    static let shared = HabitViewModel()
     let dateFormatter = DateFormatter()
 
     @Published var result: [Habit] = []
@@ -69,7 +69,7 @@ class HabitVM: ObservableObject {
             }
         })
 //        print(Realm.Configuration.defaultConfiguration.fileURL!)
-        getnumOfToDoPerWeek()
+        getNumberOfTodoPerWeek()
 //        getContinuity()
     }
 
@@ -77,7 +77,7 @@ class HabitVM: ObservableObject {
 
 
 //get result
-extension HabitVM{
+extension HabitViewModel {
     public func fetchItem(){
         print("fetchItem")
 
@@ -86,11 +86,11 @@ extension HabitVM{
         if showAll{
             temp_result = (NSArray(array: Array(realm!.objects(Habit.self))) as? [Habit])!
         } else{
-            temp_result = getTodayHabit()
+            temp_result = getTodayHabits()
         }
-        
-        if hideCompleted{
-            temp_result = temp_result.filter{!compltedLIstVM.shared.istodaydone(id: $0.id!)}
+
+        if hideCompleted {
+            temp_result = temp_result.filter { !CompletedListViewModel.shared.isDoneToday(id: $0.id!) }
         }
 
         temp_result = temp_result.filter{!$0.isInvalidated}
@@ -98,7 +98,7 @@ extension HabitVM{
         
     }
     
-    func getTodayHabit() -> [Habit]{
+    func getTodayHabits() -> [Habit] {
         let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
         var result:[Habit] = []
         realm!.objects(Habit.self).forEach{
@@ -109,7 +109,7 @@ extension HabitVM{
         return result
     }
     
-    func getYesterdayHabit() -> [Habit]{
+    func getYesterdayHabits() -> [Habit] {
         var yesdayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!-1
         if yesdayWeek == 0 {
             yesdayWeek = 7
@@ -123,7 +123,7 @@ extension HabitVM{
         return result
     }
     
-    func getWeekStr(habit: Habit) -> String{
+    func getWeekString(for habit: Habit) -> String {
         var str = ""
         let sorted = habit.weekIter.sorted(by: <)
         if sorted == [2,3,4,5,6]{
@@ -144,7 +144,7 @@ extension HabitVM{
 }
 
 //crud
-extension HabitVM{
+extension HabitViewModel {
     func addItem(name: String, iter: [Int]){
 //        print("add item")
         if name != "", let realm = habit?.realm{
@@ -182,13 +182,13 @@ extension HabitVM{
 }
 
 //continuity
-extension HabitVM{
-    func setContiuity(at item: Habit){
-        try? realm!.write{
-            if !isDoneYesterDay(id: item.id!){
+extension HabitViewModel {
+    func setContiuity(at item: Habit) {
+        try? realm!.write {
+            if !isDoneYesterday(id: item.id!) {
                 item.continuity = 0
             }
-            if compltedLIstVM.shared.todayDoneList.completed.contains(item.id!){
+            if CompletedListViewModel.shared.todayDoneList.completed.contains(item.id!) {
                 item.continuity += 1
             }else if item.continuity != 0{
                 item.continuity -= 1
@@ -198,17 +198,17 @@ extension HabitVM{
     }
     
     func getContinuity(){
-        realm!.objects(Habit.self).forEach{
+        realm!.objects(Habit.self).forEach {
             let item = $0
-            try? realm!.write{
-                if !isDoneYesterDay(id: item.id!){
+            try? realm!.write {
+                if !isDoneYesterday(id: item.id!) {
                     item.continuity = 0
                 }
             }
         }
     }
     
-    func isDoneYesterDay(id: String) -> Bool{
+    func isDoneYesterday(id: String) -> Bool {
         let yesterDayDate = Date(timeInterval: -60*60*24, since: Date())
         let yesterDay = dateFormatter.string(from: yesterDayDate)
         
@@ -224,16 +224,16 @@ extension HabitVM{
     
 }
 
-extension HabitVM{
-    
-    func getArrayIter(at habit: Habit) -> [Int]{
+extension HabitViewModel {
+
+    func getWeekIterArray(for habit: Habit) -> [Int] {
         return Array(habit.weekIter)
     }
 
 }
 
 //setting
-extension HabitVM{
+extension HabitViewModel {
     func toggleHideComplete(){
         hideCompleted.toggle()
         UserDefaults.standard.set(hideCompleted, forKey: "hideCompleted")
@@ -247,9 +247,9 @@ extension HabitVM{
     }
 }
 
-extension HabitVM{
-    
-    func getNumOfTodayHabit(todayWeek: Int =  Calendar.current.dateComponents([.weekday], from: Date()).weekday!) -> Int{
+extension HabitViewModel {
+
+    func getNumberOfTodayHabits(todayWeek: Int = Calendar.current.dateComponents([.weekday], from: Date()).weekday!) -> Int {
 //        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
         var count = 0
         
@@ -261,7 +261,7 @@ extension HabitVM{
         return count
     }
     
-    func getnumOfToDoPerWeek() -> [Int] {
+    func getNumberOfTodoPerWeek() -> [Int] {
         print("여기 걸림")
         var weekTotal = [0,0,0,0,0,0,0]
         
@@ -278,7 +278,7 @@ extension HabitVM{
     }
     
     func getMonthTotal() -> (Int, Int){
-        let weekTotal = getnumOfToDoPerWeek()
+        let weekTotal = getNumberOfTodoPerWeek()
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
         let nextMonth = calendar.date(byAdding: .month, value: +1, to: Date())

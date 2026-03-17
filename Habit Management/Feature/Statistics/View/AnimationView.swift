@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 struct AnimationView: View{
-    @StateObject var staticVM = StaticVM.shared
-    let today_total = HabitVM.shared.getNumOfTodayHabit()
-    let today_done = StaticVM.shared.getData(selected: 1).last!
-    let yesterday_done = StaticVM.shared.getData(selected: 1)[5]
+    @StateObject var statisticsViewModel = StatisticsViewModel.shared
+    let today_total = HabitViewModel.shared.getNumberOfTodayHabits()
+    let today_done = StatisticsViewModel.shared.getData(selected: 1).last!
+    let yesterday_done = StatisticsViewModel.shared.getData(selected: 1)[5]
     
     @State var index: Int = 0
     @State var timer = Timer.publish(every: 2, on: RunLoop.main, in: RunLoop.Mode.common).autoconnect()

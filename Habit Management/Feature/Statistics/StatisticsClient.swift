@@ -12,11 +12,11 @@ import Foundation
 struct StatisticsClient {
     var getInitialStatisticsData: () async -> StatisticsData
     var addOrUpdate: () async -> StatisticsData
-    var getStr: (_ selected: Int)-> [String]
-    var setnumOfToDoPerDay: () -> ()
-    var setnumOfToDoPerWeek: (_ add: Bool, _ numOfIter: Int) -> ()
-    var setnumOfToDoPerMonth: (_ add: Bool, _ numOfIter: Int) -> ()
-    var getnumOfToDo: () async -> Statistics
+    var getStr: (_ selected: Int) -> [String]
+    var updateTodoPerDay: () -> Void
+    var updateTodoPerWeek: (_ add: Bool, _ numberOfIter: Int) -> Void
+    var updateTodoPerMonth: (_ add: Bool, _ numberOfIter: Int) -> Void
+    var getTodoStatistics: () async -> Statistics
     
     static func getWeekOfNO(date: Date) -> Int {
         let calendar = Calendar(identifier: .gregorian)
@@ -294,7 +294,7 @@ extension StatisticsClient : DependencyKey {
             }
         },
 
-        setnumOfToDoPerDay: {
+        updateTodoPerDay: {
             var realm: Realm? = try? Realm()
             let object = Array(realm!.objects(Habit.self))
             var dayArray = Array(repeating: 0, count: 7)
@@ -309,7 +309,7 @@ extension StatisticsClient : DependencyKey {
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.dayArray = dayArray
             }
         },
-        setnumOfToDoPerWeek: { add, numOfIter in
+        updateTodoPerWeek: { add, numberOfIter in
             var realm: Realm? = try? Realm()
             var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
             let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
@@ -318,40 +318,37 @@ extension StatisticsClient : DependencyKey {
                 weekArray[weekNO-1] = weekArray[weekNO-2]
             }
             
-            if add{
-                weekArray[weekNO-1] += numOfIter
-            }
-            else{
-                weekArray[weekNO-1] -= numOfIter
+            if add {
+                weekArray[weekNO-1] += numberOfIter
+            } else {
+                weekArray[weekNO-1] -= numberOfIter
             }
             
             try? realm!.write{
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
             }
         },
-        setnumOfToDoPerMonth: { add, numOfIter in
+        updateTodoPerMonth: { add, numberOfIter in
             var realm: Realm? = try? Realm()
 
-            var monthArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray)
+            var monthArray = Array(realm!.objects(Statistics.self).where { ($0.classification == "Todo") }.first!.monthArray)
             let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month!
-            
-            
-            if monthArray[todayMonth-1] == 0{
+
+            if monthArray[todayMonth-1] == 0 {
                 monthArray[todayMonth-1] = monthArray[todayMonth-2]
             }
 
-            if add{
-                monthArray[todayMonth-1] += numOfIter
-            }
-            else{
-                monthArray[todayMonth-1] -= numOfIter
+            if add {
+                monthArray[todayMonth-1] += numberOfIter
+            } else {
+                monthArray[todayMonth-1] -= numberOfIter
             }
                 
             try? realm!.write{
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
             }
         },
-        getnumOfToDo: {
+        getTodoStatistics: {
             var realm: Realm! = try? Realm()
             
             guard let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first else {

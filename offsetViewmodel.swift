@@ -1,5 +1,5 @@
 //
-//  offsetViewmodel.swift
+//  OffsetViewModel.swift
 //  Habit Management
 //
 //  Created by 한수진 on 2022/04/23.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class offsetViewModel : ObservableObject {
+class OffsetViewModel: ObservableObject {
     
 //    @Published var offset:[CGFloat] = []
     @Published var offset:CGFloat = 0.0
