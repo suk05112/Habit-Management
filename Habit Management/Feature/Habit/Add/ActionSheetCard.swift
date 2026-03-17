@@ -39,7 +39,7 @@ public struct ActionSheetCard: View {
     let addView: AddView
     @State var height: CGFloat
     
-    public init(
+    init(
         isShowing: Binding<Bool>,
         backgroundColor: Color = Color.white,
         outOfFocusOpacity: CGFloat = 0.7,
@@ -105,11 +105,9 @@ public struct ActionSheetCard: View {
             }
             .background(backgroundColor)
             .cornerRadius(15)
-            GeometryReader { geometry -> AnyView in
-                var frame = geometry.frame(in: .named("test"))               // << here !!
-                frame.origin.y = UIScreen.main.bounds.size.height - kGuardian.slide
-                return AnyView(Text("\(frame.origin.x), \(frame.origin.y)"))
-    //                    .fixedSize(horizontal: false, vertical: true))
+            GeometryReader { geometry in
+                let frame = geometry.frame(in: .named("test"))
+                Text("\(frame.origin.x), \(frame.origin.y)")
             }
 
         }
@@ -136,5 +134,3 @@ public struct ActionSheetCard: View {
 
     }
 }
-
-

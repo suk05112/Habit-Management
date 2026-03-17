@@ -89,4 +89,3 @@ struct AddView: View {
         return iter.contains(todayWeek)
     }
 }
-

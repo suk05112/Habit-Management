@@ -14,4 +14,4 @@ struct TabItem: View {
 
 #Preview {
     TabItem(imageName: "house", title: "홈")
-} 
+}

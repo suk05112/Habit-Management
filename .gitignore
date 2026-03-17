@@ -92,3 +92,7 @@ iOSInjectionProject/
 Pods/
 Podfile
 Podfile.lock
+
+# Editor / IDE
+.vscode/
+buildServer.json
