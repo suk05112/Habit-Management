@@ -61,7 +61,7 @@ class RealmThread: Thread {
             // 2. Test a boolean predicate. (This predicate is a boolean flag or other variable in your code that indicates whether it is safe to perform the task protected by the condition.)
             // If no blocks (or paused) and not cancelled
             while (queue.count == 0 || paused) && !isCancelled  {
-                // 3. If the boolean predicate is false, call the condition object’s wait or waitUntilDate: method to block the thread. Upon returning from these methods, go to step 2 to retest your boolean predicate. (Continue waiting and retesting the predicate until it is true.)
+              // 3. If the boolean predicate is false, call the condition object’s wait or waitUntilDate: method to block the thread. Upon returning from these methods, go to step 2 to retest your boolean predicate. (Continue waiting and retesting the predicate until it is true.)
                 condition.wait()
             }
             // 4. If the boolean predicate is true, perform the task.

@@ -8,71 +8,61 @@
 import Foundation
 import SwiftUI
 
-struct AnimationView: View{
+struct AnimationView: View {
     @StateObject var statisticsViewModel = StatisticsViewModel.shared
-    let today_total = HabitViewModel.shared.getNumberOfTodayHabits()
-    let today_done = StatisticsViewModel.shared.getData(selected: 1).last!
-    let yesterday_done = StatisticsViewModel.shared.getData(selected: 1)[5]
-    
+    let todayTotal = HabitViewModel.shared.getNumberOfTodayHabits()
+    let todayDone = StatisticsViewModel.shared.getData(selected: 1).last!
+    let yesterdayDone = StatisticsViewModel.shared.getData(selected: 1)[5]
+
     @State var index: Int = 0
     @State var timer = Timer.publish(every: 2, on: RunLoop.main, in: RunLoop.Mode.common).autoconnect()
     var colors: [Color] = [Color.red, Color.blue, Color.green, Color.orange, Color.purple]
     var str = ["1111111111", "2222222222", "33333333", "4444444"]
     var list: [String] = []
-    
-    init(){
-//        list = getReportText()
+
+    init() {
+        // list = getReportText()
         index = list.count
     }
-    
+
     var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white)
+                .shadow(radius: 5)
+                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                .scaledFrame(width: .none, height: 80)
 
-         ZStack{
-             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                 .fill(Color.white)
-                 .shadow(radius: 5)
-                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                 .scaledFrame(width: .none, height: 80)
-                 
+            ZStack {
+                ForEach(list.indices, id: \.self) { rowIndex in
+                    if index == rowIndex {
+                        VStack(alignment: .leading) {
+                            Text("\(list[rowIndex])")
+                                .font(.system(size: 15, weight: .medium))
 
-             ZStack{
-                 ForEach(list.indices) { i in
-                     if index == i {
-
-                         VStack(alignment: .leading){
-                             
-                             Text("\(list[i])")
-                                 .font(.system(size: 15, weight: .medium))
-                                 
-                             HStack{
-                                 Text("지난 주 대비")
-                                     .font(.system(size: 12))
-                                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                                 Text("20% up")
-                                     .font(.system(size: 12))
-                                     .bold()
-                                     .foregroundColor(HabitColor.darkGreen.color)
-                                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing:0 ))
-                             }
-
-                         }
+                            HStack {
+                                Text("지난 주 대비")
+                                    .font(.system(size: 12))
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                Text("20% up")
+                                    .font(.system(size: 12))
+                                    .bold()
+                                    .foregroundColor(HabitColor.darkGreen.color)
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }
+                        }
                         .transition(.cubeRotation)
-                         
-                     }
-                 }
-             }
-             .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 15))
-             .frame(width: .none, height: 40)
-             .onReceive(timer) { _ in
-                 withAnimation(.easeInOut(duration: 1.2)) {
-                     index = (index + 1) % list.count
-                     sleep(3)
-                 }
-             }
-         }
-         
+                    }
+                }
+            }
+            .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 15))
+            .frame(width: .none, height: 40)
+            .onReceive(timer) { _ in
+                withAnimation(.easeInOut(duration: 1.2)) {
+                    index = (index + 1) % list.count
+                    sleep(3)
+                }
+            }
+        }
     }
-    
-    
-
 }

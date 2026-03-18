@@ -11,11 +11,11 @@ import SwiftUI
 struct WeekButton: View {
     @State var weekOfDay: Int
     @Binding var iter: [Int]
-    @State var OnOff: Bool
+    @State var onOff: Bool
     
     var body: some View {
         Button(action:{
-            OnOff.toggle()
+            onOff.toggle()
             if iter.contains(getWeekOfDay(num: weekOfDay).rawValue){
                 iter.removeAll(where: {$0 == getWeekOfDay(num: weekOfDay).rawValue})
             }
@@ -26,7 +26,7 @@ struct WeekButton: View {
         }){
             ZStack{
                 Circle()
-                    .fill(OnOff ? Color(hex: "#639F70"): Color.white)
+                    .fill(onOff ? Color(hex: "#639F70"): Color.white)
                     .scaledFrame(width: 41, height: 41)
                 Text(getWeekOfDay(num:weekOfDay).description).foregroundColor(Color.black)
                     .scaledText(size: 14, weight: .none)

@@ -16,12 +16,14 @@ struct MainView: View {
     private let calendarStore: StoreOf<CalendarFeature>
     private let habitStore: StoreOf<HabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
+    private let completionStore: StoreOf<CompletionFeature>
     
     init(store: StoreOf<AppFeature>) {
         self.store = store
         self.calendarStore = store.scope(state: \.calendar, action: \.calendar)
         self.habitStore = store.scope(state: \.habit, action: \.habit)
         self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
+        self.completionStore = store.scope(state: \.completion, action: \.completion)
         
         ReportData.configure(store: statisticsStore)
         self.store.send(.task)
@@ -33,9 +35,14 @@ struct MainView: View {
                 TabView {
                     HabitView(calendarStore: calendarStore,
                               habitStore: habitStore,
-                              statisticsStore: statisticsStore)
+                              statisticsStore: statisticsStore,
+                              completionStore: completionStore)
                         .tabItem { tabIconView("house", "홈") }
-                    StatisticsView(calendarStore: calendarStore, statisticsStore: statisticsStore)
+                    StatisticsView(
+                        calendarStore: calendarStore,
+                        statisticsStore: statisticsStore,
+                        completionStore: completionStore
+                    )
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
                     if #available(iOS 16.0, *) {
                         NavigationStack {
@@ -49,7 +56,9 @@ struct MainView: View {
                 .tint(HabitColor.defaultGreen.color)
                 
                 if viewStore.habit.mode == .adding || viewStore.habit.mode == .editing {
-                    AddView(habitStore: habitStore)
+                    AddView(habitStore: habitStore,
+                            statisticsStore: statisticsStore,
+                            completionStore: completionStore)
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                 }
                 

@@ -11,11 +11,16 @@ import ComposableArchitecture
 struct HabitScrollView: View {
     private let habitStore: StoreOf<HabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
+    private let completionStore: StoreOf<CompletionFeature>
     
-    init(habitStore: StoreOf<HabitFeature>,
-         statisticsStore: StoreOf<StatisticsFeature>) {
+    init(
+        habitStore: StoreOf<HabitFeature>,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
         self.habitStore = habitStore
         self.statisticsStore = statisticsStore
+        self.completionStore = completionStore
     }
     
     var body: some View {
@@ -23,7 +28,12 @@ struct HabitScrollView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer().frame(height: 8)
                 ForEach(viewStore.habitList, id: \.id) { habit in
-                        HabitItemView(habitStore: habitStore, habit: habit)
+                        HabitItemView(
+                            habitStore: habitStore,
+                            habit: habit,
+                            statisticsStore: statisticsStore,
+                            completionStore: completionStore
+                        )
                 }
                 Spacer().frame(height: 8)
             }

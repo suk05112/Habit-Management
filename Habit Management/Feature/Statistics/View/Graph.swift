@@ -123,14 +123,14 @@ struct Graph: View {
         case .week:
             return viewStore.statisticsData.day
         case .month:
-            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-            var a = b-5
-            
-            if a < 1 {
-                a = 12 - a
+            let currentWeekOfYear = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            var startWeekIndex = currentWeekOfYear - 5
+
+            if startWeekIndex < 1 {
+                startWeekIndex = 12 - startWeekIndex
             }
-            
-            return Array(viewStore.statisticsData.week[a..<b])
+
+            return Array(viewStore.statisticsData.week[startWeekIndex..<currentWeekOfYear])
         case .year:
             return viewStore.statisticsData.month
         default:
@@ -154,7 +154,7 @@ struct SelectedView: View {
         RoundedRectangle(cornerRadius: 10)
             .fill(selected==id ? Color(hex: "#77AC83"): Color(hex: "#E8E8E8"))
             .scaledFrame(width: .none, height: 30)
-            .overlay{
+            .overlay {
                 Text("\(str)")
                     .scaledText(size: 15, weight: .none)
             }

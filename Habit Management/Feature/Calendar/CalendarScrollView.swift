@@ -12,13 +12,15 @@ struct CalendarScrollView: View {
     private let calendarStore: StoreOf<CalendarFeature>
     private let calendarMonthStore: StoreOf<CalendarMonthFeature>
     private let calendarGridStore: StoreOf<CalendarGridFeature>
+    private let completionStore: StoreOf<CompletionFeature>
     
     @EnvironmentObject var setting: Setting
     
     @Namespace private var scrollID
     
-    init(calendarStore: StoreOf<CalendarFeature>) {
+    init(calendarStore: StoreOf<CalendarFeature>, completionStore: StoreOf<CompletionFeature>) {
         self.calendarStore = calendarStore
+        self.completionStore = completionStore
         self.calendarMonthStore = calendarStore.scope(state: \.month, action: \.month)
         self.calendarGridStore = calendarStore.scope(state: \.grid, action: \.grid)
     }
@@ -29,7 +31,7 @@ struct CalendarScrollView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     CalendarMonthView(store: calendarMonthStore)
                     HStack(alignment: .center, spacing: setting.ratioSpacing) {
-                        CalendarGridView(store: calendarGridStore, completionStore: Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() }))
+                        CalendarGridView(store: calendarGridStore, completionStore: completionStore)
                     }
                 }
                 .id(scrollID)

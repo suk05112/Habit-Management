@@ -9,16 +9,13 @@ import Foundation
 import SwiftUI
 
 class ScrollData {
-    
+
     static let shared = ScrollData()
-    
+
     var scrollData: [[String]] = [[]]
-    var MonthArray: [String] = []
-    var DayArray = [[String]](repeating: Array(repeating: "",count: 7 ), count: 53)
+    var monthArray: [String] = []
+    var dayArray = [[String]](repeating: Array(repeating: "", count: 7), count: 53)
 
-    init(){
-
+    init() {
     }
-    
-
 }

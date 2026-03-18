@@ -15,13 +15,18 @@ struct HabitView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let habitStore: StoreOf<HabitFeature>
     let statisticsStore: StoreOf<StatisticsFeature>
+    let completionStore: StoreOf<CompletionFeature>
     
-    init(calendarStore: StoreOf<CalendarFeature>,
-         habitStore: StoreOf<HabitFeature>,
-         statisticsStore: StoreOf<StatisticsFeature>) {
+    init(
+        calendarStore: StoreOf<CalendarFeature>,
+        habitStore: StoreOf<HabitFeature>,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
         self.calendarStore = calendarStore
         self.habitStore = habitStore
         self.statisticsStore = statisticsStore
+        self.completionStore = completionStore
     }
 
     var body: some View {
@@ -29,10 +34,13 @@ struct HabitView: View {
             HabitBackgroundView {
                 VStack(spacing: 0) {
                     HabitHeaderView(habitStore: habitStore)
-                    CalendarView(calendarStore: calendarStore)
+                    CalendarView(calendarStore: calendarStore, completionStore: completionStore)
                     HabitToggleView(habitStore: habitStore)
-                    HabitScrollView(habitStore: habitStore,
-                                    statisticsStore: statisticsStore)
+                    HabitScrollView(
+                        habitStore: habitStore,
+                        statisticsStore: statisticsStore,
+                        completionStore: completionStore
+                    )
                     divider
                 }
                 .toast(

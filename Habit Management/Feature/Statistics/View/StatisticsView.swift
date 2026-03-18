@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct StatisticsView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let statisticsStore: StoreOf<StatisticsFeature>
+    let completionStore: StoreOf<CompletionFeature>
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedListViewModel = CompletedListViewModel.shared
@@ -20,10 +21,15 @@ struct StatisticsView: View {
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
-    init(calendarStore: StoreOf<CalendarFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
+    init(
+        calendarStore: StoreOf<CalendarFeature>,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
         print("StatisticsView init")
         self.calendarStore = calendarStore
         self.statisticsStore = statisticsStore
+        self.completionStore = completionStore
         ReportData.configure(store: statisticsStore)
         randomText = ReportData.shared.getRandomReportText()
     }
@@ -40,7 +46,7 @@ struct StatisticsView: View {
                     }
                     .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
                     
-                    CalendarView(calendarStore: calendarStore)
+                    CalendarView(calendarStore: calendarStore, completionStore: completionStore)
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){

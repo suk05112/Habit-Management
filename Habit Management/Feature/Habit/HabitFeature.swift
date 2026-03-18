@@ -33,7 +33,11 @@ struct HabitFeature {
         var header: HabitHeaderFeature.State = .init()
         var toggle: HabitToggleFeature.State = .init()
         var edit: EditHabitFeature.State = .init()
-        var completion: CompletionFeature.State = .init()
+    }
+
+    enum Delegate: Equatable {
+        /// App 루트 `CompletionFeature` 갱신이 필요할 때 (중복 Scope 제거 후 위임)
+        case reloadCompletionTodayCount
     }
     
     enum Action: BindableAction {
@@ -63,7 +67,7 @@ struct HabitFeature {
         case header(HabitHeaderFeature.Action)
         case toggle(HabitToggleFeature.Action)
         case edit(EditHabitFeature.Action)
-        case completion(CompletionFeature.Action)
+        case delegate(Delegate)
     }
     
     var body: some ReducerOf<Self> {
@@ -79,10 +83,6 @@ struct HabitFeature {
         
         Scope(state: \.edit, action: \.edit) {
             EditHabitFeature()
-        }
-        
-        Scope(state: \.completion, action: \.completion) {
-            CompletionFeature()
         }
         
         Reduce { state, action in
@@ -236,16 +236,16 @@ struct HabitFeature {
                 case .didComplete:
                     print("didComplete")
                     let showAll = state.toggle.isShowAll
-                            let hideCompleted = state.toggle.isHideCompleted
-
-                            return .run { send in
-                                await send(.completion(.loadTodayCount))
-                                let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
-                                await send(.loadHabits(habits))
-                            }
+                    let hideCompleted = state.toggle.isHideCompleted
+                    return .merge(
+                        .send(.delegate(.reloadCompletionTodayCount)),
+                        .run { send in
+                            let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                            await send(.loadHabits(habits))
+                        }
+                    )
                 }
-            case .completion(_):
-                print("didComplete 호출")
+            case .delegate:
                 return .none
             }
         }

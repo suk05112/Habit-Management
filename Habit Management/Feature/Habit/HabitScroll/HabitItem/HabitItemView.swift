@@ -11,23 +11,30 @@ import ComposableArchitecture
 struct HabitItemView: View {
     private let habitStore: StoreOf<HabitFeature>
     private let habit: Habit
-    
-    let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
+    private let statisticsStore: StoreOf<StatisticsFeature>
+    private let completionStore: StoreOf<CompletionFeature>
     
     @State private var offset: CGFloat = 0
     @State private var slideRight = false
     @State private var slideLeft = false
     
-    init(habitStore: StoreOf<HabitFeature>, habit: Habit) {
+    init(
+        habitStore: StoreOf<HabitFeature>,
+        habit: Habit,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
         self.habitStore = habitStore
         self.habit = habit
+        self.statisticsStore = statisticsStore
+        self.completionStore = completionStore
     }
     
     var body: some View {
         ZStack(alignment: .trailing) {
             EditHabitView(
                 habitStore: habitStore,
-                statisticsStore: Store(initialState: StatisticsFeature.State(), reducer: { StatisticsFeature() }),
+                statisticsStore: statisticsStore,
                 habit: habit,
                 offset: $offset
             )

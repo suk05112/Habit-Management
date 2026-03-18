@@ -17,80 +17,81 @@ struct StatisticsClient {
     var updateTodoPerWeek: (_ add: Bool, _ numberOfIter: Int) -> Void
     var updateTodoPerMonth: (_ add: Bool, _ numberOfIter: Int) -> Void
     var getTodoStatistics: () async -> Statistics
-    
+
     static func getWeekOfNO(date: Date) -> Int {
         let calendar = Calendar(identifier: .gregorian)
-        
+
         let components = Calendar.current.dateComponents([.year, .month], from: date)
         let startOfMonth = calendar.date(from: components)! //이번달 1일
         var weekNo = Calendar.current.dateComponents([.weekOfMonth], from: date).weekOfMonth! //오늘이 이번 달 몇주차인지
-        
+
         if Calendar.current.dateComponents([.weekday], from: startOfMonth).weekday! > 4{
             weekNo -= 1
         }
-        
+
         return weekNo
     }
-    
+
     static func get7days() -> ([Int],[String]) { // 최근 7일
         let realm: Realm? = try? Realm()
         var object = Array(realm!.objects(CompletedList.self))
 
         let dateFormatter = DateFormatter()
-        let formatter_year = DateFormatter()
+        let formatterYear = DateFormatter()
         let calendar = Calendar(identifier: .gregorian)
-        
+
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        formatter_year.dateFormat = "yyyy"
-        
+        formatterYear.dateFormat = "yyyy"
+
         if object.count<7{
             for _ in 0..<(7-object.count){
                 object.append(CompletedList())
             }
         }
-        
+
         var dayStr: [String] = []
         var dayArray: [Int] = Array(repeating: 0, count: 7)
-        let str_today = dateFormatter.string(from: Date())
-        let date_today = dateFormatter.date(from: str_today)!
+        let stringToday = dateFormatter.string(from: Date())
+        let dateToday = dateFormatter.date(from: stringToday)!
 
         let dayOffset = DateComponents(day: -7)
-        let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: date_today))!
-        
+        let weekAgo = dateFormatter.string(for: calendar.date(byAdding: dayOffset, to: dateToday))!
+
         print("week ago =" , weekAgo)
 
-        for i in 0..<7{
-            let myday = dateFormatter.string(for: calendar.date(byAdding: DateComponents(day: -i), to: date_today))!
-            dayStr.append(myday)
-            
+        for dayOffsetIndex in 0..<7 {
+            let myDay = dateFormatter.string(
+                for: calendar.date(byAdding: DateComponents(day: -dayOffsetIndex), to: dateToday)
+            )!
+            dayStr.append(myDay)
         }
-        
+
         for item in object.reversed()[0..<7] {
-            for i in 0..<dayStr.count{
-                if dayStr[i] == item.date{
-                    dayArray[i] = item.completed.count
+            for dayStrIndex in 0..<dayStr.count {
+                if dayStr[dayStrIndex] == item.date {
+                    dayArray[dayStrIndex] = item.completed.count
                     break
                 }
             }
         }
-    
+
         dayStr.forEach{ str in
             if let index = dayStr.firstIndex(where: { $0 ==  str }) {
                 dayStr[index] = str.convert()
             }
         }
         return (dayArray.reversed(), dayStr.reversed())
-        
+
     }
-    
+
     static func getWeeks()->([Int], [String]) { //52주에 대한 데이터
         let realm: Realm? = try? Realm()
 
         var calendar = Calendar(identifier: .gregorian)
         calendar.locale = Locale(identifier: "ko")
-        
+
         var weekArray: [Int] = Array(repeating: 0, count: 52)
-        
+
         /*
         if let week = realm?.objects(Statics.self).filter(NSPredicate(format: "year == \(2022)")).first?.week{
             weekArray = Array(week)
@@ -101,7 +102,7 @@ struct StatisticsClient {
         */
 
         //print("in getweeks")
-        
+
         let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
 
         /*
@@ -115,16 +116,16 @@ struct StatisticsClient {
             else{
                 break
             }
-            
+
         }
         weekArray[weekNO-1] = total
 
         */
-        
+
         let object = realm?.objects(CompletedList.self)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
+
         if object!.count>1 {
             for item in object!.reversed()[0..<object!.endIndex-1]{
                 if weekNO != Calendar.current.dateComponents([.weekOfYear], from: dateFormatter.date(from: item.date)!).weekOfYear!{
@@ -140,7 +141,7 @@ struct StatisticsClient {
 
         var month = Calendar.current.dateComponents([.month], from: Date()).month!
         let day = Calendar.current.dateComponents([.day], from: Date()).day!
-        
+
         for _ in 0..<5{
             weekStr.append("\(month)월\n\(weekno)주")
             weekno -= 1
@@ -150,25 +151,25 @@ struct StatisticsClient {
                 weekno = getWeekOfNO(date: calendar.date(byAdding: .day, value: -day, to: Date())!)
             }
         }
-                
+
         return (Array(weekArray), weekStr.reversed())
     }
-    
+
     static func getMonth() -> ([Int], [String]) {
         let realm: Realm? = try? Realm()
         _ = realm?.objects(CompletedList.self)
 
         var monthArray: [Int] = Array(repeating: 0, count: 12)
         var monthStr: [String] = []
-        
-        for i in 1...12{
-            monthStr.append(Month(rawValue: i)!.description)
+
+        for monthNumber in 1...12 {
+            monthStr.append(Month(rawValue: monthNumber)!.description)
         }
         //월 구하기
         let str = "0000-00-00"
         let start = str.index(str.startIndex, offsetBy: 5)
         let end = str.index(str.endIndex, offsetBy: -3)
-        
+
         if let object = realm?.objects(CompletedList.self){
             for item in object{
                 if item.date != "" {
@@ -177,10 +178,10 @@ struct StatisticsClient {
                 }
             }
         }
-        
+
         return (monthArray, monthStr)
     }
-    
+
     static func getThisWeekDayArray() -> [String] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -197,7 +198,7 @@ struct StatisticsClient {
             startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
 
         }
-        
+
         for _ in 0..<(7-todayWeek){
             temp.append("")
         }
@@ -205,11 +206,11 @@ struct StatisticsClient {
 //        print(thisWeek)
         return temp
     }
-    
+
     static func getYearTotal() -> Int {
         return getMonth().0.reduce(0, +)
     }
-    
+
     static func getTotal() -> Int {
         let realm: Realm? = try? Realm()
         let object = realm!.objects(Statistics.self)
@@ -222,66 +223,68 @@ extension StatisticsClient : DependencyKey {
         getInitialStatisticsData : {
             print("Static init")
             let dateFormatter = DateFormatter()
-            let formatter_year = DateFormatter()
+            let formatterYear = DateFormatter()
             let calendar = Calendar(identifier: .gregorian)
 
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            formatter_year.dateFormat = "yyyy"
-            let current_year = Int(formatter_year.string(from: Date()))!
-            
+            formatterYear.dateFormat = "yyyy"
+            let currentYear = Int(formatterYear.string(from: Date()))!
+
             var realm: Realm? = try? Realm()
-            var Static: Results<Statistics>?
-            let day = NSArray(array: Array(get7days().0)) as! [Int]
-            let week = NSArray(array: Array(getWeeks().0)) as! [Int]
-            let month = NSArray(array: Array(getMonth().0)) as! [Int]
+            var statisticsResults: Results<Statistics>?
+            let day = NSArray(array: Array(get7days().0)) as? [Int] ?? []
+            let week = NSArray(array: Array(getWeeks().0)) as? [Int] ?? []
+            let month = NSArray(array: Array(getMonth().0)) as? [Int] ?? []
             let yearTotal = getYearTotal()
             let thisWeek = getThisWeekDayArray()
-    //        let myFilter = NSPredicate(format: "year == %@", current_year)
+    //        let myFilter = NSPredicate(format: "year == %@", currentYear)
 
     //        if let group = realm?.objects(Statics.self) {
             if realm!.objects(Statistics.self).where({($0.classification == "Todo")}).first != nil{
-                Static = realm?.objects(Statistics.self)
+                statisticsResults = realm?.objects(Statistics.self)
             }
             else{
                 try? realm?.write({
-                    realm?.add(Statistics(classification: "Done", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
-                    realm?.add(Statistics(classification: "Todo", year: current_year, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                    realm?.add(Statistics(classification: "Done", year: currentYear, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
+                    realm?.add(Statistics(classification: "Todo", year: currentYear, dayArray: day, weekArray: week, monthArray: month, total: yearTotal))
                 })
             }
-            
+
             let total = getTotal()
-            
+
             return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
         },
-        
+
         addOrUpdate: {
             let calendar = Calendar(identifier: .gregorian)
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            
-            let realm = try! Realm()
-            
-            let day = NSArray(array: Array(get7days().0)) as! [Int]
-            let week = NSArray(array: Array(getWeeks().0)) as! [Int]
-            let month = NSArray(array: Array(getMonth().0)) as! [Int]
+
+            guard let realm = try? Realm() else {
+                return StatisticsData()
+            }
+
+            let day = NSArray(array: Array(get7days().0)) as? [Int] ?? []
+            let week = NSArray(array: Array(getWeeks().0)) as? [Int] ?? []
+            let month = NSArray(array: Array(getMonth().0)) as? [Int] ?? []
             let yearTotal = getYearTotal()
 
             let object = realm.objects(Statistics.self).where{$0.classification == "Done"}.first!
-            
+
             try? realm.write {
                 object.dayArray = day
                 object.weekArray = week
                 object.monthArray = month
                 object.total = yearTotal
             }
-            
+
             let total = getTotal()
             let thisWeek = getThisWeekDayArray()
-            
+
             return StatisticsData(day: day, week: week, month: month, yearTotal: yearTotal, total: total, thisWeek: thisWeek)
         },
-        
-        getStr: {selected in 
+
+        getStr: {selected in
             switch selected{
             case 1:
                 return get7days().1
@@ -298,7 +301,7 @@ extension StatisticsClient : DependencyKey {
             var realm: Realm? = try? Realm()
             let object = Array(realm!.objects(Habit.self))
             var dayArray = Array(repeating: 0, count: 7)
-            
+
             for item in object{
                 item.weekIter.forEach{
                     dayArray[$0-1] += 1
@@ -313,17 +316,17 @@ extension StatisticsClient : DependencyKey {
             var realm: Realm? = try? Realm()
             var weekArray = Array(realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray)
             let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-            
+
             if weekArray[weekNO-1] == 0{
                 weekArray[weekNO-1] = weekArray[weekNO-2]
             }
-            
+
             if add {
                 weekArray[weekNO-1] += numberOfIter
             } else {
                 weekArray[weekNO-1] -= numberOfIter
             }
-            
+
             try? realm!.write{
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.weekArray = weekArray
             }
@@ -343,15 +346,15 @@ extension StatisticsClient : DependencyKey {
             } else {
                 monthArray[todayMonth-1] -= numberOfIter
             }
-                
+
             try? realm!.write{
                 realm!.objects(Statistics.self).where{($0.classification == "Todo")}.first!.monthArray = monthArray
             }
         },
         getTodoStatistics: {
             var realm: Realm! = try? Realm()
-            
-            guard let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first else {
+
+           guard let statistics = realm.objects(Statistics.self).where({ $0.classification == "Todo" }).first else {
                     return Statistics() // 또는 예외 처리
                 }
             return Statistics(

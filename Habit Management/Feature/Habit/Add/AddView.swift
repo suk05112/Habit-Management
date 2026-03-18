@@ -6,17 +6,24 @@
 //
 
 import SwiftUI
-import UIKit
-import RealmSwift
 import ComposableArchitecture
 
 struct AddView: View {
     let habitStore: StoreOf<HabitFeature>
-    
-    let statisticsStore: StoreOf<StatisticsFeature> = Store(initialState: StatisticsFeature.State(), reducer: { StatisticsFeature() })
-    let completionStore: StoreOf<CompletionFeature> = Store(initialState: CompletionFeature.State(), reducer: { CompletionFeature() })
+    let statisticsStore: StoreOf<StatisticsFeature>
+    let completionStore: StoreOf<CompletionFeature>
     
     @ObservedObject var textfield = TextLimiter()
+    
+    init(
+        habitStore: StoreOf<HabitFeature>,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
+        self.habitStore = habitStore
+        self.statisticsStore = statisticsStore
+        self.completionStore = completionStore
+    }
     
     var body: some View {
         WithViewStore(habitStore, observe: { $0 }) { viewStore in
@@ -69,7 +76,7 @@ struct AddView: View {
                                     WeekButton(weekOfDay: $0, iter: viewStore.binding(
                                         get: \.iter,
                                         send: HabitFeature.Action.setIter
-                                    ), OnOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
+                                    ), onOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
                                 }
                             }
                             .scaledPadding(top: 10, leading: 25, bottom: 10, trailing: 25)

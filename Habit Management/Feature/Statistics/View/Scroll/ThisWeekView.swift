@@ -10,31 +10,39 @@ import ComposableArchitecture
 
 struct ThisWeekView: View {
     private let store: StoreOf<StatisticsFeature>
-    
+
     private var ratioSpacing: CGFloat
-    private var frame_size: CGFloat
+    private var frameSize: CGFloat
     private var getColor: (String) -> Color
-    
-    init(store: StoreOf<StatisticsFeature>, ratioSpacing: CGFloat, frame_size: CGFloat, getColor: @escaping (String) -> Color) {
+
+    init(
+        store: StoreOf<StatisticsFeature>,
+        ratioSpacing: CGFloat,
+        frameSize: CGFloat,
+        getColor: @escaping (String) -> Color
+    ) {
         self.store = store
         self.ratioSpacing = ratioSpacing
-        self.frame_size = frame_size
+        self.frameSize = frameSize
         self.getColor = getColor
     }
-    
+
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: { $0 }, content: { viewStore in
             VStack(alignment: .center, spacing: ratioSpacing) {
-                ForEach(Array(viewStore.statisticsData.thisWeek.enumerated()), id:\.offset) { index, date in
+                ForEach(
+                    Array(viewStore.statisticsData.thisWeek.enumerated()),
+                    id: \.offset
+                ) { _, date in
                     Text("\(date)")
-                        .scaledFrame(width: frame_size, height: frame_size)
+                        .scaledFrame(width: frameSize, height: frameSize)
                         .overlay(
                             RoundedRectangle(cornerRadius: ratioSpacing, style: .continuous)
                                 .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date))
-                                .scaledFrame(width: frame_size, height: frame_size)
+                                .scaledFrame(width: frameSize, height: frameSize)
                         )
                 }
             }
-        }
+        })
     }
 }

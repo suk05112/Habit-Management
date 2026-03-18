@@ -22,8 +22,12 @@ struct ReportListView: View{
             }
             .padding()
             
-            ForEach(0..<list.count) { i in
-                ReportView(str: $list[i].0, percentHead: $list[i].1, percent: $list[i].2)
+            ForEach(0..<list.count, id: \.self) { rowIndex in
+                ReportView(
+                    str: $list[rowIndex].0,
+                    percentHead: $list[rowIndex].1,
+                    percent: $list[rowIndex].2
+                )
             }
             Spacer()
             HStack{}
