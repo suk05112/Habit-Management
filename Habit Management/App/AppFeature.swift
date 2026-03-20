@@ -71,7 +71,10 @@ struct AppFeature {
                 return .none
                 
             case .habit(.delegate(.reloadCompletionTodayCount)):
-                return .send(.completion(.loadTodayCount))
+                return .merge(
+                    .send(.completion(.refreshCalendar)),
+                    .send(.completion(.loadTodayCount))
+                )
                 
             case .habit:
                 return .none

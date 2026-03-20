@@ -22,7 +22,7 @@ struct CalendarGridView: View {
     }
     
     var body: some View {
-        WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
+        WithViewStore(completionStore, observe: \.refreshTick) { completionViewStore in
             WithViewStore(store, observe: { $0 }) { viewStore in
                 let dayItemArray = viewStore.dayItemArray
                 ForEach(dayItemArray, id: \.self) { week in
@@ -37,19 +37,16 @@ struct CalendarGridView: View {
                 .onAppear {
                     viewStore.send(.onAppear)
                 }
+                .id(completionViewStore.state)
             }
         }
     }
     
-    func getColor(date: String, todayCount: Int) -> Color {
-        var count = completedListViewModel.getCount(date: date)
+    func getColor(date: String) -> Color {
+        let count = completedListViewModel.getCount(date: date)
 
-        guard let targetDate = DateFormatters.standard.date(from: date) else {
+        guard DateFormatters.standard.date(from: date) != nil else {
             return HabitColor.defaultGray.color
-        }
-            
-        if Calendar.current.isDateInToday(targetDate) {
-            count = todayCount
         }
         
         let today = DateFormatters.standard.date(from: date)!
@@ -59,20 +56,13 @@ struct CalendarGridView: View {
         
         let percent = (Double(count) / Double(total)) * Double(100)
         
-        print("date", date, "todayCount", todayCount, percent)
         if count == 0 {
-            print("1")
             return HabitColor.defaultGray.color
         } else if percent < 33 {
-            print("2")
             return HabitColor.lightGreen.color
         } else if percent > 33 && percent < 66 {
-            print("3")
-
             return HabitColor.mediumGreen.color
         } else {
-            print("4")
-
             return HabitColor.darkGreen.color
         }
     }
@@ -81,11 +71,9 @@ struct CalendarGridView: View {
 // MARK: - UI Components
 extension CalendarGridView {
     func gridItem(_ date: String) -> some View {
-        return WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
-            RoundedRectangle(cornerRadius: setting.ratioSpacing)
-                .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date: date, todayCount: completionViewStore.todayCount))
-                .scaledFrame(width: setting.frameSize, height: setting.frameSize)
-        }
+        return RoundedRectangle(cornerRadius: setting.ratioSpacing)
+            .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date: date))
+            .scaledFrame(width: setting.frameSize, height: setting.frameSize)
 
 //        return RoundedRectangle(cornerRadius: setting.ratioSpacing)
 //            .fill(date == "" ? HabitColor.defaultGreen.color : getColor(date: date, todayCount: 1))

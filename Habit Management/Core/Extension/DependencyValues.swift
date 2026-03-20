@@ -40,4 +40,9 @@ extension DependencyValues {
         set { self[UserDefaultsClient.self] = newValue }
     }
 
+    var reportClient: ReportClient {
+        get { self[ReportClient.self] }
+        set { self[ReportClient.self] = newValue }
+    }
+
 }

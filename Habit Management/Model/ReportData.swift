@@ -6,17 +6,13 @@
 //
 
 import SwiftUI
-import RealmSwift
 import ComposableArchitecture
 
 class ReportData {
-    let store: StoreOf<StatisticsFeature>
     let viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>
     @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(ReportClient.self) var reportClient
 
-    @StateObject var completedListViewModel = CompletedListViewModel.shared
-
-    let todayTotal = HabitViewModel.shared.getNumberOfTodayHabits()
     let todayDone: Int
     let yesterdayDone: Int
 //    let todayDone = StaticVM.shared.day.last!
@@ -25,10 +21,8 @@ class ReportData {
     var percentList: [String] = []
     var percentHeadList: [String] = ["", "어제 대비", "지난 주 대비", "지난 달 대비", "", ""]
     var textList : [(String, String, String)] = []
-    var realm: Realm? = try? Realm()
 
     init(store: StoreOf<StatisticsFeature>) {
-        self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
 
         self.todayDone = viewStore.statisticsData.day.last ?? 0
@@ -42,18 +36,12 @@ class ReportData {
 
         list = list.filter { !($0.0.isEmpty && $0.2.isEmpty) }
 
-        guard let realm = realm,
-              let firstHabit = realm.objects(Habit.self).first,
-              let lastCompleted = realm.objects(CompletedList.self).last else {
+        guard reportClient.hasHabitAndCompletionData() else {
             textList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
             return
         }
 
-        if firstHabit == nil || lastCompleted.completed.isEmpty {
-            textList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
-        } else {
-            textList = list
-        }
+        textList = list
     }
 
     func getReportTextEntries() -> [(String, String, String)] {
@@ -71,14 +59,15 @@ class ReportData {
 
     func getTodayReportText() -> (String, String, String) {
         let todayDone = viewStore.statisticsData.day.last ?? 0
-        let todayTotal = HabitViewModel.shared.getNumberOfTodayHabits()
+        let todayTotal = reportClient.todayHabitCount()
 
         let percentHead = ""
         var str: String = ""
 
         if todayTotal == todayDone + 1 {
-            let todayDoneList = CompletedListViewModel.shared.todayDoneList
-            for item in HabitViewModel.shared.getTodayHabits() where !todayDoneList.completed.contains(item.id!) {
+            let completedIDs = reportClient.todayCompletedIDs()
+            for item in reportClient.todayHabits()
+            where !completedIDs.contains(item.id ?? "") {
                 str = item.name
                 break
             }
@@ -87,6 +76,7 @@ class ReportData {
     }
 
     func getYesterdayReportText() -> (String, String, String) {
+        let todayTotal = reportClient.todayHabitCount()
         guard todayTotal != 0 else { return ("", "", "") }
         let todayDone = viewStore.statisticsData.day.last ?? 0
 
@@ -234,13 +224,13 @@ extension ReportData {
     func getMainReportText() -> String {
         var list: [(String, String)] = []
 
-        let habits = HabitViewModel.shared.result
+        let habits = reportClient.habitsWithContinuity()
         guard !habits.isEmpty else {
             return "아직 완료된 습관이 없습니다."
         }
 
         habits.forEach {
-            if $0.continuity > 0 {
+            if $0.continuity > 0 && !$0.name.isEmpty {
                 list.append((String($0.continuity), $0.name))
             }
         }

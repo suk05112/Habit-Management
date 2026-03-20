@@ -17,6 +17,7 @@ struct CompletionFeature {
         var statisticsCount: Int = 0
         var continuityCount: Int = 0
         var dateCount: Int = 0
+        var refreshTick: Int = 0
     }
 
     enum Action: BindableAction {
@@ -34,6 +35,7 @@ struct CompletionFeature {
         case continuityUpdated(Int)
         case loadDateCount(String)
         case dateCount(Int)
+        case refreshCalendar
         case binding(BindingAction<State>)
     }
 
@@ -131,6 +133,10 @@ struct CompletionFeature {
             
             case let .dateCount(count):
                 state.dateCount = count
+                return .none
+
+            case .refreshCalendar:
+                state.refreshTick += 1
                 return .none
                 
             case .binding(_):

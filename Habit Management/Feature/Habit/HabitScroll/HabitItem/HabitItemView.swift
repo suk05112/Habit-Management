@@ -31,13 +31,14 @@ struct HabitItemView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .trailing) {
+        ZStack(alignment: .leading) {
             EditHabitView(
                 habitStore: habitStore,
                 statisticsStore: statisticsStore,
                 habit: habit,
                 offset: $offset
             )
+            .zIndex(offset > 0 ? 2 : 0)
             WithViewStore(habitStore, observe: { $0 }) { viewStore in
                 WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
                     if !habit.isInvalidated {
@@ -59,6 +60,7 @@ struct HabitItemView: View {
                             offset = 0
                         }
                         .offset(x: offset)
+                        .zIndex(offset > 0 ? 0 : 1)
                         .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
                     }
                 }

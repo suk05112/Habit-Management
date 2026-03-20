@@ -226,7 +226,9 @@ struct HabitFeature {
                         let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
                         await send(.loadHabits(habits))
                     }
-                case .editButtonPressed(_):
+                case let .editButtonPressed(habit):
+                    state.mode = .editing
+                    state.selectedHabit = habit
                     return .none
                 case .completeButtonPressed(_):
                     print("habit feature:: completeButtonPressed 호출")

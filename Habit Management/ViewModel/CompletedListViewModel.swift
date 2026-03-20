@@ -140,6 +140,7 @@ class CompletedListViewModel: ObservableObject {
     }
 
     func getCount(date: String) -> Int {
+        realm?.refresh()
         if let object = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", date)).first {
             return object.completed.count
         }

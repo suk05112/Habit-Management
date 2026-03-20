@@ -36,7 +36,7 @@ struct CalendarScrollView: View {
                 }
                 .id(scrollID)
             }
-            .onAppear() {
+            .onAppear {
                 proxy.scrollTo(scrollID, anchor: .trailing)
             }
         }
