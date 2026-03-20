@@ -9,7 +9,13 @@ import Foundation
 import SwiftUI
 
 struct ReportListView: View{
-    @State var list: [(String, String, String)] = ReportData.shared.getReportTextEntries()
+    let reportData: ReportData
+    @State var list: [(String, String, String)] = []
+
+    init(reportData: ReportData) {
+        self.reportData = reportData
+        self._list = State(initialValue: reportData.getReportTextEntries())
+    }
 
     var body: some View {
         VStack{

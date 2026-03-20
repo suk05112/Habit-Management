@@ -38,6 +38,7 @@ struct CompletionFeature {
     }
 
     @Dependency(\.completionClient) var completionClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -101,10 +102,22 @@ struct CompletionFeature {
                 return .none
                 
             case let .updateAllDoneContinuity(status, isToday):
-                return .run { send in
-                    let newCount = try await completionClient.updateAllDoneContinuity(status, isToday)
-                    await send(.continuityUpdated(newCount))
+                let key = "allDoneContinuity"
+                guard isToday else {
+                    return .send(.continuityUpdated(userDefaultsClient.integerForKey(key)))
                 }
+
+                var continuity = userDefaultsClient.integerForKey(key)
+                continuity = max(continuity, 0)
+
+                if status == .complete {
+                    continuity += 1
+                } else if status == .cancel || status == .add {
+                    continuity = max(continuity - 1, 0)
+                }
+
+                userDefaultsClient.setInteger(continuity, key)
+                return .send(.continuityUpdated(continuity))
 
             case let .continuityUpdated(newCount):
                 state.continuityCount = newCount

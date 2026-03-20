@@ -18,7 +18,7 @@ struct HabitFeature {
         var habitList: [Habit] = []
         var selectedHabit: Habit? = nil
         var mode: Mode = .viewing
-        var userName: String = UserDefaults.standard.string(forKey: "userName") ?? ""
+        var userName: String = ""
         var mainReportText: String = "아직 완료된 습관이 없습니다."
         var iter: [Int] = []
         var habitTitle: String = "" {
@@ -103,6 +103,7 @@ struct HabitFeature {
                 
             case let .setUserName(name):
                 state.userName = name
+                state.header.userName = name
                 return .none
                 
             case let .setMainReport(report):

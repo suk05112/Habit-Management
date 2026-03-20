@@ -17,7 +17,6 @@ struct CompletionClient {
     var isDoneToday: @Sendable (String) async throws -> Bool
     var todayHabitCompleteCount: @Sendable () async throws -> Int
     var yesterdayHabitCompleteCount: @Sendable () async throws -> Int
-    var updateAllDoneContinuity: @Sendable (CompleteStatus, Bool) async throws -> Int
 }
 
 extension CompletionClient: DependencyKey {
@@ -111,24 +110,5 @@ extension CompletionClient: DependencyKey {
             return realm.object(ofType: CompletedList.self, forPrimaryKey: key)?.completed.count ?? 0
         },
         
-        updateAllDoneContinuity: { status, isToday in
-            let key = "allDoneContinuity"
-            guard isToday else { return UserDefaults.standard.integer(forKey: key) }
-            
-            let calendar = Calendar.current
-            let weekday = calendar.component(.weekday, from: Date())
-            var continuity = UserDefaults.standard.integer(forKey: key)
-            
-            if continuity < 0 { continuity = 0 }
-            
-            if status == .complete {
-                continuity += 1
-            } else if status == .cancel || status == .add {
-                continuity = max(continuity - 1, 0)
-            }
-            
-            UserDefaults.standard.set(continuity, forKey: key)
-            return continuity
-        }
     )
 }

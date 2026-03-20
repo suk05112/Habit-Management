@@ -8,6 +8,22 @@
 import Foundation
 import ComposableArchitecture
 
+struct UserDefaultsClient {
+    var integerForKey: @Sendable (String) -> Int
+    var setInteger: @Sendable (Int, String) -> Void
+}
+
+extension UserDefaultsClient: DependencyKey {
+    static let liveValue = UserDefaultsClient(
+        integerForKey: { key in
+            UserDefaults.standard.integer(forKey: key)
+        },
+        setInteger: { value, key in
+            UserDefaults.standard.set(value, forKey: key)
+        }
+    )
+}
+
 extension DependencyValues {
     var habitClient: HabitClient {
         get { self[HabitClient.self] }
@@ -18,5 +34,10 @@ extension DependencyValues {
         get { self[CompletionClient.self] }
         set { self[CompletionClient.self] = newValue }
     }
-    
+
+    var userDefaultsClient: UserDefaultsClient {
+        get { self[UserDefaultsClient.self] }
+        set { self[UserDefaultsClient.self] = newValue }
+    }
+
 }

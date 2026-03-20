@@ -12,6 +12,7 @@ struct StatisticsView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let statisticsStore: StoreOf<StatisticsFeature>
     let completionStore: StoreOf<CompletionFeature>
+    let reportData: ReportData
     
     @State var ratio: Double = Double(5/6)
     @StateObject var completedListViewModel = CompletedListViewModel.shared
@@ -24,14 +25,15 @@ struct StatisticsView: View {
     init(
         calendarStore: StoreOf<CalendarFeature>,
         statisticsStore: StoreOf<StatisticsFeature>,
-        completionStore: StoreOf<CompletionFeature>
+        completionStore: StoreOf<CompletionFeature>,
+        reportData: ReportData
     ) {
         print("StatisticsView init")
         self.calendarStore = calendarStore
         self.statisticsStore = statisticsStore
         self.completionStore = completionStore
-        ReportData.configure(store: statisticsStore)
-        randomText = ReportData.shared.getRandomReportText()
+        self.reportData = reportData
+        randomText = reportData.getRandomReportText()
     }
     
     var body: some View {
@@ -50,7 +52,7 @@ struct StatisticsView: View {
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){
-                            ReportListView()
+                            ReportListView(reportData: reportData)
                         }
                         .onTapGesture {
                             showingDetail = true
@@ -71,8 +73,8 @@ struct StatisticsView: View {
             }.onAppear {
                 print("StatisticsView onappear")
                 viewStore.send(.onAppear)
-                ReportData.shared.updateReportText()
-                randomText = ReportData.shared.getRandomReportText()
+                reportData.updateReportText()
+                randomText = reportData.getRandomReportText()
             }
         }
     }

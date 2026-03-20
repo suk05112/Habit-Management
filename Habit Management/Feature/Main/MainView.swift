@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CoreData
-import RealmSwift
 import Firebase
 import ComposableArchitecture
 
@@ -17,6 +16,7 @@ struct MainView: View {
     private let habitStore: StoreOf<HabitFeature>
     private let statisticsStore: StoreOf<StatisticsFeature>
     private let completionStore: StoreOf<CompletionFeature>
+    private let reportData: ReportData
     
     init(store: StoreOf<AppFeature>) {
         self.store = store
@@ -24,8 +24,7 @@ struct MainView: View {
         self.habitStore = store.scope(state: \.habit, action: \.habit)
         self.statisticsStore = store.scope(state: \.statistics, action: \.statistics)
         self.completionStore = store.scope(state: \.completion, action: \.completion)
-        
-        ReportData.configure(store: statisticsStore)
+        self.reportData = ReportData(store: self.statisticsStore)
         self.store.send(.task)
     }
     
@@ -41,7 +40,8 @@ struct MainView: View {
                     StatisticsView(
                         calendarStore: calendarStore,
                         statisticsStore: statisticsStore,
-                        completionStore: completionStore
+                        completionStore: completionStore,
+                        reportData: reportData
                     )
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
                     if #available(iOS 16.0, *) {
@@ -62,11 +62,15 @@ struct MainView: View {
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
                 }
                 
-                if !UserDefaults.standard.bool(forKey: "wasLaunchedBefore") {
+                if !viewStore.hasLaunched {
                     OnboardingView(
                         userName: viewStore.binding(
                             get: \.userName,
                             send: { .setUserName($0) }
+                        ),
+                        hasLaunched: viewStore.binding(
+                            get: \.hasLaunched,
+                            send: { .setHasLaunched($0) }
                         )
                     )
                 }
@@ -88,9 +92,10 @@ extension MainView {
 
 struct OnboardingView: View {
     @Binding var userName: String
+    @Binding var hasLaunched: Bool
     
     var body: some View {
-        FirstLaunchView(userName: $userName)
+        FirstLaunchView(userName: $userName, hasLaunched: $hasLaunched)
             .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
 }

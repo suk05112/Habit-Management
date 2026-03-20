@@ -13,6 +13,7 @@ struct FirstLaunchView : View{
     @State var textlimiter = TextLimiter()
 
     @Binding var userName : String
+    @Binding var hasLaunched: Bool
 
 
     var body: some View {
@@ -52,9 +53,8 @@ struct FirstLaunchView : View{
                                             Text("확인")
                                          )
                                         .onTapGesture {
-                                            UserDefaults.standard.set(true, forKey: "wasLaunchedBefore")
-                                            UserDefaults.standard.set(textlimiter.value, forKey: "userName")
-                                            userName = UserDefaults.standard.string(forKey: "userName")!
+                                            userName = textlimiter.value
+                                            hasLaunched = true
                                             show = false
 
                                         }
@@ -78,10 +78,11 @@ struct FirstLaunchView : View{
 }
 struct ContentView_Previews2: PreviewProvider {
     @State static var str = ""
+    @State static var hasLaunched = false
     static let setting = Setting()
 
     static var previews: some View {
-        FirstLaunchView(show: true, userName: $str)
+        FirstLaunchView(show: true, userName: $str, hasLaunched: $hasLaunched)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .environmentObject(setting)
 

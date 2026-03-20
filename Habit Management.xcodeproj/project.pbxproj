@@ -91,7 +91,6 @@
 		4E48FABA2DF45DFA00BA7EA6 /* ReportListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA9F2DF45DFA00BA7EA6 /* ReportListView.swift */; };
 		4E48FABB2DF45DFA00BA7EA6 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA02DF45DFA00BA7EA6 /* ReportView.swift */; };
 		4E48FABC2DF45DFA00BA7EA6 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA12DF45DFA00BA7EA6 /* StatisticsView.swift */; };
-		4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA22DF45DFA00BA7EA6 /* StaticsView 2.swift */; };
 		4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA32DF45DFA00BA7EA6 /* TotalView.swift */; };
 		4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA52DF45DFA00BA7EA6 /* StatisticsClient.swift */; };
 		4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAA62DF45DFA00BA7EA6 /* StatisticsFeature.swift */; };
@@ -215,7 +214,6 @@
 		4E48FA9F2DF45DFA00BA7EA6 /* ReportListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListView.swift; sourceTree = "<group>"; };
 		4E48FAA02DF45DFA00BA7EA6 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		4E48FAA12DF45DFA00BA7EA6 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		4E48FAA22DF45DFA00BA7EA6 /* StaticsView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StaticsView 2.swift"; sourceTree = "<group>"; };
 		4E48FAA32DF45DFA00BA7EA6 /* TotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalView.swift; sourceTree = "<group>"; };
 		4E48FAA52DF45DFA00BA7EA6 /* StatisticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsClient.swift; sourceTree = "<group>"; };
 		4E48FAA62DF45DFA00BA7EA6 /* StatisticsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeature.swift; sourceTree = "<group>"; };
@@ -628,7 +626,6 @@
 				4E48FA9F2DF45DFA00BA7EA6 /* ReportListView.swift */,
 				4E48FAA02DF45DFA00BA7EA6 /* ReportView.swift */,
 				4E48FAA12DF45DFA00BA7EA6 /* StatisticsView.swift */,
-				4E48FAA22DF45DFA00BA7EA6 /* StaticsView 2.swift */,
 				4E48FAA32DF45DFA00BA7EA6 /* TotalView.swift */,
 			);
 			path = View;
@@ -920,7 +917,6 @@
 				4E33837C2DFD632B002849DB /* CalendarGridFeature.swift in Sources */,
 				4E48FABC2DF45DFA00BA7EA6 /* StatisticsView.swift in Sources */,
 				0368CBEC2E0074390086E95B /* Date.swift in Sources */,
-				4E48FABD2DF45DFA00BA7EA6 /* StaticsView 2.swift in Sources */,
 				4E3381852DF694CF002849DB /* HabitBackgroundView.swift in Sources */,
 				4E48FABE2DF45DFA00BA7EA6 /* TotalView.swift in Sources */,
 				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,

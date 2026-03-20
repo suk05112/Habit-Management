@@ -92,7 +92,7 @@ struct HabitManagementApp: SwiftUI.App {
 
     let store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
 
-    body: some Scene {
+    var body: some Scene {
         WindowGroup {
 //            HabitHeaderView(store: habitHeaderFeature)
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)

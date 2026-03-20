@@ -12,15 +12,7 @@ import ComposableArchitecture
 class ReportData {
     let store: StoreOf<StatisticsFeature>
     let viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>
-
-//    static let shared = ReportData()
-    private static var _shared: ReportData?
-    private(set) static var shared: ReportData = {
-        guard let instance = _shared else {
-            fatalError("ReportData.shared must be configured before use.")
-        }
-        return instance
-    }()
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     @StateObject var completedListViewModel = CompletedListViewModel.shared
 
@@ -44,9 +36,6 @@ class ReportData {
         updateReportText()
     }
 
-    static func configure(store: StoreOf<StatisticsFeature>) {
-        _shared = ReportData(store: store)
-    }
 
     func updateReportText() {
         var list: [(String, String, String)] = [getTodayReportText(), getYesterdayReportText(), getWeekReportText(), getMonthReportText(), getContinuityReportText()]
@@ -192,7 +181,7 @@ class ReportData {
         var text: String = ""
         let percentHead = ""
 
-        let allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+        let allDoneContinuity = userDefaultsClient.integerForKey("allDoneContinuity")
 
         if allDoneContinuity != 0 {
             text = "\(allDoneContinuity)일 연속 모든 습관을 완료했어요!"

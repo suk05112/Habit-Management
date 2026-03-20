@@ -23,7 +23,6 @@ struct HabitHeaderFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                state.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
                 return .none
             }
         }

@@ -54,12 +54,13 @@ struct AppFeature {
             switch action {
             case .task:
                 return .merge(
+                    .send(.habit(.setUserName(state.userName))),
                     .send(.statistics(.onAppear))
                 )
             case let .setUserName(name):
                 state.userName = name
                 UserDefaults.standard.set(name, forKey: "userName")
-                return .none
+                return .send(.habit(.setUserName(name)))
                 
             case let .setHasLaunched(flag):
                 state.hasLaunched = flag

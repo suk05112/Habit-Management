@@ -13,6 +13,7 @@ struct EditHabitFeature {
 
     @Dependency(\.habitClient) var habitClient
     @Dependency(\.completionClient) var completionClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
     
     struct State: Equatable {
         var mode: Mode = .viewing
@@ -34,7 +35,11 @@ struct EditHabitFeature {
                 state.mode = .viewing
                 return .run { send in
                     try await habitClient.delete(habit)
-                    try await completionClient.updateAllDoneContinuity(.delete, habit.today())
+                    if habit.today() {
+                        let key = "allDoneContinuity"
+                        let continuity = max(userDefaultsClient.integerForKey(key) - 1, 0)
+                        userDefaultsClient.setInteger(continuity, key)
+                    }
                     await send(.didDelete)
                 }
             case let .editButtonPressed(habit):
@@ -46,7 +51,11 @@ struct EditHabitFeature {
                 state.mode = .viewing
                 return .run { send in
                     try await completionClient.toggle(habit.id!)
-                    try await completionClient.updateAllDoneContinuity(.delete, habit.today())
+                    if habit.today() {
+                        let key = "allDoneContinuity"
+                        let continuity = max(userDefaultsClient.integerForKey(key) - 1, 0)
+                        userDefaultsClient.setInteger(continuity, key)
+                    }
                     await send(.didComplete)
 
                 }
