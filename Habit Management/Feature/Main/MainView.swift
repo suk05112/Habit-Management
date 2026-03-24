@@ -51,14 +51,14 @@ struct MainView: View {
                     HabitView(calendarStore: calendarStore,
                               habitStore: habitStore,
                               completionStore: completionStore)
-                        .tabItem { tabIconView("house", "홈") }
+                        .tabItem { tabIconView("house", L10n.tr("tab.home")) }
                     StatisticsView(
                         calendarStore: calendarStore,
                         statisticsStore: statisticsStore,
                         completionStore: completionStore,
                         reportData: reportData
                     )
-                        .tabItem { tabIconView("chart.bar.fill", "통계") }
+                        .tabItem { tabIconView("chart.bar.fill", L10n.tr("tab.stats")) }
                 }
                 .tint(HabitColor.defaultGreen.color)
                 

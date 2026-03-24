@@ -32,11 +32,20 @@ struct CalendarGridView: View {
                     completionCounts: completionCounts,
                     weekdayTotals: weekdayTotals
                 )
+                let cellWidth = setting.frameSize * setting.widthRatio
+                let cellHeight = setting.frameSize * setting.heightRatio
+                let cellCorner = setting.ratioSpacing
 
                 ForEach(dayItemArray, id: \.self) { week in
                     VStack(spacing: setting.ratioSpacing) {
                         ForEach(week, id: \.id) { dayItem in
-                            gridItem(dayItem.date, colorByDate: colorByDate)
+                            gridItem(
+                                dayItem.date,
+                                colorByDate: colorByDate,
+                                cellWidth: cellWidth,
+                                cellHeight: cellHeight,
+                                cornerRadius: cellCorner
+                            )
                         }
                     }
                     .scaledPadding(top: 0, leading: 0, bottom: 12, trailing: 0)
@@ -103,12 +112,18 @@ struct CalendarGridView: View {
 
 // MARK: - UI Components
 extension CalendarGridView {
-    func gridItem(_ date: String, colorByDate: [String: Color]) -> some View {
+    func gridItem(
+        _ date: String,
+        colorByDate: [String: Color],
+        cellWidth: CGFloat,
+        cellHeight: CGFloat,
+        cornerRadius: CGFloat
+    ) -> some View {
         let fillColor = date.isEmpty
             ? HabitColor.defaultGreen.color
             : (colorByDate[date] ?? HabitColor.defaultGray.color)
-        return RoundedRectangle(cornerRadius: setting.ratioSpacing)
+        return RoundedRectangle(cornerRadius: cornerRadius)
             .fill(fillColor)
-            .scaledFrame(width: setting.frameSize, height: setting.frameSize)
+            .frame(width: cellWidth, height: cellHeight)
     }
 }

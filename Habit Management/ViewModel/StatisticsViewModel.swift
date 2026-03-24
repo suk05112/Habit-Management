@@ -100,9 +100,9 @@ class StatisticsViewModel: ObservableObject {
         case 1:
             return day
         case 2:
-            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-            let a = b-5
-            return Array(week[a..<b])
+            let currentWeekOfYear = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            let startWeekIndex = currentWeekOfYear - 5
+            return Array(week[startWeekIndex..<currentWeekOfYear])
         case 3:
             return month
         default:
@@ -246,7 +246,7 @@ extension StatisticsViewModel {
         let day = Calendar.current.dateComponents([.day], from: Date()).day!
         
         for _ in 0..<5{
-            weekStr.append("\(month)월\n\(weekno)주")
+            weekStr.append(L10n.tr("date.week_month_label", month, weekno))
             weekno -= 1
             if weekno < 1{
                 month -= 1

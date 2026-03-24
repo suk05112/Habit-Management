@@ -30,19 +30,19 @@ struct Graph: View {
                         .scaledFrame(width: .none, height: 30)
                     
                     HStack {
-                        SelectedView(name: "최근 7일", id: .week, select: $selected)
+                        SelectedView(name: L10n.tr("graph.last_7_days"), id: .week, select: $selected)
                             .onTapGesture {
                                 selected = .week
                                 width = 20
                             }
                         Spacer()
-                        SelectedView(name: "최근 5주", id: .month, select: $selected)
+                        SelectedView(name: L10n.tr("graph.last_5_weeks"), id: .month, select: $selected)
                             .onTapGesture {
                                 selected = .month
                                 width = 30
                             }
                         Spacer()
-                        SelectedView(name: "월", id: .year, select: $selected)
+                        SelectedView(name: L10n.tr("graph.month_tab"), id: .year, select: $selected)
                             .onTapGesture {
                                 selected = .year
                                 width = 10
@@ -85,7 +85,7 @@ struct Graph: View {
                                         .foregroundColor(Color.white)
                                         .scaledFrame(width: 300, height: 150)
                                         .overlay{
-                                            Text("No Data")
+                                            Text(L10n.tr("report.no_data"))
                                                 .scaledText(size: 15, weight: .none)
                                         }
                                     

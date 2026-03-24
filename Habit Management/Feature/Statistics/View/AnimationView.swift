@@ -36,7 +36,7 @@ struct AnimationView: View {
                                 .font(.system(size: 15, weight: .medium))
 
                             HStack {
-                                Text("지난 주 대비")
+                                Text(L10n.tr("animation.vs_last_week"))
                                     .font(.system(size: 12))
                                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                                 Text("20% up")

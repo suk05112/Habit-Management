@@ -13,12 +13,11 @@ extension Color {
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
         
-        let r, g, b: Double
-        r = Double((int >> 16) & 0xFF) / 255
-        g = Double((int >> 8) & 0xFF) / 255
-        b = Double(int & 0xFF) / 255
-        
-        self.init(red: r, green: g, blue: b)
+        let red: Double = Double((int >> 16) & 0xFF) / 255
+        let green: Double = Double((int >> 8) & 0xFF) / 255
+        let blue: Double = Double(int & 0xFF) / 255
+
+        self.init(red: red, green: green, blue: blue)
     }
 }
 

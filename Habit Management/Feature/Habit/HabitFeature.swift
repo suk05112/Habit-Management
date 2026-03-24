@@ -19,7 +19,7 @@ struct HabitFeature {
         var selectedHabit: Habit? = nil
         var mode: Mode = .viewing
         var userName: String = ""
-        var mainReportText: String = "아직 완료된 습관이 없습니다."
+        var mainReportText: String = L10n.tr("habit.header.empty")
         var iter: [Int] = []
         var habitTitle: String = "" {
             didSet {
@@ -28,8 +28,6 @@ struct HabitFeature {
                 }
             }
         }
-        var isToastVisible: Bool = false
-        
         var header: HabitHeaderFeature.State = .init()
         var toggle: HabitToggleFeature.State = .init()
         var edit: EditHabitFeature.State = .init()
@@ -51,7 +49,6 @@ struct HabitFeature {
         case loadHabits([Habit])
         case setUserName(String)
         case setMainReport(String)
-        case setToast(Bool)
         case selectItem(Habit?)
         case setViewMode
         case setEditMode
@@ -116,10 +113,7 @@ struct HabitFeature {
                 
             case let .setMainReport(report):
                 state.mainReportText = report
-                return .none
-                
-            case let .setToast(flag):
-                state.isToastVisible = flag
+                state.header.mainReportText = report
                 return .none
                 
             case let .selectItem(habit):

@@ -18,9 +18,9 @@ extension Date {
   
     func toString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.locale = Locale.current
+        dateFormatter.timeZone = .current
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
         return dateFormatter.string(from: self)
     }
 }

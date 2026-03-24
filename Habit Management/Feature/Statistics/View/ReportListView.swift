@@ -20,7 +20,7 @@ struct ReportListView: View{
     var body: some View {
         VStack{
             HStack{
-                Text("Report")
+                Text(L10n.tr("stats.report_title"))
                     .font(.system(size: 30))
                     .bold()
                 Spacer()

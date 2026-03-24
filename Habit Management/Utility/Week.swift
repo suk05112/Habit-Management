@@ -23,17 +23,16 @@ enum Week: Int {
       }
     }
     
-    var kor : String {
-      switch self {
-          case .sun: return "일"
-          case .mon: return "월"
-          case .tue: return "화"
-          case .wed: return "수"
-          case .thu: return "목"
-          case .fri: return "금"
-          case .sat: return "토"
-
-      }
+    var kor: String {
+        switch self {
+        case .sun: return L10n.tr("weekday.sun")
+        case .mon: return L10n.tr("weekday.mon")
+        case .tue: return L10n.tr("weekday.tue")
+        case .wed: return L10n.tr("weekday.wed")
+        case .thu: return L10n.tr("weekday.thu")
+        case .fri: return L10n.tr("weekday.fri")
+        case .sat: return L10n.tr("weekday.sat")
+        }
     }
     
     /// 해당 요일에 예정된 습관 수 (Realm 직조회, HabitViewModel 미사용)

@@ -37,12 +37,12 @@ struct HabitToggleFeature {
                 
             case .showAllButtonPressed:
                 state.isShowAll.toggle()
-                state.labelTitle.showAll = state.isShowAll ? "습관 모두 보기" : "오늘의 습관"
+                state.labelTitle.showAll = state.isShowAll ? L10n.tr("toggle.show_all_habits") : L10n.tr("toggle.today_habits")
                 return .none
                 
             case .hideCompletedButtonPressed:
                 state.isHideCompleted.toggle()
-                state.labelTitle.hideCompleted = state.isHideCompleted ? "완료 숨기기" : "완료 보이기"
+                state.labelTitle.hideCompleted = state.isHideCompleted ? L10n.tr("toggle.hide_completed") : L10n.tr("toggle.show_completed")
                 return .none
                 
             case .addHabitButtonPressed:
@@ -57,7 +57,7 @@ struct HabitToggleFeature {
 extension HabitToggleFeature {
     struct LabelTitle: Identifiable, Equatable {
         let id = UUID()
-        var showAll: String = "오늘의 습관"
-        var hideCompleted: String = "완료 보이기"
+        var showAll: String = L10n.tr("toggle.today_habits")
+        var hideCompleted: String = L10n.tr("toggle.show_completed")
     }
 }

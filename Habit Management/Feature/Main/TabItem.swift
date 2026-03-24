@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 struct TabItem: View {
@@ -13,5 +14,5 @@ struct TabItem: View {
 }
 
 #Preview {
-    TabItem(imageName: "house", title: "홈")
+    TabItem(imageName: "house", title: L10n.tr("tab.home"))
 }

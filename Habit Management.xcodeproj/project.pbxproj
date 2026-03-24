@@ -68,6 +68,8 @@
 		4E33841A2E0050CE002849DB /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384192E0050CE002849DB /* DateFormatters.swift */; };
 		4E3384202E011C56002849DB /* HabitScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33841F2E011C56002849DB /* HabitScrollView.swift */; };
 		4E3384252E0050CF002849DB /* RealmCalendarQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */; };
+		4E5F6A022E020001002849DB /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5F6A012E020001002849DB /* L10n.swift */; };
+		4E5F6A042E020001002849DB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4E5F6A032E020001002849DB /* Localizable.xcstrings */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA882DF45DF200BA7EA6 /* DependencyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7F2DF45DF200BA7EA6 /* DependencyValues.swift */; };
@@ -192,6 +194,8 @@
 		4E33841D2E005672002849DB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		4E33841F2E011C56002849DB /* HabitScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitScrollView.swift; sourceTree = "<group>"; };
 		4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCalendarQueries.swift; sourceTree = "<group>"; };
+		4E5F6A012E020001002849DB /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
+		4E5F6A032E020001002849DB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7F2DF45DF200BA7EA6 /* DependencyValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyValues.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 		03CFE06627EC46D1004C54B6 /* Habit Management */ = {
 			isa = PBXGroup;
 			children = (
+				4E5F6A032E020001002849DB /* Localizable.xcstrings */,
 				0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */,
 				4E48FA842DF45DF200BA7EA6 /* Core */,
 				4E48FA8C2DF45DF700BA7EA6 /* App */,
@@ -509,6 +514,7 @@
 		4E3384182E0050BF002849DB /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				4E5F6A012E020001002849DB /* L10n.swift */,
 				4E3384192E0050CE002849DB /* DateFormatters.swift */,
 				4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */,
 			);
@@ -802,6 +808,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ko,
 				Base,
 			);
 			mainGroup = 03CFE05B27EC46D1004C54B6;
@@ -832,6 +839,7 @@
 				03CFE06F27EC46D6004C54B6 /* Preview Assets.xcassets in Resources */,
 				03CFE06C27EC46D6004C54B6 /* Assets.xcassets in Resources */,
 				0368CBE62DF8BF090086E95B /* GoogleService-Info.plist in Resources */,
+				4E5F6A042E020001002849DB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,6 +954,7 @@
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
 				4E33841A2E0050CE002849DB /* DateFormatters.swift in Sources */,
 				4E3384252E0050CF002849DB /* RealmCalendarQueries.swift in Sources */,
+				4E5F6A022E020001002849DB /* L10n.swift in Sources */,
 				4E48FAC72DF45DFD00BA7EA6 /* CompletedList.swift in Sources */,
 				4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */,
 				4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */,

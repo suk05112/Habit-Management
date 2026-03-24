@@ -95,11 +95,11 @@ extension HabitItemView {
                 
                 Spacer()
                 
-                Text("\(continuity)일")
+                Text(L10n.tr("habit.streak_days", continuity))
                     .scaledText(size: 20, weight: .semibold)
                     .foregroundColor(subText)
                 
-                Text("실천 중🔥")
+                Text(L10n.tr("habit.on_fire"))
                     .scaledText(size: 20, weight: .medium)
                     .foregroundColor(isCompletedToday ? Color.gray.opacity(0.45) : .gray.opacity(0.7))
             }
@@ -114,15 +114,15 @@ extension HabitItemView {
         let weekendSet: Set<Int> = [1, 7]
         
         if daySet == weekdaySet {
-            return "평일만"
+            return L10n.tr("habit.week.weekdays_only")
         }
         
         if daySet == everyDaySet {
-            return "매일"
+            return L10n.tr("habit.week.every_day")
         }
         
         if daySet == weekendSet {
-            return "주말만"
+            return L10n.tr("habit.week.weekends_only")
         }
         
         let orderedDays = weekIter

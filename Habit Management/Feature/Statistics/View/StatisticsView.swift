@@ -40,7 +40,7 @@ struct StatisticsView: View {
             ZStack{
                 VStack{
                     HStack{
-                        Text("Statistics")
+                        Text(L10n.tr("stats.title"))
                             .scaledText(size: 30, weight: .semibold)
                         Spacer()
                         

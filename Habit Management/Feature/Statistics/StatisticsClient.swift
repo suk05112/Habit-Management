@@ -143,7 +143,7 @@ struct StatisticsClient {
         let day = Calendar.current.dateComponents([.day], from: Date()).day!
 
         for _ in 0..<5{
-            weekStr.append("\(month)월\n\(weekno)주")
+            weekStr.append(L10n.tr("date.week_month_label", month, weekno))
             weekno -= 1
             if weekno < 1{
                 month -= 1

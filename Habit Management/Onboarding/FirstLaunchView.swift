@@ -34,13 +34,13 @@ struct FirstLaunchView : View{
                             
                         VStack(alignment: .leading){
 
-                            Text("이름을 입력해 주세요")
+                            Text(L10n.tr("onboarding.title"))
                                 .scaledText(size: 20, weight: .none)
                                 .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 25)
 
                             VStack(alignment: .center){
                                 TextField(
-                                    "8자 이내",
+                                    L10n.tr("onboarding.placeholder"),
                                     text: Binding(
                                         get: { textlimiter.value },
                                         set: { textlimiter.value = $0; showNameRequiredError = false }
@@ -52,7 +52,7 @@ struct FirstLaunchView : View{
                                     .background(Color(.systemGray6))
 
                                 if showNameRequiredError {
-                                    Text("이름을 입력해주세요")
+                                    Text(L10n.tr("onboarding.error.empty"))
                                         .foregroundColor(.red)
                                         .scaledText(size: 14, weight: .medium)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -64,7 +64,7 @@ struct FirstLaunchView : View{
                                         .fill(Color(hex: "#639F70"))
                                         .scaledFrame(width: 60, height: 30)
                                         .overlay(
-                                            Text("확인")
+                                            Text(L10n.tr("onboarding.confirm"))
                                          )
                                         .onTapGesture {
                                             let trimmed = textlimiter.value.trimmingCharacters(in: .whitespacesAndNewlines)

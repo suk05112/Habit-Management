@@ -1,3 +1,4 @@
+import Foundation
 import SwiftUI
 
 enum Tab: String, CaseIterable {
@@ -8,11 +9,11 @@ enum Tab: String, CaseIterable {
     var title: String {
         switch self {
         case .home:
-            return "홈"
+            return L10n.tr("tab.home")
         case .statistics:
-            return "통계"
+            return L10n.tr("tab.stats")
         case .settings:
-            return "설정"
+            return L10n.tr("tab.settings")
         }
     }
     

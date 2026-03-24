@@ -12,7 +12,7 @@ import ComposableArchitecture
 struct HabitHeaderFeature {
     struct State: Equatable {
         var userName: String = ""
-        var mainReportText: String = "아직 완료된 습관이 없습니다."
+        var mainReportText: String = L10n.tr("habit.header.empty")
     }
     
     enum Action: Equatable {

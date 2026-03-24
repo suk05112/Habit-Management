@@ -8,21 +8,28 @@
 import SwiftUI
 import ComposableArchitecture
 
+private struct HabitHeaderBar: Equatable {
+    var userName: String
+    var mainReportText: String
+}
+
 struct HabitHeaderView: View {
-    private let habitHeaderStore: StoreOf<HabitHeaderFeature>
-    
+    private let habitStore: StoreOf<HabitFeature>
+
     init(habitStore: StoreOf<HabitFeature>) {
-        self.habitHeaderStore = habitStore.scope(state: \.header, action: \.header)
+        self.habitStore = habitStore
     }
-    
+
     var body: some View {
-        WithViewStore(habitHeaderStore, observe: { $0 }) { viewStore in
+        WithViewStore(habitStore, observe: {
+            HabitHeaderBar(userName: $0.userName, mainReportText: $0.mainReportText)
+        }) { viewStore in
             HStack {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("\(viewStore.userName)님!")
+                    Text(L10n.tr("habit.greeting", viewStore.userName))
                         .foregroundStyle(Color(hex: "2E4A2B"))
                         .scaledText(size: 24, weight: .bold)
-                    Text("\(viewStore.mainReportText)")
+                    Text(viewStore.mainReportText)
                         .foregroundStyle(Color(hex: "2E4A2B"))
                         .scaledText(size: 24, weight: .regular)
                 }
@@ -32,7 +39,7 @@ struct HabitHeaderView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 16)
             .onAppear {
-                viewStore.send(.onAppear)
+                viewStore.send(.header(.onAppear))
             }
         }
     }

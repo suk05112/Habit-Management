@@ -8,8 +8,17 @@
 import Foundation
 
 enum Total: String {
-    case week = "이번주"
-    case month = "이번달"
-    case year = "올해"
-    case all = "전체"
+    case week
+    case month
+    case year
+    case all
+
+    var localizedTitle: String {
+        switch self {
+        case .week: return L10n.tr("stats.total.week")
+        case .month: return L10n.tr("stats.total.month")
+        case .year: return L10n.tr("stats.total.year")
+        case .all: return L10n.tr("stats.total.all")
+        }
+    }
 }

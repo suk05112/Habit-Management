@@ -33,21 +33,29 @@ extension HabitClient: DependencyKey {
             let realm = try Realm()
             let today = DateFormatters.standard.string(from: Date())
             let todayWeekDay = Date().weekday
-            
+
             var query = realm.objects(Habit.self)
-            
-            if !showAll {
-                query = query.where { $0.weekIter.contains(todayWeekDay) }
-            }
-            
+
             if hideCompleted {
                 if let completedList = realm.object(ofType: CompletedList.self, forPrimaryKey: today)?.completed {
                     let completedIDs = Set(completedList)
                     query = query.where { !$0.id.in(completedIDs) }
                 }
             }
-            
-            return Array(query).map { $0.detached() }
+
+            var habits = Array(query).map { $0.detached() }
+
+            // `showAll == false`: 오늘 예정 습관을 위로만 올리고, 나머지도 목록에 둠 (언제든 완료 가능)
+            if !showAll {
+                habits = habits.enumerated().sorted { lhs, rhs in
+                    let lToday = lhs.element.weekIter.contains(todayWeekDay)
+                    let rToday = rhs.element.weekIter.contains(todayWeekDay)
+                    if lToday != rToday { return lToday && !rToday }
+                    return lhs.offset < rhs.offset
+                }.map(\.element)
+            }
+
+            return habits
         },
         
         save: { habit in

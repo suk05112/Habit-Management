@@ -39,14 +39,6 @@ struct HabitView: View {
                     )
                     divider
                 }
-                .toast(
-                    message: "Current time: \(DateFormatters.fullName.string(from: Date()))",
-                    isShowing: viewStore.binding(
-                        get: \.isToastVisible,
-                        send: { .setToast($0) }
-                    ),
-                    duration: Toast.long
-                )
             }
             .onAppear {
                 viewStore.send(.onAppear)

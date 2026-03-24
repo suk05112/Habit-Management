@@ -44,16 +44,16 @@ struct EditHabitView: View {
                                 .background(Color.red)
                                 .cornerRadius(12)
                         }
-                        .alert("삭제하시겠습니까?", isPresented: $showingAlert) {
-                            Button("확인", role: .destructive, action: {
+                        .alert(L10n.tr("add.alert.title"), isPresented: $showingAlert) {
+                            Button(L10n.tr("common.confirm"), role: .destructive, action: {
                                 editStore.send(.deleteButtonPressed(habit))
                                 statisticsStore.send(.updateTodoCount(add: false, numberOfIter: habit.weekIter.count))
                                 statisticsStore.send(.loadTodoStatistics)
                             })
                             
-                            Button("취소", role: .cancel) { }
+                            Button(L10n.tr("common.cancel"), role: .cancel) { }
                         } message: {
-                            Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
+                            Text(L10n.tr("add.alert.message"))
                         }
                         .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: -5)
                         
@@ -88,7 +88,7 @@ struct EditHabitView: View {
                                     .font(.title)
                                     .foregroundColor(.white)
                                     .scaledFrame(width: 50, height: 80)
-                                    .background(habit.today() ? Color(hex: "#92BCA3") : Color(hex: "#D4DED8"))
+                                    .background(Color(hex: "#92BCA3"))
                                     .cornerRadius(12)
                             }
                         }

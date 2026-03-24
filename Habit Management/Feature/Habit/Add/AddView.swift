@@ -15,6 +15,8 @@ struct AddView: View {
 
     @ObservedObject var textfield = TextLimiter()
     @State private var showingDeleteAlert = false
+    @State private var showTitleRequiredError = false
+    @State private var showWeekdayRequiredError = false
 
     init(
         habitStore: StoreOf<HabitFeature>,
@@ -35,7 +37,7 @@ struct AddView: View {
                     Spacer()
                     ZStack {
                         RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .scaledFrame(width: .none, height: 280)
+                            .scaledFrame(width: .none, height: 320)
                             .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 5)
                             .foregroundColor(Color.white)
 
@@ -43,7 +45,7 @@ struct AddView: View {
                             if viewStore.mode == .editing {
                                 HStack {
                                     Spacer()
-                                    Button("삭제") {
+                                    Button(L10n.tr("common.delete")) {
                                         showingDeleteAlert = true
                                     }
                                     .foregroundColor(.red)
@@ -52,41 +54,88 @@ struct AddView: View {
                                 .scaledPadding(top: 12, leading: 25, bottom: 4, trailing: 20)
                             }
 
-                            TextField("제목을 입력하세요", text: viewStore.binding(get: \.habitTitle, send: { .setHabitTitle($0) }))
+                            TextField(
+                                L10n.tr("add.title_placeholder"),
+                                text: Binding(
+                                    get: { viewStore.habitTitle },
+                                    set: { viewStore.send(.setHabitTitle($0)); showTitleRequiredError = false }
+                                )
+                            )
                                 .textFieldStyle(.roundedBorder)
                                 .scaledText(size: 25, weight: .none)
                                 .foregroundColor(Color.black)
                                 .scaledPadding(top: viewStore.mode == .editing ? 4 : 20, leading: 25, bottom: 0, trailing: 25)
 
+                            if showTitleRequiredError {
+                                Text(L10n.tr("add.title_required"))
+                                    .foregroundColor(.red)
+                                    .scaledText(size: 14, weight: .medium)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .scaledPadding(top: 6, leading: 28, bottom: 0, trailing: 25)
+                            }
+
                             HStack {
                                 ForEach(1..<8) {
-                                    WeekButton(weekOfDay: $0, iter: viewStore.binding(
-                                        get: \.iter,
-                                        send: HabitFeature.Action.setIter
-                                    ), onOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false)
+                                    WeekButton(
+                                        weekOfDay: $0,
+                                        iter: Binding(
+                                            get: { viewStore.iter },
+                                            set: { newIter in
+                                                viewStore.send(.setIter(newIter))
+                                                if !newIter.isEmpty {
+                                                    showWeekdayRequiredError = false
+                                                }
+                                            }
+                                        ),
+                                        onOff: viewStore.selectedHabit?.weekIter.contains($0) ?? false ? true : false
+                                    )
                                 }
                             }
                             .scaledPadding(top: 10, leading: 25, bottom: 0, trailing: 25)
 
+                            if showWeekdayRequiredError {
+                                Text(L10n.tr("add.weekday_required"))
+                                    .foregroundColor(.red)
+                                    .scaledText(size: 14, weight: .medium)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .scaledPadding(top: 6, leading: 28, bottom: 0, trailing: 25)
+                            }
+
                             Spacer(minLength: 8)
 
                             HStack {
-                                Text("취소")
+                                Text(L10n.tr("common.cancel"))
                                     .scaledText(size: 17, weight: .medium)
                                     .foregroundColor(Color.gray)
                                     .onTapGesture {
+                                        showTitleRequiredError = false
+                                        showWeekdayRequiredError = false
                                         viewStore.send(.setHabitTitle(""))
                                         viewStore.send(.setViewMode)
                                     }
                                 Spacer()
-                                Text("저장")
+                                Text(L10n.tr("common.save"))
                                     .scaledText(size: 17, weight: .semibold)
                                     .foregroundColor(HabitColor.defaultGreen.color)
                                     .onTapGesture {
+                                        let trimmed = viewStore.habitTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        guard !trimmed.isEmpty else {
+                                            showTitleRequiredError = true
+                                            showWeekdayRequiredError = false
+                                            return
+                                        }
+                                        showTitleRequiredError = false
+
+                                        guard !viewStore.iter.isEmpty else {
+                                            showWeekdayRequiredError = true
+                                            return
+                                        }
+                                        showWeekdayRequiredError = false
+
                                         if viewStore.mode == .editing {
-                                            viewStore.send(.updateHabit(name: viewStore.habitTitle, iter: viewStore.iter, habit: viewStore.selectedHabit ?? Habit()))
+                                            viewStore.send(.updateHabit(name: trimmed, iter: viewStore.iter, habit: viewStore.selectedHabit ?? Habit()))
                                         } else {
-                                            viewStore.send(.addHabit(name: viewStore.habitTitle, iter: viewStore.iter))
+                                            viewStore.send(.addHabit(name: trimmed, iter: viewStore.iter))
                                         }
                                         viewStore.send(.setViewMode)
                                         viewStore.send(.setHabitTitle(""))
@@ -99,13 +148,13 @@ struct AddView: View {
                             }
                             .scaledPadding(top: 8, leading: 25, bottom: 16, trailing: 25)
                         }
-                        .scaledFrame(width: .none, height: 280)
+                        .scaledFrame(width: .none, height: 320)
                     }
                 }
             }
             .contentShape(Rectangle())
-            .alert("삭제하시겠습니까?", isPresented: $showingDeleteAlert) {
-                Button("확인", role: .destructive) {
+            .alert(L10n.tr("add.alert.title"), isPresented: $showingDeleteAlert) {
+                Button(L10n.tr("common.confirm"), role: .destructive) {
                     guard let selectedHabit = viewStore.selectedHabit else { return }
                     viewStore.send(.edit(.deleteButtonPressed(selectedHabit)))
                     viewStore.send(.setViewMode)
@@ -114,9 +163,9 @@ struct AddView: View {
                     statisticsStore.send(.loadTodoStatistics)
                     completionStore.send(.updateAllDoneContinuity(.delete, isTodayHabit(Array(selectedHabit.weekIter))))
                 }
-                Button("취소", role: .cancel) { }
+                Button(L10n.tr("common.cancel"), role: .cancel) { }
             } message: {
-                Text("이 습관을 삭제해도 완료한 기록은 유지됩니다.")
+                Text(L10n.tr("add.alert.message"))
             }
         }
     }

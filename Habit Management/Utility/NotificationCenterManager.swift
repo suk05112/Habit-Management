@@ -58,15 +58,15 @@ class NotificationCenterManager {
         let todoHabitCount = HabitViewModel.shared.getNumberOfTodayHabits()
 
         if (todoHabitCount - completedHabitCount) == 1 {
-            return "1개만 더 완료하면 모든 습관을 완료할 수 있어요!"
+            return L10n.tr("notification.one_left")
         }
         if todoHabitCount == 0 {
             return nil
         }
         if todoHabitCount == completedHabitCount {
-            return "오늘 에정된 모든 습관을 완료했어요! 내일도 화이팅!"
+            return L10n.tr("notification.all_done")
         }
-        return "오늘 미달성한 목표가 \(todoHabitCount - completedHabitCount)개 남았어요!"
+        return L10n.tr("notification.remain", todoHabitCount - completedHabitCount)
     }
     
 }

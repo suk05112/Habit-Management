@@ -126,12 +126,12 @@ extension HabitViewModel {
     func getWeekString(for habit: Habit) -> String {
         var str = ""
         let sorted = habit.weekIter.sorted(by: <)
-        if sorted == [2,3,4,5,6]{
-            str = "평일"
-        } else if sorted == [1, 7]{
-            str = "주말"
-        } else if sorted == [1,2,3,4,5,6,7]{
-            str = "매일"
+        if sorted == [2, 3, 4, 5, 6] {
+            str = L10n.tr("habit.week.weekdays_only")
+        } else if sorted == [1, 7] {
+            str = L10n.tr("habit.week.weekends_only")
+        } else if sorted == [1, 2, 3, 4, 5, 6, 7] {
+            str = L10n.tr("habit.week.every_day")
         } else{
             sorted.forEach{
                 str += Week(rawValue: $0)!.kor
