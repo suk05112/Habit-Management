@@ -25,7 +25,7 @@ struct EditHabitFeature {
         case editButtonPressed(Habit)
         case completeButtonPressed(Habit)
         case didDelete
-        case didComplete
+        case didComplete(habitID: String)
     }
     
     var body: some ReducerOf<Self> {
@@ -51,17 +51,11 @@ struct EditHabitFeature {
                 state.mode = .viewing
                 return .run { send in
                     try await completionClient.toggle(habit.id!)
-                    if habit.today() {
-                        let key = "allDoneContinuity"
-                        let continuity = max(userDefaultsClient.integerForKey(key) - 1, 0)
-                        userDefaultsClient.setInteger(continuity, key)
-                    }
-                    await send(.didComplete)
-
+                    await send(.didComplete(habitID: habit.id!))
                 }
             case .didDelete:
                 return .none
-            case .didComplete:
+            case .didComplete(_):
                 return .none
             }
         }

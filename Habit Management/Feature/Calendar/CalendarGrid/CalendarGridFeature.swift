@@ -64,10 +64,6 @@ extension CalendarGridFeature {
             }
         }
         
-//        dayItemArray.append(getThisWeekDayArray())
-//        
-        print("dayItemArray", dayItemArray)
-
         
         return dayItemArray
     }

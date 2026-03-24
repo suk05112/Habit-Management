@@ -11,148 +11,154 @@ import ComposableArchitecture
 struct HabitItemView: View {
     private let habitStore: StoreOf<HabitFeature>
     private let habit: Habit
-    private let statisticsStore: StoreOf<StatisticsFeature>
     private let completionStore: StoreOf<CompletionFeature>
-    
-    @State private var offset: CGFloat = 0
-    @State private var slideRight = false
-    @State private var slideLeft = false
     
     init(
         habitStore: StoreOf<HabitFeature>,
         habit: Habit,
-        statisticsStore: StoreOf<StatisticsFeature>,
         completionStore: StoreOf<CompletionFeature>
     ) {
         self.habitStore = habitStore
         self.habit = habit
-        self.statisticsStore = statisticsStore
         self.completionStore = completionStore
     }
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            EditHabitView(
-                habitStore: habitStore,
-                statisticsStore: statisticsStore,
-                habit: habit,
-                offset: $offset
-            )
-            .zIndex(offset > 0 ? 2 : 0)
-            WithViewStore(habitStore, observe: { $0 }) { viewStore in
-                WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
-                    if !habit.isInvalidated {
-                        HStack {
-                            habitContentView(weekDay: habit.weekString(), name: habit.name, continuity: habit.continuity)
-                        }
-                        .scaledFrame(width: .none, height: 80)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.white)
-                                .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+        WithViewStore(habitStore, observe: { $0 }) { viewStore in
+            WithViewStore(completionStore, observe: { $0 }) { completionViewStore in
+                if !habit.isInvalidated {
+                    let habitID = habit.id ?? ""
+                    let isDoneToday = completionViewStore.doneTodayMap[habitID] == true
+                    HStack(alignment: .center, spacing: 12) {
+                        habitContentView(
+                            name: habit.name,
+                            continuity: habit.continuity,
+                            weekIter: Array(habit.weekIter),
+                            isCompletedToday: isDoneToday
                         )
-                        .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
-                        .opacity(completionViewStore.doneTodayMap[habit.id!] == true ? 0.5 : 1)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            slideLeft = false
-                            slideRight = false
-                            offset = 0
+                            viewStore.send(.edit(.editButtonPressed(habit)))
+                            viewStore.send(.setHabitTitle(habit.name))
+                            viewStore.send(.setIter(Array(habit.weekIter)))
                         }
-                        .offset(x: offset)
-                        .zIndex(offset > 0 ? 0 : 1)
-                        .simultaneousGesture(DragGesture().onChanged(onChanged(value:)).onEnded(onEnd(value:)))
+                        
+                        completeButton(
+                            viewStore: viewStore,
+                            isDoneToday: isDoneToday
+                        )
                     }
+                    .scaledFrame(width: .none, height: 80)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.white)
+                            .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+                    )
+                    .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
+                    .animation(.easeInOut(duration: 0.22), value: isDoneToday)
                 }
             }
-            
         }
     }
 }
 
 // MARK: - UI Components
 extension HabitItemView {
-    func habitContentView(weekDay: String, name: String, continuity: Int) -> some View {
-        HStack {
-            Text("\(weekDay)")
+    func habitContentView(
+        name: String,
+        continuity: Int,
+        weekIter: [Int],
+        isCompletedToday: Bool
+    ) -> some View {
+        let mainText = isCompletedToday ? Color.gray.opacity(0.55) : Color(hex: "2E4A2B")
+        let subText = isCompletedToday ? Color.gray.opacity(0.5) : HabitColor.darkGreen.color
+        let capsuleText = isCompletedToday ? Color.gray.opacity(0.65) : HabitColor.darkGreen.color
+        let capsuleFill = isCompletedToday
+            ? Color.gray.opacity(0.12)
+            : HabitColor.lightGreen.color.opacity(0.25)
+        
+        return VStack(alignment: .leading, spacing: 6) {
+            Text(displayWeekText(from: weekIter))
                 .scaledText(size: 12, weight: .bold)
-                .foregroundColor(Color.white)
-                .padding(4)
-                .background(Circle().fill(HabitColor.mediumGreen.color))
+                .foregroundColor(capsuleText)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill(capsuleFill)
+                )
             
-            Text(name)
-                .scaledText(size: 20, weight: .semibold)
-                .foregroundColor(Color(hex: "2E4A2B"))
-            
-            Spacer()
-            
-            Text("\(continuity)일")
-                .scaledText(size: 20, weight: .semibold)
-                .foregroundColor(HabitColor.darkGreen.color)
-            
-            Text("실천 중🔥")
-                .scaledText(size: 20, weight: .medium)
-                .foregroundColor(.gray.opacity(0.7))
+            HStack {
+                Text(name)
+                    .scaledText(size: 20, weight: .semibold)
+                    .foregroundColor(mainText)
+                
+                Spacer()
+                
+                Text("\(continuity)일")
+                    .scaledText(size: 20, weight: .semibold)
+                    .foregroundColor(subText)
+                
+                Text("실천 중🔥")
+                    .scaledText(size: 20, weight: .medium)
+                    .foregroundColor(isCompletedToday ? Color.gray.opacity(0.45) : .gray.opacity(0.7))
+            }
         }
         .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
     }
-}
-
-extension HabitItemView {
-    func onChanged(value: DragGesture.Value) {
-        //print("offset", value.translation.width)
-
-        if value.translation.width < 0 {
-
-            if (-value.translation.width < -UIScreen.main.bounds.width/2){
-                offset = slideLeft ? value.translation.width - 60 : value.translation.width
-            }
-            else{
-                offset = value.translation.width - 60
-            }
-
+    
+    func displayWeekText(from weekIter: [Int]) -> String {
+        let daySet = Set(weekIter)
+        let weekdaySet: Set<Int> = [2, 3, 4, 5, 6]
+        let everyDaySet: Set<Int> = [1, 2, 3, 4, 5, 6, 7]
+        let weekendSet: Set<Int> = [1, 7]
+        
+        if daySet == weekdaySet {
+            return "평일만"
         }
-        else{
-
-            if (value.translation.width < UIScreen.main.bounds.width/2){
-                offset = slideRight ? value.translation.width + 110 : value.translation.width
-            }
-            else{
-                offset =  UIScreen.main.bounds.width/2
-            }
-
+        
+        if daySet == everyDaySet {
+            return "매일"
         }
-
+        
+        if daySet == weekendSet {
+            return "주말만"
+        }
+        
+        let orderedDays = weekIter
+            .sorted()
+            .compactMap { Week(rawValue: $0)?.kor }
+        return orderedDays.joined(separator: ", ")
     }
+    
+    func completeButton(
+        viewStore: ViewStore<HabitFeature.State, HabitFeature.Action>,
+        isDoneToday: Bool
+    ) -> some View {
+        let mainGreen = HabitColor.defaultGreen.color
+        let completedFill = Color.gray.opacity(0.32)
+        let completedCheck = Color.gray.opacity(0.78)
 
-    func onEnd(value: DragGesture.Value){
-
-        withAnimation(.easeOut){
-
-            if value.translation.width < 0{
-                if slideRight{
-                    slideRight = false
-                    offset = 0
-                }
-
-                else{
-                    slideLeft = true
-                    offset = -60
-                }
-
-            }
-            else{
-                if slideLeft{
-                    slideLeft = false
-                    offset = 0
-                }
-                else{
-                    slideRight = true
-                    offset = 110
-
+        return Button {
+            viewStore.send(.edit(.completeButtonPressed(habit)))
+        } label: {
+            ZStack {
+                if isDoneToday {
+                    Circle()
+                        .fill(completedFill)
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(completedCheck)
+                } else {
+                    Circle()
+                        .fill(Color.white)
+                    Circle()
+                        .stroke(mainGreen, lineWidth: 2.5)
                 }
             }
-
+            .scaledFrame(width: 32, height: 32)
         }
+        .buttonStyle(.plain)
+        .scaledPadding(top: 0, leading: 0, bottom: 0, trailing: 10)
     }
 }

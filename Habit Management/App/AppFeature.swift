@@ -75,6 +75,15 @@ struct AppFeature {
                     .send(.completion(.refreshCalendar)),
                     .send(.completion(.loadTodayCount))
                 )
+
+            case .habit(.delegate(.refreshDoneTodayForHabit(let id))):
+                return .send(.completion(.loadDoneToday(id)))
+
+            case .habit(.delegate(.refreshDoneTodayForHabits(let ids))):
+                return .send(.completion(.loadDoneTodayForHabits(ids)))
+
+            case .habit(.delegate(.refreshStatisticsFromRealm)):
+                return .send(.statistics(.addOrUpdate))
                 
             case .habit:
                 return .none

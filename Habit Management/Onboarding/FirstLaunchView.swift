@@ -11,6 +11,7 @@ import SwiftUI
 struct FirstLaunchView : View{
     @State var show: Bool = true
     @State var textlimiter = TextLimiter()
+    @State private var showNameRequiredError = false
 
     @Binding var userName : String
     @Binding var hasLaunched: Bool
@@ -38,12 +39,25 @@ struct FirstLaunchView : View{
                                 .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 25)
 
                             VStack(alignment: .center){
-                                TextField("8자 이내", text: $textlimiter.value)
+                                TextField(
+                                    "8자 이내",
+                                    text: Binding(
+                                        get: { textlimiter.value },
+                                        set: { textlimiter.value = $0; showNameRequiredError = false }
+                                    )
+                                )
                                     .scaledPadding(top: 5, leading: 15, bottom: 5, trailing: 15)
                                     .scaledText(size: 25, weight: .none)
                                     .foregroundColor(Color.black)
                                     .background(Color(.systemGray6))
 
+                                if showNameRequiredError {
+                                    Text("이름을 입력해주세요")
+                                        .foregroundColor(.red)
+                                        .scaledText(size: 14, weight: .medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .scaledPadding(top: 6, leading: 4, bottom: 0, trailing: 0)
+                                }
 
                                 HStack{
                                     RoundedRectangle(cornerRadius: 5, style: .continuous)
@@ -53,10 +67,15 @@ struct FirstLaunchView : View{
                                             Text("확인")
                                          )
                                         .onTapGesture {
-                                            userName = textlimiter.value
+                                            let trimmed = textlimiter.value.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            guard !trimmed.isEmpty else {
+                                                showNameRequiredError = true
+                                                return
+                                            }
+                                            showNameRequiredError = false
+                                            userName = trimmed
                                             hasLaunched = true
                                             show = false
-
                                         }
                                 }
 

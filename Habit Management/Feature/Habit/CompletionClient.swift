@@ -24,7 +24,8 @@ extension CompletionClient: DependencyKey {
         toggle: { id in
             let realm = try Realm()
             let todayKey = DateFormatters.standard.string(from: Date())
-            
+            let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
+
             try realm.write {
                 if let list = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey) {
                     if let idx = list.completed.firstIndex(of: id) {
@@ -37,15 +38,24 @@ extension CompletionClient: DependencyKey {
                     realm.add(new)
                 }
             }
-            
-            let completedSet = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey)!.completed
+
+            // 토글한 습관만 연속 일수 갱신 (기존 HabitViewModel.setContiuity와 동일)
+            // 이전 구현은 매 토글마다 '오늘 완료된 모든 습관'에 +1 해서 취소해도 숫자가 꼬였음.
+            guard let habit = realm.objects(Habit.self).first(where: { $0.id == id }) else { return }
+
+            let completedToday = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey)?.completed
+                ?? List<String>()
+            let doneYesterday = realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
+                .completed.contains(id) == true
+
             try realm.write {
-                let yesterday = Date().adding(-1)
-                let yesterdayKey = DateFormatters.standard.string(from: yesterday)
-                let yList = realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?.completed ?? List<String>()
-                for habit in realm.objects(Habit.self) {
-                    if !yList.contains(habit.id!) { habit.continuity = 0 }
-                    if completedSet.contains(habit.id!) { habit.continuity += 1 }
+                if !doneYesterday {
+                    habit.continuity = 0
+                }
+                if completedToday.contains(id) {
+                    habit.continuity += 1
+                } else if habit.continuity > 0 {
+                    habit.continuity -= 1
                 }
             }
         },

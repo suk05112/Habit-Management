@@ -24,6 +24,7 @@ struct CompletionFeature {
         case toggle(String)
         case toggleResponse(Bool)
         case loadDoneToday(String)
+        case loadDoneTodayForHabits([String])
         case doneTodayResponse(String, Bool)
         case loadTodayCount
         case loadYesterdayCount
@@ -65,6 +66,14 @@ struct CompletionFeature {
                 return .run { send in
                     let result = try await completionClient.isDoneToday(id)
                     await send(.doneTodayResponse(id, result))
+                }
+
+            case let .loadDoneTodayForHabits(ids):
+                return .run { send in
+                    for id in ids {
+                        let result = try await completionClient.isDoneToday(id)
+                        await send(.doneTodayResponse(id, result))
+                    }
                 }
                 
             case let .doneTodayResponse(id, result):

@@ -78,7 +78,6 @@ struct EditHabitView: View {
                         
                         if !habit.isInvalidated {
                             Button(action: {
-                                statisticsStore.send(.addOrUpdate)
                                 editStore.send(.completeButtonPressed(habit))
                                 withAnimation(.easeOut) {
                                     habit.offset = 0

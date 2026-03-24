@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Week: Int{
+enum Week: Int {
     case sun = 1, mon, tue, wed, thu, fri, sat
     
     var description : String {
@@ -36,17 +36,8 @@ enum Week: Int{
       }
     }
     
-    var total : Int{
-        switch self {
-            case .sun: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 1)
-            case .mon: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 2)
-            case .tue: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 3)
-            case .wed: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 4)
-            case .thu: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 5)
-            case .fri: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 6)
-            case .sat: return HabitViewModel.shared.getNumberOfTodayHabits(todayWeek: 7)
-   
-        }
-        
+    /// 해당 요일에 예정된 습관 수 (Realm 직조회, HabitViewModel 미사용)
+    var total: Int {
+        RealmCalendarQueries.habitsScheduledCount(on: rawValue)
     }
 }

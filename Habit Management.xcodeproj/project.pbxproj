@@ -11,13 +11,11 @@
 		032EED5A285E252800994E5B /* TextLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED59285E252800994E5B /* TextLimiter.swift */; };
 		032EED5C285E255D00994E5B /* WeekButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032EED5B285E255D00994E5B /* WeekButton.swift */; };
 		0346333628913B24000D1E61 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0346333528913B24000D1E61 /* NotificationCenterManager.swift */; };
-		4E48FAE12DF45DFA00BA7EA6 /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAE02DF45DFA00BA7EA6 /* KeyboardGuardian.swift */; };
 		03463346289FA7F9000D1E61 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 03463345289FA7F9000D1E61 /* FirebaseAnalytics */; };
 		03463348289FA7F9000D1E61 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03463347289FA7F9000D1E61 /* FirebaseAnalyticsSwift */; };
 		0346334A289FA7F9000D1E61 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03463349289FA7F9000D1E61 /* FirebaseDatabase */; };
 		0346334C289FA7F9000D1E61 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334B289FA7F9000D1E61 /* FirebaseDatabaseSwift */; };
 		0346334E289FA7F9000D1E61 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0346334D289FA7F9000D1E61 /* FirebaseCrashlytics */; };
-		03463351289FA7F9000D1E61 /* FirebaseCrashTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */; };
 		0368CBE62DF8BF090086E95B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */; };
 		0368CBEA2E0074010086E95B /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBE92E0073FB0086E95B /* String.swift */; };
 		0368CBEC2E0074390086E95B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0368CBEB2E0074360086E95B /* Date.swift */; };
@@ -69,6 +67,7 @@
 		4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384162DFED3BD002849DB /* HabitToggleFeature.swift */; };
 		4E33841A2E0050CE002849DB /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384192E0050CE002849DB /* DateFormatters.swift */; };
 		4E3384202E011C56002849DB /* HabitScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E33841F2E011C56002849DB /* HabitScrollView.swift */; };
+		4E3384252E0050CF002849DB /* RealmCalendarQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */; };
 		4E48FA852DF45DF200BA7EA6 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */; };
 		4E48FA862DF45DF200BA7EA6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7D2DF45DF200BA7EA6 /* Color.swift */; };
 		4E48FA882DF45DF200BA7EA6 /* DependencyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FA7F2DF45DF200BA7EA6 /* DependencyValues.swift */; };
@@ -97,7 +96,6 @@
 		4E48FAC72DF45DFD00BA7EA6 /* CompletedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC12DF45DFD00BA7EA6 /* CompletedList.swift */; };
 		4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */; };
 		4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */; };
-		8F1C2D3E4B5A6C7D8E9F0012 /* ReportClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1C2D3E4B5A6C7D8E9F0011 /* ReportClient.swift */; };
 		4E48FACA2DF45DFD00BA7EA6 /* ScrollData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */; };
 		4E48FACB2DF45DFD00BA7EA6 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */; };
 		4E48FAD42DF45DFA00BA7EA6 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAD22DF45DFA00BA7EA6 /* Tab.swift */; };
@@ -105,7 +103,9 @@
 		4E48FAD82DF45DFA00BA7EA6 /* ActionSheetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAD62DF45DFA00BA7EA6 /* ActionSheetCard.swift */; };
 		4E48FAD92DF45DFA00BA7EA6 /* GreyOutOfFocusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAD72DF45DFA00BA7EA6 /* GreyOutOfFocusView.swift */; };
 		4E48FADB2DF45DFA00BA7EA6 /* OffsetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FADA2DF45DFA00BA7EA6 /* OffsetViewModel.swift */; };
+		4E48FAE12DF45DFA00BA7EA6 /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E48FAE02DF45DFA00BA7EA6 /* KeyboardGuardian.swift */; };
 		4EB11C4B2E054245004B3BA1 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB11C4A2E054245004B3BA1 /* Mode.swift */; };
+		8F1C2D3E4B5A6C7D8E9F0012 /* ReportClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1C2D3E4B5A6C7D8E9F0011 /* ReportClient.swift */; };
 		B56F33732DF9D30900416589 /* PaddingModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56F33722DF9D30900416589 /* PaddingModifier.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,9 +144,7 @@
 		032EED59285E252800994E5B /* TextLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiter.swift; sourceTree = "<group>"; };
 		032EED5B285E255D00994E5B /* WeekButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekButton.swift; sourceTree = "<group>"; };
 		0346333528913B24000D1E61 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
-		4E48FAE02DF45DFA00BA7EA6 /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
 		0346333D289AC6DA000D1E61 /* Habit-Management-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Habit-Management-Info.plist"; sourceTree = SOURCE_ROOT; };
-		03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCrashTestView.swift; sourceTree = "<group>"; };
 		0368CBE52DF8BF090086E95B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0368CBE92E0073FB0086E95B /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0368CBEB2E0074360086E95B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -193,6 +191,7 @@
 		4E3384192E0050CE002849DB /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		4E33841D2E005672002849DB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		4E33841F2E011C56002849DB /* HabitScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitScrollView.swift; sourceTree = "<group>"; };
+		4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCalendarQueries.swift; sourceTree = "<group>"; };
 		4E48FA7B2DF45DF200BA7EA6 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		4E48FA7D2DF45DF200BA7EA6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4E48FA7F2DF45DF200BA7EA6 /* DependencyValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyValues.swift; sourceTree = "<group>"; };
@@ -221,7 +220,6 @@
 		4E48FAC12DF45DFD00BA7EA6 /* CompletedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedList.swift; sourceTree = "<group>"; };
 		4E48FAC22DF45DFD00BA7EA6 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		4E48FAC32DF45DFD00BA7EA6 /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
-		8F1C2D3E4B5A6C7D8E9F0011 /* ReportClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClient.swift; sourceTree = "<group>"; };
 		4E48FAC42DF45DFD00BA7EA6 /* ScrollData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollData.swift; sourceTree = "<group>"; };
 		4E48FAC52DF45DFD00BA7EA6 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		4E48FAD22DF45DFA00BA7EA6 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -229,7 +227,9 @@
 		4E48FAD62DF45DFA00BA7EA6 /* ActionSheetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCard.swift; sourceTree = "<group>"; };
 		4E48FAD72DF45DFA00BA7EA6 /* GreyOutOfFocusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreyOutOfFocusView.swift; sourceTree = "<group>"; };
 		4E48FADA2DF45DFA00BA7EA6 /* OffsetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetViewModel.swift; sourceTree = "<group>"; };
+		4E48FAE02DF45DFA00BA7EA6 /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
 		4EB11C4A2E054245004B3BA1 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
+		8F1C2D3E4B5A6C7D8E9F0011 /* ReportClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportClient.swift; sourceTree = "<group>"; };
 		B56F33722DF9D30900416589 /* PaddingModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -401,7 +401,6 @@
 			isa = PBXGroup;
 			children = (
 				03DBC27D2827CEEE000848BF /* Main */,
-				03463350289FA7F9000D1E61 /* FirebaseCrashTestView.swift */,
 				037FFAF6284614F400BD3C0E /* TestView.swift */,
 			);
 			name = View;
@@ -511,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				4E3384192E0050CE002849DB /* DateFormatters.swift */,
+				4E3384262E0050CF002849DB /* RealmCalendarQueries.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -925,7 +925,6 @@
 				4E48FABF2DF45DFA00BA7EA6 /* StatisticsClient.swift in Sources */,
 				4E48FAC02DF45DFA00BA7EA6 /* StatisticsFeature.swift in Sources */,
 				4E3384172DFED3BD002849DB /* HabitToggleFeature.swift in Sources */,
-				03463351289FA7F9000D1E61 /* FirebaseCrashTestView.swift in Sources */,
 				037FFAF7284614F400BD3C0E /* TestView.swift in Sources */,
 				0392B41B28080DA0006C1E04 /* RealmThread.swift in Sources */,
 				032EED5C285E255D00994E5B /* WeekButton.swift in Sources */,
@@ -946,6 +945,7 @@
 				0392B41928080A7F006C1E04 /* RealmManager.swift in Sources */,
 				03CFE06A27EC46D1004C54B6 /* MainView.swift in Sources */,
 				4E33841A2E0050CE002849DB /* DateFormatters.swift in Sources */,
+				4E3384252E0050CF002849DB /* RealmCalendarQueries.swift in Sources */,
 				4E48FAC72DF45DFD00BA7EA6 /* CompletedList.swift in Sources */,
 				4E48FAC82DF45DFD00BA7EA6 /* Habit.swift in Sources */,
 				4E48FAC92DF45DFD00BA7EA6 /* ReportData.swift in Sources */,
@@ -1128,7 +1128,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = QYR3CD5MQ8;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1147,7 +1147,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Habit-Management";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayflowlabs.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1165,7 +1165,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Habit Management/Preview Content\"";
-				DEVELOPMENT_TEAM = F2YB4PBTB4;
+				DEVELOPMENT_TEAM = QYR3CD5MQ8;
 				ENABLE_PREVIEWS = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1184,7 +1184,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Habit-Management";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dayflowlabs.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

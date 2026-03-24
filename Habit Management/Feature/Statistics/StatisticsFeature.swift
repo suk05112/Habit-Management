@@ -62,7 +62,7 @@ struct StatisticsFeature {
 
             case let .statisticsUpdated(data):
                 state.statisticsData = data
-                return .none
+                return .send(.computeTotalCounts)
 
             case let .scrollDataLoaded(dayArray, monthArray, thisWeek):
                 state.dayArray = dayArray
@@ -78,7 +78,7 @@ struct StatisticsFeature {
 
             case let .initialStatisticsDataLoaded(data):
                 state.statisticsData = data
-                return .none
+                return .send(.computeTotalCounts)
 
             case .computeTotalCounts:
                 var counts: [Total: Int] = [:]

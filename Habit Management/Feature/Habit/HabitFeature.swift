@@ -38,6 +38,12 @@ struct HabitFeature {
     enum Delegate: Equatable {
         /// App 루트 `CompletionFeature` 갱신이 필요할 때 (중복 Scope 제거 후 위임)
         case reloadCompletionTodayCount
+        /// 토글 직후 해당 습관의 오늘 완료 여부를 `doneTodayMap`에 반영
+        case refreshDoneTodayForHabit(String)
+        /// 목록 로드 후 각 습관의 오늘 완료 여부 동기화
+        case refreshDoneTodayForHabits([String])
+        /// 완료 토글 후 Realm 반영 뒤 통계(완료 수) 재계산 — 뷰에서 `addOrUpdate`를 토글 전에내면 숫자가 반대로 보임
+        case refreshStatisticsFromRealm
     }
     
     enum Action: BindableAction {
@@ -99,7 +105,9 @@ struct HabitFeature {
                 
             case let .loadHabits(habits):
                 state.habitList = habits
-                return .none
+                let ids = habits.compactMap(\.id)
+                guard !ids.isEmpty else { return .none }
+                return .send(.delegate(.refreshDoneTodayForHabits(ids)))
                 
             case let .setUserName(name):
                 state.userName = name
@@ -236,12 +244,14 @@ struct HabitFeature {
                         await send(.onAppear)
                     }
                 
-                case .didComplete:
+                case let .didComplete(habitID):
                     print("didComplete")
                     let showAll = state.toggle.isShowAll
                     let hideCompleted = state.toggle.isHideCompleted
                     return .merge(
                         .send(.delegate(.reloadCompletionTodayCount)),
+                        .send(.delegate(.refreshDoneTodayForHabit(habitID))),
+                        .send(.delegate(.refreshStatisticsFromRealm)),
                         .run { send in
                             let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
                             await send(.loadHabits(habits))

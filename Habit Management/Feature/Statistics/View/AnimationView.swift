@@ -9,11 +9,6 @@ import Foundation
 import SwiftUI
 
 struct AnimationView: View {
-    @StateObject var statisticsViewModel = StatisticsViewModel.shared
-    let todayTotal = HabitViewModel.shared.getNumberOfTodayHabits()
-    let todayDone = StatisticsViewModel.shared.getData(selected: 1).last!
-    let yesterdayDone = StatisticsViewModel.shared.getData(selected: 1)[5]
-
     @State var index: Int = 0
     @State var timer = Timer.publish(every: 2, on: RunLoop.main, in: RunLoop.Mode.common).autoconnect()
     var colors: [Color] = [Color.red, Color.blue, Color.green, Color.orange, Color.purple]

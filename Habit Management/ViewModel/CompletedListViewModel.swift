@@ -139,12 +139,10 @@ class CompletedListViewModel: ObservableObject {
         print("alldone Continue", UserDefaults.standard.integer(forKey: "allDoneContinuity"))
     }
 
+    /// 날짜(yyyy-MM-dd)별 완료 개수. `refresh()`·전체 스캔 없이 primary key만 조회 (달력 등 고빈도 호출 대비).
     func getCount(date: String) -> Int {
-        realm?.refresh()
-        if let object = realm?.objects(CompletedList.self).filter(NSPredicate(format: "date = %@", date)).first {
-            return object.completed.count
-        }
-        return 0
+        guard let realm else { return 0 }
+        return realm.object(ofType: CompletedList.self, forPrimaryKey: date)?.completed.count ?? 0
     }
 
     func getStatistics(staticCase: Total) -> Int {

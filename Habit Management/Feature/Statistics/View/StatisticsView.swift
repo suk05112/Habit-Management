@@ -15,8 +15,7 @@ struct StatisticsView: View {
     let reportData: ReportData
     
     @State var ratio: Double = Double(5/6)
-    @StateObject var completedListViewModel = CompletedListViewModel.shared
-    
+
     @State private var showingDetail = false
     
     @State var index: Int = 0

@@ -7,8 +7,15 @@
 
 import SwiftUI
 import CoreData
-import Firebase
 import ComposableArchitecture
+
+/// `MainView`에서 실제로 그릴 때만 반응해야 하는 상태만 구독해,
+/// 홈에서 습관 완료 등으로 `calendar`/`completion` 등이 바뀔 때 통계 탭 뷰가 매번 재생성되지 않게 함.
+private struct MainViewObservedState: Equatable {
+    var userName: String
+    var hasLaunched: Bool
+    var habitMode: Mode
+}
 
 struct MainView: View {
     let store: StoreOf<AppFeature>
@@ -29,12 +36,20 @@ struct MainView: View {
     }
     
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(
+            store,
+            observe: {
+                MainViewObservedState(
+                    userName: $0.userName,
+                    hasLaunched: $0.hasLaunched,
+                    habitMode: $0.habit.mode
+                )
+            }
+        ) { viewStore in
             ZStack {
                 TabView {
                     HabitView(calendarStore: calendarStore,
                               habitStore: habitStore,
-                              statisticsStore: statisticsStore,
                               completionStore: completionStore)
                         .tabItem { tabIconView("house", "홈") }
                     StatisticsView(
@@ -44,18 +59,10 @@ struct MainView: View {
                         reportData: reportData
                     )
                         .tabItem { tabIconView("chart.bar.fill", "통계") }
-                    if #available(iOS 16.0, *) {
-                        NavigationStack {
-                            FirebaseCrashTestView()
-                        }
-                        .tabItem { tabIconView("exclamationmark.triangle", "비정상종료테스트") }
-                    } else {
-                        // Fallback on earlier versions
-                    }
                 }
                 .tint(HabitColor.defaultGreen.color)
                 
-                if viewStore.habit.mode == .adding || viewStore.habit.mode == .editing {
+                if viewStore.habitMode == .adding || viewStore.habitMode == .editing {
                     AddView(habitStore: habitStore,
                             statisticsStore: statisticsStore,
                             completionStore: completionStore)
