@@ -13,6 +13,7 @@ import RealmSwift
 struct HabitFeature {
     
     @Dependency(\.habitClient) var habitClient
+    @Dependency(\.reportClient) var reportClient
     
     struct State: Equatable {
         var habitList: [Habit] = []
@@ -93,8 +94,7 @@ struct HabitFeature {
             case .onAppear:
                 let showAll = state.toggle.isShowAll
                 let hideCompleted = state.toggle.isHideCompleted
-                //                state.mainReportText = ReportData.shared.getMainReport()
-                
+
                 return .run { send in
                     let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
                     await send(.loadHabits(habits))
@@ -102,6 +102,9 @@ struct HabitFeature {
                 
             case let .loadHabits(habits):
                 state.habitList = habits
+                let headerText = reportClient.mainHeaderReportText()
+                state.mainReportText = headerText
+                state.header.mainReportText = headerText
                 let ids = habits.compactMap(\.id)
                 guard !ids.isEmpty else { return .none }
                 return .send(.delegate(.refreshDoneTodayForHabits(ids)))

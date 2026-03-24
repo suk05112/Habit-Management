@@ -17,17 +17,17 @@ struct HabitToggleView: View {
     
     var body: some View {
         WithViewStore(habitToggleStore, observe: { $0 }) { viewStore in
-            HStack {
+            HStack(spacing: 8) {
                 showAllButton(title: viewStore.labelTitle.showAll) {
                     viewStore.send(.showAllButtonPressed)
                 }
-                
+                .frame(maxWidth: .infinity)
+
                 hideCompletedButton(title: viewStore.labelTitle.hideCompleted) {
                     viewStore.send(.hideCompletedButtonPressed)
                 }
-                
-                Spacer()
-                
+                .frame(maxWidth: .infinity)
+
                 addHabitButton {
                     viewStore.send(.addHabitButtonPressed)
 //                    viewStore.send(.selectItem(nil))
@@ -46,22 +46,32 @@ extension HabitToggleView {
         Button(action: action) {
             Text(title)
                 .scaledText(size: 16, weight: .bold)
-                .scaledFrame(width: 112, height: 36)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
+                .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity, minHeight: 36)
                 .background(HabitColor.mediumGreen.color)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
+        .buttonStyle(.plain)
     }
-    
+
     private func hideCompletedButton(title: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .scaledText(size: 16, weight: .bold)
-                .scaledFrame(width: 100, height: 36)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
+                .padding(.horizontal, 10)
+                .frame(maxWidth: .infinity, minHeight: 36)
                 .background(HabitColor.mediumGreen.color)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
+        .buttonStyle(.plain)
     }
     
     private func addHabitButton(action: @escaping () -> Void) -> some View {

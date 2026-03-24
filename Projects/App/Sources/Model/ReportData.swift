@@ -234,26 +234,6 @@ class ReportData {
 
 extension ReportData {
     func getMainReportText() -> String {
-        var list: [(String, String)] = []
-
-        let habits = reportClient.habitsWithContinuity()
-        guard !habits.isEmpty else {
-            return L10n.tr("habit.header.empty")
-        }
-
-        habits.forEach {
-            if $0.continuity > 0 && !$0.name.isEmpty {
-                list.append((String($0.continuity), $0.name))
-            }
-        }
-
-        guard !list.isEmpty else {
-            return L10n.tr("habit.header.empty")
-        }
-
-        let randomInt = Int.random(in: 0..<list.count)
-        let item = list[randomInt]
-        let days = Int(item.0) ?? 0
-        return L10n.tr("report.main_streak", days, item.1)
+        reportClient.mainHeaderReportText()
     }
 }

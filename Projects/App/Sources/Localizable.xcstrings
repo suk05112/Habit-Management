@@ -7,23 +7,17 @@
     "%@" : {
 
     },
-    "%lf, %lf" : {
+    "%@, %@" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$lf, %2$lf"
+            "value" : "%1$@, %2$@"
           }
         }
       }
     },
-    "%lld" : {
-
-    },
     "0" : {
-
-    },
-    "20% up" : {
 
     },
     "add.alert.message" : {

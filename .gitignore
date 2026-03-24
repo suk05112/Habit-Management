@@ -49,9 +49,11 @@ playground.xcworkspace
 
 .build/
 
-# Project
+# Xcode 프로젝트·워크스페이스는 아래 예외만 추적
 *.xcworkspace
+!Habit Management.xcworkspace
 *.xcodeproj
+!Projects/App/Habit Management.xcodeproj
 
 # fastlane
 #
