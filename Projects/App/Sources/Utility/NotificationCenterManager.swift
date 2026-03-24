@@ -54,19 +54,19 @@ class NotificationCenterManager {
     }
     
     func setBodyMessage() -> String? {
-        let numOfcompletedHabit = compltedLIstVM.shared.isTodayHabitComplete()
-        let numOfTodoHabit = HabitVM.shared.getNumOfTodayHabit()
-        
-        if (numOfTodoHabit-numOfcompletedHabit) == 1 {
-            return "1개만 더 완료하면 모든 습관을 완료할 수 있어요!"
+        let completedHabitCount = CompletedListViewModel.shared.isTodayHabitComplete()
+        let todoHabitCount = HabitViewModel.shared.getNumberOfTodayHabits()
+
+        if (todoHabitCount - completedHabitCount) == 1 {
+            return L10n.tr("notification.one_left")
         }
-        if numOfTodoHabit == 0 {
+        if todoHabitCount == 0 {
             return nil
         }
-        if numOfTodoHabit == numOfcompletedHabit {
-            return "오늘 에정된 모든 습관을 완료했어요! 내일도 화이팅!"
+        if todoHabitCount == completedHabitCount {
+            return L10n.tr("notification.all_done")
         }
-        return "오늘 미달성한 목표가 \(numOfTodoHabit-numOfcompletedHabit)개 남았어요!"
+        return L10n.tr("notification.remain", todoHabitCount - completedHabitCount)
     }
     
 }

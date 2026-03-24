@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import ComposableArchitecture
 import RealmSwift
+import ComposableArchitecture
 
 struct CompletionClient {
     var toggle: @Sendable (String) async throws -> Void
@@ -17,7 +17,6 @@ struct CompletionClient {
     var isDoneToday: @Sendable (String) async throws -> Bool
     var todayHabitCompleteCount: @Sendable () async throws -> Int
     var yesterdayHabitCompleteCount: @Sendable () async throws -> Int
-    var updateAllDoneContinuity: @Sendable (CompleteStatus, Bool) async throws -> Int
 }
 
 extension CompletionClient: DependencyKey {
@@ -25,6 +24,7 @@ extension CompletionClient: DependencyKey {
         toggle: { id in
             let realm = try Realm()
             let todayKey = DateFormatters.standard.string(from: Date())
+            let yesterdayKey = DateFormatters.standard.string(from: Date().adding(-1))
 
             try realm.write {
                 if let list = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey) {
@@ -38,15 +38,24 @@ extension CompletionClient: DependencyKey {
                     realm.add(new)
                 }
             }
-            
-            let completedSet = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey)!.completed
+
+            // 토글한 습관만 연속 일수 갱신 (기존 HabitViewModel.setContiuity와 동일)
+            // 이전 구현은 매 토글마다 '오늘 완료된 모든 습관'에 +1 해서 취소해도 숫자가 꼬였음.
+            guard let habit = realm.objects(Habit.self).first(where: { $0.id == id }) else { return }
+
+            let completedToday = realm.object(ofType: CompletedList.self, forPrimaryKey: todayKey)?.completed
+                ?? List<String>()
+            let doneYesterday = realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?
+                .completed.contains(id) == true
+
             try realm.write {
-                let yesterday = Date().adding(-1)
-                let yesterdayKey = DateFormatters.standard.string(from: yesterday)
-                let yList = realm.object(ofType: CompletedList.self, forPrimaryKey: yesterdayKey)?.completed ?? List<String>()
-                for habit in realm.objects(Habit.self) {
-                    if !yList.contains(habit.id!) { habit.continuity = 0 }
-                    if completedSet.contains(habit.id!) { habit.continuity += 1 }
+                if !doneYesterday {
+                    habit.continuity = 0
+                }
+                if completedToday.contains(id) {
+                    habit.continuity += 1
+                } else if habit.continuity > 0 {
+                    habit.continuity -= 1
                 }
             }
         },
@@ -63,7 +72,7 @@ extension CompletionClient: DependencyKey {
             return realm.object(ofType: CompletedList.self, forPrimaryKey: date)?.completed.count ?? 0
         },
         
-                statistics: { staticCase in
+        statistics: { staticCase in
             let realm = try Realm()
             let comps = Calendar.current.dateComponents([.year, .month, .weekday], from: Date())
             let year = comps.year!, month = comps.month!, weekday = comps.weekday!
@@ -111,24 +120,5 @@ extension CompletionClient: DependencyKey {
             return realm.object(ofType: CompletedList.self, forPrimaryKey: key)?.completed.count ?? 0
         },
         
-        updateAllDoneContinuity: { status, isToday in
-            guard isToday else { return UserDefaults.standard.integer(forKey: "allDoneContinuity") }
-
-            let calendar = Calendar.current
-            let weekday = calendar.component(.weekday, from: Date())
-            let key = "allDoneContinuity"
-            var continuity = UserDefaults.standard.integer(forKey: key)
-
-            if continuity < 0 { continuity = 0 }
-
-            if status == .complete {
-                continuity += 1
-            } else if status == .cancel || status == .add {
-                continuity = max(continuity - 1, 0)
-            }
-
-            UserDefaults.standard.set(continuity, forKey: key)
-            return continuity
-        }
     )
 }

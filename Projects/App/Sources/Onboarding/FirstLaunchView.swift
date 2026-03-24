@@ -11,8 +11,10 @@ import SwiftUI
 struct FirstLaunchView : View{
     @State var show: Bool = true
     @State var textlimiter = TextLimiter()
+    @State private var showNameRequiredError = false
 
     @Binding var userName : String
+    @Binding var hasLaunched: Bool
 
 
     var body: some View {
@@ -32,31 +34,48 @@ struct FirstLaunchView : View{
                             
                         VStack(alignment: .leading){
 
-                            Text("이름을 입력해 주세요")
+                            Text(L10n.tr("onboarding.title"))
                                 .scaledText(size: 20, weight: .none)
                                 .scaledPadding(top: 0, leading: 5, bottom: 0, trailing: 25)
 
                             VStack(alignment: .center){
-                                TextField("8자 이내", text: $textlimiter.value)
+                                TextField(
+                                    L10n.tr("onboarding.placeholder"),
+                                    text: Binding(
+                                        get: { textlimiter.value },
+                                        set: { textlimiter.value = $0; showNameRequiredError = false }
+                                    )
+                                )
                                     .scaledPadding(top: 5, leading: 15, bottom: 5, trailing: 15)
                                     .scaledText(size: 25, weight: .none)
                                     .foregroundColor(Color.black)
                                     .background(Color(.systemGray6))
 
+                                if showNameRequiredError {
+                                    Text(L10n.tr("onboarding.error.empty"))
+                                        .foregroundColor(.red)
+                                        .scaledText(size: 14, weight: .medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .scaledPadding(top: 6, leading: 4, bottom: 0, trailing: 0)
+                                }
 
                                 HStack{
                                     RoundedRectangle(cornerRadius: 5, style: .continuous)
                                         .fill(Color(hex: "#639F70"))
                                         .scaledFrame(width: 60, height: 30)
                                         .overlay(
-                                            Text("확인")
+                                            Text(L10n.tr("onboarding.confirm"))
                                          )
                                         .onTapGesture {
-                                            UserDefaults.standard.set(true, forKey: "wasLaunchedBefore")
-                                            UserDefaults.standard.set(textlimiter.value, forKey: "userName")
-                                            userName = UserDefaults.standard.string(forKey: "userName")!
+                                            let trimmed = textlimiter.value.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            guard !trimmed.isEmpty else {
+                                                showNameRequiredError = true
+                                                return
+                                            }
+                                            showNameRequiredError = false
+                                            userName = trimmed
+                                            hasLaunched = true
                                             show = false
-
                                         }
                                 }
 
@@ -78,10 +97,11 @@ struct FirstLaunchView : View{
 }
 struct ContentView_Previews2: PreviewProvider {
     @State static var str = ""
+    @State static var hasLaunched = false
     static let setting = Setting()
 
     static var previews: some View {
-        FirstLaunchView(show: true, userName: $str)
+        FirstLaunchView(show: true, userName: $str, hasLaunched: $hasLaunched)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .environmentObject(setting)
 

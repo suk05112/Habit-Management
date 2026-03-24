@@ -10,9 +10,9 @@ import Foundation
 extension String {
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = .current
         
         if let date = dateFormatter.date(from: self) {
             return date
@@ -21,30 +21,21 @@ extension String {
         }
     }
     func toString() -> String {
+        guard let date = toDate() else { return self }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM월\ndd일"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
-        return dateFormatter.string(from: self.toDate()!)
+        dateFormatter.locale = Locale.current
+        dateFormatter.timeZone = .current
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd")
+        return dateFormatter.string(from: date)
     }
     
-    func convert() -> String{
-        let monthFormatter = DateFormatter()
+    func convert() -> String {
+        guard let date = toDate() else { return self }
         let dayFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: "ko_KR")
-        dayFormatter.locale = Locale(identifier: "ko_KR")
-
-        monthFormatter.timeZone = TimeZone(abbreviation: "KST")
-        dayFormatter.timeZone = TimeZone(abbreviation: "KST")
-
-        monthFormatter.dateFormat = "MM"
-        dayFormatter.dateFormat = "dd"
-        
-        let month = Int(monthFormatter.string(from: self.toDate()!))!
-        let day = dayFormatter.string(from: self.toDate()!)
-
-//        return "\(Month(rawValue: month)!.description)\n\(day)"
-        return "\(day)일"
-
+        dayFormatter.locale = Locale.current
+        dayFormatter.timeZone = .current
+        dayFormatter.dateFormat = "d"
+        let day = dayFormatter.string(from: date)
+        return L10n.tr("date.day_suffix", day)
     }
 }

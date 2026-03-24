@@ -17,6 +17,7 @@ struct AppFeature {
         var calendar: CalendarFeature.State = .init()
         var habit: HabitFeature.State = .init()
         var statistics: StatisticsFeature.State = .init()
+        var completion: CompletionFeature.State = .init()
     }
     
     enum Action: BindableAction {
@@ -26,6 +27,7 @@ struct AppFeature {
         case calendar(CalendarFeature.Action)
         case habit(HabitFeature.Action)
         case statistics(StatisticsFeature.Action)
+        case completion(CompletionFeature.Action)
         case binding(BindingAction<State>)
     }
     
@@ -44,16 +46,21 @@ struct AppFeature {
             StatisticsFeature()
         }
         
+        Scope(state: \.completion, action: \.completion) {
+            CompletionFeature()
+        }
+        
         Reduce { state, action in
             switch action {
             case .task:
                 return .merge(
+                    .send(.habit(.setUserName(state.userName))),
                     .send(.statistics(.onAppear))
                 )
             case let .setUserName(name):
                 state.userName = name
                 UserDefaults.standard.set(name, forKey: "userName")
-                return .none
+                return .send(.habit(.setUserName(name)))
                 
             case let .setHasLaunched(flag):
                 state.hasLaunched = flag
@@ -63,10 +70,28 @@ struct AppFeature {
             case .calendar:
                 return .none
                 
+            case .habit(.delegate(.reloadCompletionTodayCount)):
+                return .merge(
+                    .send(.completion(.refreshCalendar)),
+                    .send(.completion(.loadTodayCount))
+                )
+
+            case .habit(.delegate(.refreshDoneTodayForHabit(let id))):
+                return .send(.completion(.loadDoneToday(id)))
+
+            case .habit(.delegate(.refreshDoneTodayForHabits(let ids))):
+                return .send(.completion(.loadDoneTodayForHabits(ids)))
+
+            case .habit(.delegate(.refreshStatisticsFromRealm)):
+                return .send(.statistics(.addOrUpdate))
+                
             case .habit:
                 return .none
                 
             case .statistics:
+                return .none
+                
+            case .completion:
                 return .none
                 
             case .binding(_):

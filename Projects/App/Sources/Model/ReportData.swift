@@ -5,117 +5,87 @@
 //  Created by 한수진 on 2022/06/14.
 //
 
-import ComposableArchitecture
-import RealmSwift
 import SwiftUI
+import ComposableArchitecture
 
 class ReportData {
-    let store: StoreOf<StatisticsFeature>
     let viewStore: ViewStore<StatisticsFeature.State, StatisticsFeature.Action>
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(ReportClient.self) var reportClient
 
-    //    static let shared = ReportData()
-    private static var _shared: ReportData?
-    private(set) static var shared: ReportData = {
-        guard let instance = _shared else {
-            fatalError("ReportData.shared must be configured before use.")
-        }
-        return instance
-    }()
+    let todayDone: Int
+    let yesterdayDone: Int
 
-    @StateObject var completedVM = compltedLIstVM.shared
-
-    let today_total = HabitVM.shared.getNumOfTodayHabit()
-    let today_done: Int
-    let yesterday_done: Int
-    //    let today_done = StaticVM.shared.day.last!
-
-    var strList: [String] = []
-    var percentList: [String] = []
-    var percentHeadList: [String] = ["", "어제 대비", "지난 주 대비", "지난 달 대비", "", ""]
-    var TextList: [(String, String, String)] = []
-    var realm: Realm? = try? Realm()
+    var textList: [(String, String, String)] = []
 
     init(store: StoreOf<StatisticsFeature>) {
-        self.store = store
         self.viewStore = ViewStore(store, observe: { $0 })
 
-        self.today_done = viewStore.statisticsData.day.last ?? 0
-        self.yesterday_done =
-            viewStore.statisticsData.day.count > 5 ? viewStore.statisticsData.day[5] : 0
-        setReportText()
+        self.todayDone = viewStore.statisticsData.day.last ?? 0
+        self.yesterdayDone = viewStore.statisticsData.day.count > 5 ? viewStore.statisticsData.day[5] : 0
+        updateReportText()
     }
 
-    static func configure(store: StoreOf<StatisticsFeature>) {
-        _shared = ReportData(store: store)
-    }
-
-    func setReportText() {
+    func updateReportText() {
         var list: [(String, String, String)] = [
-            getTodayText(), getYesterDayText(), getWeekText(), getMonthText(), getCotinuityText(),
+            getTodayReportText(), getYesterdayReportText(), getWeekReportText(), getMonthReportText(),
+            getContinuityReportText(),
         ]
 
         list = list.filter { !($0.0.isEmpty && $0.2.isEmpty) }
 
-        guard let realm = realm,
-            let firstHabit = realm.objects(Habit.self).first,
-            let lastCompleted = realm.objects(CompletedList.self).last
-        else {
-            TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
+        guard reportClient.hasHabitAndCompletionData() else {
+            textList = [(L10n.tr("report.empty.line1"), L10n.tr("report.empty.line2"), "")]
             return
         }
 
-        if firstHabit == nil || lastCompleted.completed.isEmpty {
-            TextList = [("아직 완료된 습관이 없습니다", "습관을 완료해 주세요.", "")]
-        } else {
-            TextList = list
-        }
+        textList = list
     }
 
-    func getReportText() -> [(String, String, String)] {
-        return TextList
+    func getReportTextEntries() -> [(String, String, String)] {
+        textList
     }
 
-    func getRandomText() -> (String, String, String) {
-        guard !TextList.isEmpty else {
-            return ("데이터가 없습니다", "", "")
+    func getRandomReportText() -> (String, String, String) {
+        guard !textList.isEmpty else {
+            return (L10n.tr("report.no_data"), "", "")
         }
 
-        let randomInt = Int.random(in: 0..<TextList.count)
-        return TextList[randomInt]
+        let randomInt = Int.random(in: 0..<textList.count)
+        return textList[randomInt]
     }
 
-    func getTodayText() -> (String, String, String) {
-        let today_done = viewStore.statisticsData.day.last ?? 0
-        let today_total = HabitVM.shared.getNumOfTodayHabit()
+    func getTodayReportText() -> (String, String, String) {
+        let todayDone = viewStore.statisticsData.day.last ?? 0
+        let todayTotal = reportClient.todayHabitCount()
 
         let percentHead = ""
         var str: String = ""
 
-        if today_total == today_done + 1 {
-            let today_doneList = compltedLIstVM.shared.todayDoneList
-            for item in HabitVM.shared.getTodayHabit() {
-                if !today_doneList.completed.contains(item.id!) {
-                    str = item.name
-                    break
-                }
+        if todayTotal == todayDone + 1 {
+            let completedIDs = reportClient.todayCompletedIDs()
+            for item in reportClient.todayHabits()
+                where !completedIDs.contains(item.id ?? "") {
+                str = item.name
+                break
             }
         }
-        return str == ""
-            ? ("", "", percentHead) : ("\(str)만 완료하면 오늘 예정된 모든 습관을 완료할 수 있어요!", "", percentHead)
+        return str == "" ? ("", "", percentHead) : (L10n.tr("report.today_one_left", str), "", percentHead)
     }
 
-    func getYesterDayText() -> (String, String, String) {
-        guard today_total != 0 else { return ("", "", "") }
-        let today_done = viewStore.statisticsData.day.last ?? 0
+    func getYesterdayReportText() -> (String, String, String) {
+        let todayTotal = reportClient.todayHabitCount()
+        guard todayTotal != 0 else { return ("", "", "") }
+        let todayDone = viewStore.statisticsData.day.last ?? 0
 
         var text: String
         var percent: String
-        let percentHead = "어제 대비"
+        let percentHead = L10n.tr("report.head.yesterday")
 
         guard viewStore.statisticsData.day.count > 5 else {
             return ("", "", "")
         }
-        let yesterday_done = viewStore.statisticsData.day[5]
+        let yesterdayDone = viewStore.statisticsData.day[5]
 
         guard !viewStore.todoPerDay.isEmpty else {
             return ("", "", "")
@@ -127,7 +97,7 @@ class ReportData {
         let yesterdayIndex = (todayWeek - 2 + 7) % 7
 
         guard todayIndex < viewStore.todoPerDay.count,
-            yesterdayIndex < viewStore.todoPerDay.count
+              yesterdayIndex < viewStore.todoPerDay.count
         else {
             return ("", "", "")
         }
@@ -135,27 +105,27 @@ class ReportData {
         let todayTodo = viewStore.todoPerDay[todayIndex]
         let yesterdayTodo = viewStore.todoPerDay[yesterdayIndex]
 
-        text = getText(thisDone: today_done, lastDone: yesterday_done, "어제")
+        text = getLocalizedCompareText(
+            thisDone: todayDone, lastDone: yesterdayDone, periodKey: "report.period.yesterday")
         percent = getPercent(
-            thisDone: today_done, lastDone: yesterday_done, thisTodo: todayTodo,
-            lastTodo: yesterdayTodo)
+            thisDone: todayDone, lastDone: yesterdayDone, thisTodo: todayTodo, lastTodo: yesterdayTodo)
 
         return (text, percentHead, percent)
     }
 
-    func getWeekText() -> (String, String, String) {
-        let percentHead = "지난 주 대비"
+    func getWeekReportText() -> (String, String, String) {
+        let percentHead = L10n.tr("report.head.last_week")
 
         guard let weekNO = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear,
-            weekNO > 1
+              weekNO > 1
         else {
             return ("", "", "")
         }
 
         guard weekNO - 1 < viewStore.statisticsData.week.count,
-            weekNO - 2 >= 0,
-            weekNO - 1 < viewStore.todoPerWeek.count,
-            weekNO - 2 < viewStore.todoPerWeek.count
+              weekNO - 2 >= 0,
+              weekNO - 1 < viewStore.todoPerWeek.count,
+              weekNO - 2 < viewStore.todoPerWeek.count
         else {
             return ("", "", "")
         }
@@ -165,20 +135,20 @@ class ReportData {
         let thisWeekTodo = viewStore.todoPerWeek[weekNO - 1]
         let lastWeekTodo = viewStore.todoPerWeek[weekNO - 2]
 
-        let text = getText(thisDone: thisWeekDone, lastDone: lastWeekDone, "지난 주")
+        let text = getLocalizedCompareText(
+            thisDone: thisWeekDone, lastDone: lastWeekDone, periodKey: "report.period.last_week")
         let percent = getPercent(
             thisDone: thisWeekDone, lastDone: lastWeekDone, thisTodo: thisWeekTodo,
-            lastTodo: lastWeekTodo
-        )
+            lastTodo: lastWeekTodo)
 
         return (text, percentHead, percent)
     }
 
-    func getMonthText() -> (String, String, String) {
-        let percentHead = "지난 달 대비"
+    func getMonthReportText() -> (String, String, String) {
+        let percentHead = L10n.tr("report.head.last_month")
 
         guard let todayMonth = Calendar.current.dateComponents([.month], from: Date()).month,
-            todayMonth > 1
+              todayMonth > 1
         else {
             return ("", "", "")
         }
@@ -187,9 +157,9 @@ class ReportData {
         let lastMonthIndex = (todayMonth - 2 + 7) % 7
 
         guard thisMonthIndex < viewStore.statisticsData.month.count,
-            lastMonthIndex < viewStore.statisticsData.month.count,
-            thisMonthIndex < viewStore.todoPerMonth.count,
-            lastMonthIndex < viewStore.todoPerMonth.count
+              lastMonthIndex < viewStore.statisticsData.month.count,
+              thisMonthIndex < viewStore.todoPerMonth.count,
+              lastMonthIndex < viewStore.todoPerMonth.count
         else {
             return ("", "", "")
         }
@@ -199,7 +169,8 @@ class ReportData {
         let thisMonthTodo = viewStore.todoPerMonth[thisMonthIndex]
         let lastMonthTodo = viewStore.todoPerMonth[lastMonthIndex]
 
-        let text = getText(thisDone: thisMonthDone, lastDone: lastMonthDone, "지난 달")
+        let text = getLocalizedCompareText(
+            thisDone: thisMonthDone, lastDone: lastMonthDone, periodKey: "report.period.last_month")
         let percent = getPercent(
             thisDone: thisMonthDone, lastDone: lastMonthDone, thisTodo: thisMonthTodo,
             lastTodo: lastMonthTodo)
@@ -207,85 +178,82 @@ class ReportData {
         return (text, percentHead, percent)
     }
 
-    func getCotinuityText() -> (String, String, String) {
+    func getContinuityReportText() -> (String, String, String) {
         var text: String = ""
         let percentHead = ""
 
-        let allDoneContinuity = UserDefaults.standard.integer(forKey: "allDoneContinuity")
+        let allDoneContinuity = userDefaultsClient.integerForKey("allDoneContinuity")
 
         if allDoneContinuity != 0 {
-            text = "\(allDoneContinuity)일 연속 모든 습관을 완료했어요!"
+            text = L10n.tr("report.continuity", allDoneContinuity)
         }
 
         return (text, percentHead, "")
     }
 
-}
-
-extension ReportData {
-    func getMainReport() -> String {
-        var list: [(String, String)] = []
-
-        let habits = HabitVM.shared.result
-        guard !habits.isEmpty else {
-            return "아직 완료된 습관이 없습니다."
-        }
-
-        habits.forEach {
-            if $0.continuity > 0 {
-                list.append((String($0.continuity), $0.name))
-            }
-        }
-
-        guard !list.isEmpty else {
-            return "아직 완료된 습관이 없습니다."
-        }
-
-        let randomInt = Int.random(in: 0..<list.count)
-        return "\(list[randomInt].0)일째 \(list[randomInt].1) 실천 중!"
-    }
-}
-
-// MARK: private Methods
-extension ReportData {
-    private func getText(thisDone: Int, lastDone: Int, _ which: String) -> String {
-
+    func getLocalizedCompareText(thisDone: Int, lastDone: Int, periodKey: String) -> String {
+        let period = L10n.tr(periodKey)
         if thisDone > lastDone {
-            return which + "보다 예정된 습관을 \(thisDone - lastDone)개 더 완료했어요!"
+            return L10n.tr("report.cmp.more", period, thisDone - lastDone)
         } else if thisDone == lastDone {
-            return which + "만큼 예정된 습관을 완료했어요!"
+            return L10n.tr("report.cmp.same", period)
         } else {
-            return which + "보다 예정된 습관을 \(lastDone - thisDone)개 덜 완료했어요!"
+            return L10n.tr("report.cmp.less", period, lastDone - thisDone)
         }
     }
 
-    private func getPercent(thisDone: Int, lastDone: Int, thisTodo: Int, lastTodo: Int) -> String {
+    func getPercent(thisDone: Int, lastDone: Int, thisTodo: Int, lastTodo: Int) -> String {
         var percent = ""
 
         if thisDone == 0 && thisTodo == 0 && lastDone == 0 && lastTodo == 0 {
             percent = ""
         } else if lastDone == 0 || lastTodo == 0 {
             if thisTodo == 0 {
-                percent = "\(thisDone*100)"
+                percent = "\(thisDone * 100)"
             } else {
-                percent = "\(Int(((Double(thisDone)/Double(thisTodo)))*Double(100)))"
+                percent = "\(Int(((Double(thisDone) / Double(thisTodo))) * Double(100)))"
             }
         } else if thisDone == 0 || thisTodo == 0 {
-            percent = "-\(Int(((Double(lastDone)/Double(lastTodo)))*Double(100)))"
+            percent = "-\(Int(((Double(lastDone) / Double(lastTodo))) * Double(100)))"
         } else {
             percent =
-                "\(Int(((Double(thisDone)/Double(thisTodo)) - ((Double(lastDone)/Double(lastTodo))))*Double(100)))"
+                "\(Int(((Double(thisDone) / Double(thisTodo)) - ((Double(lastDone) / Double(lastTodo)))) * Double(100)))"
         }
 
         if thisDone > lastDone {
-            percent += "% up"
+            percent += L10n.tr("report.suffix.up")
         } else if thisDone == lastDone {
             percent = ""
         } else {
-            percent += "% down"
+            percent += L10n.tr("report.suffix.down")
         }
 
         return percent
+    }
+}
 
+extension ReportData {
+    func getMainReportText() -> String {
+        var list: [(String, String)] = []
+
+        let habits = reportClient.habitsWithContinuity()
+        guard !habits.isEmpty else {
+            return L10n.tr("habit.header.empty")
+        }
+
+        habits.forEach {
+            if $0.continuity > 0 && !$0.name.isEmpty {
+                list.append((String($0.continuity), $0.name))
+            }
+        }
+
+        guard !list.isEmpty else {
+            return L10n.tr("habit.header.empty")
+        }
+
+        let randomInt = Int.random(in: 0..<list.count)
+        let item = list[randomInt]
+        let days = Int(item.0) ?? 0
+        return L10n.tr("report.main_streak", days, item.1)
     }
 }

@@ -13,8 +13,8 @@ struct CalendarWeekDayView: View {
     @EnvironmentObject var setting: Setting
     
     private var ratioSpacing: CGFloat { 3 * setting.widthRatio }
-    private var frame_size: CGFloat = CGFloat(20)
-    
+    private var frameSize: CGFloat = CGFloat(20)
+  
     var body: some View {
         week(for: days)
             .scaledPadding(top: 0, leading: 16, bottom: 12, trailing: 0)
@@ -28,7 +28,7 @@ extension CalendarWeekDayView {
             ForEach(days, id: \.self) { day in
                 Text("\(day)")
                     .font(.system(size: 12, weight: .bold, design: .monospaced))
-                    .scaledFrame(width: .none, height: frame_size)
+                    .scaledFrame(width: .none, height: frameSize)
                     .foregroundColor(Color.white)
             }
         }

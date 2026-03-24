@@ -16,12 +16,15 @@ struct CompletionFeature {
         var yesterdayCount: Int = 0
         var statisticsCount: Int = 0
         var continuityCount: Int = 0
+        var dateCount: Int = 0
+        var refreshTick: Int = 0
     }
 
     enum Action: BindableAction {
         case toggle(String)
         case toggleResponse(Bool)
         case loadDoneToday(String)
+        case loadDoneTodayForHabits([String])
         case doneTodayResponse(String, Bool)
         case loadTodayCount
         case loadYesterdayCount
@@ -31,10 +34,14 @@ struct CompletionFeature {
         case statisticsResponse(Int)
         case updateAllDoneContinuity(CompleteStatus, Bool)
         case continuityUpdated(Int)
+        case loadDateCount(String)
+        case dateCount(Int)
+        case refreshCalendar
         case binding(BindingAction<State>)
     }
 
     @Dependency(\.completionClient) var completionClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
 
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -60,12 +67,21 @@ struct CompletionFeature {
                     let result = try await completionClient.isDoneToday(id)
                     await send(.doneTodayResponse(id, result))
                 }
+
+            case let .loadDoneTodayForHabits(ids):
+                return .run { send in
+                    for id in ids {
+                        let result = try await completionClient.isDoneToday(id)
+                        await send(.doneTodayResponse(id, result))
+                    }
+                }
                 
             case let .doneTodayResponse(id, result):
                 state.doneTodayMap[id] = result
                 return .none
                 
             case .loadTodayCount:
+                print("loadTodayCount 호출")
                 return .run { send in
                     let count = try await completionClient.todayHabitCompleteCount()
                     await send(.todayCountResponse(count))
@@ -79,6 +95,7 @@ struct CompletionFeature {
                 
             case let .todayCountResponse(count):
                 state.todayCount = count
+                print("todayCountResponse todayCount", state.todayCount )
                 return .none
                 
             case let .yesterdayCountResponse(count):
@@ -96,13 +113,39 @@ struct CompletionFeature {
                 return .none
                 
             case let .updateAllDoneContinuity(status, isToday):
-                return .run { send in
-                    let newCount = try await completionClient.updateAllDoneContinuity(status, isToday)
-                    await send(.continuityUpdated(newCount))
+                let key = "allDoneContinuity"
+                guard isToday else {
+                    return .send(.continuityUpdated(userDefaultsClient.integerForKey(key)))
                 }
+
+                var continuity = userDefaultsClient.integerForKey(key)
+                continuity = max(continuity, 0)
+
+                if status == .complete {
+                    continuity += 1
+                } else if status == .cancel || status == .add {
+                    continuity = max(continuity - 1, 0)
+                }
+
+                userDefaultsClient.setInteger(continuity, key)
+                return .send(.continuityUpdated(continuity))
 
             case let .continuityUpdated(newCount):
                 state.continuityCount = newCount
+                return .none
+                
+            case let .loadDateCount(date):
+                return .run { send in
+                    let count = try await completionClient.countForDate(date)
+                    await send(.dateCount(count))
+                }
+            
+            case let .dateCount(count):
+                state.dateCount = count
+                return .none
+
+            case .refreshCalendar:
+                state.refreshTick += 1
                 return .none
                 
             case .binding(_):

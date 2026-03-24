@@ -9,18 +9,16 @@ import XCTest
 import RealmSwift
 @testable import Habit_Management
 
-class Habit_ManagementTests: XCTestCase {
+class HabitManagementTests: XCTestCase {
 //    let name = "test"
     let habit = Habit(name: "test", iter: [1, 2, 3, 4])
     // Test Code
     let realmPath = URL(fileURLWithPath: "...")
-    var habitVM: HabitVM?
-    
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var habitViewModel: HabitViewModel?
 
+    override func setUpWithError() throws {
         Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
-        self.habitVM = HabitVM()
+        self.habitViewModel = HabitViewModel()
 
     }
 
@@ -49,20 +47,19 @@ class Habit_ManagementTests: XCTestCase {
         }
     }
     
-    func testgetWeekStr() {
+    func testGetWeekString() {
         let realm = try! Realm()
-        let habit = Habit(name: "test name", iter: [1,7])
-        
-        let result = habitVM!.getWeekStr(habit: habit)
-        
-        XCTAssert(result == "주말")
+        let habit = Habit(name: "test name", iter: [1, 7])
 
+        let result = habitViewModel!.getWeekString(for: habit)
+
+        XCTAssert(result == "주말")
     }
-    
-    func testgetArrayIter() {
-        let habit = Habit(name: "test name", iter: [1,7])
-        let result = habitVM!.getArrayIter(at: habit)
-        XCTAssert(result==[1,7])
+
+    func testGetWeekIterArray() {
+        let habit = Habit(name: "test name", iter: [1, 7])
+        let result = habitViewModel!.getWeekIterArray(for: habit)
+        XCTAssert(result == [1, 7])
     }
 
     func testWithProjection() {

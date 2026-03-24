@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CalendarLevelView: View {
-    private let HabitLevel: [HabitColor] = [.defaultGray, .lightGreen, .mediumGreen, .darkGreen]
-    
+    private let habitLevel: [HabitColor] = [.defaultGray, .lightGreen, .mediumGreen, .darkGreen]
+
     var body: some View {
         HStack(spacing: 4) {
             Spacer()
             levelLabel("LEVEL")
-            level(for: HabitLevel)
+            level(for: habitLevel)
         }
         .scaledPadding(top: 0, leading: 0, bottom: 12, trailing: 20)
     }
@@ -27,7 +27,7 @@ extension CalendarLevelView {
             .foregroundColor(Color.white)
             .scaledText(size: 12, weight: .bold)
     }
-    
+
     private func level(for colors: [HabitColor]) -> some View {
         HStack(spacing: 3) {
             ForEach(colors, id: \.self) { color in

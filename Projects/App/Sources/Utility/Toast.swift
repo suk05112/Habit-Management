@@ -30,8 +30,7 @@ struct Toast: ViewModifier {
       Spacer()
       if isShowing {
         Group {
-//          Text(message)
-            Text("예정된 습관만 완료할 수 있습니다. \n습관을 완료하려면 요일을 변경해주세요.")
+            Text(message)
             .multilineTextAlignment(.center)
             .foregroundColor(config.textColor)
             .font(config.font)

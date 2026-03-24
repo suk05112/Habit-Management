@@ -11,21 +11,28 @@ import ComposableArchitecture
 struct StatisticsView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let statisticsStore: StoreOf<StatisticsFeature>
+    let completionStore: StoreOf<CompletionFeature>
+    let reportData: ReportData
     
     @State var ratio: Double = Double(5/6)
-    @StateObject var completedVM = compltedLIstVM.shared
-    
+
     @State private var showingDetail = false
     
     @State var index: Int = 0
     @State var randomText: (String, String, String) = ("", "", "")
     
-    init(calendarStore: StoreOf<CalendarFeature>, statisticsStore: StoreOf<StatisticsFeature>) {
-        print("StaticsView init")
+    init(
+        calendarStore: StoreOf<CalendarFeature>,
+        statisticsStore: StoreOf<StatisticsFeature>,
+        completionStore: StoreOf<CompletionFeature>,
+        reportData: ReportData
+    ) {
+        print("StatisticsView init")
         self.calendarStore = calendarStore
         self.statisticsStore = statisticsStore
-        ReportData.configure(store: statisticsStore)
-        randomText = ReportData.shared.getRandomText()
+        self.completionStore = completionStore
+        self.reportData = reportData
+        randomText = reportData.getRandomReportText()
     }
     
     var body: some View {
@@ -33,18 +40,18 @@ struct StatisticsView: View {
             ZStack{
                 VStack{
                     HStack{
-                        Text("Statistics")
+                        Text(L10n.tr("stats.title"))
                             .scaledText(size: 30, weight: .semibold)
                         Spacer()
                         
                     }
                     .scaledPadding(top: 10, leading: 20, bottom: 5, trailing: 15)
                     
-                    CalendarView(calendarStore: calendarStore)
+                    CalendarView(calendarStore: calendarStore, completionStore: completionStore)
                     
                     ReportView(str: $randomText.0, percentHead: $randomText.1, percent: $randomText.2)
                         .sheet(isPresented: $showingDetail){
-                            ReportListView()
+                            ReportListView(reportData: reportData)
                         }
                         .onTapGesture {
                             showingDetail = true
@@ -65,8 +72,8 @@ struct StatisticsView: View {
             }.onAppear {
                 print("StatisticsView onappear")
                 viewStore.send(.onAppear)
-                ReportData.shared.setReportText()
-                randomText = ReportData.shared.getRandomText()
+                reportData.updateReportText()
+                randomText = reportData.getRandomReportText()
             }
         }
     }

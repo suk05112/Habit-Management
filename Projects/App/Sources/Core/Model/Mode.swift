@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Mode {
+enum Mode: Equatable {
     case viewing
     case adding
     case editing

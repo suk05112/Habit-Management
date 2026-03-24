@@ -10,9 +10,11 @@ import ComposableArchitecture
 
 struct CalendarView: View {
     private let calendarStore: StoreOf<CalendarFeature>
+    private let completionStore: StoreOf<CompletionFeature>
     
-    init(calendarStore: StoreOf<CalendarFeature>) {
+    init(calendarStore: StoreOf<CalendarFeature>, completionStore: StoreOf<CompletionFeature>) {
         self.calendarStore = calendarStore
+        self.completionStore = completionStore
     }
     
     var body: some View {
@@ -20,7 +22,7 @@ struct CalendarView: View {
             CalendarBackgroundView {
                 HStack(alignment: .bottom) {
                     CalendarWeekDayView()
-                    CalendarScrollView(calendarStore: calendarStore)
+                    CalendarScrollView(calendarStore: calendarStore, completionStore: completionStore)
                 }
                 .scaledPadding(top: 12, leading: 0, bottom: 0, trailing: 20)
                 CalendarLevelView()

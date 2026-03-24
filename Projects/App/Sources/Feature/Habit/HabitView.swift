@@ -14,10 +14,16 @@ import ComposableArchitecture
 struct HabitView: View {
     let calendarStore: StoreOf<CalendarFeature>
     let habitStore: StoreOf<HabitFeature>
+    let completionStore: StoreOf<CompletionFeature>
     
-    init(calendarStore: StoreOf<CalendarFeature>, habitStore: StoreOf<HabitFeature>) {
+    init(
+        calendarStore: StoreOf<CalendarFeature>,
+        habitStore: StoreOf<HabitFeature>,
+        completionStore: StoreOf<CompletionFeature>
+    ) {
         self.calendarStore = calendarStore
         self.habitStore = habitStore
+        self.completionStore = completionStore
     }
 
     var body: some View {
@@ -25,19 +31,14 @@ struct HabitView: View {
             HabitBackgroundView {
                 VStack(spacing: 0) {
                     HabitHeaderView(habitStore: habitStore)
-                    CalendarView(calendarStore: calendarStore)
+                    CalendarView(calendarStore: calendarStore, completionStore: completionStore)
                     HabitToggleView(habitStore: habitStore)
-                    HabitScrollView(habitStore: habitStore)
+                    HabitScrollView(
+                        habitStore: habitStore,
+                        completionStore: completionStore
+                    )
                     divider
                 }
-                .toast(
-                    message: "Current time: \(DateFormatters.fullName.string(from: Date()))",
-                    isShowing: viewStore.binding(
-                        get: \.isToastVisible,
-                        send: { .setToast($0) }
-                    ),
-                    duration: Toast.long
-                )
             }
             .onAppear {
                 viewStore.send(.onAppear)

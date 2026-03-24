@@ -56,4 +56,15 @@ extension Habit {
         copy.weekIter.append(objectsIn: self.weekIter)
         return copy
     }
+    
+    func today() -> Bool {
+        let todayWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday!
+        
+        if self.weekIter.contains(todayWeek){
+            return true
+        }
+        else{
+            return false
+        }
+    }
 }

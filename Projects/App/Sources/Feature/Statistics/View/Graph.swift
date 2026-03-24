@@ -30,19 +30,19 @@ struct Graph: View {
                         .scaledFrame(width: .none, height: 30)
                     
                     HStack {
-                        SelectedView(name: "최근 7일", id: .week, select: $selected)
+                        SelectedView(name: L10n.tr("graph.last_7_days"), id: .week, select: $selected)
                             .onTapGesture {
                                 selected = .week
                                 width = 20
                             }
                         Spacer()
-                        SelectedView(name: "최근 5주", id: .month, select: $selected)
+                        SelectedView(name: L10n.tr("graph.last_5_weeks"), id: .month, select: $selected)
                             .onTapGesture {
                                 selected = .month
                                 width = 30
                             }
                         Spacer()
-                        SelectedView(name: "월", id: .year, select: $selected)
+                        SelectedView(name: L10n.tr("graph.month_tab"), id: .year, select: $selected)
                             .onTapGesture {
                                 selected = .year
                                 width = 10
@@ -85,7 +85,7 @@ struct Graph: View {
                                         .foregroundColor(Color.white)
                                         .scaledFrame(width: 300, height: 150)
                                         .overlay{
-                                            Text("No Data")
+                                            Text(L10n.tr("report.no_data"))
                                                 .scaledText(size: 15, weight: .none)
                                         }
                                     
@@ -123,14 +123,14 @@ struct Graph: View {
         case .week:
             return viewStore.statisticsData.day
         case .month:
-            let b = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
-            var a = b-5
-            
-            if a < 1 {
-                a = 12 - a
+            let currentWeekOfYear = Calendar.current.dateComponents([.weekOfYear], from: Date()).weekOfYear!
+            var startWeekIndex = currentWeekOfYear - 5
+
+            if startWeekIndex < 1 {
+                startWeekIndex = 12 - startWeekIndex
             }
-            
-            return Array(viewStore.statisticsData.week[a..<b])
+
+            return Array(viewStore.statisticsData.week[startWeekIndex..<currentWeekOfYear])
         case .year:
             return viewStore.statisticsData.month
         default:
@@ -154,7 +154,7 @@ struct SelectedView: View {
         RoundedRectangle(cornerRadius: 10)
             .fill(selected==id ? Color(hex: "#77AC83"): Color(hex: "#E8E8E8"))
             .scaledFrame(width: .none, height: 30)
-            .overlay{
+            .overlay {
                 Text("\(str)")
                     .scaledText(size: 15, weight: .none)
             }

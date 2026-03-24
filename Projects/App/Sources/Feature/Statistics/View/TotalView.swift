@@ -15,7 +15,7 @@ struct TotalView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             let count = viewStore.totalCounts[staticCase] ?? 0
-            let statisticsStr = String(staticCase.rawValue)
+            let statisticsStr = staticCase.localizedTitle
             ZStack{
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.white)

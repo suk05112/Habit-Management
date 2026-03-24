@@ -9,12 +9,18 @@ import Foundation
 import SwiftUI
 
 struct ReportListView: View{
-    @State var list: [(String, String, String)] = ReportData.shared.getReportText()
+    let reportData: ReportData
+    @State var list: [(String, String, String)] = []
+
+    init(reportData: ReportData) {
+        self.reportData = reportData
+        self._list = State(initialValue: reportData.getReportTextEntries())
+    }
 
     var body: some View {
         VStack{
             HStack{
-                Text("Report")
+                Text(L10n.tr("stats.report_title"))
                     .font(.system(size: 30))
                     .bold()
                 Spacer()
@@ -22,8 +28,12 @@ struct ReportListView: View{
             }
             .padding()
             
-            ForEach(0..<list.count) { i in
-                ReportView(str: $list[i].0, percentHead: $list[i].1, percent: $list[i].2)
+            ForEach(0..<list.count, id: \.self) { rowIndex in
+                ReportView(
+                    str: $list[rowIndex].0,
+                    percentHead: $list[rowIndex].1,
+                    percent: $list[rowIndex].2
+                )
             }
             Spacer()
             HStack{}
