@@ -14,6 +14,8 @@ class Habit: Object, ObjectKeyIdentifiable, Identifiable {
     @Persisted var name: String = ""
     @Persisted var weekIter: List<Int> = List<Int>()
     @Persisted var continuity: Int = 0
+    /// 미완료/완료 각 그룹 내부 정렬용 (같은 숫자가 양쪽 그룹에 있어도 됨 — 화면에서 그룹별로만 비교)
+    @Persisted var sortOrder: Int = 0
 
     var offset: CGFloat = 0.0
     var isSwipe: Bool = false
@@ -53,6 +55,7 @@ extension Habit {
         copy.id = self.id
         copy.name = self.name
         copy.continuity = self.continuity
+        copy.sortOrder = self.sortOrder
         copy.weekIter.append(objectsIn: self.weekIter)
         return copy
     }

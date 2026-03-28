@@ -31,6 +31,8 @@
 		4853780C5B2FC1272E5F5DE9 /* CalendarFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033D076C391A517C0591B79 /* CalendarFeature.swift */; };
 		4A2E6AC1401931624E69688C /* Habit_ManagementUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FE48035B7859D30F12F66F /* Habit_ManagementUITests.swift */; };
 		4AB53B0B42559E2122E53E68 /* Habit_ManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D920F4F67034DCBFC0BD0110 /* Habit_ManagementApp.swift */; };
+		F10000000000000000000002 /* AppRealmSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000001 /* AppRealmSchema.swift */; };
+		F20000000000000000000002 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20000000000000000000001 /* RealmMigrationTests.swift */; };
 		521E258F3BD8512E54E54930 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7AC77E39BB6E693CA6A07F /* AppFeature.swift */; };
 		53DAAE800951A80F282D906B /* CalendarGridFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FBF61D4D29E289C2C675C3 /* CalendarGridFeature.swift */; };
 		554DD575D4606A22D1D52D6F /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8B7E95CECF78D63EE8FECC /* Mode.swift */; };
@@ -188,6 +190,8 @@
 		D033D076C391A517C0591B79 /* CalendarFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarFeature.swift; sourceTree = "<group>"; };
 		D3985BE061D3EEC330D119DA /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
 		D3F864C7BD6D70A6FCDA362E /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		F10000000000000000000001 /* AppRealmSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRealmSchema.swift; sourceTree = "<group>"; };
+		F20000000000000000000001 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
 		D920F4F67034DCBFC0BD0110 /* Habit_ManagementApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit_ManagementApp.swift; sourceTree = "<group>"; };
 		DF570C1EED4D0C1C81909DE6 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		E0A499A0EEB5870D31EB012A /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
@@ -476,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				7B3BC6082762793F9FAD105E /* Habit_ManagementTests.swift */,
+				F20000000000000000000001 /* RealmMigrationTests.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				9D6EF8E90A2E6F11D8CFCADE /* Utility */,
 				B5294C6CE07F929D748E161D /* ViewModel */,
 				10EBD12C78CB57D3D9E82FA6 /* Assets.xcassets */,
+				F10000000000000000000001 /* AppRealmSchema.swift */,
 				D920F4F67034DCBFC0BD0110 /* Habit_ManagementApp.swift */,
 				0032D297F6528A75FEE9CA2B /* Localizable.xcstrings */,
 				41ACF169605ECA6AC26F5839 /* Persistence.swift */,
@@ -788,6 +794,7 @@
 				D93464B5B1E02BE10091C583 /* HabitToggleView.swift in Sources */,
 				16994B983AA13E335E3480F3 /* HabitView.swift in Sources */,
 				2F29A7DD4D64A924B492ABAC /* HabitViewModel.swift in Sources */,
+				F10000000000000000000002 /* AppRealmSchema.swift in Sources */,
 				4AB53B0B42559E2122E53E68 /* Habit_ManagementApp.swift in Sources */,
 				428AB9349E8ECA1086117EA9 /* KeyboardGuardian.swift in Sources */,
 				A119C41002056EA6ADE6F346 /* L10n.swift in Sources */,
@@ -831,6 +838,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9848B669B39343EA52B3C9B1 /* Habit_ManagementTests.swift in Sources */,
+				F20000000000000000000002 /* RealmMigrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

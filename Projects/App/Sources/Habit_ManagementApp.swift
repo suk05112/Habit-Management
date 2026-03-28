@@ -69,23 +69,7 @@ struct HabitManagementApp: SwiftUI.App {
 
     init() {
         self.store = Store(initialState: AppFeature.State(), reducer: { AppFeature() })
-        let config = RealmSwift.Realm.Configuration(
-            schemaVersion: 5,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 5 {
-                    migration.enumerateObjects(ofType: Statistics.className()) { _, newObject in
-                        newObject!["year"] = 0
-                        newObject!["days"] = []
-                        newObject!["week"] = []
-                        newObject!["month"] = []
-                        newObject!["total"] = 0
-                        newObject!["classification"] = "Done"
-                    }
-                }
-            }
-        )
-
-        Realm.Configuration.defaultConfiguration = config
+        Realm.Configuration.defaultConfiguration = AppRealmSchema.makeDefaultConfiguration()
     }
 
     var body: some Scene {

@@ -29,6 +29,8 @@ struct HabitItemView: View {
                 if !habit.isInvalidated {
                     let habitID = habit.id ?? ""
                     let isDoneToday = completionViewStore.doneTodayMap[habitID] == true
+                    let cardShape = RoundedRectangle(cornerRadius: 12)
+                    // 카드(둥근 박스)와 완료 버튼 분리 — 탭/롱프레스는 카드 영역에만 적용
                     HStack(alignment: .center, spacing: 12) {
                         habitContentView(
                             name: habit.name,
@@ -36,25 +38,29 @@ struct HabitItemView: View {
                             weekIter: Array(habit.weekIter),
                             isCompletedToday: isDoneToday
                         )
-                        .contentShape(Rectangle())
+                        .scaledFrame(width: .none, height: 80)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            cardShape
+                                .fill(Color.white)
+                                .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
+                        )
+                        // 히트 영역을 사각형 전체 행이 아니라 둥근 카드와 동일하게
+                        .contentShape(cardShape)
                         .onTapGesture {
                             viewStore.send(.edit(.editButtonPressed(habit)))
                             viewStore.send(.setHabitTitle(habit.name))
                             viewStore.send(.setIter(Array(habit.weekIter)))
                         }
-                        
+                        .onLongPressGesture(minimumDuration: 0.45) {
+                            viewStore.send(.setHabitListReordering(true))
+                        }
+
                         completeButton(
                             viewStore: viewStore,
                             isDoneToday: isDoneToday
                         )
                     }
-                    .scaledFrame(width: .none, height: 80)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white)
-                            .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 2)
-                    )
-                    .scaledPadding(top: 0, leading: 16, bottom: 0, trailing: 16)
                     .animation(.easeInOut(duration: 0.22), value: isDoneToday)
                 }
             }

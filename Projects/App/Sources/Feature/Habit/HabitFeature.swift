@@ -17,6 +17,8 @@ struct HabitFeature {
     
     struct State: Equatable {
         var habitList: [Habit] = []
+        /// 길게 누름 후 순서 변경(EditMode) — 별도 화면 없이 리스트만 편집 모드
+        var isHabitListReordering: Bool = false
         var selectedHabit: Habit? = nil
         var mode: Mode = .viewing
         var userName: String = ""
@@ -67,6 +69,11 @@ struct HabitFeature {
         case resetContinuity
         case setHabitTitle(String)
         case setIter([Int])
+        case setHabitListReordering(Bool)
+        /// 미완료 섹션에서 드래그 종료 후 id 순서 (0…n-1로 저장)
+        case reorderIncompleteSection([String])
+        /// 완료 섹션에서 드래그 종료 후 id 순서
+        case reorderCompletedSection([String])
         
         case header(HabitHeaderFeature.Action)
         case toggle(HabitToggleFeature.Action)
@@ -142,6 +149,28 @@ struct HabitFeature {
             case let .setIter(iter):
                 state.iter = iter
                 return .none
+                
+            case let .setHabitListReordering(flag):
+                state.isHabitListReordering = flag
+                return .none
+                
+            case let .reorderIncompleteSection(ids):
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
+                return .run { send in
+                    try await habitClient.applySortOrder(ids)
+                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await send(.loadHabits(habits))
+                }
+                
+            case let .reorderCompletedSection(ids):
+                let showAll = state.toggle.isShowAll
+                let hideCompleted = state.toggle.isHideCompleted
+                return .run { send in
+                    try await habitClient.applySortOrder(ids)
+                    let habits = try await habitClient.fetchFiltered(showAll, hideCompleted)
+                    await send(.loadHabits(habits))
+                }
                 
             case let .addHabit(name, iter):
                 let habit = Habit(name: name, iter: iter)

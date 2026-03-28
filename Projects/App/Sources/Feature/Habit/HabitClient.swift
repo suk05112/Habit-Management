@@ -15,6 +15,8 @@ struct HabitClient {
     var save: @Sendable (Habit) async throws -> Void
     var update: @Sendable (Habit, String, [Int]) async throws -> Void
     var delete: @Sendable (Habit) async throws -> Void
+    /// 해당 id 순서대로 sortOrder를 0…n-1로 일괄 반영 (한 번의 write)
+    var applySortOrder: @Sendable ([String]) async throws -> Void
     var todayHabitCount: @Sendable () async throws -> Int
     var weeklyHabitStats: @Sendable () async throws -> [Int]
     var monthSummary: @Sendable () async throws -> (Int, Int)
@@ -34,7 +36,13 @@ extension HabitClient: DependencyKey {
             let today = DateFormatters.standard.string(from: Date())
             let todayWeekDay = Date().weekday
 
-            var query = realm.objects(Habit.self)
+            var query: Results<Habit> = realm.objects(Habit.self)
+
+            // 토글 `isShowAll`: false면 오늘 요일에 해당하는 습관만, true면 전체 (라벨과 동일)
+            // `filter { }` 클로저는 Swift Sequence용이라 LazyFilterSequence가 되어 Results에 못 넣음 → NSPredicate 사용
+            if !showAll {
+                query = query.filter(NSPredicate(format: "ANY weekIter == %d", todayWeekDay))
+            }
 
             if hideCompleted {
                 if let completedList = realm.object(ofType: CompletedList.self, forPrimaryKey: today)?.completed {
@@ -44,23 +52,21 @@ extension HabitClient: DependencyKey {
             }
 
             var habits = Array(query).map { $0.detached() }
-
-            // `showAll == false`: 오늘 예정 습관을 위로만 올리고, 나머지도 목록에 둠 (언제든 완료 가능)
-            if !showAll {
-                habits = habits.enumerated().sorted { lhs, rhs in
-                    let lToday = lhs.element.weekIter.contains(todayWeekDay)
-                    let rToday = rhs.element.weekIter.contains(todayWeekDay)
-                    if lToday != rToday { return lToday && !rToday }
-                    return lhs.offset < rhs.offset
-                }.map(\.element)
-            }
+            habits.sort { Self.compareBySortOrderThenId($0, $1) }
 
             return habits
         },
         
         save: { habit in
             let realm = try Realm()
-            try realm.write { realm.add(habit, update: .modified) }
+            try realm.write {
+                // 신규 습관이면 맨 뒤 순번 부여 (기존 행은 sortOrder 유지)
+                if habit.id.flatMap({ realm.object(ofType: Habit.self, forPrimaryKey: $0) }) == nil {
+                    let maxOrder = realm.objects(Habit.self).max(ofProperty: "sortOrder") as Int? ?? -1
+                    habit.sortOrder = maxOrder + 1
+                }
+                realm.add(habit, update: .modified)
+            }
         },
         
         update: { habit, name, iter in
@@ -85,12 +91,21 @@ extension HabitClient: DependencyKey {
             }
         },
         
+        applySortOrder: { orderedIDs in
+            let realm = try Realm()
+            try realm.write {
+                for (index, id) in orderedIDs.enumerated() {
+                    realm.object(ofType: Habit.self, forPrimaryKey: id)?.sortOrder = index
+                }
+            }
+        },
+        
         todayHabitCount: {
             let realm = try Realm()
             let todayWeekDay = Date().weekday
-            return realm.objects(Habit.self).filter {
-                $0.weekIter.contains(todayWeekDay)
-            }.count
+            return realm.objects(Habit.self)
+                .filter("ANY weekIter == %@", todayWeekDay)
+                .count
         },
         weeklyHabitStats: {
             let realm = try Realm()
@@ -160,4 +175,12 @@ extension HabitClient: DependencyKey {
             }
         }
     )
+}
+
+private extension HabitClient {
+    /// 같은 우선순위(예: 둘 다 오늘 할 일) 안에서의 순서
+    static func compareBySortOrderThenId(_ lhs: Habit, _ rhs: Habit) -> Bool {
+        if lhs.sortOrder != rhs.sortOrder { return lhs.sortOrder < rhs.sortOrder }
+        return (lhs.id ?? "") < (rhs.id ?? "")
+    }
 }
